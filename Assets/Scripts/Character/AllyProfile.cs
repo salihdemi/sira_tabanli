@@ -6,17 +6,7 @@ using UnityEngine.UI;
 
 public class AllyProfile : Profile
 {
-    AllyProfile()
-    {
-        //character.Heal();//!
-        //ResetStats();
-    }
 
-    private void Awake()
-    {
-        button = GetComponent<Button>();
-        //button.onClick.AddListener()
-    }
     public override void Play()
     {
         CharacterActionPanel.instance.WriteThings(this);

@@ -154,8 +154,7 @@ public class FightManager : MonoBehaviour
     {
         for (int i = 0; i < AllyProfiles.Count; i++)
         {
-            Profile character = Characters[i];
-            Debug.Log(character);
+            Profile character = Characters[i];  
             character.ResetStats();
         }
     }

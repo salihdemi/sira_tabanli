@@ -25,12 +25,5 @@ public class EnemyProfile : Profile
 
         Over();
     }
-    private void Awake()
-    {
-        button = GetComponent<Button>();
-        Debug.Log("a");
-
-        //button.onClick.AddListener()
-    }
 
 }

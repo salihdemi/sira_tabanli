@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,8 +24,13 @@ public abstract class Profile : MonoBehaviour
 
 
 
+    public TextMeshProUGUI healthText, powerText, speedText;
 
-
+    private void Start()
+    {
+        ChangeHealth(character.maxHealth);
+        ResetStats();
+    }
 
     public abstract void Play();
     public abstract void Over();
@@ -32,6 +38,8 @@ public abstract class Profile : MonoBehaviour
     {
         currentPower = character.basePower;
         currentSpeed = character.baseSpeed;
+        powerText.text = currentPower.ToString();
+        speedText.text = currentSpeed.ToString();
     }
     public abstract void SetLunge(_Skill skill);
     public abstract void OpenPickTargetMenu(_Skill skill);
@@ -52,6 +60,7 @@ public abstract class Profile : MonoBehaviour
             //herkes öldü mü diye kontrol et
         }
         //yaz
+        WriteHealth();
     }
     public void ChangeHealth(float amount)
     {
@@ -65,14 +74,17 @@ public abstract class Profile : MonoBehaviour
             currentHealth = 0;
         }
         //yaz
+        WriteHealth();
     }
     public void ChangePower(float amount)
     {
         currentPower += amount;
+        powerText.text = currentPower.ToString();
     }
     public void ChangeSpeed(float amount)
     {
         currentSpeed += amount;
+        speedText.text = currentSpeed.ToString();
     }
     public bool IsDied()
     {
@@ -95,5 +107,12 @@ public abstract class Profile : MonoBehaviour
     public float GetSpeed()
     {
         return currentSpeed;
+    }
+
+
+
+    private void WriteHealth()
+    {
+        healthText.text = currentHealth+"/"+character.maxHealth;
     }
 }
