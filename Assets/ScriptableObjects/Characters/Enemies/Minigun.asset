@@ -15,8 +15,8 @@ MonoBehaviour:
   maxHealth: 100
   basePower: 20
   baseSpeed: 0
-  Target: {fileID: 0}
   _sprite: {fileID: 4246200125604500827, guid: 64d58308f89e8de40b24e6f1b6c8aea4, type: 3}
+  attack: {fileID: 0}
   skills:
-  - {fileID: 11400000, guid: 4e2e20dbe6d7bb44cabbb4441bd14e5a, type: 2}
+  - {fileID: 11400000, guid: da1014413da27ab4c8304b5d5df75006, type: 2}
   profile: {fileID: 0}
