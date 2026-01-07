@@ -64,6 +64,8 @@ public abstract class Profile : MonoBehaviour
     }
     public void ChangeHealth(float amount)
     {
+        if (name == "Okçu")
+            Debug.LogWarning(currentHealth);
         currentHealth += amount;
         if (currentHealth > character.maxHealth)
         {
