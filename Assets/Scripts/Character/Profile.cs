@@ -23,20 +23,6 @@ public abstract class Profile : MonoBehaviour
 
     [HideInInspector] public Action onTurnStarted, onTurnEnded;
 
-    public void ExecuteSkill(_Skill skill, Profile target)
-    {
-        Debug.Log($"{characterData.name}, {skill.name} yeteneðini {target.characterData.name} üzerinde kullanýyor!");
-
-        // 1. Yeteneðin asýl iþini yap (Hasar, Heal vb.)
-        // Þimdilik senin eski mantýðýnla çaðýrýyoruz:
-        skill.Method(this, target);
-
-        // 2. Hamle bittikten sonra temizlik yap
-        ClearLungeAndTarget();
-
-        // 3. Sýrayý bitir
-        TurnEnd();
-    }
 
 
     public void OnProfileButtonPressed()

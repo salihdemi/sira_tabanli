@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 public class TargetingSystem : MonoBehaviour
 {
@@ -42,7 +43,7 @@ public class TargetingSystem : MonoBehaviour
         if (selectedSkill == null) return;
 
         // Skilli uygula
-        currentCaster.ExecuteSkill(selectedSkill, clickedProfile);
+        currentCaster.Lunge(currentCaster, currentCaster.Target);
 
         // Her þeyi temizle
         currentCaster.ClearLungeAndTarget();
