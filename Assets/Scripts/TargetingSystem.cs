@@ -5,6 +5,10 @@ using UnityEngine.Profiling;
 public class TargetingSystem : MonoBehaviour
 {
     public static TargetingSystem instance;
+    private void Awake()
+    {
+        instance = this;
+    }
     private _Skill selectedSkill;
     private Profile currentCaster;
     public enum TargetType
@@ -21,13 +25,15 @@ public class TargetingSystem : MonoBehaviour
         selectedSkill = skill;
         currentCaster = caster;
 
+        CharacterActionPanel.instance.gameObject.SetActive(false);
         // Sahnedeki tüm profilleri bul ve sadece uygun olanlarý aktif et
         List<Profile> allProfiles = FightManager.instance.GetAllProfiles();
         foreach (Profile p in allProfiles)
         {
             bool isValid = CheckIfValid(p, skill.targetType);
-            p.SetSelectable(isValid); // Butonu aç/kapat ve görsel efekt ver
+            p.SetSelectable(isValid,currentCaster); // Butonu aç/kapat ve görsel efekt ver
         }
+
     }
 
     private bool CheckIfValid(Profile target, TargetType type)

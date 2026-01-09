@@ -43,33 +43,7 @@ public class AllyProfile : Profile
         CharacterActionPanel.instance.DisableAllPanels();
 
         //hedef seçecek
-        OpenPickTargetMenu(skill);
-    }
-    public override void OpenPickTargetMenu(_Skill skill)
-    {
-        Debug.Log(skill.targetType);
-        CharacterActionPanel.instance.gameObject.SetActive(false);
-        if (skill.targetType == TargetingSystem.TargetType.enemy)
-        {
-            foreach (Profile profile in FightManager.instance.EnemyProfiles)
-            {
-                profile.button.interactable = true;
-                profile.button.onClick.AddListener(() => SetTarget(profile));
-            }
-        }
-        else if (skill.targetType == TargetingSystem.TargetType.ally)
-        {
-            foreach (Profile profile in FightManager.instance.AllyProfiles)
-            {
-                profile.button.interactable = true;
-                profile.button.onClick.AddListener(() => SetTarget(profile));
-            }
-        }
-    }
-    public void SetTarget(Profile profile)
-    {
-        Target = profile;
-
-        TurnEnd();
+        //OpenPickTargetMenu(skill);
+        TargetingSystem.instance.StartTargeting(this, skill);
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Profiling;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
@@ -30,9 +31,10 @@ public abstract class Profile : MonoBehaviour
         TargetingSystem.instance.OnProfileClicked(this);
     }
 
-    public void SetSelectable(bool state)
+    public void SetSelectable(bool state, Profile currentCaster)
     {
         button.interactable = state;
+        button.onClick.AddListener(() => currentCaster.SetTarget(this));
         // Ýstersen burada seçilebilir olanlarýn etrafýnda parlama efekti açabilirsin
     }
 
@@ -55,6 +57,12 @@ public abstract class Profile : MonoBehaviour
         onSpeedChange?.Invoke(currentSpeed);
     }
     public abstract void SetLunge(_Skill skill);
+    public void SetTarget(Profile profile)
+    {
+        Target = profile;
+
+        TurnEnd();//!
+    }
     public void ClearLungeAndTarget()
     {
         Lunge = null;
@@ -62,7 +70,6 @@ public abstract class Profile : MonoBehaviour
     }
 
 
-    public abstract void OpenPickTargetMenu(_Skill skill);//!
 
 
 

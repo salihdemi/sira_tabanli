@@ -20,10 +20,6 @@ public class EnemyProfile : Profile
     {
         Lunge = skill.Method;//secili saldýrýyý iþaretle
 
-        OpenPickTargetMenu(skill);//Hedef seçme ekranýný aç
-    }
-    public override void OpenPickTargetMenu(_Skill skill)
-    {
         Target = MainCharacterMoveable.instance.party[0].profile;//default hedef!
 
         TurnEnd();
