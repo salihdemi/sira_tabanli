@@ -6,10 +6,11 @@ using UnityEngine.UI;
 
 public abstract class Profile : MonoBehaviour
 {
-    public Button button;
+    public Button button;//!
     public CharacterBase character;
 
 
+    private float currentHealth;
     private float currentPower;
     private float currentSpeed;
 
@@ -17,14 +18,13 @@ public abstract class Profile : MonoBehaviour
     [HideInInspector] public Action<Profile, Profile> Lunge;
     [HideInInspector] public Profile Target;//fonksiyon içi deðiþken olabilir belki
 
-
-
-    private float currentHealth;
-
+    [HideInInspector] public Action<float> onHealthChange, onPowerChange, onSpeedChange;
 
 
 
-    public TextMeshProUGUI healthText, powerText, speedText;
+
+
+
 
     private void Start()
     {
@@ -37,9 +37,10 @@ public abstract class Profile : MonoBehaviour
     public void ResetStats()
     {
         currentPower = character.basePower;
+        onPowerChange?.Invoke(currentPower);
+
         currentSpeed = character.baseSpeed;
-        powerText.text = currentPower.ToString();
-        speedText.text = currentSpeed.ToString();
+        onSpeedChange?.Invoke(currentSpeed);
     }
     public abstract void SetLunge(_Skill skill);
     public abstract void OpenPickTargetMenu(_Skill skill);
@@ -48,6 +49,7 @@ public abstract class Profile : MonoBehaviour
         Lunge = null;
         Target = null;
     }
+
     public void ForceChangeHealth(float amount)//Overhealth
     {
         currentHealth += amount;
@@ -59,8 +61,7 @@ public abstract class Profile : MonoBehaviour
 
             //herkes öldü mü diye kontrol et
         }
-        //yaz
-        WriteHealth();
+        onHealthChange?.Invoke(currentHealth);
     }
     public void ChangeHealth(float amount)
     {
@@ -73,19 +74,20 @@ public abstract class Profile : MonoBehaviour
         {
             currentHealth = 0;
         }
-        //yaz
-        WriteHealth();
+        onHealthChange?.Invoke(currentHealth);
     }
     public void ChangePower(float amount)
     {
         currentPower += amount;
-        powerText.text = currentPower.ToString();
+        onPowerChange?.Invoke(currentPower);
     }
     public void ChangeSpeed(float amount)
     {
         currentSpeed += amount;
-        speedText.text = currentSpeed.ToString();
+        onSpeedChange?.Invoke(currentSpeed);
     }
+
+
     public bool IsDied()
     {
         if (currentHealth <= 0)
@@ -96,7 +98,7 @@ public abstract class Profile : MonoBehaviour
         {
             return false;
         }
-    }
+    }//!
 
 
 
@@ -107,12 +109,5 @@ public abstract class Profile : MonoBehaviour
     public float GetSpeed()
     {
         return currentSpeed;
-    }
-
-
-
-    private void WriteHealth()
-    {
-        healthText.text = currentHealth+"/"+character.maxHealth;
     }
 }

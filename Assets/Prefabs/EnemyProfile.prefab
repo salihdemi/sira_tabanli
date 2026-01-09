@@ -285,6 +285,7 @@ GameObject:
   - component: {fileID: 5027435730248344302}
   - component: {fileID: -675919997547338896}
   - component: {fileID: 742744003490145377}
+  - component: {fileID: 2523895754031296691}
   m_Layer: 5
   m_Name: EnemyProfile
   m_TagString: Untagged
@@ -411,7 +412,19 @@ MonoBehaviour:
   button: {fileID: -675919997547338896}
   character: {fileID: 0}
   Target: {fileID: 0}
-  maxHealthText: {fileID: 0}
+--- !u!114 &2523895754031296691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5446839951801960851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 257ed68485bca8540b0668a9f40fc133, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProfileUIManager
+  profile: {fileID: 742744003490145377}
   healthText: {fileID: 4327997815875413924}
   powerText: {fileID: 7651256957941327744}
   speedText: {fileID: 5689225676759426715}
