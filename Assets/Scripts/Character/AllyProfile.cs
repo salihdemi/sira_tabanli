@@ -7,14 +7,18 @@ using UnityEngine.UI;
 public class AllyProfile : Profile
 {
 
-    public override void Play()
+    public override void TurnStart()
     {
+        onTurnStarted?.Invoke();
+
         CharacterActionPanel.instance.WriteThings(this);
 
         CharacterActionPanel.instance.gameObject.SetActive(true);
+
     }
-    public override void Over()
+    public override void TurnEnd()
     {
+        onTurnEnded?.Invoke();
         foreach (Profile profile in FightManager.instance.EnemyProfiles)
         {
             profile.button.interactable = false;
@@ -43,8 +47,9 @@ public class AllyProfile : Profile
     }
     public override void OpenPickTargetMenu(_Skill skill)
     {
+        Debug.Log(skill.targetType);
         CharacterActionPanel.instance.gameObject.SetActive(false);
-        if (skill.isToEnemy)
+        if (skill.targetType == TargetingSystem.TargetType.enemy)
         {
             foreach (Profile profile in FightManager.instance.EnemyProfiles)
             {
@@ -52,7 +57,7 @@ public class AllyProfile : Profile
                 profile.button.onClick.AddListener(() => SetTarget(profile));
             }
         }
-        else
+        else if (skill.targetType == TargetingSystem.TargetType.ally)
         {
             foreach (Profile profile in FightManager.instance.AllyProfiles)
             {
@@ -65,6 +70,6 @@ public class AllyProfile : Profile
     {
         Target = profile;
 
-        Over();
+        TurnEnd();
     }
 }

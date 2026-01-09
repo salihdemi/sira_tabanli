@@ -3,14 +3,17 @@ using UnityEngine.UI;
 
 public class EnemyProfile : Profile
 {
-    public override void Play()
+    public override void TurnStart()
     {
-        _Skill currentskill = character.skills[Random.Range(0, character.skills.Count - 1)]; //Random hamle ver
+        onTurnStarted?.Invoke();
+
+        _Skill currentskill = characterData.skills[Random.Range(0, characterData.skills.Count - 1)]; //Random hamle ver
         SetLunge(currentskill);
     }
 
-    public override void Over()
+    public override void TurnEnd()
     {
+        onTurnEnded?.Invoke();
         FightManager.instance.CheckNextCharacter();
     }
     public override void SetLunge(_Skill skill)
@@ -23,7 +26,7 @@ public class EnemyProfile : Profile
     {
         Target = MainCharacterMoveable.instance.party[0].profile;//default hedef!
 
-        Over();
+        TurnEnd();
     }
 
 }

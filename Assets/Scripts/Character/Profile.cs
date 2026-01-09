@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public abstract class Profile : MonoBehaviour
 {
     public Button button;//!
-    public CharacterBase character;
+    public CharacterBase characterData;
 
 
     private float currentHealth;
@@ -20,35 +21,64 @@ public abstract class Profile : MonoBehaviour
 
     [HideInInspector] public Action<float> onHealthChange, onPowerChange, onSpeedChange;
 
+    [HideInInspector] public Action onTurnStarted, onTurnEnded;
+
+    public void ExecuteSkill(_Skill skill, Profile target)
+    {
+        Debug.Log($"{characterData.name}, {skill.name} yeteneðini {target.characterData.name} üzerinde kullanýyor!");
+
+        // 1. Yeteneðin asýl iþini yap (Hasar, Heal vb.)
+        // Þimdilik senin eski mantýðýnla çaðýrýyoruz:
+        skill.Method(this, target);
+
+        // 2. Hamle bittikten sonra temizlik yap
+        ClearLungeAndTarget();
+
+        // 3. Sýrayý bitir
+        TurnEnd();
+    }
 
 
+    public void OnProfileButtonPressed()
+    {
+        TargetingSystem.instance.OnProfileClicked(this);
+    }
 
+    public void SetSelectable(bool state)
+    {
+        button.interactable = state;
+        // Ýstersen burada seçilebilir olanlarýn etrafýnda parlama efekti açabilirsin
+    }
 
 
 
     private void Start()
     {
-        ChangeHealth(character.maxHealth);
+        ChangeHealth(characterData.maxHealth);
         ResetStats();
     }
 
-    public abstract void Play();
-    public abstract void Over();
+    public abstract void TurnStart();
+    public abstract void TurnEnd();
     public void ResetStats()
     {
-        currentPower = character.basePower;
+        currentPower = characterData.basePower;
         onPowerChange?.Invoke(currentPower);
 
-        currentSpeed = character.baseSpeed;
+        currentSpeed = characterData.baseSpeed;
         onSpeedChange?.Invoke(currentSpeed);
     }
     public abstract void SetLunge(_Skill skill);
-    public abstract void OpenPickTargetMenu(_Skill skill);
     public void ClearLungeAndTarget()
     {
         Lunge = null;
         Target = null;
     }
+
+
+    public abstract void OpenPickTargetMenu(_Skill skill);//!
+
+
 
     public void ForceChangeHealth(float amount)//Overhealth
     {
@@ -66,9 +96,9 @@ public abstract class Profile : MonoBehaviour
     public void ChangeHealth(float amount)
     {
         currentHealth += amount;
-        if (currentHealth > character.maxHealth)
+        if (currentHealth > characterData.maxHealth)
         {
-            currentHealth = character.maxHealth;
+            currentHealth = characterData.maxHealth;
         }
         if (currentHealth < 0)
         {

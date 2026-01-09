@@ -108,7 +108,7 @@ public class FightManager : MonoBehaviour
     private void LetNextPlayertoPlay()
     {
         Debug.Log(Characters[characterOrder - 1].name + " hamlesini seçiyor");
-        Characters[characterOrder - 1].Play();
+        Characters[characterOrder - 1].TurnStart();
     }
 
 
@@ -234,9 +234,9 @@ public class FightManager : MonoBehaviour
         Debug.Log("Oynat");
         for (int i = 0;i < Characters.Count; i++)
         {
-            Profile item = Characters[i];
-            item.Lunge(item, item.Target);//Hamleyi yap
-            item.ClearLungeAndTarget();//Hamleyi temizle
+            Profile profile = Characters[i];
+            profile.Lunge(profile, profile.Target);//Hamleyi yap
+            profile.ClearLungeAndTarget();//Hamleyi temizle
 
             yield return new WaitForSeconds(1);
         }
@@ -253,5 +253,11 @@ public class FightManager : MonoBehaviour
     public EnemyProfile MakeEnemyProfile()
     {
         return Instantiate(EnemyProfilePrefab, EnemyProfileParent);
+    }
+
+
+    public List<Profile> GetAllProfiles()
+    {
+        return AllyProfiles.Concat(EnemyProfiles).ToList();
     }
 }

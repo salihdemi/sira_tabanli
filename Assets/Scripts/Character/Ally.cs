@@ -11,16 +11,12 @@ public class Ally : CharacterBase
 
 
     [HideInInspector] public AllyProfile characterAlly;
-    Ally()
-    {
-
-    }
 
 
     public override void MakeProfile()
     {
         profile = FightManager.instance.MakeAllyProfile();
-        profile.character = this;
+        profile.characterData = this;
         profile.gameObject.name = name;
     }
 
