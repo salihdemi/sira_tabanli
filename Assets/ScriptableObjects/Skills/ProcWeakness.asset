@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ProcWeakness
   m_EditorClassIdentifier: Assembly-CSharp::ChargedAttack
   _name: Proc Weakness
-  isToEnemy: 1
+  targetType: 1

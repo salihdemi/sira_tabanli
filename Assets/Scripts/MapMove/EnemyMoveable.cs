@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyMoveable : MapMoveable
 {
-    [SerializeField] private Enemy[] enemies;
+    [SerializeField] private EnemyData[] enemies;
 
 
 
@@ -53,7 +53,7 @@ public class EnemyMoveable : MapMoveable
         if (collision.gameObject.TryGetComponent<MapMoveable>(out MapMoveable character))
         {
             gameObject.SetActive(false);
-            FightManager.instance.StartFight(enemies);
+            FightManager.instance.StartFight(MainCharacterMoveable.instance.party, enemies);
         }
     }
     //Tetikleniþ

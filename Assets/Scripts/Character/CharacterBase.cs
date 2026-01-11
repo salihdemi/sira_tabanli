@@ -16,7 +16,6 @@ public abstract class CharacterBase : ScriptableObject
     //kalkan
     //zýrh
 
-    private float currentHealth;
 
 
 
@@ -31,18 +30,11 @@ public abstract class CharacterBase : ScriptableObject
 
 
 
-    [HideInInspector] public Profile profile;
 
 
 
 
 
-    public void Heal()
-    {
-        currentHealth = maxHealth;
-    }
 
-
-    public abstract void MakeProfile();
 
 }

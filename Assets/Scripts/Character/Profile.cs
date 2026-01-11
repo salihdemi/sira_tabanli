@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public abstract class Profile : MonoBehaviour
 {
     public Button button;//!
-    public CharacterBase characterData;
+    public CharacterBase BaseData;
 
 
     private float currentHealth;
@@ -42,7 +42,7 @@ public abstract class Profile : MonoBehaviour
 
     private void Start()
     {
-        ChangeHealth(characterData.maxHealth);
+        ChangeHealth(BaseData.maxHealth);
         ResetStats();
     }
 
@@ -50,10 +50,10 @@ public abstract class Profile : MonoBehaviour
     public abstract void TurnEnd();
     public void ResetStats()
     {
-        currentPower = characterData.basePower;
+        currentPower = BaseData.basePower;
         onPowerChange?.Invoke(currentPower);
 
-        currentSpeed = characterData.baseSpeed;
+        currentSpeed = BaseData.baseSpeed;
         onSpeedChange?.Invoke(currentSpeed);
     }
     public abstract void SetLunge(_Skill skill);
@@ -89,9 +89,9 @@ public abstract class Profile : MonoBehaviour
     public void ChangeHealth(float amount)
     {
         currentHealth += amount;
-        if (currentHealth > characterData.maxHealth)
+        if (currentHealth > BaseData.maxHealth)
         {
-            currentHealth = characterData.maxHealth;
+            currentHealth = BaseData.maxHealth;
         }
         if (currentHealth < 0)
         {

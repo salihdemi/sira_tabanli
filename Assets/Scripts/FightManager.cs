@@ -1,13 +1,9 @@
-using System;
+
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using UnityEngine.UI;
-using static UnityEditor.Progress;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class FightManager : MonoBehaviour
 {
@@ -16,49 +12,37 @@ public class FightManager : MonoBehaviour
     {
         instance = this;
     }
-    public List<Profile> Characters = new List<Profile> { };
+
+    public BattleSpawner battleSpawner;
+
+    private List<Profile> Profiles = new List<Profile> { };
 
 
     //public Animator animator;
     [Header("Profiles")]
-    [SerializeField] private AllyProfile AllyProfilePrefab;
-    [SerializeField] private EnemyProfile EnemyProfilePrefab;
-
-    [SerializeField] private Transform AllyProfileParent;
-    [SerializeField] private Transform EnemyProfileParent;
-    [HideInInspector] public List<Profile>  AllyProfiles = new List<Profile>();
-    [HideInInspector] public List<Profile> EnemyProfiles = new List<Profile>();
+    [HideInInspector] public List<AllyProfile>   AllyProfiles = new List<AllyProfile>();
+    [HideInInspector] public List<EnemyProfile> EnemyProfiles = new List<EnemyProfile>();
 
 
 
     private int characterOrder;
 
 
-    public void StartFight(Enemy[] enemies)//Fonksiyonla!
+    public void StartFight(AllyData[] allies, EnemyData[] enemies)//Fonksiyonla!
     {
-        if(MainCharacterMoveable.instance.party.Length < 1)
+        if (MainCharacterMoveable.instance.party.Length < 1)
         {Debug.LogError("Parti boþ");return; }
         if (enemies.Length < 1)
         {Debug.LogError("Düþman partisi boþ");return; }
-
-
-
+        //------------------------------------------------------
+        //------------------------------------------------------
+        //------------------------------------------------------
         gameObject.SetActive(true);
 
-        Ally[] allies = MainCharacterMoveable.instance.party;
-                    //.Where(a => a.GetHealth() > 0)
-                    //.ToArray();
+        AllyProfiles = battleSpawner.SpawnAllies(allies);
+        EnemyProfiles = battleSpawner.SpawnEnemies(enemies);
 
-        SortAllies(allies);
-        SortEnemies(enemies);
-
-
-
-
-        
-
-
-
+        Profiles = GetAllProfiles();
 
         ResetStats();
 
@@ -76,6 +60,7 @@ public class FightManager : MonoBehaviour
         //moveable
         CharacterActionPanel.instance.gameObject.SetActive(false);
         //gameObject.SetActive(false);
+        battleSpawner.ClearBattlefield();
     }
 
 
@@ -85,15 +70,17 @@ public class FightManager : MonoBehaviour
     {
         SortWithSpeed();
         characterOrder = 0;
+        Debug.Log("starttour");
         CheckNextCharacter();
     }
     private void SortWithSpeed()
     {
-        Characters.Sort((a, b) => b.GetSpeed().CompareTo(a.GetSpeed()));
+        Profiles.Sort((a, b) => b.GetSpeed().CompareTo(a.GetSpeed()));
     }
     public void CheckNextCharacter()
     {
-        if (characterOrder == Characters.Count)
+        Debug.Log(Profiles.Count);
+        if (characterOrder == Profiles.Count)
         {
             Debug.Log("tüm hamleler yapýldý");
             
@@ -107,61 +94,24 @@ public class FightManager : MonoBehaviour
     }
     private void LetNextPlayertoPlay()
     {
-        Debug.Log(Characters[characterOrder - 1].name + " hamlesini seçiyor");
-        Characters[characterOrder - 1].TurnStart();
+        Debug.Log(Profiles[characterOrder - 1].name + " hamlesini seçiyor");
+        Profiles[characterOrder - 1].TurnStart();
     }
 
 
 
-    private void SortAllies(Ally[] allies)
-    {
-        //Dostlarý diz
-        for (int i = 0; i < allies.Length; i++)
-        {
-            Ally ally = allies[i];
-
-            ally.MakeProfile();
-            Profile profile = ally.profile;
-            AllyProfiles.Add(profile);
-
-            Image profileImage = profile.GetComponent<Image>();
-            profileImage.sprite = ally._sprite;
-
-
-            Characters.Add(profile);
-
-        }
-    }
-    private void SortEnemies(Enemy[] enemies)
-    {
-        //Düþmanlarý diz
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            Enemy enemy = enemies[i];
-
-            enemy.MakeProfile();
-            Profile profile = enemy.profile;
-            EnemyProfiles.Add(profile);
-
-            Image profileImage = profile.GetComponent<Image>();
-            profileImage.sprite = enemy._sprite;
-
-
-            Characters.Add(profile);
-        }
-    }
     private void ResetStats()
     {
         for (int i = 0; i < AllyProfiles.Count; i++)
         {
-            Profile character = Characters[i];  
+            Profile character = AllyProfiles[i];  
             character.ResetStats();
         }
     }
 
     private void ClearCharacters()
     {
-        Characters = new List<Profile> { };
+        Profiles = new List<Profile> { };
 
         for (int i = 0; i < AllyProfiles.Count; i++)
         { Destroy(AllyProfiles[i].gameObject); }
@@ -176,9 +126,9 @@ public class FightManager : MonoBehaviour
 
     public void CheckDie()
     {
-        for (int i = 0; i < Characters.Count; i++)
+        for (int i = 0; i < Profiles.Count; i++)
         {
-            Profile profile = Characters[i];
+            Profile profile = Profiles[i];
             if (profile.IsDied())
             {
                 KillCharacter(profile);
@@ -209,7 +159,7 @@ public class FightManager : MonoBehaviour
         if (profile is AllyProfile)
         {
             AllyProfile ally = (AllyProfile)profile;
-            Characters.Remove(ally);
+            Profiles.Remove(ally);
             AllyProfiles.Remove(ally);
 
             Destroy(ally.gameObject);
@@ -219,7 +169,7 @@ public class FightManager : MonoBehaviour
         else if (profile is EnemyProfile)
         {
             EnemyProfile enemy = (EnemyProfile)profile;
-            Characters.Remove(enemy);
+            Profiles.Remove(enemy);
             EnemyProfiles.Remove(enemy);
 
             Destroy(enemy.gameObject);
@@ -228,13 +178,12 @@ public class FightManager : MonoBehaviour
     }
 
 
-
     private IEnumerator Play()
     {
         Debug.Log("Oynat");
-        for (int i = 0;i < Characters.Count; i++)
+        for (int i = 0;i < Profiles.Count; i++)
         {
-            Profile profile = Characters[i];
+            Profile profile = Profiles[i];
             profile.Lunge(profile, profile.Target);//Hamleyi yap
             profile.ClearLungeAndTarget();//Hamleyi temizle
 
@@ -245,19 +194,11 @@ public class FightManager : MonoBehaviour
 
     }
 
-    public AllyProfile MakeAllyProfile()
-    {
-        return Instantiate(AllyProfilePrefab, AllyProfileParent);
-    }
-
-    public EnemyProfile MakeEnemyProfile()
-    {
-        return Instantiate(EnemyProfilePrefab, EnemyProfileParent);
-    }
-
 
     public List<Profile> GetAllProfiles()
     {
-        return AllyProfiles.Concat(EnemyProfiles).ToList();
+        return AllyProfiles.Cast<Profile>()
+                           .Concat(EnemyProfiles.Cast<Profile>())
+                           .ToList();
     }
 }

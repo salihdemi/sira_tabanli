@@ -7,22 +7,28 @@ public class EnemyProfile : Profile
     {
         onTurnStarted?.Invoke();
 
-        _Skill currentskill = characterData.skills[Random.Range(0, characterData.skills.Count - 1)]; //Random hamle ver
+        Debug.Log(BaseData.skills.Count);
+        _Skill currentskill = BaseData.attack; //default hamle
+        Debug.Log(currentskill);
         SetLunge(currentskill);
     }
 
     public override void TurnEnd()
     {
         onTurnEnded?.Invoke();
+        Debug.Log("turnend");
         FightManager.instance.CheckNextCharacter();
     }
     public override void SetLunge(_Skill skill)
     {
         Lunge = skill.Method;//secili saldýrýyý iþaretle
 
-        Target = MainCharacterMoveable.instance.party[0].profile;//default hedef!
+        Target = FightManager.instance.AllyProfiles[0];//default hedef!
 
         TurnEnd();
     }
-
+    private void Update()
+    {
+        //Debug.Log(BaseData);
+    }
 }

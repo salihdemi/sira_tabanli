@@ -12,7 +12,7 @@ public class MainCharacterMoveable : MapMoveable
         }
     }
 
-    [SerializeField] public Ally[] party;
+    [SerializeField] public AllyData[] party;
     protected override void Move()
     {
              if (Input.GetKey(KeyCode.W)) { x = 0; y = +1; }

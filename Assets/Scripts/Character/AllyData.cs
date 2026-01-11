@@ -6,20 +6,9 @@ using UnityEngine.UI;
 
 
 [CreateAssetMenu(fileName = "Ally", menuName = "Scriptable Objects/Characters/Ally")]
-public class Ally : CharacterBase
+public class AllyData : CharacterBase
 {
-
-
-    [HideInInspector] public AllyProfile characterAlly;
-
-
-    public override void MakeProfile()
-    {
-        profile = FightManager.instance.MakeAllyProfile();
-        profile.characterData = this;
-        profile.gameObject.name = name;
-    }
-
+    private float currentHealth;
     public void LearnSkill(_Skill skill)
     {
         Debug.Log(skill.ToString());
@@ -30,6 +19,10 @@ public class Ally : CharacterBase
         }
         Debug.Log("Skill öðrenldi");
         skills.Add(skill);
+    }
+    public void Heal()
+    {
+        currentHealth = maxHealth;
     }
 
 }
