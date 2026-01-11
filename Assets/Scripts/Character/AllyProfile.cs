@@ -19,7 +19,9 @@ public class AllyProfile : Profile
     public override void TurnEnd()
     {
         base.TurnEnd();
+        
 
+        //burayý al
         foreach (Profile profile in FightManager.instance.EnemyProfiles)
         {
             profile.button.interactable = false;
@@ -31,10 +33,12 @@ public class AllyProfile : Profile
             profile.button.interactable = false;
             profile.button.onClick.RemoveAllListeners();
         }
+        
+
+
+
 
         CharacterActionPanel.instance.gameObject.SetActive(false);
-        Debug.Log("enemyturnend");
-        FightManager.instance.turnScheduler.CheckNextCharacter();
     }
     public override void SetLunge(_Skill skill)
     {
@@ -44,7 +48,6 @@ public class AllyProfile : Profile
         CharacterActionPanel.instance.DisableAllPanels();
 
         //hedef seçecek
-        //OpenPickTargetMenu(skill);
         TargetingSystem.instance.StartTargeting(this, skill);
     }
 }

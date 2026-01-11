@@ -60,14 +60,14 @@ public class TurnScheduler : MonoBehaviour
         }
         else
         {
-            order++;
             LetNextPlayertoPlay();
         }
     }
     private void LetNextPlayertoPlay()
     {
-        Debug.Log(aliveProfiles[order-1].name + " hamlesini seçiyor");
-        orderedProfiles[0].TurnStart();
+        Debug.Log(aliveProfiles[order].name + " hamlesini seçiyor");
+        orderedProfiles[order].TurnStart();
+        order++;
     }
 
 
@@ -81,40 +81,4 @@ public class TurnScheduler : MonoBehaviour
 
 
 
-    /*
-
-    // Savaþacak olanlarýn sýrasý burada tutulur
-    private Queue<Profile> turnQueue = new Queue<Profile>();
-
-    // 1. Kuyruðu Oluþtur ve Sýrala
-    public void PrepareQueue(List<Profile> allParticipants)
-    {
-        turnQueue.Clear();
-
-        // Hýz (Speed) deðerine göre büyükten küçüðe sýrala
-        var sortedList = allParticipants
-            .OrderByDescending(p => p.GetSpeed())
-            .ToList();
-
-        // Sýralanmýþ listeyi kuyruða ekle
-        foreach (var p in sortedList)
-        {
-            turnQueue.Enqueue(p);
-        }
-    }
-
-    // 2. Sýradaki Karakteri Ver
-    public Profile GetNextCharacter()
-    {
-        if (turnQueue.Count > 0)
-        {
-            return turnQueue.Dequeue(); // Kuyruðun baþýndaki kiþiyi alýr ve listeden çýkarýr
-        }
-        return null; // Kuyruk bittiyse (Tur tamamlandýysa) null döner
-    }
-
-    // 3. Kuyruk boþ mu kontrolü
-    public bool IsQueueEmpty() => turnQueue.Count == 0;
-
-    */
 }

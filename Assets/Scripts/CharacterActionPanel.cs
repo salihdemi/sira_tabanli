@@ -110,7 +110,7 @@ public class CharacterActionPanel : MonoBehaviour
 
         foreach (_Skill skill in profile.BaseData.skills)
         {
-            skill.AddButton(profile, skillsPanel);
+            //skill butonu ekle
         }
     }
     private void WriteFoodsPanel()

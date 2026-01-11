@@ -7,7 +7,6 @@ public class EnemyProfile : Profile
     {
         base.TurnStart();
 
-        Debug.Log(BaseData.skills.Count);
         _Skill currentskill = BaseData.attack; //default hamle
         Debug.Log(currentskill);
         SetLunge(currentskill);
@@ -18,7 +17,6 @@ public class EnemyProfile : Profile
         base.TurnEnd();
 
         Debug.Log("turnend");
-        FightManager.instance.turnScheduler.CheckNextCharacter();
     }
     public override void SetLunge(_Skill skill)
     {

@@ -57,7 +57,7 @@ public abstract class Profile : MonoBehaviour
     }
     public virtual void TurnEnd()
     {
-
+        onTurnEnded?.Invoke();
     }
     public void ResetStats()
     {
