@@ -9,7 +9,7 @@ public class AllyProfile : Profile
 
     public override void TurnStart()
     {
-        onTurnStarted?.Invoke();
+        base.TurnStart();
 
         CharacterActionPanel.instance.WriteThings(this);
 
@@ -18,7 +18,8 @@ public class AllyProfile : Profile
     }
     public override void TurnEnd()
     {
-        onTurnEnded?.Invoke();
+        base.TurnEnd();
+
         foreach (Profile profile in FightManager.instance.EnemyProfiles)
         {
             profile.button.interactable = false;

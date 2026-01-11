@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,6 +38,22 @@ public class BattleSpawner : MonoBehaviour
         return profile;
     }
 
+    public void ResetStats(List<AllyProfile> AllyProfiles)
+    {
+        for (int i = 0; i < AllyProfiles.Count; i++)
+        {
+            Profile character = AllyProfiles[i];
+            character.ResetStats();
+        }
+    }
+    public void SetupProfile(Profile profile, CharacterBase data)
+    {
+
+        // Ölüm olayýna FightManager'ý abone et
+        profile.onProfileDie += FightManager.instance.HandleProfileDeath;
+        // Ölüm olayýna Scheduler'ý abone et
+        profile.onProfileDie += FightManager.instance.turnScheduler.RemoveFromQueue;
+    }
 
 
 
@@ -69,5 +86,9 @@ public class BattleSpawner : MonoBehaviour
         foreach (Transform child in AllyProfileParent) Destroy(child.gameObject);
         foreach (Transform child in EnemyProfileParent) Destroy(child.gameObject);
     }
+
+
+
+
 
 }

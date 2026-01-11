@@ -5,7 +5,7 @@ public class EnemyProfile : Profile
 {
     public override void TurnStart()
     {
-        onTurnStarted?.Invoke();
+        base.TurnStart();
 
         Debug.Log(BaseData.skills.Count);
         _Skill currentskill = BaseData.attack; //default hamle
@@ -15,7 +15,8 @@ public class EnemyProfile : Profile
 
     public override void TurnEnd()
     {
-        onTurnEnded?.Invoke();
+        base.TurnEnd();
+
         Debug.Log("turnend");
         FightManager.instance.turnScheduler.CheckNextCharacter();
     }

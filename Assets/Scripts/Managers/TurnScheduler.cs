@@ -6,7 +6,7 @@ using UnityEngine.Profiling;
 public class TurnScheduler : MonoBehaviour
 {
 
-    public List<Profile> profiles;
+    public List<Profile> aliveProfiles;
     public List<Profile> orderedProfiles;//hiza gore siralan
     private int order;
 
@@ -14,9 +14,9 @@ public class TurnScheduler : MonoBehaviour
     //hamleler yaparken kullanýlan
 
 
-    public void SetProfiles(List<AllyProfile> AllyProfiles, List<EnemyProfile> EnemyProfiles)
+    public void SetAliveProfiles(List<AllyProfile> AllyProfiles, List<EnemyProfile> EnemyProfiles)
     {
-        profiles = AllyProfiles.Cast<Profile>()
+        aliveProfiles = AllyProfiles.Cast<Profile>()
                            .Concat(EnemyProfiles.Cast<Profile>())
                            .ToList();
     }
@@ -24,11 +24,21 @@ public class TurnScheduler : MonoBehaviour
     public void SortProfilesWithSpeed()
     {
         order = 0;
-        orderedProfiles = profiles.OrderByDescending(p => p.GetSpeed()).ToList();
+        orderedProfiles = aliveProfiles.OrderByDescending(p => p.GetSpeed()).ToList();
 
     }
 
+    public void RemoveFromQueue(Profile deadProfile)
+    {
+        if (orderedProfiles.Contains(deadProfile))
+        {
+            // Eðer ölen kiþi listede sýrasý gelmemiþ biriyse listeden çýkar
+            orderedProfiles.Remove(deadProfile);
 
+            // Önemli: Eðer þu an hamle seçen kiþi öldüyse 'order'ý bir geri çekmelisin
+            // ki bir sonraki karakter atlanmasýn.
+        }
+    }
 
 
 
@@ -37,6 +47,7 @@ public class TurnScheduler : MonoBehaviour
     public void StartTour()
     {
         Debug.Log("starttour");
+        SortProfilesWithSpeed();
         CheckNextCharacter();
     }
     public void CheckNextCharacter()
@@ -55,7 +66,7 @@ public class TurnScheduler : MonoBehaviour
     }
     private void LetNextPlayertoPlay()
     {
-        Debug.Log(profiles[0].name + " hamlesini seçiyor");
+        Debug.Log(aliveProfiles[order-1].name + " hamlesini seçiyor");
         orderedProfiles[0].TurnStart();
     }
 

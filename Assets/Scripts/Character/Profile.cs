@@ -18,11 +18,16 @@ public abstract class Profile : MonoBehaviour
 
 
     [HideInInspector] public Action<Profile, Profile> Lunge;
-    [HideInInspector] public Profile Target;//fonksiyon içi deðiþken olabilir belki
+    [HideInInspector] public Profile Target;
 
-    [HideInInspector] public Action<float> onHealthChange, onPowerChange, onSpeedChange;
+    [HideInInspector] public event Action<float> onHealthChange, onPowerChange, onSpeedChange;
 
-    [HideInInspector] public Action onTurnStarted, onTurnEnded;
+
+
+    [HideInInspector] public event Action<Profile> onProfileDie;
+
+
+    [HideInInspector] public event Action onTurnStarted, onTurnEnded;
 
 
 
@@ -46,8 +51,14 @@ public abstract class Profile : MonoBehaviour
         ResetStats();
     }
 
-    public abstract void TurnStart();
-    public abstract void TurnEnd();
+    public virtual void TurnStart()
+    {
+        onTurnStarted?.Invoke();
+    }
+    public virtual void TurnEnd()
+    {
+
+    }
     public void ResetStats()
     {
         currentPower = BaseData.basePower;
@@ -79,7 +90,7 @@ public abstract class Profile : MonoBehaviour
         if (currentHealth < 0)
         {
             currentHealth = 0;
-            //öl
+            Die();
 
 
             //herkes öldü mü diye kontrol et
@@ -111,17 +122,13 @@ public abstract class Profile : MonoBehaviour
     }
 
 
-    public bool IsDied()
+
+    public void Die()
     {
-        if (currentHealth <= 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }//!
+        //Listelerden sil
+        onProfileDie?.Invoke(this);
+        Destroy(gameObject);
+    }
 
 
 

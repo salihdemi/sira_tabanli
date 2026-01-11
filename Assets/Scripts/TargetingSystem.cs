@@ -27,7 +27,7 @@ public class TargetingSystem : MonoBehaviour
 
         CharacterActionPanel.instance.gameObject.SetActive(false);
         // Sahnedeki tüm profilleri bul ve sadece uygun olanlarý aktif et
-        List<Profile> allProfiles = FightManager.instance.turnScheduler.profiles;//!
+        List<Profile> allProfiles = FightManager.instance.turnScheduler.aliveProfiles;//!
         foreach (Profile p in allProfiles)
         {
             bool isValid = CheckIfValid(p, skill.targetType);
