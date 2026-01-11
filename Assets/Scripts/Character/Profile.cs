@@ -17,8 +17,8 @@ public abstract class Profile : MonoBehaviour
     private float currentSpeed;
 
 
-    [HideInInspector] public Action<Profile, Profile> Lunge;
-    [HideInInspector] public Profile Target;
+    [HideInInspector] public _Skill currentSkill;
+    [HideInInspector] public Profile target;
 
     [HideInInspector] public event Action<float> onHealthChange, onPowerChange, onSpeedChange;
 
@@ -27,7 +27,7 @@ public abstract class Profile : MonoBehaviour
     [HideInInspector] public event Action<Profile> onProfileDie;
 
 
-    [HideInInspector] public event Action onTurnStarted, onTurnEnded;
+    //[HideInInspector] public event Action onTurnStarted, onTurnEnded;
 
 
 
@@ -51,34 +51,27 @@ public abstract class Profile : MonoBehaviour
         ResetStats();
     }
 
-    public virtual void TurnStart()
-    {
-        onTurnStarted?.Invoke();
-    }
-    public virtual void TurnEnd()
-    {
-        onTurnEnded?.Invoke();
-    }
-    public void ResetStats()
-    {
-        currentPower = BaseData.basePower;
-        onPowerChange?.Invoke(currentPower);
-
-        currentSpeed = BaseData.baseSpeed;
-        onSpeedChange?.Invoke(currentSpeed);
-    }
-    public abstract void SetLunge(_Skill skill);
-    public void SetTarget(Profile profile)
-    {
-        Target = profile;
-
-        TurnEnd();//!
-    }
+    public abstract void TurnStart();
+    public abstract void ChooseSkill(_Skill skill);
+    public abstract void SetTarget(Profile profile);
     public void ClearLungeAndTarget()
     {
-        Lunge = null;
-        Target = null;
+        target = null;
+        currentSkill= null;
     }
+    public abstract void TurnEnd();
+
+
+
+    public void Play()
+    {
+        currentSkill.Method(this, target);
+    }
+
+
+
+
+
 
 
 
@@ -123,12 +116,22 @@ public abstract class Profile : MonoBehaviour
 
 
 
+    public void ResetStats()
+    {
+        currentPower = BaseData.basePower;
+        onPowerChange?.Invoke(currentPower);
+
+        currentSpeed = BaseData.baseSpeed;
+        onSpeedChange?.Invoke(currentSpeed);
+    }
     public void Die()
     {
         //Listelerden sil
         onProfileDie?.Invoke(this);
         Destroy(gameObject);
     }
+
+
 
 
 

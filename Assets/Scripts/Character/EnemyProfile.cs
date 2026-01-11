@@ -8,26 +8,25 @@ public class EnemyProfile : Profile
         base.TurnStart();
 
         _Skill currentskill = BaseData.attack; //default hamle
-        Debug.Log(currentskill);
-        SetLunge(currentskill);
+        ChooseSkill(currentskill);
     }
+    public override void ChooseSkill(_Skill skill)
+    {
 
+        target = FightManager.instance.AllyProfiles[0];//default hedef!
+
+        TurnEnd();
+    }
+    public override void SetTarget(Profile profile)
+    {
+        target = profile;
+
+        TurnEnd();//!
+    }
     public override void TurnEnd()
     {
         base.TurnEnd();
 
         Debug.Log("turnend");
-    }
-    public override void SetLunge(_Skill skill)
-    {
-        Lunge = skill.Method;//secili saldýrýyý iþaretle
-
-        Target = FightManager.instance.AllyProfiles[0];//default hedef!
-
-        TurnEnd();
-    }
-    private void Update()
-    {
-        //Debug.Log(BaseData);
     }
 }

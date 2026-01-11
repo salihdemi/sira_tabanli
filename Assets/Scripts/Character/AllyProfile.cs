@@ -16,10 +16,25 @@ public class AllyProfile : Profile
         CharacterActionPanel.instance.gameObject.SetActive(true);
 
     }
+    public override void ChooseSkill(_Skill skill)
+    {
+
+        CharacterActionPanel.instance.DisableAllPanels();
+
+        //hedef seçecek
+        TargetingSystem.instance.StartTargeting(this, skill);
+    }
+    public override void SetTarget(Profile profile)
+    {
+        target = profile;
+
+        TurnEnd();//!
+    }
     public override void TurnEnd()
     {
         base.TurnEnd();
-        
+
+        CharacterActionPanel.instance.gameObject.SetActive(false);
 
         //burayý al
         foreach (Profile profile in FightManager.instance.EnemyProfiles)
@@ -33,21 +48,11 @@ public class AllyProfile : Profile
             profile.button.interactable = false;
             profile.button.onClick.RemoveAllListeners();
         }
-        
+
 
 
 
 
         CharacterActionPanel.instance.gameObject.SetActive(false);
-    }
-    public override void SetLunge(_Skill skill)
-    {
-        //secili saldýrýyý iþaretle
-        Lunge = skill.Method;
-
-        CharacterActionPanel.instance.DisableAllPanels();
-
-        //hedef seçecek
-        TargetingSystem.instance.StartTargeting(this, skill);
     }
 }

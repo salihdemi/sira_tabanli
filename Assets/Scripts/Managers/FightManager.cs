@@ -113,7 +113,7 @@ public class FightManager : MonoBehaviour
         for (int i = 0;i < profiles.Count; i++)
         {
             Profile profile = profiles[i];
-            profile.Lunge(profile, profile.Target);//Hamleyi yap
+            profile.Play();
             profile.ClearLungeAndTarget();//Hamleyi temizle
 
             yield return new WaitForSeconds(1);

@@ -99,7 +99,7 @@ public class CharacterActionPanel : MonoBehaviour
     private void WriteAttack(AllyProfile profile)
     {
         attackButton.onClick.RemoveAllListeners();
-        attackButton.onClick.AddListener(() => profile.SetLunge(profile.BaseData.attack));
+        attackButton.onClick.AddListener(() => profile.ChooseSkill(profile.BaseData.attack));
     }
     private void WriteSkillsPanel(AllyProfile profile)
     {
