@@ -17,7 +17,7 @@ public class EnemyProfile : Profile
     {
         onTurnEnded?.Invoke();
         Debug.Log("turnend");
-        FightManager.instance.CheckNextCharacter();
+        FightManager.instance.turnScheduler.CheckNextCharacter();
     }
     public override void SetLunge(_Skill skill)
     {

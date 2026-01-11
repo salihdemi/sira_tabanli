@@ -33,7 +33,7 @@ public class AllyProfile : Profile
 
         CharacterActionPanel.instance.gameObject.SetActive(false);
         Debug.Log("enemyturnend");
-        FightManager.instance.CheckNextCharacter();
+        FightManager.instance.turnScheduler.CheckNextCharacter();
     }
     public override void SetLunge(_Skill skill)
     {
