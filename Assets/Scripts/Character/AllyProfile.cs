@@ -9,8 +9,6 @@ public class AllyProfile : Profile
 
     public override void TurnStart()
     {
-        base.TurnStart();
-
         CharacterActionPanel.instance.WriteThings(this);
 
         CharacterActionPanel.instance.gameObject.SetActive(true);
@@ -32,8 +30,6 @@ public class AllyProfile : Profile
     }
     public override void TurnEnd()
     {
-        base.TurnEnd();
-
         CharacterActionPanel.instance.gameObject.SetActive(false);
 
         //burayý al

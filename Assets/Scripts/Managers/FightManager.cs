@@ -63,8 +63,6 @@ public class FightManager : MonoBehaviour
         profile.onProfileDie += HandleProfileDeath;
         profile.onProfileDie += turnScheduler.RemoveFromQueue;
 
-        // Sýra seçimi bitti haberi: Scheduler bir sonrakine geçmek için dinliyor
-        profile.onTurnEnded += turnScheduler.CheckNextCharacter;
     }
     public void LoseFight()
     {

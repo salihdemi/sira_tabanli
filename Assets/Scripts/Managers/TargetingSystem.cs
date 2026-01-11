@@ -49,7 +49,7 @@ public class TargetingSystem : MonoBehaviour
         if (selectedSkill == null) return;
 
         // Skilli uygula
-        currentCaster.Lunge(currentCaster, currentCaster.target);
+        currentCaster.target = clickedProfile;
 
         // Her þeyi temizle
         currentCaster.ClearLungeAndTarget();

@@ -54,11 +54,6 @@ public abstract class Profile : MonoBehaviour
     public abstract void TurnStart();
     public abstract void ChooseSkill(_Skill skill);
     public abstract void SetTarget(Profile profile);
-    public void ClearLungeAndTarget()
-    {
-        target = null;
-        currentSkill= null;
-    }
     public abstract void TurnEnd();
 
 
@@ -70,7 +65,11 @@ public abstract class Profile : MonoBehaviour
 
 
 
-
+    public void ClearLungeAndTarget()
+    {
+        target = null;
+        currentSkill = null;
+    }
 
 
 

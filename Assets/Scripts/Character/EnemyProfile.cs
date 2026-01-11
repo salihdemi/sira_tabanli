@@ -5,8 +5,6 @@ public class EnemyProfile : Profile
 {
     public override void TurnStart()
     {
-        base.TurnStart();
-
         _Skill currentskill = BaseData.attack; //default hamle
         ChooseSkill(currentskill);
     }
@@ -25,8 +23,6 @@ public class EnemyProfile : Profile
     }
     public override void TurnEnd()
     {
-        base.TurnEnd();
-
         Debug.Log("turnend");
     }
 }
