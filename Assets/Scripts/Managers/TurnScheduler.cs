@@ -30,13 +30,9 @@ public class TurnScheduler : MonoBehaviour
 
     public void RemoveFromQueue(Profile deadProfile)
     {
-        if (orderedProfiles.Contains(deadProfile))
+        if (aliveProfiles.Contains(deadProfile))
         {
-            // Eðer ölen kiþi listede sýrasý gelmemiþ biriyse listeden çýkar
-            orderedProfiles.Remove(deadProfile);
-
-            // Önemli: Eðer þu an hamle seçen kiþi öldüyse 'order'ý bir geri çekmelisin
-            // ki bir sonraki karakter atlanmasýn.
+            aliveProfiles.Remove(deadProfile);
         }
     }
 
@@ -68,13 +64,14 @@ public class TurnScheduler : MonoBehaviour
         order++;
         orderedProfiles[order - 1].LungeStart();
     }
+    public void FinishTour()
+    {
+        Debug.Log("finishtour");
 
 
 
-
-
-
-
+        StartTour();
+    }
 
 
 

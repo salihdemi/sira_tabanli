@@ -479,7 +479,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2989173070378636950}
   m_Layer: 5
-  m_Name: Paneller
+  m_Name: PanelsParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -655,7 +655,7 @@ GameObject:
   - component: {fileID: 2860512781704655754}
   - component: {fileID: 4495839615307806353}
   m_Layer: 5
-  m_Name: YetenekPaneli
+  m_Name: SkillsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -811,6 +811,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f0325c01cff3b498aff4b14b5148e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterActionPanel
+  nameText: {fileID: 3123537757729761054}
+  buttonsParent: {fileID: 4754496591685326186}
+  panelsParent: {fileID: 2989173070378636950}
+  attackButton: {fileID: 1671137845621695900}
+  skillsButton: {fileID: 6567993507521604671}
+  foodsButton: {fileID: 8405600568702872393}
+  toysButton: {fileID: 8404823631447534955}
+  skillsPanel: {fileID: 934719877482468335}
+  foodsPanel: {fileID: 5180853260727118561}
+  toysPanel: {fileID: 3415667625571011333}
 --- !u!1 &3171253030444145168
 GameObject:
   m_ObjectHideFlags: 0
@@ -884,7 +894,7 @@ GameObject:
   - component: {fileID: 4488165566973079650}
   - component: {fileID: 8736482509750390334}
   m_Layer: 5
-  m_Name: OyuncakkPaneli
+  m_Name: ToysPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1092,7 +1102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4754496591685326186}
   m_Layer: 5
-  m_Name: Butonlar
+  m_Name: ButtonsParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1134,7 +1144,7 @@ GameObject:
   - component: {fileID: 7379068694326289697}
   - component: {fileID: 6567993507521604671}
   m_Layer: 5
-  m_Name: YetenekButonu
+  m_Name: SkillsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1241,7 +1251,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7379068694326289697}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 934719877482468335}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &4834490600131322754
 GameObject:
   m_ObjectHideFlags: 0
@@ -1375,7 +1397,7 @@ GameObject:
   - component: {fileID: 2522044230446819390}
   - component: {fileID: 7643352939464427869}
   m_Layer: 5
-  m_Name: YemekPaneli
+  m_Name: FoodsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1647,7 +1669,7 @@ GameObject:
   - component: {fileID: 4623756050235318541}
   - component: {fileID: 8404823631447534955}
   m_Layer: 5
-  m_Name: OyuncakButonu
+  m_Name: ToysButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1754,7 +1776,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4623756050235318541}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3415667625571011333}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &6715145004196871538
 GameObject:
   m_ObjectHideFlags: 0
@@ -1768,7 +1802,7 @@ GameObject:
   - component: {fileID: 5504459173076334607}
   - component: {fileID: 8405600568702872393}
   m_Layer: 5
-  m_Name: YemekButonu
+  m_Name: FoodsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1875,7 +1909,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5504459173076334607}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5180853260727118561}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &6900089041710938710
 GameObject:
   m_ObjectHideFlags: 0
@@ -2432,7 +2478,7 @@ GameObject:
   - component: {fileID: 6500259850907597448}
   - component: {fileID: 3123537757729761054}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: NameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2705,7 +2751,7 @@ GameObject:
   - component: {fileID: 5620183185950733643}
   - component: {fileID: 1671137845621695900}
   m_Layer: 5
-  m_Name: "Sald\u0131rButonu"
+  m_Name: AttackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

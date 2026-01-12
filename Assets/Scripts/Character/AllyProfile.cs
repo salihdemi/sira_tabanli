@@ -23,6 +23,8 @@ public class AllyProfile : Profile
 
         //hedef seçecek
         TargetingSystem.instance.StartTargeting(this, skill);
+
+        CharacterActionPanel.instance.gameObject.SetActive(false);
     }
     public override void SetTarget(Profile profile)
     {
@@ -48,7 +50,6 @@ public class AllyProfile : Profile
 
 
 
-        CharacterActionPanel.instance.gameObject.SetActive(false);
 
 
 

@@ -24,8 +24,6 @@ public abstract class Profile : MonoBehaviour
 
 
 
-    [HideInInspector] public event Action<Profile> onProfileDie;
-
 
     //[HideInInspector] public event Action onTurnStarted, onTurnEnded;
 
@@ -60,7 +58,10 @@ public abstract class Profile : MonoBehaviour
 
     public void Play()
     {
-        currentSkill.Method(this, target);
+        if (this && target)
+        {
+            currentSkill.Method(this, target);
+        }
     }
 
 
@@ -79,13 +80,10 @@ public abstract class Profile : MonoBehaviour
     public void ForceChangeHealth(float amount)//Overhealth
     {
         currentHealth += amount;
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
         {
             currentHealth = 0;
             Die();
-
-
-            //herkes öldü mü diye kontrol et
         }
         onHealthChange?.Invoke(currentHealth);
     }
@@ -96,9 +94,10 @@ public abstract class Profile : MonoBehaviour
         {
             currentHealth = BaseData.maxHealth;
         }
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
         {
             currentHealth = 0;
+            Die();
         }
         onHealthChange?.Invoke(currentHealth);
     }
@@ -125,8 +124,9 @@ public abstract class Profile : MonoBehaviour
     }
     public void Die()
     {
-        //Listelerden sil
-        onProfileDie?.Invoke(this);
+        Debug.Log(name+ " -------------------------------------------------");
+        FightManager.instance.HandleProfileDeath(this);
+        FightManager.instance.turnScheduler.RemoveFromQueue(this);
         Destroy(gameObject);
     }
 

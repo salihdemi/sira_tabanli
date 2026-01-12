@@ -46,14 +46,7 @@ public class BattleSpawner : MonoBehaviour
             character.ResetStats();
         }
     }
-    public void SetupProfile(Profile profile, CharacterBase data)
-    {
-
-        // Ölüm olayýna FightManager'ý abone et
-        profile.onProfileDie += FightManager.instance.HandleProfileDeath;
-        // Ölüm olayýna Scheduler'ý abone et
-        profile.onProfileDie += FightManager.instance.turnScheduler.RemoveFromQueue;
-    }
+    
 
 
 

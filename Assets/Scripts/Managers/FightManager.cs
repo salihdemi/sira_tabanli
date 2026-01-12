@@ -17,7 +17,7 @@ public class FightManager : MonoBehaviour
     public BattleSpawner battleSpawner;
     public TurnScheduler turnScheduler;
 
-    [SerializeField] private GameObject fightParent;
+    [SerializeField] private GameObject fightPanel;
 
 
 
@@ -37,16 +37,11 @@ public class FightManager : MonoBehaviour
         { Debug.LogError("Düþman partisi boþ"); return; }
         #endregion
 
-        fightParent.SetActive(true);
+        fightPanel.SetActive(true);
 
         AllyProfiles = battleSpawner.SpawnAllies(allyDatas);
         EnemyProfiles = battleSpawner.SpawnEnemies(enemyDatas);
 
-        // --- YENÝ EKLENEN ABONELÝK KISMI ---
-        // Oluþturulan tüm karakterleri gez ve olaylarýný baðla
-        foreach (var p in AllyProfiles) SubscribeProfileEvents(p);
-        foreach (var p in EnemyProfiles) SubscribeProfileEvents(p);
-        // ----------------------------------
 
         turnScheduler.SetAliveProfiles(AllyProfiles, EnemyProfiles);
         turnScheduler.SortProfilesWithSpeed();
@@ -55,31 +50,26 @@ public class FightManager : MonoBehaviour
 
         turnScheduler.StartTour();
     }
-
-    // Kod kalabalýðý olmamasý için abonelikleri ayrý bir küçük fonksiyona aldýk
-    private void SubscribeProfileEvents(Profile profile)
+    
+    public void WinFight()
     {
-        // Ölüm haberi: FightManager ve TurnScheduler dinliyor
-        profile.onProfileDie += HandleProfileDeath;
-        profile.onProfileDie += turnScheduler.RemoveFromQueue;
-
+        //Ödül ver
+        //moveable
+        FinishFight();
     }
     public void LoseFight()
     {
         //ölüm ekraný* vs
-        //ClearCharacters();
+        //Son save e donme
+        FinishFight();
     }
+    
     public void FinishFight()
     {
-        //Ödül ver
-        //moveable
-        CharacterActionPanel.instance.gameObject.SetActive(false);
         battleSpawner.ClearBattlefield();
 
-
-        fightParent.SetActive(false);
+        fightPanel.SetActive(false);
     }
-
 
 
 
@@ -87,14 +77,14 @@ public class FightManager : MonoBehaviour
     public void HandleProfileDeath(Profile deadProfile)
     {
         // Listelerden çýkar
-        if (deadProfile is AllyProfile ally)
-            AllyProfiles.Remove(ally);
-        else if (deadProfile is EnemyProfile enemy)
-            EnemyProfiles.Remove(enemy);
+             if (deadProfile is AllyProfile  ally)   AllyProfiles.Remove(ally);
+        else if (deadProfile is EnemyProfile enemy) EnemyProfiles.Remove(enemy);
+
+        turnScheduler.RemoveFromQueue(deadProfile);
 
         // Savaþ bitti mi kontrol et
-        if (AllyProfiles.Count == 0) LoseFight();
-        else if (EnemyProfiles.Count == 0) FinishFight();
+             if (AllyProfiles .Count == 0) LoseFight();
+        else if (EnemyProfiles.Count == 0) WinFight();
     }
 
 
@@ -117,7 +107,7 @@ public class FightManager : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
 
-        turnScheduler.StartTour();
+        turnScheduler.FinishTour();
     }
 
 

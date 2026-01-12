@@ -7,18 +7,18 @@ public class CharacterActionPanel : MonoBehaviour
 {
     public static CharacterActionPanel instance;
 
-    private TextMeshProUGUI nameText;
-    private Transform buttonsParent;
-    private Transform panelsParent;
+    [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private Transform buttonsParent;
+    [SerializeField] private Transform panelsParent;
 
-    private Button attackButton;
-    private Button skillsButton;
-    private Button foodsButton;
-    private Button toysButton;
+    [SerializeField] private Button attackButton;
+    [SerializeField] private Button skillsButton;
+    [SerializeField] private Button foodsButton;
+    [SerializeField] private Button toysButton;
 
-    private GameObject skillsPanel;
-    private GameObject foodsPanel;
-    private GameObject toysPanel;
+    [SerializeField] private GameObject skillsPanel;
+    [SerializeField] private GameObject foodsPanel;
+    [SerializeField] private GameObject toysPanel;
 
     private void CheckInstance()
     {
@@ -29,7 +29,7 @@ public class CharacterActionPanel : MonoBehaviour
         else
         {
             Debug.LogWarning("Birden fazla CharacterActionPanel var");
-            Debug.Log(this.name);
+            Debug.Log(name);
             Destroy(gameObject);
         }
     }
@@ -37,41 +37,8 @@ public class CharacterActionPanel : MonoBehaviour
     private void Awake()
     {
         CheckInstance();
-
-        FindFirstChilds();
-        FindButtons();
-        FindPanels();
-
-        AssignButtons();
     }
 
-    #region Finds-Assigns
-    private void FindFirstChilds()
-    {
-        nameText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        buttonsParent = transform.GetChild(1);
-        panelsParent = transform.GetChild(2);
-    }
-    private void FindButtons()
-    {
-        attackButton = buttonsParent.GetChild(0).GetComponent<Button>();
-        skillsButton = buttonsParent.GetChild(1).GetComponent<Button>();
-        foodsButton = buttonsParent.GetChild(2).GetComponent<Button>();
-        toysButton = buttonsParent.GetChild(3).GetComponent<Button>();
-    }
-    private void FindPanels()
-    {
-        skillsPanel = panelsParent.GetChild(0).gameObject;
-        foodsPanel = panelsParent.GetChild(1).gameObject;
-        toysPanel = panelsParent.GetChild(2).gameObject;
-    }
-    private void AssignButtons()
-    {
-        skillsButton.onClick.AddListener(() => skillsPanel.SetActive(true));
-        foodsButton.onClick.AddListener(() => foodsPanel.SetActive(true));
-        toysButton.onClick.AddListener(() => toysPanel.SetActive(true));
-    }
-    #endregion
 
 
     public void DisableAllPanels()
