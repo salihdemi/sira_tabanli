@@ -3,26 +3,28 @@ using UnityEngine.UI;
 
 public class EnemyProfile : Profile
 {
-    public override void TurnStart()
+    public override void LungeStart()
     {
+        Debug.Log(name + " hamlesini seçiyor");
+
         _Skill currentskill = BaseData.attack; //default hamle
         ChooseSkill(currentskill);
     }
     public override void ChooseSkill(_Skill skill)
     {
+        currentSkill = skill;
+        SetTarget(FightManager.instance.AllyProfiles[0]);//default hedef!
 
-        target = FightManager.instance.AllyProfiles[0];//default hedef!
-
-        TurnEnd();
     }
     public override void SetTarget(Profile profile)
     {
         target = profile;
 
-        TurnEnd();//!
+        LungeEnd();//!
     }
-    public override void TurnEnd()
+    public override void LungeEnd()
     {
-        Debug.Log("turnend");
+
+        FightManager.instance.turnScheduler.CheckNextCharacter();
     }
 }

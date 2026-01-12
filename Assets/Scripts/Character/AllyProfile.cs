@@ -7,8 +7,10 @@ using UnityEngine.UI;
 public class AllyProfile : Profile
 {
 
-    public override void TurnStart()
+    public override void LungeStart()
     {
+        Debug.Log(name + " hamlesini seçiyor");
+
         CharacterActionPanel.instance.WriteThings(this);
 
         CharacterActionPanel.instance.gameObject.SetActive(true);
@@ -16,7 +18,7 @@ public class AllyProfile : Profile
     }
     public override void ChooseSkill(_Skill skill)
     {
-
+        currentSkill = skill;
         CharacterActionPanel.instance.DisableAllPanels();
 
         //hedef seçecek
@@ -26,11 +28,10 @@ public class AllyProfile : Profile
     {
         target = profile;
 
-        TurnEnd();//!
+        LungeEnd();//!
     }
-    public override void TurnEnd()
+    public override void LungeEnd()
     {
-        CharacterActionPanel.instance.gameObject.SetActive(false);
 
         //burayý al
         foreach (Profile profile in FightManager.instance.EnemyProfiles)
@@ -47,8 +48,11 @@ public class AllyProfile : Profile
 
 
 
-
-
         CharacterActionPanel.instance.gameObject.SetActive(false);
+
+
+
+        FightManager.instance.turnScheduler.CheckNextCharacter();
+
     }
 }

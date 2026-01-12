@@ -51,7 +51,7 @@ public class FightManager : MonoBehaviour
         turnScheduler.SetAliveProfiles(AllyProfiles, EnemyProfiles);
         turnScheduler.SortProfilesWithSpeed();
 
-        battleSpawner.ResetStats(AllyProfiles);
+        //battleSpawner.ResetStats(AllyProfiles);
 
         turnScheduler.StartTour();
     }
@@ -117,7 +117,7 @@ public class FightManager : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
 
-
+        turnScheduler.StartTour();
     }
 
 

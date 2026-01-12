@@ -31,7 +31,7 @@ public class TargetingSystem : MonoBehaviour
         foreach (Profile p in allProfiles)
         {
             bool isValid = CheckIfValid(p, skill.targetType);
-            p.SetSelectable(isValid,currentCaster); // Butonu aç/kapat ve görsel efekt ver
+            p.SetSelectable(isValid); // Butonu aç/kapat ve görsel efekt ver
         }
 
     }
@@ -49,9 +49,9 @@ public class TargetingSystem : MonoBehaviour
         if (selectedSkill == null) return;
 
         // Skilli uygula
-        currentCaster.target = clickedProfile;
+        currentCaster.SetTarget(clickedProfile);
 
         // Her þeyi temizle
-        currentCaster.ClearLungeAndTarget();
+        //currentCaster.ClearLungeAndTarget();
     }
 }

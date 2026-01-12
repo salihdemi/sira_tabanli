@@ -36,10 +36,10 @@ public abstract class Profile : MonoBehaviour
         TargetingSystem.instance.OnProfileClicked(this);
     }
 
-    public void SetSelectable(bool state, Profile currentCaster)
+    public void SetSelectable(bool state)
     {
         button.interactable = state;
-        button.onClick.AddListener(() => currentCaster.SetTarget(this));
+        button.onClick.AddListener(() => OnProfileButtonPressed());
         // Ýstersen burada seçilebilir olanlarýn etrafýnda parlama efekti açabilirsin
     }
 
@@ -51,10 +51,10 @@ public abstract class Profile : MonoBehaviour
         ResetStats();
     }
 
-    public abstract void TurnStart();
+    public abstract void LungeStart();
     public abstract void ChooseSkill(_Skill skill);
     public abstract void SetTarget(Profile profile);
-    public abstract void TurnEnd();
+    public abstract void LungeEnd();
 
 
 
@@ -71,7 +71,7 @@ public abstract class Profile : MonoBehaviour
         currentSkill = null;
     }
 
-
+    
 
 
 

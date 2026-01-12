@@ -65,9 +65,8 @@ public class TurnScheduler : MonoBehaviour
     }
     private void LetNextPlayertoPlay()
     {
-        Debug.Log(aliveProfiles[order].name + " hamlesini seçiyor");
-        orderedProfiles[order].TurnStart();
         order++;
+        orderedProfiles[order - 1].LungeStart();
     }
 
 
