@@ -8,38 +8,38 @@ public class EnemyMoveable : MapMoveable
 
 
     private bool trigger;
+
+    private MainCharacterMoveable mainCharacter;
     protected override void Move()
     {
-        float targetX = MainCharacterMoveable.instance.transform.position.x;
-        float targetY = MainCharacterMoveable.instance.transform.position.y;
+        if (!trigger) return;
+        float targetX = mainCharacter.transform.position.x;
+        float targetY = mainCharacter.transform.position.y;
 
         float currentX = transform.position.x;
         float currentY = transform.position.y;
-        if(trigger)
+        //x uzaksa
+        if (Mathf.Abs(currentX - targetX) >= Mathf.Abs(currentY - targetY))
         {
-            //x uzaksa
-            if (Mathf.Abs(currentX - targetX) >= Mathf.Abs(currentY - targetY))
-            {
-                if (y < 0f) { transform.position = new Vector3(transform.position.x, Mathf.Floor(transform.position.y), 0f); }
-                else        { transform.position = new Vector3(transform.position.x, Mathf.Ceil (transform.position.y), 0f); }
+            if (y < 0f) { transform.position = new Vector3(transform.position.x, Mathf.Floor(transform.position.y), 0f); }
+            else { transform.position = new Vector3(transform.position.x, Mathf.Ceil(transform.position.y), 0f); }
 
-                y = 0;
+            y = 0;
 
-                x = Mathf.Sign(targetX - currentX);
-            }
-            //y uzaksa
-            else
-            {
-                if (y < 0f) { transform.position = new Vector3(Mathf.Floor(transform.position.x), transform.position.y, 0f); }
-                else        { transform.position = new Vector3(Mathf.Ceil (transform.position.x), transform.position.y, 0f); }
-
-                x = 0;
-
-                y = Mathf.Sign(targetY - currentY);
-            }
-
-            rb.linearVelocity = new Vector3(x * speed, y * speed, 0);
+            x = Mathf.Sign(targetX - currentX);
         }
+        //y uzaksa
+        else
+        {
+            if (y < 0f) { transform.position = new Vector3(Mathf.Floor(transform.position.x), transform.position.y, 0f); }
+            else { transform.position = new Vector3(Mathf.Ceil(transform.position.x), transform.position.y, 0f); }
+
+            x = 0;
+
+            y = Mathf.Sign(targetY - currentY);
+        }
+
+        rb.linearVelocity = new Vector3(x * speed, y * speed, 0);
     }
 
     protected override void CheckStop()
@@ -59,7 +59,7 @@ public class EnemyMoveable : MapMoveable
     //Tetikleniþ
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(!trigger && other.gameObject.GetComponent<MainCharacterMoveable>())
+        if(!trigger && other.gameObject.TryGetComponent<MainCharacterMoveable>(out mainCharacter))
         {
             trigger = true;
         }
@@ -69,6 +69,8 @@ public class EnemyMoveable : MapMoveable
         if (trigger && other.gameObject.GetComponent<MainCharacterMoveable>())
         {
             trigger = false;
+            mainCharacter = null;
+        rb.linearVelocity = Vector2.zero;
         }
     }
 }

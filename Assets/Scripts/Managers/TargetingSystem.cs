@@ -4,10 +4,13 @@ using UnityEngine.Profiling;
 
 public class TargetingSystem : MonoBehaviour
 {
-    public static TargetingSystem instance;
     private void Awake()
     {
-        instance = this;
+        AllyProfile.OnSkillChosen += StartTargeting;
+    }
+    private void OnDestroy()
+    {
+        AllyProfile.OnSkillChosen -= StartTargeting;
     }
     private _Skill selectedSkill;
     private Profile currentCaster;
@@ -19,6 +22,7 @@ public class TargetingSystem : MonoBehaviour
         allAlly,
         ally
     }
+
 
     public void StartTargeting(Profile caster, _Skill skill)
     {

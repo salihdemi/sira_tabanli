@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class MainCharacterMoveable : MapMoveable
 {
-    public static MainCharacterMoveable instance;
 
     [Header("Grid Settings")]
     [SerializeField] private float gridSize = 1f;
@@ -13,7 +12,6 @@ public class MainCharacterMoveable : MapMoveable
 
     void Awake()
     {
-        if (instance == null) instance = this;
         targetPosition = transform.position; // Baþlangýçta olduðumuz yer hedefimiz
     }
 

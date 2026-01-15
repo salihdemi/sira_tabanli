@@ -23,12 +23,12 @@ public class CharacterActionPanel : MonoBehaviour
     private void Awake()
     {
         AllyProfile.OnLungeStart += OpenWriteThings;
-        AllyProfile.OnChooseSkill += CloseAndDisableAllPanels;
+        AllyProfile.OnSkillChosen += OnSkillSelectedWrapper;
     }
     private void OnDestroy()
     {
         AllyProfile.OnLungeStart -= OpenWriteThings;
-        AllyProfile.OnChooseSkill -= CloseAndDisableAllPanels;
+        AllyProfile.OnSkillChosen -= OnSkillSelectedWrapper;
     }
 
 
@@ -53,7 +53,12 @@ public class CharacterActionPanel : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-
+    private void OnSkillSelectedWrapper(Profile character, _Skill skill)
+    {
+        // Event fýrladýðýnda buraya gelecek, 
+        // biz de asýl kapatma fonksiyonunu tetikleyeceðiz.
+        CloseAndDisableAllPanels();
+    }
 
     #region Write
     private void WriteName(AllyProfile character)
