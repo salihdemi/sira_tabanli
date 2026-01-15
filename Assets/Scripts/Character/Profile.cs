@@ -32,7 +32,7 @@ public abstract class Profile : MonoBehaviour
 
 
 
-
+    private string lastTargetName; 
 
 
 
@@ -48,6 +48,7 @@ public abstract class Profile : MonoBehaviour
     public  void SetTarget(Profile profile)
     {
         currentTarget = profile;
+        lastTargetName = currentTarget.name;
 
         LungeEnd();//!
     }
@@ -60,7 +61,16 @@ public abstract class Profile : MonoBehaviour
 
     public void Play()
     {
-        if (this && currentTarget)
+        if (!this)
+        {
+            //objectpoola geçince!!!!!
+            Debug.Log(name + " saldýramaz, öldü");
+        }
+        else if (!currentTarget)
+        {
+            Debug.Log(lastTargetName + " öldü");
+        }
+        else
         {
             currentSkill.Method(this, currentTarget);
         }

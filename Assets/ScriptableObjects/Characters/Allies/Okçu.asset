@@ -13,11 +13,9 @@ MonoBehaviour:
   m_Name: "Ok\xE7u"
   m_EditorClassIdentifier: Assembly-CSharp::Ally
   maxHealth: 50
-  basePower: 100
+  basePower: 30
   baseSpeed: 2
   _sprite: {fileID: 5731584507761909605, guid: f4ac01e0052f15e418b62663d5a94719, type: 3}
   attack: {fileID: 11400000, guid: 9d1e90c9bfde37e4b97d4456b48556bb, type: 2}
   skills:
   - {fileID: 11400000, guid: 4e2e20dbe6d7bb44cabbb4441bd14e5a, type: 2}
-  profile: {fileID: 0}
-  characterAlly: {fileID: 0}

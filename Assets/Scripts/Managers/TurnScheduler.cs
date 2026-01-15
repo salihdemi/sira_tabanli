@@ -14,14 +14,6 @@ public class TurnScheduler : MonoBehaviour
 
     //veri tutan
     //hamleler yaparken kullanýlan
-    private void Awake()
-    {
-        Profile.OnSomeoneDie += RemoveFromQueue;
-    }
-    private void OnDestroy()
-    {
-        Profile.OnSomeoneDie -= RemoveFromQueue;
-    }
 
     public void SetAliveProfiles(List<AllyProfile> AllyProfiles, List<EnemyProfile> EnemyProfiles)
     {

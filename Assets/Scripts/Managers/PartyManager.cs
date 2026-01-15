@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class PartyManager : MonoBehaviour
 {
-    public static PartyManager instance;
+    //public static PartyManager instance;
     private void Awake()
     {
-        instance = this;
+        //instance = this;
     }
-    [SerializeField] public AllyData[] party;
+    [SerializeField] public AllyData[] party; //static olabilir
 }

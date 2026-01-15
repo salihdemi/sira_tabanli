@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class BattleSpawner : MonoBehaviour
 {
-    //ins-destroy yerine enable-yaz yap
+
+    [SerializeField] private ObjectPoolManager objectPoolManager;
 
     [Header("Profiles")]
     [SerializeField] private AllyProfile AllyProfilePrefab;
@@ -20,7 +21,8 @@ public class BattleSpawner : MonoBehaviour
 
     private AllyProfile MakeAllyProfile(AllyData data)
     {
-        AllyProfile profile = Instantiate(AllyProfilePrefab, AllyProfileParent);
+        //AllyProfile profile = Instantiate(AllyProfilePrefab, AllyProfileParent);
+        AllyProfile profile = objectPoolManager.GetAlly();
         profile.BaseData = data;
         profile.gameObject.name = data.name;
         profile.GetComponent<Image>().sprite = data._sprite;
@@ -29,7 +31,8 @@ public class BattleSpawner : MonoBehaviour
     }
     private EnemyProfile MakeEnemyProfile(EnemyData data)
     {
-        EnemyProfile profile = Instantiate(EnemyProfilePrefab, EnemyProfileParent);
+        //EnemyProfile profile = Instantiate(EnemyProfilePrefab, EnemyProfileParent);
+        EnemyProfile profile = objectPoolManager.GetEnemy();
         profile.BaseData = data;
         profile.gameObject.name = data.name;
         profile.GetComponent<Image>().sprite = data._sprite;
@@ -76,8 +79,8 @@ public class BattleSpawner : MonoBehaviour
     }
     public void ClearBattlefield()
     {
-        foreach (Transform child in AllyProfileParent) Destroy(child.gameObject);
-        foreach (Transform child in EnemyProfileParent) Destroy(child.gameObject);
+        objectPoolManager.ClearAllies();
+        objectPoolManager.ClearEnemies();
     }
 
 

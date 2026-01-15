@@ -1,5 +1,6 @@
 
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +10,17 @@ using UnityEngine.Profiling;
 public class FightManager : MonoBehaviour
 {
 
-    public BattleSpawner battleSpawner;
-    public TurnScheduler turnScheduler;
+    [SerializeField] private BattleSpawner battleSpawner;
+    [SerializeField] private TurnScheduler turnScheduler;
+    [SerializeField] private PartyManager  partyManager;
 
     [SerializeField] private GameObject fightPanel;
 
 
 
     [Header("Profiles")]
-    [HideInInspector] public List<AllyProfile>   AllyProfiles = new List<AllyProfile>();
-    [HideInInspector] public List<EnemyProfile> EnemyProfiles = new List<EnemyProfile>();
-
+    [HideInInspector] public List<AllyProfile>  ActiveAllyProfiles  = new List<AllyProfile>();
+    [HideInInspector] public List<EnemyProfile> ActiveEnemyProfiles = new List<EnemyProfile>();
 
 
 
@@ -44,10 +45,10 @@ public class FightManager : MonoBehaviour
 
 
 
-    public void StartFight(AllyData[] allyDatas, EnemyData[] enemyDatas)
+    public void StartFight(EnemyData[] enemyDatas)
     {
         #region NullCheck
-        if (PartyManager.instance.party.Length < 1)
+        if (partyManager.party.Length < 1)
         { Debug.LogError("Parti boþ"); return; }
         if (enemyDatas.Length < 1)
         { Debug.LogError("Düþman partisi boþ"); return; }
@@ -55,11 +56,15 @@ public class FightManager : MonoBehaviour
 
         fightPanel.SetActive(true);
 
-        AllyProfiles = battleSpawner.SpawnAllies(allyDatas);
-        EnemyProfiles = battleSpawner.SpawnEnemies(enemyDatas);
+
+        AllyData[] allyDatas = partyManager.party;
 
 
-        turnScheduler.SetAliveProfiles(AllyProfiles, EnemyProfiles);
+        ActiveAllyProfiles = battleSpawner.SpawnAllies(allyDatas);
+        ActiveEnemyProfiles = battleSpawner.SpawnEnemies(enemyDatas);
+
+
+        turnScheduler.SetAliveProfiles(ActiveAllyProfiles, ActiveEnemyProfiles);
         turnScheduler.SortProfilesWithSpeed();
 
         //battleSpawner.ResetStats(AllyProfiles);
@@ -93,14 +98,14 @@ public class FightManager : MonoBehaviour
     public void HandleProfileDeath(Profile deadProfile)
     {
         // Listelerden çýkar
-             if (deadProfile is AllyProfile  ally)   AllyProfiles.Remove(ally);
-        else if (deadProfile is EnemyProfile enemy) EnemyProfiles.Remove(enemy);
+             if (deadProfile is AllyProfile  ally)  ActiveAllyProfiles. Remove(ally);
+        else if (deadProfile is EnemyProfile enemy) ActiveEnemyProfiles.Remove(enemy);
 
         turnScheduler.RemoveFromQueue(deadProfile);
 
         // Savaþ bitti mi kontrol et
-             if (AllyProfiles .Count == 0) LoseFight();
-        else if (EnemyProfiles.Count == 0) WinFight();
+             if (ActiveAllyProfiles .Count == 0) LoseFight();
+        else if (ActiveEnemyProfiles.Count == 0) WinFight();
     }
 
 
@@ -117,13 +122,27 @@ public class FightManager : MonoBehaviour
     public IEnumerator Play(List<Profile> profiles)
     {
         Debug.Log("Oynat");
-        for (int i = 0;i < profiles.Count; i++)
+        for (int i = 0; i < profiles.Count; i++)
         {
             Profile profile = profiles[i];
-            profile.Play();
-            profile.ClearSkillAndTarget();//Hamleyi temizle
 
-            yield return new WaitForSeconds(1);
+            if (!profile)//isdied kontrolu olmalý
+            {
+                //caster olmus ona göre yaz
+                continue;
+            }
+            if (!profile.currentTarget)//isdied kontrolu olmalý
+            {
+                //hedef olmus ona göre yaz-- sovalyenin canavara vurmasini gerektiren bir durum yok
+                continue;
+            }
+            
+
+            profile.Play();
+            profile.ClearSkillAndTarget();
+
+            // Sadece bir hamle yapýldýysa bekleme yap
+            yield return new WaitForSeconds(1f);
         }
 
         turnScheduler.FinishTour();
