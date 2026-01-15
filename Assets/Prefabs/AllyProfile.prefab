@@ -149,8 +149,8 @@ GameObject:
   - component: {fileID: 5027435730248344302}
   - component: {fileID: -675919997547338896}
   - component: {fileID: 8979091839921229595}
-  - component: {fileID: 8454806501549580934}
   - component: {fileID: 5857489469346434421}
+  - component: {fileID: 8454806501549580934}
   m_Layer: 5
   m_Name: AllyProfile
   m_TagString: Untagged
@@ -261,7 +261,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5027435730248344302}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5857489469346434421}
+        m_TargetAssemblyTypeName: ProfileView, Assembly-CSharp
+        m_MethodName: OnProfileButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8979091839921229595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,10 +286,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d20ce6938a66c05448b36daa0442b3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AllyProfile
-  view: {fileID: 0}
   BaseData: {fileID: 0}
+  view: {fileID: 5857489469346434421}
   currentSkill: {fileID: 0}
   currentTarget: {fileID: 0}
+--- !u!114 &5857489469346434421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5446839951801960851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd30b81f47f4f26438a7894e7649ec80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProfileView
+  button: {fileID: -675919997547338896}
+  boundProfile: {fileID: 8979091839921229595}
 --- !u!114 &8454806501549580934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,20 +320,6 @@ MonoBehaviour:
   healthText: {fileID: 4500755664502863378}
   powerText: {fileID: 7568955583885500185}
   speedText: {fileID: 1863081096888292311}
---- !u!114 &5857489469346434421
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5446839951801960851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd30b81f47f4f26438a7894e7649ec80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProfileView
-  button: {fileID: -675919997547338896}
-  boundProfile: {fileID: 8979091839921229595}
 --- !u!1 &5775723802442382393
 GameObject:
   m_ObjectHideFlags: 0

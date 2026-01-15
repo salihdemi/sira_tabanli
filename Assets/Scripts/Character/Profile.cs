@@ -8,15 +8,15 @@ using UnityEngine.UI;
 
 public abstract class Profile : MonoBehaviour
 {
+
+
+
+
+
+
+    [HideInInspector] public CharacterBase BaseData;
+
     public ProfileView view;
-
-
-
-
-
-
-    public CharacterBase BaseData;
-
 
     private float currentHealth;
     private float currentPower;
