@@ -46,10 +46,14 @@ public class CharacterActionPanel : MonoBehaviour
         skillsPanel.SetActive(false);
         foodsPanel.SetActive(false);
         toysPanel.SetActive(false);
+
+        gameObject.SetActive(false);
     }
 
     public void WriteThings(AllyProfile character)
     {
+        gameObject.SetActive(true);
+
         WriteName(character);
         WriteAttack(character);
         WriteSkillsPanel(character);

@@ -13,8 +13,6 @@ public class AllyProfile : Profile
 
         CharacterActionPanel.instance.WriteThings(this);
 
-        CharacterActionPanel.instance.gameObject.SetActive(true);
-
     }
     public override void ChooseSkill(_Skill skill)
     {
@@ -24,11 +22,10 @@ public class AllyProfile : Profile
         //hedef seçecek
         TargetingSystem.instance.StartTargeting(this, skill);
 
-        CharacterActionPanel.instance.gameObject.SetActive(false);
     }
     public override void SetTarget(Profile profile)
     {
-        target = profile;
+        currentTarget = profile;
 
         LungeEnd();//!
     }
@@ -38,14 +35,12 @@ public class AllyProfile : Profile
         //burayý al
         foreach (Profile profile in FightManager.instance.EnemyProfiles)
         {
-            profile.button.interactable = false;
-            profile.button.onClick.RemoveAllListeners();
+            profile.view.SetSelectable(false);
         }
 
         foreach (Profile profile in FightManager.instance.AllyProfiles)
         {
-            profile.button.interactable = false;
-            profile.button.onClick.RemoveAllListeners();
+            profile.view.SetSelectable(false);
         }
 
 

@@ -18,7 +18,7 @@ public class EnemyProfile : Profile
     }
     public override void SetTarget(Profile profile)
     {
-        target = profile;
+        currentTarget = profile;
 
         LungeEnd();//!
     }

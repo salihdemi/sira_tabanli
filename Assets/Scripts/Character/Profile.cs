@@ -8,7 +8,13 @@ using UnityEngine.UI;
 
 public abstract class Profile : MonoBehaviour
 {
-    public Button button;//!
+    public ProfileView view;
+
+
+
+
+
+
     public CharacterBase BaseData;
 
 
@@ -18,28 +24,16 @@ public abstract class Profile : MonoBehaviour
 
 
     [HideInInspector] public _Skill currentSkill;
-    [HideInInspector] public Profile target;
+    [HideInInspector] public Profile currentTarget;
 
     [HideInInspector] public event Action<float> onHealthChange, onPowerChange, onSpeedChange;
 
 
 
 
-    //[HideInInspector] public event Action onTurnStarted, onTurnEnded;
 
 
 
-    public void OnProfileButtonPressed()
-    {
-        TargetingSystem.instance.OnProfileClicked(this);
-    }
-
-    public void SetSelectable(bool state)
-    {
-        button.interactable = state;
-        button.onClick.AddListener(() => OnProfileButtonPressed());
-        // Ýstersen burada seçilebilir olanlarýn etrafýnda parlama efekti açabilirsin
-    }
 
 
 
@@ -58,17 +52,17 @@ public abstract class Profile : MonoBehaviour
 
     public void Play()
     {
-        if (this && target)
+        if (this && currentTarget)
         {
-            currentSkill.Method(this, target);
+            currentSkill.Method(this, currentTarget);
         }
     }
 
 
 
-    public void ClearLungeAndTarget()
+    public void ClearSkillAndTarget()
     {
-        target = null;
+        currentTarget = null;
         currentSkill = null;
     }
 
@@ -124,7 +118,6 @@ public abstract class Profile : MonoBehaviour
     }
     public void Die()
     {
-        Debug.Log(name+ " -------------------------------------------------");
         FightManager.instance.HandleProfileDeath(this);
         FightManager.instance.turnScheduler.RemoveFromQueue(this);
         Destroy(gameObject);

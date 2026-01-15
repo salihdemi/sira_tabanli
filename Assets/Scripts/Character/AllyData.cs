@@ -8,7 +8,7 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "Ally", menuName = "Scriptable Objects/Characters/Ally")]
 public class AllyData : CharacterBase
 {
-    private float currentHealth;
+    //private float currentHealth;
     public void LearnSkill(_Skill skill)
     {
         Debug.Log(skill.ToString());
@@ -20,9 +20,10 @@ public class AllyData : CharacterBase
         Debug.Log("Skill öðrenldi");
         skills.Add(skill);
     }
-    public void Heal()
+    /*public void Heal()
     {
         currentHealth = maxHealth;
     }
+    */
 
 }

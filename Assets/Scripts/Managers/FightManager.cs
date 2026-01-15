@@ -31,7 +31,7 @@ public class FightManager : MonoBehaviour
     public void StartFight(AllyData[] allyDatas, EnemyData[] enemyDatas)
     {
         #region NullCheck
-        if (MainCharacterMoveable.instance.party.Length < 1)
+        if (PartyManager.instance.party.Length < 1)
         { Debug.LogError("Parti boþ"); return; }
         if (enemyDatas.Length < 1)
         { Debug.LogError("Düþman partisi boþ"); return; }
@@ -102,7 +102,7 @@ public class FightManager : MonoBehaviour
         {
             Profile profile = profiles[i];
             profile.Play();
-            profile.ClearLungeAndTarget();//Hamleyi temizle
+            profile.ClearSkillAndTarget();//Hamleyi temizle
 
             yield return new WaitForSeconds(1);
         }

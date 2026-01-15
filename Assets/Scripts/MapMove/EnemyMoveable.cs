@@ -53,7 +53,7 @@ public class EnemyMoveable : MapMoveable
         if (collision.gameObject.TryGetComponent<MapMoveable>(out MapMoveable character))
         {
             gameObject.SetActive(false);
-            FightManager.instance.StartFight(MainCharacterMoveable.instance.party, enemies);
+            FightManager.instance.StartFight(PartyManager.instance.party, enemies);
         }
     }
     //Tetikleniþ
