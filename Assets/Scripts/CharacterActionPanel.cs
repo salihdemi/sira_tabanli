@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class CharacterActionPanel : MonoBehaviour
 {
-    public static CharacterActionPanel instance;
 
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private Transform buttonsParent;
@@ -20,37 +19,21 @@ public class CharacterActionPanel : MonoBehaviour
     [SerializeField] private GameObject foodsPanel;
     [SerializeField] private GameObject toysPanel;
 
-    private void CheckInstance()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Debug.LogWarning("Birden fazla CharacterActionPanel var");
-            Debug.Log(name);
-            Destroy(gameObject);
-        }
-    }
 
     private void Awake()
     {
-        CheckInstance();
+        AllyProfile.OnLungeStart += OpenWriteThings;
+        AllyProfile.OnChooseSkill += CloseAndDisableAllPanels;
     }
-
-
-
-    public void DisableAllPanels()
+    private void OnDestroy()
     {
-        skillsPanel.SetActive(false);
-        foodsPanel.SetActive(false);
-        toysPanel.SetActive(false);
-
-        gameObject.SetActive(false);
+        AllyProfile.OnLungeStart -= OpenWriteThings;
+        AllyProfile.OnChooseSkill -= CloseAndDisableAllPanels;
     }
 
-    public void WriteThings(AllyProfile character)
+
+
+    public void OpenWriteThings(AllyProfile character)
     {
         gameObject.SetActive(true);
 
@@ -60,6 +43,16 @@ public class CharacterActionPanel : MonoBehaviour
         WriteFoodsPanel();
         WriteToysPanel();
     }
+
+    public void CloseAndDisableAllPanels()
+    {
+        skillsPanel.SetActive(false);
+        foodsPanel.SetActive(false);
+        toysPanel.SetActive(false);
+
+        gameObject.SetActive(false);
+    }
+
 
 
     #region Write

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Profiling;
@@ -6,18 +7,19 @@ using UnityEngine.UI;
 
 public class AllyProfile : Profile
 {
-
+    public static event Action <AllyProfile> OnLungeStart;
+    public static event Action OnChooseSkill;
     public override void LungeStart()
     {
         Debug.Log(name + " hamlesini seçiyor");
 
-        CharacterActionPanel.instance.WriteThings(this);
+        OnLungeStart.Invoke(this);
 
     }
     public override void ChooseSkill(_Skill skill)
     {
         currentSkill = skill;
-        CharacterActionPanel.instance.DisableAllPanels();
+        OnChooseSkill.Invoke();
 
         //hedef seçecek
         TargetingSystem.instance.StartTargeting(this, skill);
