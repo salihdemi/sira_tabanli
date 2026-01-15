@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public abstract class Profile : MonoBehaviour
 {
-
+    public static event Action<Profile> OnSomeoneDie;
 
 
 
@@ -45,8 +45,16 @@ public abstract class Profile : MonoBehaviour
 
     public abstract void LungeStart();
     public abstract void ChooseSkill(_Skill skill);
-    public abstract void SetTarget(Profile profile);
-    public abstract void LungeEnd();
+    public  void SetTarget(Profile profile)
+    {
+        currentTarget = profile;
+
+        LungeEnd();//!
+    }
+    public void LungeEnd()
+    {
+        TurnScheduler.CheckNextCharacter();
+    }
 
 
 
@@ -118,8 +126,10 @@ public abstract class Profile : MonoBehaviour
     }
     public void Die()
     {
-        FightManager.instance.HandleProfileDeath(this);
-        FightManager.instance.turnScheduler.RemoveFromQueue(this);
+        //FightManager.instance.HandleProfileDeath(this);
+        //FightManager.instance.turnScheduler.RemoveFromQueue(this);
+        OnSomeoneDie.Invoke(this);
+
         Destroy(gameObject);
     }
 

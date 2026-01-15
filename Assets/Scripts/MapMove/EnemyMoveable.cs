@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 
 public class EnemyMoveable : MapMoveable
 {
     [SerializeField] private EnemyData[] enemies;
 
-
+    public static event Action <AllyData[], EnemyData[]> OnSomeoneCollideMainCharacterMoveable;
 
 
     private bool trigger;
@@ -53,7 +54,8 @@ public class EnemyMoveable : MapMoveable
         if (collision.gameObject.TryGetComponent<MapMoveable>(out MapMoveable character))
         {
             gameObject.SetActive(false);
-            FightManager.instance.StartFight(PartyManager.instance.party, enemies);
+            OnSomeoneCollideMainCharacterMoveable.Invoke(PartyManager.instance.party, enemies);
+
         }
     }
     //Tetikleniþ

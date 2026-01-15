@@ -8,11 +8,6 @@ using UnityEngine.Profiling;
 
 public class FightManager : MonoBehaviour
 {
-    public static FightManager instance;
-    FightManager()
-    {
-        instance = this;
-    }
 
     public BattleSpawner battleSpawner;
     public TurnScheduler turnScheduler;
@@ -24,6 +19,27 @@ public class FightManager : MonoBehaviour
     [Header("Profiles")]
     [HideInInspector] public List<AllyProfile>   AllyProfiles = new List<AllyProfile>();
     [HideInInspector] public List<EnemyProfile> EnemyProfiles = new List<EnemyProfile>();
+
+
+
+
+
+
+
+    private void Awake()
+    {
+        Profile.OnSomeoneDie += HandleProfileDeath;
+        EnemyMoveable.OnSomeoneCollideMainCharacterMoveable += StartFight;
+        TurnScheduler.PlayTime += PlayF;
+    }
+    private void OnDestroy()
+    {
+        Profile.OnSomeoneDie -= HandleProfileDeath;
+        EnemyMoveable.OnSomeoneCollideMainCharacterMoveable -= StartFight;
+    }
+
+
+
 
 
 
@@ -93,7 +109,10 @@ public class FightManager : MonoBehaviour
 
 
 
-
+    public void PlayF(List<Profile> orderedProfiles)
+    {
+        StartCoroutine(Play(orderedProfiles));
+    }
 
     public IEnumerator Play(List<Profile> profiles)
     {

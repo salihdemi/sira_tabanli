@@ -22,13 +22,13 @@ public class CharacterActionPanel : MonoBehaviour
 
     private void Awake()
     {
-        AllyProfile.OnLungeStart += OpenWriteThings;
-        AllyProfile.OnSkillChosen += OnSkillSelectedWrapper;
+        AllyProfile.OnAnyAllyLungeStart += OpenWriteThings;
+        AllyProfile.OnAnyAllyChoseSkill += OnSkillSelectedWrapper;
     }
     private void OnDestroy()
     {
-        AllyProfile.OnLungeStart -= OpenWriteThings;
-        AllyProfile.OnSkillChosen -= OnSkillSelectedWrapper;
+        AllyProfile.OnAnyAllyLungeStart -= OpenWriteThings;
+        AllyProfile.OnAnyAllyChoseSkill -= OnSkillSelectedWrapper;
     }
 
 

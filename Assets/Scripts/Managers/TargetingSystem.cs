@@ -6,16 +6,25 @@ public class TargetingSystem : MonoBehaviour
 {
     private void Awake()
     {
-        AllyProfile.OnSkillChosen += StartTargeting;
+        AllyProfile.OnAnyAllyChoseSkill += StartTargeting;
         ProfileView.OnAnyProfileClicked += OnProfileClicked;
     }
     private void OnDestroy()
     {
-        AllyProfile.OnSkillChosen -= StartTargeting;
+        AllyProfile.OnAnyAllyChoseSkill -= StartTargeting;
         ProfileView.OnAnyProfileClicked -= OnProfileClicked;
     }
+
+
+
+
+
+
     private _Skill selectedSkill;
     private Profile currentCaster;
+
+
+    private List<Profile> activeProfileButtons = new List<Profile> { };
     public enum TargetType
     {
         self,
@@ -31,12 +40,16 @@ public class TargetingSystem : MonoBehaviour
         selectedSkill = skill;
         currentCaster = caster;
 
-        // Sahnedeki tüm profilleri bul ve sadece uygun olanlarý aktif et
-        List<Profile> allProfiles = FightManager.instance.turnScheduler.aliveProfiles;//!
+        List<Profile> allProfiles = TurnScheduler.orderedProfiles;//!
+
         foreach (Profile p in allProfiles)
         {
             bool isValid = CheckIfValid(p, skill.targetType);
-            p.view.SetSelectable(isValid); // Butonu aç/kapat ve görsel efekt ver
+            if (isValid)
+            {
+                activeProfileButtons.Add(p);
+                p.view.SetSelectable(true);
+            }
         }
 
     }
@@ -55,8 +68,14 @@ public class TargetingSystem : MonoBehaviour
 
         // Skilli uygula
         currentCaster.SetTarget(clickedProfile);
-
-        // Her þeyi temizle
-        //currentCaster.ClearLungeAndTarget();
+        CloseButtons();
+    }
+    private void CloseButtons()
+    {
+        foreach (Profile profile in activeProfileButtons)
+        {
+            profile.view.SetSelectable(false);
+        }
+        activeProfileButtons.Clear();
     }
 }

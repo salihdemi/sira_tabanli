@@ -20,7 +20,6 @@ public class ProfileView : MonoBehaviour
     {
         if (boundProfile == null) return;
 
-        Debug.Log(boundProfile.name + " týklandý, event fýrlatýlýyor.");
 
         OnAnyProfileClicked?.Invoke(boundProfile);
     }

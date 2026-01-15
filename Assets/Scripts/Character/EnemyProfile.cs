@@ -13,18 +13,9 @@ public class EnemyProfile : Profile
     public override void ChooseSkill(_Skill skill)
     {
         currentSkill = skill;
-        SetTarget(FightManager.instance.AllyProfiles[0]);//default hedef!
+        SetTarget(TurnScheduler.orderedProfiles[0]);//default hedef!
 
     }
-    public override void SetTarget(Profile profile)
-    {
-        currentTarget = profile;
-
-        LungeEnd();//!
-    }
-    public override void LungeEnd()
-    {
-
-        FightManager.instance.turnScheduler.CheckNextCharacter();
-    }
+    //public override void SetTarget(Profile profile)
+    //public override void LungeEnd()
 }

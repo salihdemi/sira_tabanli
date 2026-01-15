@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -5,14 +6,22 @@ using UnityEngine.Profiling;
 
 public class TurnScheduler : MonoBehaviour
 {
+    public static event Action <List<Profile>> PlayTime;
 
     public List<Profile> aliveProfiles;
-    public List<Profile> orderedProfiles;//hiza gore siralan
-    private int order;
+    public static List<Profile> orderedProfiles;//hiza gore siralan
+    public static int order;
 
     //veri tutan
     //hamleler yaparken kullanýlan
-
+    private void Awake()
+    {
+        Profile.OnSomeoneDie += RemoveFromQueue;
+    }
+    private void OnDestroy()
+    {
+        Profile.OnSomeoneDie -= RemoveFromQueue;
+    }
 
     public void SetAliveProfiles(List<AllyProfile> AllyProfiles, List<EnemyProfile> EnemyProfiles)
     {
@@ -46,20 +55,21 @@ public class TurnScheduler : MonoBehaviour
         SortProfilesWithSpeed();
         CheckNextCharacter();
     }
-    public void CheckNextCharacter()
+    public static void CheckNextCharacter()
     {
         if (order == orderedProfiles.Count)
         {
             Debug.Log("tüm hamleler yapýldý");
 
-            StartCoroutine(FightManager.instance.Play(orderedProfiles));//oynat
+            //StartCoroutine(FightManager.instance.Play(orderedProfiles));//oynat
+            PlayTime.Invoke(orderedProfiles);
         }
         else
         {
             LetNextPlayertoPlay();
         }
     }
-    private void LetNextPlayertoPlay()
+    public static void LetNextPlayertoPlay()
     {
         order++;
         orderedProfiles[order - 1].LungeStart();
