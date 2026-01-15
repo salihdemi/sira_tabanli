@@ -7,10 +7,12 @@ public class TargetingSystem : MonoBehaviour
     private void Awake()
     {
         AllyProfile.OnSkillChosen += StartTargeting;
+        ProfileView.OnAnyProfileClicked += OnProfileClicked;
     }
     private void OnDestroy()
     {
         AllyProfile.OnSkillChosen -= StartTargeting;
+        ProfileView.OnAnyProfileClicked -= OnProfileClicked;
     }
     private _Skill selectedSkill;
     private Profile currentCaster;
