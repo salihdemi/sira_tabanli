@@ -38,7 +38,7 @@ public class ObjectPoolManager : MonoBehaviour
     }
 
 
-    // --- ALLY ÝÞLEMLERÝ ---
+    #region --- ALLY ÝÞLEMLERÝ ---
     public AllyProfile GetAlly()
     {
         foreach (var ally in allyPool)
@@ -77,9 +77,10 @@ public class ObjectPoolManager : MonoBehaviour
             ReturnAllyToPool(activeAllies[i]);
         }
     }
+    #endregion
 
 
-    // --- ENEMY ÝÞLEMLERÝ ---
+    #region --- ENEMY ÝÞLEMLERÝ ---
     public EnemyProfile GetEnemy()
     {
         foreach (var enemy in enemyPool)
@@ -116,4 +117,5 @@ public class ObjectPoolManager : MonoBehaviour
             ReturnEnemyToPool(activeEnemies[i]);
         }
     }
+    #endregion
 }

@@ -136,13 +136,14 @@ public class FightManager : MonoBehaviour
                 //hedef olmus ona göre yaz-- sovalyenin canavara vurmasini gerektiren bir durum yok
                 continue;
             }
-            
+
+
+            // Sadece bir hamle yapýldýysa bekleme yap
+            yield return new WaitForSeconds(1f);
 
             profile.Play();
             profile.ClearSkillAndTarget();
 
-            // Sadece bir hamle yapýldýysa bekleme yap
-            yield return new WaitForSeconds(1f);
         }
 
         turnScheduler.FinishTour();
