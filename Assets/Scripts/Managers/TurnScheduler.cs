@@ -9,8 +9,8 @@ public class TurnScheduler : MonoBehaviour
 {
     public FightManager fightManager;
     [HideInInspector] public List<Profile> aliveProfiles;
-    public List<Profile> orderedProfiles;//hiza gore siralan
-    public int order;
+    [HideInInspector] public List<Profile> orderedProfiles;//hiza gore siralan
+    private int order;
 
     [HideInInspector] public List<AllyProfile> ActiveAllyProfiles = new List<AllyProfile>();
     [HideInInspector] public List<EnemyProfile> ActiveEnemyProfiles = new List<EnemyProfile>();
@@ -62,7 +62,7 @@ public class TurnScheduler : MonoBehaviour
     }
     public void CheckNextCharacter()
     {
-        if (order == orderedProfiles.Count)
+        if (order == aliveProfiles.Count)
         {
             Debug.Log("tüm hamleler yapýldý");
 
@@ -77,7 +77,7 @@ public class TurnScheduler : MonoBehaviour
     public void LetNextPlayertoPlay()
     {
         order++;
-        orderedProfiles[order - 1].LungeStart();
+        aliveProfiles[order - 1].LungeStart();
     }
     public void FinishTour()
     {
