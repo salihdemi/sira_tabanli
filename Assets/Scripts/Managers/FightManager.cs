@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Profiling;
+using UnityEngine.SceneManagement;
 
 public class FightManager : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class FightManager : MonoBehaviour
     public static event Action OnFightStart, OnFightEnd;
 
 
-
+    private string fightLoot;
     private void Awake()
     {
         Profile.OnSomeoneDie += HandleProfileDeath;
@@ -44,23 +45,24 @@ public class FightManager : MonoBehaviour
 
 
 
-    public void StartFight(PersistanceStats[] enemyStats)
+    public void StartFight(EnemyMoveable enemy)
     {
         #region NullCheck
         if (partyManager.party.Length < 1)
         { Debug.LogError("Parti boþ"); return; }
-        if (enemyStats.Length < 1)
+        if (enemy.enemyStats.Length < 1)
         { Debug.LogError("Düþman partisi boþ"); return; }
         #endregion
 
         OnFightStart.Invoke();
 
         fightPanel.SetActive(true);
+        fightLoot = enemy.loot;
 
         PersistanceStats[] allyStats = partyManager.party;
-
-
         ActiveAllyProfiles = battleSpawner.SpawnAllies(allyStats);
+
+        PersistanceStats[] enemyStats = enemy.enemyStats;
         ActiveEnemyProfiles = battleSpawner.SpawnEnemies(enemyStats);
 
 
@@ -75,19 +77,21 @@ public class FightManager : MonoBehaviour
     public void WinFight()
     {
         //Ödül ver
-        //moveable
+        Debug.Log(fightLoot + "kazanildi");
+
         FinishFight();
     }
     public void LoseFight()
     {
         //ölüm ekraný* vs
-        //Son save e donme
+        SceneManager.LoadScene(0);//save sistemi degisince
+
         FinishFight();
     }
     
     public void FinishFight()
     {
-        OnFightEnd.Invoke();
+        OnFightEnd.Invoke();//moveable-setisinfight
 
         battleSpawner.ClearBattlefield();
 

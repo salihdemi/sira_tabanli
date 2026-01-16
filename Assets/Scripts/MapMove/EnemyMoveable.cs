@@ -5,15 +5,17 @@ using UnityEngine;
 public class EnemyMoveable : MapMoveable
 {
     [SerializeField] public CharacterData[] datas; //!!!!!!!!!!
-    [SerializeField] private PersistanceStats[] enemyStats;
+    [SerializeField] public PersistanceStats[] enemyStats;
 
-    public static event Action <PersistanceStats[]> OnSomeoneCollideMainCharacterMoveable;
+    public static event Action <EnemyMoveable> OnSomeoneCollideMainCharacterMoveable;
 
 
     private bool trigger;
 
     private MainCharacterMoveable mainCharacter;
 
+
+    public string loot;
 
     private void Awake()
     {
@@ -70,7 +72,7 @@ public class EnemyMoveable : MapMoveable
         if (collision.gameObject.TryGetComponent<MapMoveable>(out MapMoveable character))
         {
             gameObject.SetActive(false);
-            OnSomeoneCollideMainCharacterMoveable.Invoke(enemyStats);
+            OnSomeoneCollideMainCharacterMoveable.Invoke(this);
 
         }
     }
