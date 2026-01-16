@@ -58,11 +58,11 @@ public abstract class Profile : MonoBehaviour
     {
         if (isDied)
         {
-            Debug.Log(name + " saldýramaz, öldü");
+            Debug.Log(name + " " + lastTargetName + "'a vurmadý çünkü " + name + " öldü");
         }
         else if (currentTarget.isDied)
         {
-            Debug.Log(lastTargetName + " öldü");
+            Debug.Log(name + " " + lastTargetName + "'a vurmadý çünkü " + lastTargetName + " öldü");
         }
         else
         {

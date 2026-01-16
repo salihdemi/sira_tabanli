@@ -40,6 +40,9 @@ public class BattleSpawner : MonoBehaviour
         profile.BaseData = data;
         profile.gameObject.name = data.name;
         profile.GetComponent<Image>().sprite = data._sprite;
+
+        profile.ChangeHealth(data.maxHealth);
+        profile.ResetStats();
         //deger yazma
 
         return profile;

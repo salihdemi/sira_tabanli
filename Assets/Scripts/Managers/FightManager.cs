@@ -129,25 +129,14 @@ public class FightManager : MonoBehaviour
         {
             Profile profile = profiles[i];
 
-            if (!profile)//isdied kontrolu olmalý
-            {
-                //caster olmus ona göre yaz
-                continue;
-            }
-            if (!profile.currentTarget)//isdied kontrolu olmalý
-            {
-                //hedef olmus ona göre yaz-- sovalyenin canavara vurmasini gerektiren bir durum yok
-                continue;
-            }
 
-
-            // Sadece bir hamle yapýldýysa bekleme yap
             yield return new WaitForSeconds(1f);
 
             profile.Play();
             profile.ClearSkillAndTarget();
 
         }
+        yield return new WaitForSeconds(1f);
 
         turnScheduler.FinishTour();
     }
