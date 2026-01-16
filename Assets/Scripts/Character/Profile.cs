@@ -31,17 +31,12 @@ public abstract class Profile : MonoBehaviour
 
 
 
-
+    public bool isDied;
     private string lastTargetName; 
 
 
 
 
-    private void Start()
-    {
-        ChangeHealth(BaseData.maxHealth);
-        ResetStats();
-    }
 
     public abstract void LungeStart();
     public abstract void ChooseSkill(_Skill skill);
@@ -61,12 +56,11 @@ public abstract class Profile : MonoBehaviour
 
     public void Play()
     {
-        if (!this)
+        if (isDied)
         {
-            //objectpoola geçince!!!!!
             Debug.Log(name + " saldýramaz, öldü");
         }
-        else if (!currentTarget)
+        else if (currentTarget.isDied)
         {
             Debug.Log(lastTargetName + " öldü");
         }
@@ -136,11 +130,8 @@ public abstract class Profile : MonoBehaviour
     }
     public void Die()
     {
-        //FightManager.instance.HandleProfileDeath(this);
-        //FightManager.instance.turnScheduler.RemoveFromQueue(this);
-        OnSomeoneDie.Invoke(this);
-
-        Destroy(gameObject);
+        isDied = true;
+        OnSomeoneDie?.Invoke(this);
     }
 
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Overlays;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,6 +27,9 @@ public class BattleSpawner : MonoBehaviour
         profile.BaseData = data;
         profile.gameObject.name = data.name;
         profile.GetComponent<Image>().sprite = data._sprite;
+
+        profile.ChangeHealth(data.maxHealth);
+        profile.ResetStats();
         //deger yazma
         return profile;
     }
@@ -40,7 +44,7 @@ public class BattleSpawner : MonoBehaviour
 
         return profile;
     }
-
+    /*
     public void ResetStats(List<AllyProfile> AllyProfiles)
     {
         for (int i = 0; i < AllyProfiles.Count; i++)
@@ -48,7 +52,7 @@ public class BattleSpawner : MonoBehaviour
             Profile character = AllyProfiles[i];
             character.ResetStats();
         }
-    }
+    }*/
     
 
 

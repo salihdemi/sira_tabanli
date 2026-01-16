@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ObjectPoolManager : MonoBehaviour
 {
+    //sistem disable ederken veriyi temizlemedi, enable edince uzerine yaziyor!
 
     [SerializeField] private FightManager fightManager;
 
@@ -26,7 +27,25 @@ public class ObjectPoolManager : MonoBehaviour
     {
         // Oyun baþýnda küçük bir hazýrlýk (Pre-warm)
         PreparePool();
+
+        Profile.OnSomeoneDie += HandleReturnToPool;
     }
+    private void OnDestroy()
+    {
+        Profile.OnSomeoneDie -= HandleReturnToPool;
+    }
+    private void HandleReturnToPool(Profile profile)
+    {
+        if (profile is AllyProfile ally)
+        {
+            ReturnAllyToPool(ally);
+        }
+        else if (profile is EnemyProfile enemy)
+        {
+            ReturnEnemyToPool(enemy);
+        }
+    }
+
 
     private void PreparePool()
     {
@@ -55,7 +74,7 @@ public class ObjectPoolManager : MonoBehaviour
     {
         // Objenin üzerindeki tüm geçici verileri temizle
         ally.ClearSkillAndTarget();
-        ally.ResetStats();
+        //ally.ResetStats();
 
         // Obje artýk "uyuyan" statüsüne geçer
         ally.gameObject.SetActive(false);
@@ -64,7 +83,7 @@ public class ObjectPoolManager : MonoBehaviour
     {
         GameObject obj = Instantiate(allyPrefab, allyParent);
         AllyProfile profile = obj.GetComponent<AllyProfile>();
-        obj.SetActive(false);
+        obj.SetActive(false);//! denemek gerek
         allyPool.Add(profile);
         return profile;
     }
@@ -96,7 +115,7 @@ public class ObjectPoolManager : MonoBehaviour
     public void ReturnEnemyToPool(EnemyProfile enemy)
     {
         enemy.ClearSkillAndTarget();
-        enemy.ResetStats();
+        //enemy.ResetStats();
 
         enemy.gameObject.SetActive(false);
     }
@@ -104,7 +123,7 @@ public class ObjectPoolManager : MonoBehaviour
     {
         GameObject obj = Instantiate(enemyPrefab, enemyParent);
         EnemyProfile profile = obj.GetComponent<EnemyProfile>();
-        obj.SetActive(false);
+        obj.SetActive(false);//! denemek gerek
         enemyPool.Add(profile);
         return profile;
     }
