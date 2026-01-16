@@ -12,13 +12,16 @@ public class FightManager : MonoBehaviour
 {
 
     [SerializeField] private BattleSpawner battleSpawner;
-    [SerializeField] public TurnScheduler turnScheduler;
+    [SerializeField] private TurnScheduler turnScheduler;
     [SerializeField] private PartyManager  partyManager;
 
     [SerializeField] private GameObject fightPanel;
 
 
 
+    [Header("Profiles")]
+    [HideInInspector] public List<AllyProfile>  ActiveAllyProfiles  = new List<AllyProfile>();
+    [HideInInspector] public List<EnemyProfile> ActiveEnemyProfiles = new List<EnemyProfile>();
 
 
     public static event Action OnFightStart, OnFightEnd;
@@ -27,15 +30,13 @@ public class FightManager : MonoBehaviour
     private string fightLoot;
     private void Awake()
     {
+        Profile.OnSomeoneDie += HandleProfileDeath;
         EnemyMoveable.OnSomeoneCollideMainCharacterMoveable += StartFight;
-        turnScheduler.onAllAlliesDie += LoseFight;
-        turnScheduler.onAllEnemiesDie += WinFight;
     }
     private void OnDestroy()
     {
+        Profile.OnSomeoneDie -= HandleProfileDeath;
         EnemyMoveable.OnSomeoneCollideMainCharacterMoveable -= StartFight;
-        turnScheduler.onAllAlliesDie -= LoseFight;
-        turnScheduler.onAllEnemiesDie -= WinFight;
     }
 
 
@@ -53,21 +54,23 @@ public class FightManager : MonoBehaviour
         { Debug.LogError("Düþman partisi boþ"); return; }
         #endregion
 
-        OnFightStart.Invoke();//moveable
+        OnFightStart.Invoke();
 
         fightPanel.SetActive(true);
         fightLoot = enemy.loot;
 
         PersistanceStats[] allyStats = partyManager.party;
-        turnScheduler.ActiveAllyProfiles = battleSpawner.SpawnAllies(allyStats);
+        ActiveAllyProfiles = battleSpawner.SpawnAllies(allyStats);
 
         PersistanceStats[] enemyStats = enemy.enemyStats;
-        turnScheduler.ActiveEnemyProfiles = battleSpawner.SpawnEnemies(enemyStats);
+        ActiveEnemyProfiles = battleSpawner.SpawnEnemies(enemyStats);
 
 
+        turnScheduler.SetAliveProfiles(ActiveAllyProfiles, ActiveEnemyProfiles);
+        turnScheduler.SortProfilesWithSpeed();
 
+        //battleSpawner.ResetStats(AllyProfiles);
 
-        turnScheduler.SetAliveProfiles();
         turnScheduler.StartTour();
     }
     
@@ -98,6 +101,18 @@ public class FightManager : MonoBehaviour
 
 
 
+    public void HandleProfileDeath(Profile deadProfile)
+    {
+        // Listelerden çýkar
+             if (deadProfile is AllyProfile  ally)  ActiveAllyProfiles. Remove(ally);
+        else if (deadProfile is EnemyProfile enemy) ActiveEnemyProfiles.Remove(enemy);
+
+        turnScheduler.RemoveFromQueue(deadProfile);
+
+        // Savaþ bitti mi kontrol et
+             if (ActiveAllyProfiles .Count == 0) LoseFight();
+        else if (ActiveEnemyProfiles.Count == 0) WinFight();
+    }
 
 
 

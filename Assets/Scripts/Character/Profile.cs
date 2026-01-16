@@ -54,27 +54,14 @@ public abstract class Profile : MonoBehaviour
     public abstract void ChooseSkill(_Skill skill);
     public  void SetTarget(Profile profile)
     {
-        if (profile == null) return;
         currentTarget = profile;
         lastTargetName = currentTarget.name;
 
-        Debug.Log("settarget");
         LungeEnd();//!
     }
     public void LungeEnd()
     {
-        Debug.Log($"{name} LungeEnd metoduna girdi.");
-
-        if (OnSomeoneLungeEnd != null)
-        {
-            Debug.Log("Event dolu, abonesi var. Invoke ediliyor...");
-            OnSomeoneLungeEnd.Invoke();
-        }
-        else
-        {
-            // Ýkinci turda buraya düþüyorsan, TurnScheduler aboneliði býrakmýþ demektir!
-            Debug.LogError("HATA: OnSomeoneLungeEnd eventi NULL! 2. turda bað koptu.");
-        }
+        OnSomeoneLungeEnd?.Invoke();
     }
 
 

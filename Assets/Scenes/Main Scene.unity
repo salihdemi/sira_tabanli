@@ -316,6 +316,8 @@ MonoBehaviour:
   turnScheduler: {fileID: 2099794845}
   partyManager: {fileID: 503546261}
   fightPanel: {fileID: 940415007}
+  ActiveAllyProfiles: []
+  ActiveEnemyProfiles: []
 --- !u!4 &518877570
 Transform:
   m_ObjectHideFlags: 0
@@ -571,7 +573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eb3e8a838990bd44bbd590d7402999f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPoolManager
-  turnScheduler: {fileID: 2099794845}
+  fightManager: {fileID: 518877569}
   allyParent: {fileID: 1024666692}
   enemyParent: {fileID: 567234374}
   allyPrefab: {fileID: 5446839951801960851, guid: 857798f39e9c69448832bf6dad7e072f, type: 3}
@@ -1311,40 +1313,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6182487853994404768, guid: fbdaca29569714c42962068a5e795053, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7347999620127111571, guid: fbdaca29569714c42962068a5e795053, type: 3}
-      propertyPath: datas.Array.size
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7347999620127111571, guid: fbdaca29569714c42962068a5e795053, type: 3}
-      propertyPath: 'datas.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 6e161a6276ab42c4fb89fb12fab5556d, type: 2}
-    - target: {fileID: 7347999620127111571, guid: fbdaca29569714c42962068a5e795053, type: 3}
-      propertyPath: 'datas.Array.data[1]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 510f7f017e7c34b409fb2893ed92353e, type: 2}
-    - target: {fileID: 7347999620127111571, guid: fbdaca29569714c42962068a5e795053, type: 3}
-      propertyPath: 'datas.Array.data[2]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 510f7f017e7c34b409fb2893ed92353e, type: 2}
-    - target: {fileID: 7347999620127111571, guid: fbdaca29569714c42962068a5e795053, type: 3}
-      propertyPath: 'datas.Array.data[3]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 510f7f017e7c34b409fb2893ed92353e, type: 2}
-    - target: {fileID: 7347999620127111571, guid: fbdaca29569714c42962068a5e795053, type: 3}
-      propertyPath: 'datas.Array.data[4]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 6e161a6276ab42c4fb89fb12fab5556d, type: 2}
-    - target: {fileID: 7347999620127111571, guid: fbdaca29569714c42962068a5e795053, type: 3}
-      propertyPath: 'datas.Array.data[5]'
-      value: 
-      objectReference: {fileID: 11400000, guid: fb8b12ce883fa9542ba4cff8bfe8d708, type: 2}
-    - target: {fileID: 7347999620127111571, guid: fbdaca29569714c42962068a5e795053, type: 3}
-      propertyPath: 'datas.Array.data[6]'
-      value: 
-      objectReference: {fileID: 11400000, guid: fb8b12ce883fa9542ba4cff8bfe8d708, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1380,8 +1350,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurnScheduler
   aliveProfiles: []
-  ActiveAllyProfiles: []
-  ActiveEnemyProfiles: []
 --- !u!4 &2099794846
 Transform:
   m_ObjectHideFlags: 0
