@@ -23,7 +23,7 @@ public class FightManager : MonoBehaviour
     [HideInInspector] public List<EnemyProfile> ActiveEnemyProfiles = new List<EnemyProfile>();
 
 
-
+    public static event Action OnFightStart, OnFightEnd;
 
 
 
@@ -54,8 +54,9 @@ public class FightManager : MonoBehaviour
         { Debug.LogError("Düþman partisi boþ"); return; }
         #endregion
 
-        fightPanel.SetActive(true);
+        OnFightStart.Invoke();
 
+        fightPanel.SetActive(true);
 
         AllyData[] allyDatas = partyManager.party;
 
@@ -87,6 +88,8 @@ public class FightManager : MonoBehaviour
     
     public void FinishFight()
     {
+        OnFightEnd.Invoke();
+
         battleSpawner.ClearBattlefield();
 
         fightPanel.SetActive(false);

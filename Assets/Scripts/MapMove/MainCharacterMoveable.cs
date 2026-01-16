@@ -10,15 +10,12 @@ public class MainCharacterMoveable : MapMoveable
     private Vector3 targetPosition;
     private bool isMoving = false;
 
-    void Awake()
-    {
-        targetPosition = transform.position; // Baþlangýçta olduðumuz yer hedefimiz
-    }
+
 
     protected override void Move()
     {
         // Eðer zaten hareket halindeyse yeni input alma (Grid kuralý)
-        if (isMoving) return;
+        if (isMoving || isInFight) return;
 
         float inputX = 0;
         float inputY = 0;
@@ -77,4 +74,5 @@ public class MainCharacterMoveable : MapMoveable
             rb.linearVelocity = Vector2.zero;
         }
     }
+
 }

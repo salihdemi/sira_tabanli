@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public abstract class MapMoveable : MonoBehaviour
@@ -7,6 +8,22 @@ public abstract class MapMoveable : MonoBehaviour
 
 
     protected float x, y;
+
+
+
+    protected bool isInFight;
+
+    void Awake()
+    {
+
+        FightManager.OnFightStart += () => SetIsInFight(true);
+        FightManager.OnFightEnd += () => SetIsInFight(false);
+    }
+    private void OnDestroy()
+    {
+        FightManager.OnFightStart -= () => SetIsInFight(true);
+        FightManager.OnFightEnd -= () => SetIsInFight(false);
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -20,5 +37,9 @@ public abstract class MapMoveable : MonoBehaviour
 
         CheckStop();
 
+    }
+    private void SetIsInFight(bool can)
+    {
+        isInFight = can;
     }
 }

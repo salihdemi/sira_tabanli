@@ -8,7 +8,7 @@ public class TurnScheduler : MonoBehaviour
 {
     public static event Action <List<Profile>> PlayTime;
 
-    public List<Profile> aliveProfiles;
+    [HideInInspector] public List<Profile> aliveProfiles;
     public static List<Profile> orderedProfiles;//hiza gore siralan
     public static int order;
 

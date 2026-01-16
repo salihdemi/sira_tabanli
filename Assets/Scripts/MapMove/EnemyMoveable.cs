@@ -13,7 +13,7 @@ public class EnemyMoveable : MapMoveable
     private MainCharacterMoveable mainCharacter;
     protected override void Move()
     {
-        if (!trigger) return;
+        if (!trigger || isInFight) return;
         float targetX = mainCharacter.transform.position.x;
         float targetY = mainCharacter.transform.position.y;
 
