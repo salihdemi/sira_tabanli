@@ -74,7 +74,7 @@ public class CharacterActionPanel : MonoBehaviour
     {
         foreach (Transform child in skillsPanel.transform.GetChild(0))
         {
-            Destroy(child.gameObject);
+            Destroy(child.gameObject);//pool tipi yap!
         }
 
         foreach (_Skill skill in profile.stats.skills)

@@ -15,6 +15,9 @@ public class TurnScheduler : MonoBehaviour
     [HideInInspector] public List<AllyProfile> ActiveAllyProfiles = new List<AllyProfile>();
     [HideInInspector] public List<EnemyProfile> ActiveEnemyProfiles = new List<EnemyProfile>();
 
+
+
+    [SerializeField] private GameObject console;
     //veri tutan
     //hamleler yaparken kullanýlan
     private void Awake()
@@ -57,6 +60,7 @@ public class TurnScheduler : MonoBehaviour
     public void StartTour()
     {
         Debug.Log("starttour");
+        console.SetActive(false);
         SortProfilesWithSpeed();
         CheckNextCharacter();
     }
@@ -66,6 +70,7 @@ public class TurnScheduler : MonoBehaviour
         {
             Debug.Log("tüm hamleler yapýldý");
 
+            console.SetActive(true);
             //oynat
             PlayF(orderedProfiles);
         }
@@ -105,13 +110,12 @@ public class TurnScheduler : MonoBehaviour
             Profile profile = profiles[i];
 
 
-            yield return new WaitForSeconds(1f);
 
             profile.Play();
             profile.ClearSkillAndTarget();
+            yield return new WaitForSeconds(1f);
 
         }
-        yield return new WaitForSeconds(1f);
 
         FinishTour();
     }

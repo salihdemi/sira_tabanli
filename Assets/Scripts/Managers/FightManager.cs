@@ -53,6 +53,7 @@ public class FightManager : MonoBehaviour
         OnFightStart.Invoke();
 
         fightPanel.SetActive(true);
+
         fightLoot = enemy.loot;
 
 

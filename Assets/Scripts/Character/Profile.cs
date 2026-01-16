@@ -10,7 +10,7 @@ public abstract class Profile : MonoBehaviour
 {
     public static event Action<Profile> OnSomeoneDie;
     public static event Action OnSomeoneLungeEnd;
-
+    public static event Action<string> OnSomeonePlay;
 
 
 
@@ -74,18 +74,22 @@ public abstract class Profile : MonoBehaviour
 
     public void Play()
     {
+        string text;
         if (isDied)
         {
-            Debug.Log(name + " " + lastTargetName + "'a vurmadý çünkü " + name + " öldü");
+            text = name + " " + lastTargetName + "'a vurmadý çünkü " + name + " öldü";
         }
         else if (currentTarget.isDied)
         {
-            Debug.Log(name + " " + lastTargetName + "'a vurmadý çünkü " + lastTargetName + " öldü");
+            text = name + " " + lastTargetName + "'a vurmadý çünkü " + lastTargetName + " öldü";
         }
         else
         {
+            text = name + " " + lastTargetName + "'a " + currentSkill + " yaptý";
             currentSkill.Method(this, currentTarget);
         }
+        Debug.Log(text);
+        OnSomeonePlay.Invoke(text);
     }
 
 
