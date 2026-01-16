@@ -67,7 +67,9 @@ public class CharacterActionPanel : MonoBehaviour
     }
     private void WriteAttack(AllyProfile profile)
     {
+        Debug.Log("silindi");
         attackButton.onClick.RemoveAllListeners();
+        Debug.Log("yazýldý");
         attackButton.onClick.AddListener(() => profile.ChooseSkill(profile.stats.attack));
     }
     private void WriteSkillsPanel(AllyProfile profile)

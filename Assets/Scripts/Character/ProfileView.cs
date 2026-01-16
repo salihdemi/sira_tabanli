@@ -18,6 +18,7 @@ public class ProfileView : MonoBehaviour
 
     public void OnProfileButtonPressed()
     {
+        Debug.Log(name+"tiklkandi");
         if (boundProfile == null) return;
 
 
