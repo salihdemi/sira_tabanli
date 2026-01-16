@@ -54,15 +54,19 @@ public abstract class Profile : MonoBehaviour
     public abstract void ChooseSkill(_Skill skill);
     public  void SetTarget(Profile profile)
     {
-        Debug.Log("settarget");
+        if(profile == null)//!
+        {
+            LungeEnd();//!
+            return;
+        }
         currentTarget = profile;
+        Debug.Log(currentTarget);
         lastTargetName = currentTarget.name;
 
         LungeEnd();//!
     }
     public void LungeEnd()
     {
-        Debug.Log("lungeEnd");
         OnSomeoneLungeEnd?.Invoke();
     }
 

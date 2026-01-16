@@ -7,21 +7,25 @@ using UnityEngine.Profiling;
 
 public class TurnScheduler : MonoBehaviour
 {
-
+    public FightManager fightManager;
     [HideInInspector] public List<Profile> aliveProfiles;
-    public static List<Profile> orderedProfiles;//hiza gore siralan
-    public static int order;
+    public List<Profile> orderedProfiles;//hiza gore siralan
+    public int order;
+
+    [HideInInspector] public List<AllyProfile> ActiveAllyProfiles = new List<AllyProfile>();
+    [HideInInspector] public List<EnemyProfile> ActiveEnemyProfiles = new List<EnemyProfile>();
 
     //veri tutan
     //hamleler yaparken kullanýlan
     private void Awake()
     {
         Profile.OnSomeoneLungeEnd += CheckNextCharacter;
+        Profile.OnSomeoneDie += HandleProfileDeath;
     }
     private void OnDestroy()
     {
         Profile.OnSomeoneLungeEnd -= CheckNextCharacter;
-        
+        Profile.OnSomeoneDie -= HandleProfileDeath;
     }
 
     public void SetAliveProfiles(List<AllyProfile> AllyProfiles, List<EnemyProfile> EnemyProfiles)
@@ -110,5 +114,20 @@ public class TurnScheduler : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         FinishTour();
+    }
+
+
+
+    public void HandleProfileDeath(Profile deadProfile)
+    {
+        // Listelerden çýkar
+        if (deadProfile is AllyProfile ally) ActiveAllyProfiles.Remove(ally);
+        else if (deadProfile is EnemyProfile enemy) ActiveEnemyProfiles.Remove(enemy);
+
+        RemoveFromQueue(deadProfile);
+
+        // Savaþ bitti mi kontrol et
+        if (ActiveAllyProfiles.Count == 0) fightManager.LoseFight();
+        else if (ActiveEnemyProfiles.Count == 0) fightManager.WinFight();
     }
 }

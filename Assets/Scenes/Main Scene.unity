@@ -316,8 +316,6 @@ MonoBehaviour:
   turnScheduler: {fileID: 2099794845}
   partyManager: {fileID: 503546261}
   fightPanel: {fileID: 940415007}
-  ActiveAllyProfiles: []
-  ActiveEnemyProfiles: []
 --- !u!4 &518877570
 Transform:
   m_ObjectHideFlags: 0
@@ -1349,7 +1347,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752687a1d76fc204dbe026ff42107b64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurnScheduler
+  fightManager: {fileID: 518877569}
   aliveProfiles: []
+  ActiveAllyProfiles: []
+  ActiveEnemyProfiles: []
 --- !u!4 &2099794846
 Transform:
   m_ObjectHideFlags: 0

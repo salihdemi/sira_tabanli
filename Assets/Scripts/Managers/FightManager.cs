@@ -10,18 +10,16 @@ using UnityEngine.SceneManagement;
 
 public class FightManager : MonoBehaviour
 {
+    public static Profile defaultTargetForEnemies;//!
 
     [SerializeField] private BattleSpawner battleSpawner;
-    [SerializeField] private TurnScheduler turnScheduler;
+    [SerializeField] public TurnScheduler turnScheduler;
     [SerializeField] private PartyManager  partyManager;
 
     [SerializeField] private GameObject fightPanel;
 
 
 
-    [Header("Profiles")]
-    [HideInInspector] public List<AllyProfile>  ActiveAllyProfiles  = new List<AllyProfile>();
-    [HideInInspector] public List<EnemyProfile> ActiveEnemyProfiles = new List<EnemyProfile>();
 
 
     public static event Action OnFightStart, OnFightEnd;
@@ -30,12 +28,10 @@ public class FightManager : MonoBehaviour
     private string fightLoot;
     private void Awake()
     {
-        Profile.OnSomeoneDie += HandleProfileDeath;
         EnemyMoveable.OnSomeoneCollideMainCharacterMoveable += StartFight;
     }
     private void OnDestroy()
     {
-        Profile.OnSomeoneDie -= HandleProfileDeath;
         EnemyMoveable.OnSomeoneCollideMainCharacterMoveable -= StartFight;
     }
 
@@ -59,12 +55,16 @@ public class FightManager : MonoBehaviour
         fightPanel.SetActive(true);
         fightLoot = enemy.loot;
 
+
         PersistanceStats[] allyStats = partyManager.party;
-        ActiveAllyProfiles = battleSpawner.SpawnAllies(allyStats);
+        List<AllyProfile> ActiveAllyProfiles = battleSpawner.SpawnAllies(allyStats);
 
         PersistanceStats[] enemyStats = enemy.enemyStats;
-        ActiveEnemyProfiles = battleSpawner.SpawnEnemies(enemyStats);
+        List<EnemyProfile> ActiveEnemyProfiles = battleSpawner.SpawnEnemies(enemyStats);
 
+
+
+        defaultTargetForEnemies = ActiveAllyProfiles[0];//!
 
         turnScheduler.SetAliveProfiles(ActiveAllyProfiles, ActiveEnemyProfiles);
         turnScheduler.SortProfilesWithSpeed();
@@ -101,18 +101,6 @@ public class FightManager : MonoBehaviour
 
 
 
-    public void HandleProfileDeath(Profile deadProfile)
-    {
-        // Listelerden çýkar
-             if (deadProfile is AllyProfile  ally)  ActiveAllyProfiles. Remove(ally);
-        else if (deadProfile is EnemyProfile enemy) ActiveEnemyProfiles.Remove(enemy);
-
-        turnScheduler.RemoveFromQueue(deadProfile);
-
-        // Savaþ bitti mi kontrol et
-             if (ActiveAllyProfiles .Count == 0) LoseFight();
-        else if (ActiveEnemyProfiles.Count == 0) WinFight();
-    }
 
 
 
