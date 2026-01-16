@@ -85,7 +85,7 @@ public abstract class Profile : MonoBehaviour
         }
         else
         {
-            text = name + " " + lastTargetName + "'a " + currentSkill + " yaptý";
+            text = name + " " + lastTargetName + "'a " + currentSkill.name + " yaptý";
             currentSkill.Method(this, currentTarget);
         }
         Debug.Log(text);
