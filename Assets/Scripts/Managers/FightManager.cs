@@ -31,7 +31,6 @@ public class FightManager : MonoBehaviour
     {
         Profile.OnSomeoneDie += HandleProfileDeath;
         EnemyMoveable.OnSomeoneCollideMainCharacterMoveable += StartFight;
-        TurnScheduler.PlayTime += PlayF;
     }
     private void OnDestroy()
     {
@@ -117,29 +116,6 @@ public class FightManager : MonoBehaviour
 
 
 
-    public void PlayF(List<Profile> orderedProfiles)
-    {
-        StartCoroutine(Play(orderedProfiles));
-    }
-
-    public IEnumerator Play(List<Profile> profiles)
-    {
-        Debug.Log("Oynat");
-        for (int i = 0; i < profiles.Count; i++)
-        {
-            Profile profile = profiles[i];
-
-
-            yield return new WaitForSeconds(1f);
-
-            profile.Play();
-            profile.ClearSkillAndTarget();
-
-        }
-        yield return new WaitForSeconds(1f);
-
-        turnScheduler.FinishTour();
-    }
 
 
 }

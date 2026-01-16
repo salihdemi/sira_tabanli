@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,7 +7,6 @@ using UnityEngine.Profiling;
 
 public class TurnScheduler : MonoBehaviour
 {
-    public static event Action <List<Profile>> PlayTime;
 
     [HideInInspector] public List<Profile> aliveProfiles;
     public static List<Profile> orderedProfiles;//hiza gore siralan
@@ -14,6 +14,15 @@ public class TurnScheduler : MonoBehaviour
 
     //veri tutan
     //hamleler yaparken kullanýlan
+    private void Awake()
+    {
+        Profile.OnSomeoneLungeEnd += CheckNextCharacter;
+    }
+    private void OnDestroy()
+    {
+        Profile.OnSomeoneLungeEnd -= CheckNextCharacter;
+        
+    }
 
     public void SetAliveProfiles(List<AllyProfile> AllyProfiles, List<EnemyProfile> EnemyProfiles)
     {
@@ -47,21 +56,21 @@ public class TurnScheduler : MonoBehaviour
         SortProfilesWithSpeed();
         CheckNextCharacter();
     }
-    public static void CheckNextCharacter()
+    public void CheckNextCharacter()
     {
         if (order == orderedProfiles.Count)
         {
             Debug.Log("tüm hamleler yapýldý");
 
-            //StartCoroutine(FightManager.instance.Play(orderedProfiles));//oynat
-            PlayTime.Invoke(orderedProfiles);
+            //oynat
+            PlayF(orderedProfiles);
         }
         else
         {
             LetNextPlayertoPlay();
         }
     }
-    public static void LetNextPlayertoPlay()
+    public void LetNextPlayertoPlay()
     {
         order++;
         orderedProfiles[order - 1].LungeStart();
@@ -79,4 +88,27 @@ public class TurnScheduler : MonoBehaviour
 
 
 
+    public void PlayF(List<Profile> orderedProfiles)
+    {
+        StartCoroutine(Play(orderedProfiles));
+    }
+
+    public IEnumerator Play(List<Profile> profiles)
+    {
+        Debug.Log("Oynat");
+        for (int i = 0; i < profiles.Count; i++)
+        {
+            Profile profile = profiles[i];
+
+
+            yield return new WaitForSeconds(1f);
+
+            profile.Play();
+            profile.ClearSkillAndTarget();
+
+        }
+        yield return new WaitForSeconds(1f);
+
+        FinishTour();
+    }
 }

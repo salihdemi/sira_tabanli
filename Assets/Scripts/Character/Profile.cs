@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public abstract class Profile : MonoBehaviour
 {
     public static event Action<Profile> OnSomeoneDie;
+    public static event Action OnSomeoneLungeEnd;
 
 
 
@@ -60,7 +61,7 @@ public abstract class Profile : MonoBehaviour
     }
     public void LungeEnd()
     {
-        TurnScheduler.CheckNextCharacter();
+        OnSomeoneLungeEnd?.Invoke();
     }
 
 
