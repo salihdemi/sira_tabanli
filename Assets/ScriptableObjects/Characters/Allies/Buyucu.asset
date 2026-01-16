@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17bc0e10ad87e7844acbdf3d692570e6, type: 3}
-  m_Name: Minigun
+  m_Name: Buyucu
   m_EditorClassIdentifier: Assembly-CSharp::CharacterBase
-  maxHealth: 56
-  basePower: 3
-  baseSpeed: 2
-  _sprite: {fileID: 4246200125604500827, guid: 64d58308f89e8de40b24e6f1b6c8aea4, type: 3}
+  maxHealth: 67
+  basePower: 4
+  baseSpeed: 3
+  _sprite: {fileID: 3422849895820167655, guid: 350468460324d7f4ea9703444d789cf2, type: 3}
   attack: {fileID: 11400000, guid: 9d1e90c9bfde37e4b97d4456b48556bb, type: 2}
   skills: []

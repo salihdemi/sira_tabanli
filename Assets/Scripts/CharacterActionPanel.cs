@@ -68,7 +68,7 @@ public class CharacterActionPanel : MonoBehaviour
     private void WriteAttack(AllyProfile profile)
     {
         attackButton.onClick.RemoveAllListeners();
-        attackButton.onClick.AddListener(() => profile.ChooseSkill(profile.BaseData.attack));
+        attackButton.onClick.AddListener(() => profile.ChooseSkill(profile.stats.attack));
     }
     private void WriteSkillsPanel(AllyProfile profile)
     {
@@ -77,7 +77,7 @@ public class CharacterActionPanel : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach (_Skill skill in profile.BaseData.skills)
+        foreach (_Skill skill in profile.stats.skills)
         {
             //skill butonu ekle
         }

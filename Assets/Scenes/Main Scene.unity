@@ -234,11 +234,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bd8bf7b93d21a48869b9fac8e69072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartyManager
+  datas:
+  - {fileID: 11400000, guid: 510f7f017e7c34b409fb2893ed92353e, type: 2}
+  - {fileID: 11400000, guid: b6be121c27ed2ca41961a59342253244, type: 2}
+  - {fileID: 11400000, guid: adce3d5ff492bd24385f3f68406579ca, type: 2}
+  - {fileID: 11400000, guid: e3fc427995f3e03428fe2ce59f58b89f, type: 2}
   party:
-  - {fileID: 11400000, guid: 3616406fdade5fb4da50cfa3a214ea7a, type: 2}
-  - {fileID: 11400000, guid: a68528e2a939b604b837d49651aa2808, type: 2}
-  - {fileID: 11400000, guid: b24f3dc987006fd40acb610473907314, type: 2}
-  - {fileID: 11400000, guid: 46b91865b525ed4488c5fac238b66199, type: 2}
+  - originData: {fileID: 0}
+    currentHealth: 0
+    maxHealth: 0
+    basePower: 0
+    baseSpeed: 0
+    attack: {fileID: 0}
+    skills: []
+  - originData: {fileID: 0}
+    currentHealth: 0
+    maxHealth: 0
+    basePower: 0
+    baseSpeed: 0
+    attack: {fileID: 0}
+    skills: []
+  - originData: {fileID: 0}
+    currentHealth: 0
+    maxHealth: 0
+    basePower: 0
+    baseSpeed: 0
+    attack: {fileID: 0}
+    skills: []
+  - originData: {fileID: 0}
+    currentHealth: 0
+    maxHealth: 0
+    basePower: 0
+    baseSpeed: 0
+    attack: {fileID: 0}
+    skills: []
 --- !u!4 &503546262
 Transform:
   m_ObjectHideFlags: 0
@@ -1389,21 +1418,41 @@ PrefabInstance:
       value: MoveableEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 7347999620127111571, guid: fbdaca29569714c42962068a5e795053, type: 3}
+      propertyPath: datas.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7347999620127111571, guid: fbdaca29569714c42962068a5e795053, type: 3}
       propertyPath: enemies.Array.size
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7347999620127111571, guid: fbdaca29569714c42962068a5e795053, type: 3}
+      propertyPath: 'datas.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 6e161a6276ab42c4fb89fb12fab5556d, type: 2}
+    - target: {fileID: 7347999620127111571, guid: fbdaca29569714c42962068a5e795053, type: 3}
+      propertyPath: 'datas.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: fb8b12ce883fa9542ba4cff8bfe8d708, type: 2}
+    - target: {fileID: 7347999620127111571, guid: fbdaca29569714c42962068a5e795053, type: 3}
+      propertyPath: 'datas.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 44123f40cc834bc4b9a19b2ae8f27a18, type: 2}
+    - target: {fileID: 7347999620127111571, guid: fbdaca29569714c42962068a5e795053, type: 3}
       propertyPath: 'enemies.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: b47710ac3bea2504ca4354a6cccad6ed, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 7347999620127111571, guid: fbdaca29569714c42962068a5e795053, type: 3}
       propertyPath: 'enemies.Array.data[1]'
       value: 
-      objectReference: {fileID: 11400000, guid: d844d6513d09d0641888d2753d10aef2, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 7347999620127111571, guid: fbdaca29569714c42962068a5e795053, type: 3}
       propertyPath: 'enemies.Array.data[2]'
       value: 
-      objectReference: {fileID: 11400000, guid: 48cabb20532d1304b8563e71d4c87f4d, type: 2}
+      objectReference: {fileID: 0}
+    - target: {fileID: 7347999620127111571, guid: fbdaca29569714c42962068a5e795053, type: 3}
+      propertyPath: enemyStats.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -14,7 +14,18 @@ public abstract class Profile : MonoBehaviour
 
 
 
-    [HideInInspector] public CharacterBase BaseData;
+    [HideInInspector] public PersistanceStats stats;
+    public void Setup(PersistanceStats persistentData)
+    {
+        // Dýþarýdaki kalýcý datayý bu profile baðla
+        stats = persistentData;
+
+        // Sahneye hazýrla
+        gameObject.SetActive(true);
+        onHealthChange.Invoke(currentHealth);
+        onPowerChange. Invoke(currentPower);
+        onSpeedChange. Invoke(currentSpeed);
+    }
 
     public ProfileView view;
 
@@ -96,9 +107,9 @@ public abstract class Profile : MonoBehaviour
     public void ChangeHealth(float amount)
     {
         currentHealth += amount;
-        if (currentHealth > BaseData.maxHealth)
+        if (currentHealth > stats.maxHealth)
         {
-            currentHealth = BaseData.maxHealth;
+            currentHealth = stats.maxHealth;
         }
         if (currentHealth <= 0)
         {
@@ -122,10 +133,10 @@ public abstract class Profile : MonoBehaviour
 
     public void ResetStats()
     {
-        currentPower = BaseData.basePower;
+        currentPower = stats.basePower;
         onPowerChange?.Invoke(currentPower);
 
-        currentSpeed = BaseData.baseSpeed;
+        currentSpeed = stats.baseSpeed;
         onSpeedChange?.Invoke(currentSpeed);
     }
     public void Die()

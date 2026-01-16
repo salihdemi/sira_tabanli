@@ -2,10 +2,17 @@ using UnityEngine;
 
 public class PartyManager : MonoBehaviour
 {
-    //public static PartyManager instance;
+
     private void Awake()
     {
-        //instance = this;
+        for (int i = 0; i < party.Length; i++)
+        {
+            if (party.Length > i && datas.Length > i)
+            {
+                party[i].LoadFromBase(datas[i]);
+            }
+        }
     }
-    [SerializeField] public AllyData[] party; //static olabilir
+    [SerializeField] public CharacterData[] datas; //!!!!!!!!!!
+    [SerializeField] public PersistanceStats[] party; //static olabilir
 }

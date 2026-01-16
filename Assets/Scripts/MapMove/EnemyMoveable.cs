@@ -1,16 +1,32 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyMoveable : MapMoveable
 {
-    [SerializeField] private EnemyData[] enemies;
+    [SerializeField] public CharacterData[] datas; //!!!!!!!!!!
+    [SerializeField] private PersistanceStats[] enemyStats;
 
-    public static event Action <EnemyData[]> OnSomeoneCollideMainCharacterMoveable;
+    public static event Action <PersistanceStats[]> OnSomeoneCollideMainCharacterMoveable;
 
 
     private bool trigger;
 
     private MainCharacterMoveable mainCharacter;
+
+
+    private void Awake()
+    {
+        for (int i = 0; i < enemyStats.Length; i++)
+        {
+            if (enemyStats.Length > i && datas.Length > i)
+            {
+                enemyStats[i].LoadFromBase(datas[i]);
+            }
+        }
+    }
+
+
     protected override void Move()
     {
         if (!trigger || isInFight) return;
@@ -54,7 +70,7 @@ public class EnemyMoveable : MapMoveable
         if (collision.gameObject.TryGetComponent<MapMoveable>(out MapMoveable character))
         {
             gameObject.SetActive(false);
-            OnSomeoneCollideMainCharacterMoveable.Invoke(enemies);
+            OnSomeoneCollideMainCharacterMoveable.Invoke(enemyStats);
 
         }
     }

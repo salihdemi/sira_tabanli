@@ -20,28 +20,28 @@ public class BattleSpawner : MonoBehaviour
 
 
 
-    private AllyProfile MakeAllyProfile(AllyData data)
+    private AllyProfile MakeAllyProfile(PersistanceStats runtimeStats)
     {
         //AllyProfile profile = Instantiate(AllyProfilePrefab, AllyProfileParent);
         AllyProfile profile = objectPoolManager.GetAlly();
-        profile.BaseData = data;
-        profile.gameObject.name = data.name;
-        profile.GetComponent<Image>().sprite = data._sprite;
+        profile.stats = runtimeStats;
+        profile.gameObject.name = runtimeStats.originData.name;
+        profile.GetComponent<Image>().sprite = runtimeStats.originData._sprite;
 
-        profile.ChangeHealth(data.maxHealth);
+        profile.ChangeHealth(runtimeStats.maxHealth);
         profile.ResetStats();
         //deger yazma
         return profile;
     }
-    private EnemyProfile MakeEnemyProfile(EnemyData data)
+    private EnemyProfile MakeEnemyProfile(PersistanceStats runtimeStats)
     {
         //EnemyProfile profile = Instantiate(EnemyProfilePrefab, EnemyProfileParent);
         EnemyProfile profile = objectPoolManager.GetEnemy();
-        profile.BaseData = data;
-        profile.gameObject.name = data.name;
-        profile.GetComponent<Image>().sprite = data._sprite;
+        profile.stats = runtimeStats;
+        profile.gameObject.name = runtimeStats.originData.name;
+        profile.GetComponent<Image>().sprite = runtimeStats.originData._sprite;
 
-        profile.ChangeHealth(data.maxHealth);
+        profile.ChangeHealth(runtimeStats.maxHealth);
         profile.ResetStats();
         //deger yazma
 
@@ -60,27 +60,27 @@ public class BattleSpawner : MonoBehaviour
 
 
 
-    public List<AllyProfile> SpawnAllies(AllyData[] party)
+    public List<AllyProfile> SpawnAllies(PersistanceStats[] partyStats)
     {
         List<AllyProfile> allyProfiles = new List<AllyProfile> { };
 
 
-        for (int i = 0; i < party.Length; i++)
+        for (int i = 0; i < partyStats.Length; i++)
         {
-            allyProfiles.Add(MakeAllyProfile(party[i]));
+            allyProfiles.Add(MakeAllyProfile(partyStats[i]));
         }
         return allyProfiles;
 
     }
-    public List<EnemyProfile> SpawnEnemies(EnemyData[] enemies)
+    public List<EnemyProfile> SpawnEnemies(PersistanceStats[] enemyStats)
     {
         List<EnemyProfile> enemyProfiles = new List<EnemyProfile> { };
 
 
 
-        for (int i = 0; i < enemies.Length; i++)
+        for (int i = 0; i < enemyStats.Length; i++)
         {
-            enemyProfiles.Add(MakeEnemyProfile(enemies[i]));
+            enemyProfiles.Add(MakeEnemyProfile(enemyStats[i]));
         }
         return enemyProfiles;
     }

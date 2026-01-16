@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class CharacterBase : ScriptableObject
+[CreateAssetMenu(fileName = "CharacterData", menuName = "Scriptable Objects/CharacterData")]
+public class CharacterData : ScriptableObject
 {
 
     [Header("Stats")]
@@ -23,12 +24,11 @@ public abstract class CharacterBase : ScriptableObject
     public Sprite _sprite;
 
 
+
+
     [Header("Skills")]
     public _Skill attack;
     public List<_Skill> skills = new List<_Skill>();
-
-
-
 
 
 

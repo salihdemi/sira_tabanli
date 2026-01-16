@@ -7,7 +7,7 @@ public class EnemyProfile : Profile
     {
         Debug.Log(name + " hamlesini seçiyor");
 
-        _Skill currentskill = BaseData.attack; //default hamle
+        _Skill currentskill = stats.attack; //default hamle
         ChooseSkill(currentskill);
     }
     public override void ChooseSkill(_Skill skill)

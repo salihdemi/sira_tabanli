@@ -45,12 +45,12 @@ public class FightManager : MonoBehaviour
 
 
 
-    public void StartFight(EnemyData[] enemyDatas)
+    public void StartFight(PersistanceStats[] enemyStats)
     {
         #region NullCheck
         if (partyManager.party.Length < 1)
         { Debug.LogError("Parti boþ"); return; }
-        if (enemyDatas.Length < 1)
+        if (enemyStats.Length < 1)
         { Debug.LogError("Düþman partisi boþ"); return; }
         #endregion
 
@@ -58,11 +58,11 @@ public class FightManager : MonoBehaviour
 
         fightPanel.SetActive(true);
 
-        AllyData[] allyDatas = partyManager.party;
+        PersistanceStats[] allyStats = partyManager.party;
 
 
-        ActiveAllyProfiles = battleSpawner.SpawnAllies(allyDatas);
-        ActiveEnemyProfiles = battleSpawner.SpawnEnemies(enemyDatas);
+        ActiveAllyProfiles = battleSpawner.SpawnAllies(allyStats);
+        ActiveEnemyProfiles = battleSpawner.SpawnEnemies(enemyStats);
 
 
         turnScheduler.SetAliveProfiles(ActiveAllyProfiles, ActiveEnemyProfiles);

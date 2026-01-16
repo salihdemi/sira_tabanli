@@ -44,6 +44,9 @@ public class TargetingSystem : MonoBehaviour
 
         foreach (Profile p in allProfiles)
         {
+            Debug.Log(p);
+            Debug.Log(skill);
+            Debug.Log(skill.targetType);
             bool isValid = CheckIfValid(p, skill.targetType);
             if (isValid)
             {
