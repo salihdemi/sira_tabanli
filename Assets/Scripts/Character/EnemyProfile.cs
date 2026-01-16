@@ -13,7 +13,7 @@ public class EnemyProfile : Profile
     public override void ChooseSkill(_Skill skill)
     {
         currentSkill = skill;
-        SetTarget(TurnScheduler.orderedProfiles[0]);//default hedef!
+        SetTarget(null);//default hedef!
 
     }
     //public override void SetTarget(Profile profile)

@@ -7,27 +7,32 @@ using UnityEngine.Profiling;
 
 public class TurnScheduler : MonoBehaviour
 {
-
+    public event Action onAllAlliesDie;
+    public event Action onAllEnemiesDie;
     [HideInInspector] public List<Profile> aliveProfiles;
-    public static List<Profile> orderedProfiles;//hiza gore siralan
-    public static int order;
+    public List<Profile> orderedProfiles;//hiza gore siralan
+    public int order;
 
+    [Header("Profiles")]
+    [HideInInspector] public List<AllyProfile> ActiveAllyProfiles = new List<AllyProfile>();
+    [HideInInspector] public List<EnemyProfile> ActiveEnemyProfiles = new List<EnemyProfile>();
     //veri tutan
     //hamleler yaparken kullanýlan
     private void Awake()
     {
+        Profile.OnSomeoneDie += HandleProfileDeath;
         Profile.OnSomeoneLungeEnd += CheckNextCharacter;
     }
     private void OnDestroy()
     {
+        Profile.OnSomeoneDie -= HandleProfileDeath;
         Profile.OnSomeoneLungeEnd -= CheckNextCharacter;
-        
     }
 
-    public void SetAliveProfiles(List<AllyProfile> AllyProfiles, List<EnemyProfile> EnemyProfiles)
+    public void SetAliveProfiles()
     {
-        aliveProfiles = AllyProfiles.Cast<Profile>()
-                           .Concat(EnemyProfiles.Cast<Profile>())
+        aliveProfiles = ActiveAllyProfiles.Cast<Profile>()
+                           .Concat(ActiveEnemyProfiles.Cast<Profile>())
                            .ToList();
     }
 
@@ -53,11 +58,13 @@ public class TurnScheduler : MonoBehaviour
     public void StartTour()
     {
         Debug.Log("starttour");
+        Debug.Log(order);
         SortProfilesWithSpeed();
         CheckNextCharacter();
     }
     public void CheckNextCharacter()
     {
+        Debug.Log(order+" "+orderedProfiles.Count);
         if (order == orderedProfiles.Count)
         {
             Debug.Log("tüm hamleler yapýldý");
@@ -110,5 +117,19 @@ public class TurnScheduler : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         FinishTour();
+    }
+
+
+    public void HandleProfileDeath(Profile deadProfile)
+    {
+        // Listelerden çýkar
+        if (deadProfile is AllyProfile ally) ActiveAllyProfiles.Remove(ally);
+        else if (deadProfile is EnemyProfile enemy) ActiveEnemyProfiles.Remove(enemy);
+
+        RemoveFromQueue(deadProfile);
+
+        // Savaþ bitti mi kontrol et
+             if (ActiveAllyProfiles .Count == 0) onAllAlliesDie.Invoke();
+        else if (ActiveEnemyProfiles.Count == 0) onAllEnemiesDie.Invoke();
     }
 }

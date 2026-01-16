@@ -4,6 +4,7 @@ using UnityEngine.Profiling;
 
 public class TargetingSystem : MonoBehaviour
 {
+    TurnScheduler turnScheduler;
     private void Awake()
     {
         AllyProfile.OnAnyAllyChoseSkill += StartTargeting;
@@ -40,13 +41,10 @@ public class TargetingSystem : MonoBehaviour
         selectedSkill = skill;
         currentCaster = caster;
 
-        List<Profile> allProfiles = TurnScheduler.orderedProfiles;//!
+        List<Profile> allProfiles = turnScheduler.orderedProfiles;//!
 
         foreach (Profile p in allProfiles)
         {
-            Debug.Log(p);
-            Debug.Log(skill);
-            Debug.Log(skill.targetType);
             bool isValid = CheckIfValid(p, skill.targetType);
             if (isValid)
             {
@@ -70,6 +68,7 @@ public class TargetingSystem : MonoBehaviour
         if (selectedSkill == null) return;
 
         // Skilli uygula
+        Debug.Log("OnProfileClicked");
         currentCaster.SetTarget(clickedProfile);
         CloseButtons();
     }

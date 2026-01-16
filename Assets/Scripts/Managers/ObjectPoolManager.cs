@@ -5,7 +5,7 @@ public class ObjectPoolManager : MonoBehaviour
 {
     //sistem disable ederken veriyi temizlemedi, enable edince uzerine yaziyor!
 
-    [SerializeField] private FightManager fightManager;
+    [SerializeField] private TurnScheduler turnScheduler;
 
     [Header("Parents")]
     [SerializeField] private Transform allyParent;
@@ -89,7 +89,7 @@ public class ObjectPoolManager : MonoBehaviour
     }
     public void ClearAllies()
     {
-        List<AllyProfile> activeAllies = fightManager.ActiveAllyProfiles;
+        List<AllyProfile> activeAllies = turnScheduler.ActiveAllyProfiles;
 
         for (int i = activeAllies.Count - 1; i >= 0; i--)
         {
@@ -129,7 +129,7 @@ public class ObjectPoolManager : MonoBehaviour
     }
     public void ClearEnemies()
     {
-        List<EnemyProfile> activeEnemies = fightManager.ActiveEnemyProfiles;
+        List<EnemyProfile> activeEnemies = turnScheduler.ActiveEnemyProfiles;
 
         for (int i = activeEnemies.Count - 1; i >= 0; i--)
         {

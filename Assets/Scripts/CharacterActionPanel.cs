@@ -68,7 +68,14 @@ public class CharacterActionPanel : MonoBehaviour
     private void WriteAttack(AllyProfile profile)
     {
         attackButton.onClick.RemoveAllListeners();
-        attackButton.onClick.AddListener(() => profile.ChooseSkill(profile.stats.attack));
+
+        // ÇÖZÜM: Yerel bir deðiþken oluþturarak referansý "dondur"
+        AllyProfile currentActer = profile;
+
+        attackButton.onClick.AddListener(() => {
+            Debug.Log("Butona týklandý, çalýþtýrýlan profil: " + currentActer.name);
+            currentActer.ChooseSkill(currentActer.stats.attack);
+        });
     }
     private void WriteSkillsPanel(AllyProfile profile)
     {

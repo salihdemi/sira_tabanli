@@ -20,6 +20,7 @@ public class AllyProfile : Profile
     public override void ChooseSkill(_Skill skill)
     {
         currentSkill = skill;
+        Debug.Log("ChooseSkill");
         OnAnyAllyChoseSkill?.Invoke(this, skill);
 
     }
