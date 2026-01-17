@@ -41,7 +41,7 @@ public class FightManager : MonoBehaviour
 
 
 
-    public void StartFight(EnemyMoveable enemy)
+    public void StartFight(EnemyMoveable enemy)//fonksiyonla
     {
         #region NullCheck
         if (partyManager.party.Length < 1)
@@ -64,7 +64,6 @@ public class FightManager : MonoBehaviour
         List<EnemyProfile> ActiveEnemyProfiles = battleSpawner.SpawnEnemies(enemyStats);
 
 
-
         defaultTargetForEnemies = ActiveAllyProfiles[0];//!
 
         turnScheduler.SetAliveProfiles(ActiveAllyProfiles, ActiveEnemyProfiles);
@@ -84,6 +83,7 @@ public class FightManager : MonoBehaviour
     }
     public void LoseFight()
     {
+        Debug.Log("lose");
         //ölüm ekraný* vs
         SceneManager.LoadScene(0);//save sistemi degisince
 

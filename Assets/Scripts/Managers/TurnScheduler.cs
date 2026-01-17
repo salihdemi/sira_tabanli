@@ -18,6 +18,8 @@ public class TurnScheduler : MonoBehaviour
     public static event Action onStartPlay;
     public static event Action onStartTour;
 
+    private Coroutine playCoroutine;
+
     //veri tutan
     //hamleler yaparken kullanýlan
     private void Awake()
@@ -33,6 +35,10 @@ public class TurnScheduler : MonoBehaviour
 
     public void SetAliveProfiles(List<AllyProfile> AllyProfiles, List<EnemyProfile> EnemyProfiles)
     {
+
+        ActiveAllyProfiles = AllyProfiles;
+        ActiveEnemyProfiles = EnemyProfiles;
+
         aliveProfiles = AllyProfiles.Cast<Profile>()
                            .Concat(EnemyProfiles.Cast<Profile>())
                            .ToList();
@@ -99,7 +105,10 @@ public class TurnScheduler : MonoBehaviour
     public void PlayF(List<Profile> orderedProfiles)
     {
         onStartPlay.Invoke();
-        StartCoroutine(Play(orderedProfiles));
+        if (playCoroutine == null)
+        {
+            playCoroutine = StartCoroutine(Play(orderedProfiles));
+        }
     }
 
     public IEnumerator Play(List<Profile> profiles)
@@ -131,7 +140,25 @@ public class TurnScheduler : MonoBehaviour
         RemoveFromQueue(deadProfile);
 
         // Savaþ bitti mi kontrol et
-        if (ActiveAllyProfiles.Count == 0) fightManager.LoseFight();
-        else if (ActiveEnemyProfiles.Count == 0) fightManager.WinFight();
+        if (ActiveAllyProfiles.Count == 0)
+        {
+            if (playCoroutine != null)
+            {
+                StopCoroutine(playCoroutine);
+                playCoroutine = null;
+            }
+
+            fightManager.LoseFight();
+        }
+        else if (ActiveEnemyProfiles.Count == 0)
+        {
+            if (playCoroutine != null)
+            {
+                StopCoroutine(playCoroutine);
+                playCoroutine = null;
+            }
+
+            fightManager.WinFight();
+        }
     }
 }

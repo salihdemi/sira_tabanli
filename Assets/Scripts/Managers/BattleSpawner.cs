@@ -10,7 +10,6 @@ public class BattleSpawner : MonoBehaviour
 
     [SerializeField] private ObjectPoolManager objectPoolManager;
 
-    [Header("Profiles")]
     [SerializeField] private AllyProfile AllyProfilePrefab;
     [SerializeField] private EnemyProfile EnemyProfilePrefab;
 
@@ -22,7 +21,6 @@ public class BattleSpawner : MonoBehaviour
 
     private AllyProfile MakeAllyProfile(PersistanceStats runtimeStats)
     {
-        //AllyProfile profile = Instantiate(AllyProfilePrefab, AllyProfileParent);
         AllyProfile profile = objectPoolManager.GetAlly();
         profile.stats = runtimeStats;
         profile.gameObject.name = runtimeStats.originData.name;
@@ -35,7 +33,6 @@ public class BattleSpawner : MonoBehaviour
     }
     private EnemyProfile MakeEnemyProfile(PersistanceStats runtimeStats)
     {
-        //EnemyProfile profile = Instantiate(EnemyProfilePrefab, EnemyProfileParent);
         EnemyProfile profile = objectPoolManager.GetEnemy();
         profile.stats = runtimeStats;
         profile.gameObject.name = runtimeStats.originData.name;

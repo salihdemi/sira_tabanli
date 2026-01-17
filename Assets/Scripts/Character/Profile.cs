@@ -1,10 +1,5 @@
 using System;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Profiling;
-using UnityEngine.TextCore.Text;
-using UnityEngine.UI;
 
 public abstract class Profile : MonoBehaviour
 {
@@ -60,7 +55,6 @@ public abstract class Profile : MonoBehaviour
             return;
         }
         currentTarget = profile;
-        Debug.Log(currentTarget);
         lastTargetName = currentTarget.name;
 
         LungeEnd();//!
@@ -88,7 +82,7 @@ public abstract class Profile : MonoBehaviour
             text = name + " " + lastTargetName + "'a " + currentSkill.name + " yaptý";
             currentSkill.Method(this, currentTarget);
         }
-        Debug.Log(text);
+        //Debug.Log(text);
         OnSomeonePlay.Invoke(text);
     }
 
