@@ -135,7 +135,10 @@ public abstract class Profile : MonoBehaviour
     }
 
 
-
+    public void SaveHealth()
+    {
+        stats.currentHealth = currentHealth;
+    }
     public void ResetStats()
     {
         isDied = false;
