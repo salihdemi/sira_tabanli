@@ -83,7 +83,7 @@ public abstract class Profile : MonoBehaviour
             currentSkill.Method(this, currentTarget);
         }
         //Debug.Log(text);
-        OnSomeonePlay.Invoke(text);
+        OnSomeonePlay?.Invoke(text);
     }
 
 
@@ -138,6 +138,7 @@ public abstract class Profile : MonoBehaviour
 
     public void ResetStats()
     {
+        isDied = false;
         currentPower = stats.basePower;
         onPowerChange?.Invoke(currentPower);
 
@@ -148,6 +149,7 @@ public abstract class Profile : MonoBehaviour
     {
         isDied = true;
         OnSomeoneDie?.Invoke(this);
+        FightManager.instance.SetDefaultTarget();
     }
 
 

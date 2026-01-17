@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17bc0e10ad87e7844acbdf3d692570e6, type: 3}
-  m_Name: Sovalye
+  m_Name: Spider 1
   m_EditorClassIdentifier: Assembly-CSharp::CharacterBase
-  maxHealth: 45
+  maxHealth: 1000
   basePower: 100
-  baseSpeed: 6
-  _sprite: {fileID: 4495478712733764576, guid: 838545d8300eb52449d69b1a1ac126d3, type: 3}
+  baseSpeed: 1
+  _sprite: {fileID: -3438905571476058607, guid: 34db587e0e7c9d54ea985722ca717eab, type: 3}
   attack: {fileID: 11400000, guid: 9d1e90c9bfde37e4b97d4456b48556bb, type: 2}
   skills: []

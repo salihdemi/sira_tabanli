@@ -8,12 +8,12 @@ using UnityEngine.Profiling;
 public class TurnScheduler : MonoBehaviour
 {
     public FightManager fightManager;
-    [HideInInspector] public List<Profile> aliveProfiles;
-    [HideInInspector] public List<Profile> orderedProfiles;//hiza gore siralan
+    /*[HideInInspector]*/ public List<Profile> aliveProfiles;
+    /*[HideInInspector]*/ public List<Profile> orderedProfiles;//hiza gore siralan
     private int order;
 
-    [HideInInspector] public List<AllyProfile> ActiveAllyProfiles = new List<AllyProfile>();
-    [HideInInspector] public List<EnemyProfile> ActiveEnemyProfiles = new List<EnemyProfile>();
+    /*[HideInInspector]*/ public List<AllyProfile> ActiveAllyProfiles = new List<AllyProfile>();
+    /*[HideInInspector]*/ public List<EnemyProfile> ActiveEnemyProfiles = new List<EnemyProfile>();
 
     public static event Action onStartPlay;
     public static event Action onStartTour;
@@ -65,7 +65,7 @@ public class TurnScheduler : MonoBehaviour
 
     public void StartTour()
     {
-        Debug.Log("starttour");
+        //Debug.Log("starttour");
         onStartTour.Invoke();
         SortProfilesWithSpeed();
         CheckNextCharacter();
@@ -74,7 +74,7 @@ public class TurnScheduler : MonoBehaviour
     {
         if (order == aliveProfiles.Count)
         {
-            Debug.Log("tüm hamleler yapýldý");
+            //Debug.Log("tüm hamleler yapýldý");
 
             //oynat
             PlayF(orderedProfiles);
@@ -91,10 +91,10 @@ public class TurnScheduler : MonoBehaviour
     }
     public void FinishTour()
     {
-        Debug.Log("finishtour");
+        //Debug.Log("finishtour");
 
 
-
+        //Debug.Log("fintour");
         StartTour();
     }
 
@@ -104,29 +104,33 @@ public class TurnScheduler : MonoBehaviour
 
     public void PlayF(List<Profile> orderedProfiles)
     {
+        //Debug.Log("Oynat");
         onStartPlay.Invoke();
         if (playCoroutine == null)
         {
             playCoroutine = StartCoroutine(Play(orderedProfiles));
+            Debug.Log(playCoroutine);
         }
     }
 
     public IEnumerator Play(List<Profile> profiles)
     {
-        Debug.Log("Oynat");
+        yield return null;
         for (int i = 0; i < profiles.Count; i++)
         {
             Profile profile = profiles[i];
 
-
-
-            profile.Play();
+            if (playCoroutine != null)
+            {
+                profile.Play();
+            }
             profile.ClearSkillAndTarget();
             yield return new WaitForSeconds(1f);
 
         }
 
         FinishTour();
+        playCoroutine = null;
     }
 
 

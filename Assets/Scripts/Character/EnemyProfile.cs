@@ -5,7 +5,7 @@ public class EnemyProfile : Profile
 {
     public override void LungeStart()
     {
-        Debug.Log(name + " hamlesini seçiyor");
+        //Debug.Log(name + " hamlesini seçiyor");
 
         _Skill currentskill = stats.attack; //default hamle
         ChooseSkill(currentskill);

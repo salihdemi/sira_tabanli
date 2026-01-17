@@ -12,6 +12,6 @@ public class Attack : _Skill
         //saldýrýyý yap
 
         target.ChangeHealth(-user.GetPower());
-        Debug.Log(user.name + " " + target.name + "'a " + name + " ile " + user.GetPower() + " hasar verdi");
+        //Debug.Log(user.name + " " + target.name + "'a " + name + " ile " + user.GetPower() + " hasar verdi");
     }
 }

@@ -12,7 +12,7 @@ public class AllyProfile : Profile
 
     public override void LungeStart()
     {
-        Debug.Log(name + " hamlesini seçiyor");
+        //Debug.Log(name + " hamlesini seçiyor");
         OnAnyAllyLungeStart.Invoke(this);
 
     }

@@ -74,7 +74,6 @@ public class BattleSpawner : MonoBehaviour
         List<EnemyProfile> enemyProfiles = new List<EnemyProfile> { };
 
 
-
         for (int i = 0; i < enemyStats.Length; i++)
         {
             enemyProfiles.Add(MakeEnemyProfile(enemyStats[i]));

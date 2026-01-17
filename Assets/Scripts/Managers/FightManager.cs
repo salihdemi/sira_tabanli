@@ -10,7 +10,25 @@ using UnityEngine.SceneManagement;
 
 public class FightManager : MonoBehaviour
 {
+    //düþman kendi hedefini seçebilince silinecek
+    public static FightManager instance;
     public static Profile defaultTargetForEnemies;//!
+
+    public void SetDefaultTarget()//gecici
+    {
+        if (turnScheduler.ActiveAllyProfiles.Count > 0)
+        {
+            defaultTargetForEnemies = turnScheduler.ActiveAllyProfiles[0];//!
+        }
+    }
+
+    //-----------------------
+
+
+
+
+
+
 
     [SerializeField] private BattleSpawner battleSpawner;
     [SerializeField] public TurnScheduler turnScheduler;
@@ -28,6 +46,7 @@ public class FightManager : MonoBehaviour
     private string fightLoot;
     private void Awake()
     {
+        instance = this;
         EnemyMoveable.OnSomeoneCollideMainCharacterMoveable += StartFight;
     }
     private void OnDestroy()
@@ -64,12 +83,13 @@ public class FightManager : MonoBehaviour
         List<EnemyProfile> ActiveEnemyProfiles = battleSpawner.SpawnEnemies(enemyStats);
 
 
-        defaultTargetForEnemies = ActiveAllyProfiles[0];//!
 
         turnScheduler.SetAliveProfiles(ActiveAllyProfiles, ActiveEnemyProfiles);
         turnScheduler.SortProfilesWithSpeed();
 
         //battleSpawner.ResetStats(AllyProfiles);
+
+        SetDefaultTarget();//!
 
         turnScheduler.StartTour();
     }
