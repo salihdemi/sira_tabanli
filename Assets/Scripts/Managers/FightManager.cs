@@ -99,6 +99,9 @@ public class FightManager : MonoBehaviour
         //Ödül ver
         Debug.Log(fightLoot + "kazanildi");
 
+        partyManager.SaveHealths();
+
+
         FinishFight();
     }
     public void LoseFight()
@@ -115,6 +118,8 @@ public class FightManager : MonoBehaviour
         OnFightEnd.Invoke();//moveable-setisinfight
 
         battleSpawner.ClearBattlefield();
+
+        defaultTargetForEnemies = null;
 
         fightPanel.SetActive(false);
     }

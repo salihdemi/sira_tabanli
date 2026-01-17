@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17bc0e10ad87e7844acbdf3d692570e6, type: 3}
   m_Name: Spider 1
   m_EditorClassIdentifier: Assembly-CSharp::CharacterBase
-  maxHealth: 1000
+  maxHealth: 1001
   basePower: 100
   baseSpeed: 1
   _sprite: {fileID: -3438905571476058607, guid: 34db587e0e7c9d54ea985722ca717eab, type: 3}

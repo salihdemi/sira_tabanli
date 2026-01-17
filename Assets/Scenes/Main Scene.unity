@@ -234,6 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bd8bf7b93d21a48869b9fac8e69072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartyManager
+  battleSpawner: {fileID: 202671502}
   datas:
   - {fileID: 11400000, guid: 510f7f017e7c34b409fb2893ed92353e, type: 2}
   - {fileID: 11400000, guid: b6be121c27ed2ca41961a59342253244, type: 2}
@@ -268,6 +269,7 @@ MonoBehaviour:
     baseSpeed: 0
     attack: {fileID: 0}
     skills: []
+  partyProfiles: []
 --- !u!4 &503546262
 Transform:
   m_ObjectHideFlags: 0

@@ -19,26 +19,26 @@ public class BattleSpawner : MonoBehaviour
 
 
 
-    private AllyProfile MakeAllyProfile(PersistanceStats runtimeStats)
+    private AllyProfile MakeAllyProfile(PersistanceStats persistanceStats)
     {
         AllyProfile profile = objectPoolManager.GetAlly();
-        profile.stats = runtimeStats;
-        profile.gameObject.name = runtimeStats.originData.name;
-        profile.GetComponent<Image>().sprite = runtimeStats.originData._sprite;
+        profile.stats = persistanceStats;
+        profile.gameObject.name = persistanceStats.originData.name;
+        profile.GetComponent<Image>().sprite = persistanceStats.originData._sprite;
 
-        profile.ChangeHealth(runtimeStats.maxHealth);
+        profile.ChangeHealth(persistanceStats.currentHealth);
         profile.ResetStats();
         //deger yazma
         return profile;
     }
-    private EnemyProfile MakeEnemyProfile(PersistanceStats runtimeStats)
+    private EnemyProfile MakeEnemyProfile(PersistanceStats persistanceStats)
     {
         EnemyProfile profile = objectPoolManager.GetEnemy();
-        profile.stats = runtimeStats;
-        profile.gameObject.name = runtimeStats.originData.name;
-        profile.GetComponent<Image>().sprite = runtimeStats.originData._sprite;
+        profile.stats = persistanceStats;
+        profile.gameObject.name = persistanceStats.originData.name;
+        profile.GetComponent<Image>().sprite = persistanceStats.originData._sprite;
 
-        profile.ChangeHealth(runtimeStats.maxHealth);
+        profile.ChangeHealth(persistanceStats.maxHealth);
         profile.ResetStats();
         //deger yazma
 
@@ -64,6 +64,7 @@ public class BattleSpawner : MonoBehaviour
 
         for (int i = 0; i < partyStats.Length; i++)
         {
+            Debug.Log(partyStats[i].originData.name);
             allyProfiles.Add(MakeAllyProfile(partyStats[i]));
         }
         return allyProfiles;

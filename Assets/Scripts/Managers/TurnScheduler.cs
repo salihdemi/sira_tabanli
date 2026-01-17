@@ -109,7 +109,6 @@ public class TurnScheduler : MonoBehaviour
         if (playCoroutine == null)
         {
             playCoroutine = StartCoroutine(Play(orderedProfiles));
-            Debug.Log(playCoroutine);
         }
     }
 
