@@ -7,27 +7,20 @@ public class PartyManager : MonoBehaviour
     public BattleSpawner battleSpawner;
     private void Awake()
     {
-        for (int i = 0; i < party.Length; i++)
+        for (int i = 0; i < partyStats.Length; i++)
         {
-            if (party.Length > i && datas.Length > i)
+            if (partyStats.Length > i && partyDatas.Length > i)
             {
-                party[i].LoadFromBase(datas[i]);
+                partyStats[i].LoadFromBase(partyDatas[i]);
             }
         }
 
-        partyProfiles = battleSpawner.SpawnAllies(party);
-        Debug.Log(party.Length);
+        //partyProfiles = battleSpawner.SpawnAllies(party);
+        //Debug.Log(party.Length);
     }
-    [SerializeField] public CharacterData[] datas; //!!!!!!!!!!
-    [SerializeField] public PersistanceStats[] party; //static olabilir
-    [SerializeField] public List <AllyProfile> partyProfiles = new List<AllyProfile>();
+    [SerializeField] public CharacterData[] partyDatas; //!!!!!!!!!!
+    [SerializeField] public PersistanceStats[] partyStats; //static olabilir
 
-    public void SaveHealths()
-    {
-        foreach (AllyProfile partyProfile in partyProfiles)
-        {
-            partyProfile.SaveHealth();
-        }
-        //pratyProfiles = AllyProfile[]
-    }
+
+
 }

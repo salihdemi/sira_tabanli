@@ -26,7 +26,7 @@ public class BattleSpawner : MonoBehaviour
         profile.gameObject.name = persistanceStats.originData.name;
         profile.GetComponent<Image>().sprite = persistanceStats.originData._sprite;
 
-        profile.ChangeHealth(persistanceStats.currentHealth);
+        profile.SetHealth(persistanceStats.currentHealth);
         profile.ResetStats();
         //deger yazma
         return profile;
@@ -38,7 +38,7 @@ public class BattleSpawner : MonoBehaviour
         profile.gameObject.name = persistanceStats.originData.name;
         profile.GetComponent<Image>().sprite = persistanceStats.originData._sprite;
 
-        profile.ChangeHealth(persistanceStats.maxHealth);
+        profile.SetHealth(persistanceStats.maxHealth);
         profile.ResetStats();
         //deger yazma
 
@@ -64,7 +64,6 @@ public class BattleSpawner : MonoBehaviour
 
         for (int i = 0; i < partyStats.Length; i++)
         {
-            Debug.Log(partyStats[i].originData.name);
             allyProfiles.Add(MakeAllyProfile(partyStats[i]));
         }
         return allyProfiles;

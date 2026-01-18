@@ -63,7 +63,7 @@ public class FightManager : MonoBehaviour
     public void StartFight(EnemyMoveable enemy)//fonksiyonla
     {
         #region NullCheck
-        if (partyManager.party.Length < 1)
+        if (partyManager.partyStats.Length < 1)
         { Debug.LogError("Parti boþ"); return; }
         if (enemy.enemyStats.Length < 1)
         { Debug.LogError("Düþman partisi boþ"); return; }
@@ -76,7 +76,7 @@ public class FightManager : MonoBehaviour
         fightLoot = enemy.loot;
 
 
-        PersistanceStats[] allyStats = partyManager.party;
+        PersistanceStats[] allyStats = partyManager.partyStats;
         List<AllyProfile> ActiveAllyProfiles = battleSpawner.SpawnAllies(allyStats);
 
         PersistanceStats[] enemyStats = enemy.enemyStats;
@@ -99,8 +99,9 @@ public class FightManager : MonoBehaviour
         //Ödül ver
         Debug.Log(fightLoot + "kazanildi");
 
-        partyManager.SaveHealths();
 
+
+        //resetstats!
 
         FinishFight();
     }

@@ -10,6 +10,8 @@ public class AllyProfile : Profile
     public static event Action<AllyProfile> OnAnyAllyLungeStart;
     public static event Action<Profile, _Skill> OnAnyAllyChoseSkill;
 
+
+
     public override void LungeStart()
     {
         //Debug.Log(name + " hamlesini seçiyor");

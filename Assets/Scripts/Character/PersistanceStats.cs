@@ -11,6 +11,7 @@ public class PersistanceStats
     public float maxHealth;
     public float basePower;
     public float baseSpeed;
+    public bool isDied;
 
     [Header("Skills")]
     public _Skill attack;

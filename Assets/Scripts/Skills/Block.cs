@@ -11,7 +11,7 @@ public class Block : _Skill
 
         //saldýrýyý yap
 
-        user.ChangeHealth(user.GetPower());
+        user.AddToHealth(user.GetPower());
         Debug.Log(user.name + " " + target.name + "'i " + name + " ile " + user.GetPower() + " iyileþtirdi");
     }
 }

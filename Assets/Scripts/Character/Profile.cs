@@ -18,14 +18,15 @@ public abstract class Profile : MonoBehaviour
 
         // Sahneye hazýrla
         gameObject.SetActive(true);
-        onHealthChange.Invoke(currentHealth);
+        Debug.Log(name);
+        onHealthChange.Invoke(stats.currentHealth);
         onPowerChange. Invoke(currentPower);
         onSpeedChange. Invoke(currentSpeed);
     }
 
     public ProfileView view;
 
-    private float currentHealth;
+
     private float currentPower;
     private float currentSpeed;
 
@@ -98,30 +99,40 @@ public abstract class Profile : MonoBehaviour
 
 
 
+    public void SetHealth(float amount)
+    {
+        Debug.Log(name + " " + stats.currentHealth);
+        stats.currentHealth = amount;
+        Debug.Log(name + " " + stats.currentHealth);
+
+
+        onHealthChange?.Invoke(stats.currentHealth);
+    }
 
     public void ForceChangeHealth(float amount)//Overhealth
     {
-        currentHealth += amount;
-        if (currentHealth <= 0)
+        stats.currentHealth += amount;
+        if (stats.currentHealth <= 0)
         {
-            currentHealth = 0;
+            stats.currentHealth = 0;
             Die();
         }
-        onHealthChange?.Invoke(currentHealth);
+        onHealthChange?.Invoke(stats.currentHealth);
     }
-    public void ChangeHealth(float amount)
+    public void AddToHealth(float amount)
     {
-        currentHealth += amount;
-        if (currentHealth > stats.maxHealth)
+        Debug.Log(name + " " + stats.currentHealth);
+        stats.currentHealth += amount;
+        Debug.Log(name + " " + stats.currentHealth);
+        if (stats.currentHealth > stats.maxHealth)
         {
-            currentHealth = stats.maxHealth;
+            stats.currentHealth = stats.maxHealth;
         }
-        if (currentHealth <= 0)
+        if (stats.currentHealth <= 0)
         {
-            currentHealth = 0;
             Die();
         }
-        onHealthChange?.Invoke(currentHealth);
+        onHealthChange?.Invoke(stats.currentHealth);
     }
     public void ChangePower(float amount)
     {
@@ -135,10 +146,6 @@ public abstract class Profile : MonoBehaviour
     }
 
 
-    public void SaveHealth()
-    {
-        stats.currentHealth = currentHealth;
-    }
     public void ResetStats()
     {
         isDied = false;
@@ -151,6 +158,7 @@ public abstract class Profile : MonoBehaviour
     public void Die()
     {
         isDied = true;
+        stats.isDied = true;
         OnSomeoneDie?.Invoke(this);
         FightManager.instance.SetDefaultTarget();
     }
