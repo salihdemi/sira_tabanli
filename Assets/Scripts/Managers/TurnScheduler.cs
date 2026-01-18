@@ -124,7 +124,7 @@ public class TurnScheduler : MonoBehaviour
                 profile.Play();
             }
             profile.ClearSkillAndTarget();
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(.1f);
 
         }
 

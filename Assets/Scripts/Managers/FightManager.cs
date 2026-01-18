@@ -102,6 +102,10 @@ public class FightManager : MonoBehaviour
 
 
         //resetstats!
+        foreach (Profile item in turnScheduler.ActiveAllyProfiles)
+        {
+            item.ResetStats();
+        }
 
         FinishFight();
     }

@@ -64,7 +64,10 @@ public class BattleSpawner : MonoBehaviour
 
         for (int i = 0; i < partyStats.Length; i++)
         {
-            allyProfiles.Add(MakeAllyProfile(partyStats[i]));
+            if (!partyStats[i].isDied)
+            {
+                allyProfiles.Add(MakeAllyProfile(partyStats[i]));
+            }
         }
         return allyProfiles;
 

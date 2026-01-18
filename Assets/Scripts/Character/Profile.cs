@@ -101,9 +101,7 @@ public abstract class Profile : MonoBehaviour
 
     public void SetHealth(float amount)
     {
-        Debug.Log(name + " " + stats.currentHealth);
         stats.currentHealth = amount;
-        Debug.Log(name + " " + stats.currentHealth);
 
 
         onHealthChange?.Invoke(stats.currentHealth);
@@ -121,9 +119,7 @@ public abstract class Profile : MonoBehaviour
     }
     public void AddToHealth(float amount)
     {
-        Debug.Log(name + " " + stats.currentHealth);
         stats.currentHealth += amount;
-        Debug.Log(name + " " + stats.currentHealth);
         if (stats.currentHealth > stats.maxHealth)
         {
             stats.currentHealth = stats.maxHealth;
