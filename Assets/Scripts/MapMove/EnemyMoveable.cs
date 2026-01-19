@@ -63,7 +63,10 @@ public class EnemyMoveable : MapMoveable
 
     protected override void CheckStop()
     {
-
+        if (isInFight)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
     }
 
     //Savaþa giriþ

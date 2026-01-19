@@ -16,13 +16,13 @@ public abstract class MapMoveable : MonoBehaviour
     void Awake()
     {
 
-        FightManager.OnFightStart += () => SetIsInFight(true);
-        FightManager.OnFightEnd += () => SetIsInFight(false);
+        FightManager.OnFightStart += SetInFight;
+        FightManager.OnFightEnd += SetNotInFight;
     }
     private void OnDestroy()
     {
-        FightManager.OnFightStart -= () => SetIsInFight(true);
-        FightManager.OnFightEnd -= () => SetIsInFight(false);
+        FightManager.OnFightStart -= SetInFight;
+        FightManager.OnFightEnd -= SetNotInFight;
     }
     void Start()
     {
@@ -38,8 +38,12 @@ public abstract class MapMoveable : MonoBehaviour
         CheckStop();
 
     }
-    private void SetIsInFight(bool can)
+    private void SetInFight()
     {
-        isInFight = can;
+        isInFight = true;
+    }
+    private void SetNotInFight()
+    {
+        isInFight = false;
     }
 }

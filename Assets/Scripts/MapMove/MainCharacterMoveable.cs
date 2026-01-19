@@ -69,7 +69,7 @@ public class MainCharacterMoveable : MapMoveable
         // Yeni sistemde tuþ býrakýldýðýnda ýþýnlama yapmaya gerek yok. 
         // Karakter zaten targetPosition'a vardýðýnda otomatik duruyor.
         // Bu metod MapMoveable zorunlu kýldýðý için boþ býrakýlabilir.
-        if (!isMoving)
+        if (!isMoving || isInFight)
         {
             rb.linearVelocity = Vector2.zero;
         }
