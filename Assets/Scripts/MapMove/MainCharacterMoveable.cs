@@ -5,7 +5,6 @@ public class MainCharacterMoveable : MapMoveable
 
     [Header("Grid Settings")]
     [SerializeField] private float gridSize = 1f;
-    [SerializeField] private LayerMask obstacleLayer; // Duvarlarý seçmek için
 
     private Vector3 targetPosition;
     private bool isMoving = false;
@@ -39,7 +38,7 @@ public class MainCharacterMoveable : MapMoveable
 
         // Hedef noktada engel var mý kontrol et (OverlapCircle)
         // Eðer duvarlarýn Layer'ýný 'obstacleLayer' olarak ayarlarsan burasý çalýþýr
-        if (!Physics2D.OverlapCircle(potentialTarget, 0.2f, obstacleLayer))
+        if (!Physics2D.OverlapCircle(potentialTarget, 0.2f))
         {
             targetPosition = potentialTarget;
             isMoving = true;
@@ -54,7 +53,7 @@ public class MainCharacterMoveable : MapMoveable
             // Karakteri hedefe pürüzsüzce kaydýr
             Vector3 newPosition = Vector3.MoveTowards(rb.position, targetPosition, speed * Time.fixedDeltaTime);
             rb.MovePosition(newPosition);
-
+            Debug.Log(targetPosition);
             // Hedefe ulaþtý mý kontrol et
             if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
             {
@@ -72,6 +71,7 @@ public class MainCharacterMoveable : MapMoveable
         if (!isMoving || isInFight)
         {
             rb.linearVelocity = Vector2.zero;
+
         }
     }
 
