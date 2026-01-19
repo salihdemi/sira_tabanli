@@ -32,16 +32,18 @@ public class PartyManager : MonoBehaviour
 
         allUnlockedAllys.Add(stats);
 
+        Debug.Log("unlockally " + stats._name);
 
-        Debug.Log("added" + stats.originData);
+        TryAddToParty(stats);//kaldirilacak
 
-        TryAddToParty(stats);
     }
 
-    private void TryAddToParty(PersistanceStats characterStats)
+    public void TryAddToParty(PersistanceStats characterStats)
     {
         if (partyStats.Count < 4)
         {
+            Debug.Log("addparty " + characterStats._name);
+            characterStats.isInParty = true;
             partyStats.Add(characterStats);
         }
         else
@@ -50,17 +52,14 @@ public class PartyManager : MonoBehaviour
         }
     }
 
-    private void SetParty(PersistanceStats characterToAdd, PersistanceStats characterToRemove)
+    public void TryToRemoveFromParty(PersistanceStats characterToRemove)
     {
-        // characterToRemove gerçekten partide mi kontrolü
-        int index = partyStats.IndexOf(characterToRemove);
-
-        if (index != -1)
+        if (partyStats.Count > 1 && partyStats.Contains(characterToRemove))
         {
-            // Direkt o index'teki karakteri yenisiyle deðiþtir (Swap)
-            partyStats[index] = characterToAdd;
-            Debug.Log("Karakter deðiþtirildi.");
+            characterToRemove.isInParty = false;
+            partyStats.Remove(characterToRemove);
         }
+
     }
 
 }

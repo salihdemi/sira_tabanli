@@ -53,7 +53,6 @@ public class MainCharacterMoveable : MapMoveable
             // Karakteri hedefe pürüzsüzce kaydýr
             Vector3 newPosition = Vector3.MoveTowards(rb.position, targetPosition, speed * Time.fixedDeltaTime);
             rb.MovePosition(newPosition);
-            Debug.Log(targetPosition);
             // Hedefe ulaþtý mý kontrol et
             if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
             {

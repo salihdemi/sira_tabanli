@@ -6,12 +6,16 @@ public class PersistanceStats
 {
     [HideInInspector] public CharacterData originData;
 
+    public string _name;
+
+
     public float currentHealth;
 
     public float maxHealth;
     public float basePower;
     public float baseSpeed;
     public bool isDied;
+    public bool isInParty;
 
     [Header("Skills")]
     public _Skill attack;
@@ -19,6 +23,7 @@ public class PersistanceStats
     public void LoadFromBase(CharacterData data)
     {
         originData = data;
+        _name = data.name;
         maxHealth = data.maxHealth;
         currentHealth = maxHealth;
         basePower = data.basePower;
