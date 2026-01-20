@@ -2,76 +2,42 @@ using UnityEngine;
 
 public class MainCharacterMoveable : MapMoveable
 {
-
-    [Header("Grid Settings")]
-    [SerializeField] private float gridSize = 1f;
-
-    private Vector3 targetPosition;
-    private bool isMoving = false;
-
-
+    private Vector2 moveInput;
 
     protected override void Move()
     {
-        // Eðer zaten hareket halindeyse yeni input alma (Grid kuralý)
-        if (isMoving || isInFight) return;
-
-        float inputX = 0;
-        float inputY = 0;
-
-        // Input alma (Önce yatay sonra dikey kontrolü çapraz gitmeyi engeller)
-        if (Input.GetKey(KeyCode.D)) inputX = 1;
-        else if (Input.GetKey(KeyCode.A)) inputX = -1;
-        else if (Input.GetKey(KeyCode.W)) inputY = 1;
-        else if (Input.GetKey(KeyCode.S)) inputY = -1;
-
-        if (inputX != 0 || inputY != 0)
+        // Eðer savaþtaysak hareket etme
+        if (isInFight)
         {
-            Vector3 direction = new Vector3(inputX, inputY, 0);
-            TryMove(direction);
+            rb.linearVelocity = Vector2.zero;
+            return;
         }
+
+        // 1. Input alma (Yatay ve Dikey)
+        // GetAxisRaw kullanýyoruz ki hareket daha keskin/net olsun
+        float inputX = Input.GetAxisRaw("Horizontal");
+        float inputY = Input.GetAxisRaw("Vertical");
+
+        moveInput = new Vector2(inputX, inputY).normalized;
     }
 
-    private void TryMove(Vector3 direction)
-    {
-        Vector3 potentialTarget = targetPosition + (direction * gridSize);
-
-        // Hedef noktada engel var mý kontrol et (OverlapCircle)
-        // Eðer duvarlarýn Layer'ýný 'obstacleLayer' olarak ayarlarsan burasý çalýþýr
-        if (!Physics2D.OverlapCircle(potentialTarget, 0.2f))
-        {
-            targetPosition = potentialTarget;
-            isMoving = true;
-        }
-    }
-
-    // MapMoveable içindeki Update her kare çalýþýyor, biz fiziði FixedUpdate ile destekleyelim
     private void FixedUpdate()
     {
-        if (isMoving)
+        if (!isInFight)
         {
-            // Karakteri hedefe pürüzsüzce kaydýr
-            Vector3 newPosition = Vector3.MoveTowards(rb.position, targetPosition, speed * Time.fixedDeltaTime);
-            rb.MovePosition(newPosition);
-            // Hedefe ulaþtý mý kontrol et
-            if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
-            {
-                transform.position = targetPosition; // Tam kareye sabitle (Snap)
-                isMoving = false;
-            }
+            // 2. Fiziksel hareket
+            // Serbest harekette rb.MovePosition yerine velocity (hýz) kullanmak 
+            // duvarlarla etkileþim için genellikle daha pürüzsüzdür.
+            rb.linearVelocity = moveInput * speed;
         }
     }
 
     protected override void CheckStop()
     {
-        // Yeni sistemde tuþ býrakýldýðýnda ýþýnlama yapmaya gerek yok. 
-        // Karakter zaten targetPosition'a vardýðýnda otomatik duruyor.
-        // Bu metod MapMoveable zorunlu kýldýðý için boþ býrakýlabilir.
-        if (!isMoving || isInFight)
+        // Tuþ býrakýldýðýnda veya input yoksa hýzý sýfýrla
+        if (moveInput == Vector2.zero || isInFight)
         {
             rb.linearVelocity = Vector2.zero;
-
         }
     }
-
 }
