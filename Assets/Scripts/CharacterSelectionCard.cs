@@ -16,7 +16,7 @@ public class CharacterSelectionCard : MonoBehaviour
         myStats = stats;
         menuManager = manager;
 
-        portrait.sprite = stats.originData._sprite;
+        portrait.sprite = stats.sprite;
         healthText.text = stats.currentHealth + " " + stats.maxHealth;
         UpdateUI();
     }

@@ -23,8 +23,8 @@ public class BattleSpawner : MonoBehaviour
     {
         AllyProfile profile = objectPoolManager.GetAlly();
         profile.stats = persistanceStats;
-        profile.gameObject.name = persistanceStats.originData.name;
-        profile.GetComponent<Image>().sprite = persistanceStats.originData._sprite;
+        profile.gameObject.name = persistanceStats._name;
+        profile.GetComponent<Image>().sprite = persistanceStats.sprite;
 
         profile.SetHealth(persistanceStats.currentHealth);
         profile.ResetStats();
@@ -35,8 +35,8 @@ public class BattleSpawner : MonoBehaviour
     {
         EnemyProfile profile = objectPoolManager.GetEnemy();
         profile.stats = persistanceStats;
-        profile.gameObject.name = persistanceStats.originData.name;
-        profile.GetComponent<Image>().sprite = persistanceStats.originData._sprite;
+        profile.gameObject.name = persistanceStats._name;
+        profile.GetComponent<Image>().sprite = persistanceStats.sprite;
 
         profile.SetHealth(persistanceStats.maxHealth);
         profile.ResetStats();

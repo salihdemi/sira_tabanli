@@ -24,7 +24,6 @@ public class SaveSlotUI : MonoBehaviour
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
             dateText.text = data.saveDate;
-            infoText.text = data.currentPartyIDs.Count + " Kiþilik Parti";
         }
         else
         {

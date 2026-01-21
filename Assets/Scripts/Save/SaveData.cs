@@ -1,20 +1,35 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class SaveData
 {
     public string saveDate;
-    public float playerX, playerY;
+    public float playerX, playerY;//kayýt noktasý olarak deðiþtirilecek!
 
-    // Açýlan karakterlerin isim listesi
+
     public List<AllySaveData> savedAllys = new List<AllySaveData>();
 
-    // O anki aktif partideki karakterlerin isim listesi
-    public List<string> currentPartyIDs = new List<string>();
+
+    //Yenilen bosslar
+    //Hikaye ilerlemeleri()
+    //Kaynaklar
+    //sevviye-tecrübe?
+
 }
 
 [System.Serializable]
 public class AllySaveData
 {
-    public string characterID; // ScriptableObject'in dosya adý (name)
+
+    public string name;
+    public Sprite sprite;
+
+    public float currentHealth;
+
+    public float maxHealth;
+    public float basePower;
+    public float baseSpeed;
+    public bool isDied;
+    public bool isInParty;
 }

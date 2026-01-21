@@ -20,7 +20,7 @@ public class CharacterSelectMenu : MonoBehaviour
         foreach (Transform child in contentArea) Destroy(child.gameObject);
         spawnedCards.Clear();
 
-        foreach (var ally in partyManager.allUnlockedAllys)
+        foreach (var ally in partyManager.allUnlockedAllies)
         {
             GameObject go = Instantiate(cardPrefab, contentArea);
             var card = go.GetComponent<CharacterSelectionCard>();

@@ -4,9 +4,10 @@ using UnityEngine;
 [System.Serializable]
 public class PersistanceStats
 {
-    [HideInInspector] public CharacterData originData;
+    //[HideInInspector] public CharacterData originData;
 
     public string _name;
+    public Sprite sprite;
 
 
     public float currentHealth;
@@ -22,8 +23,9 @@ public class PersistanceStats
     public List<_Skill> skills = new List<_Skill>();
     public void LoadFromBase(CharacterData data)
     {
-        originData = data;
+        //originData = data;
         _name = data.name;
+        sprite = data._sprite;
         maxHealth = data.maxHealth;
         currentHealth = maxHealth;
         basePower = data.basePower;

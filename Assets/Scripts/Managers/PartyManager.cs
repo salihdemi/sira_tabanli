@@ -16,7 +16,7 @@ public class PartyManager : MonoBehaviour
 
     }
 
-    public List<PersistanceStats> allUnlockedAllys = new List<PersistanceStats>();
+    public List<PersistanceStats> allUnlockedAllies = new List<PersistanceStats>();
     
     [SerializeField] public CharacterData[] partyDatas; //!!!!!!!!!!gereksiz
     [SerializeField] public List<PersistanceStats> partyStats; //static olabilir
@@ -30,7 +30,7 @@ public class PartyManager : MonoBehaviour
 
 
 
-        allUnlockedAllys.Add(stats);
+        allUnlockedAllies.Add(stats);
 
         Debug.Log("unlockally " + stats._name);
 
