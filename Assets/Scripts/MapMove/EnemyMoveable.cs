@@ -4,29 +4,18 @@ using UnityEngine;
 
 public class EnemyMoveable : MapMoveable
 {
-    [SerializeField] public CharacterData[] datas; //!!!!!!!!!!
-    [SerializeField] public PersistanceStats[] enemyStats;
+    [SerializeField] EnemyGroup group;
 
-    public static event Action <EnemyMoveable> OnSomeoneCollideMainCharacterMoveable;
+    [SerializeField] public CharacterData data;
 
 
-    private bool trigger;
+
+    public bool trigger;
 
     private MainCharacterMoveable mainCharacter;
 
 
-    public string loot;
 
-    private void Awake()
-    {
-        for (int i = 0; i < enemyStats.Length; i++)
-        {
-            if (enemyStats.Length > i && datas.Length > i)
-            {
-                enemyStats[i].LoadFromBase(datas[i]);
-            }
-        }
-    }
 
 
     protected override void Move()
@@ -59,41 +48,42 @@ public class EnemyMoveable : MapMoveable
         }
 
         rb.linearVelocity = new Vector3(x * speed, y * speed, 0);
-    }
 
-    protected override void CheckStop()
-    {
-        if (isInFight)
+
+
+        Debug.Log(isInFight +" "+ !trigger + " "+ !group.trigger);
+
+        if (isInFight || !trigger || !group.trigger)
         {
             rb.linearVelocity = Vector2.zero;
         }
     }
 
-    //Savaþa giriþ
+
+    //Oyuncuyu yakalayýnca
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.TryGetComponent<MapMoveable>(out MapMoveable character))
+        if (collision.gameObject.GetComponent<MainCharacterMoveable>())
         {
-            gameObject.SetActive(false);
-            OnSomeoneCollideMainCharacterMoveable.Invoke(this);
-
+            group.Cath();
         }
-    }
-    //Tetikleniþ
+    } 
+    //Oyuncu menzile girince
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(!trigger && other.gameObject.TryGetComponent<MainCharacterMoveable>(out mainCharacter))
+        if(!trigger && group.trigger && other.gameObject.TryGetComponent<MainCharacterMoveable>(out mainCharacter))
         {
             trigger = true;
+            Debug.Log("menzile girdi");
         }
     }
+    //Oyuncu menzilden çýkýnca
     private void OnTriggerExit2D(Collider2D other)
     {
         if (trigger && other.gameObject.GetComponent<MainCharacterMoveable>())
         {
             trigger = false;
-            mainCharacter = null;
-        rb.linearVelocity = Vector2.zero;
+            Debug.Log("menzilden cýkrý");
         }
     }
 }

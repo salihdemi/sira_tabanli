@@ -30,12 +30,10 @@ public abstract class MapMoveable : MonoBehaviour
     }
 
     protected abstract void Move();
-    protected abstract void CheckStop();
     void Update()
     {
         Move();
 
-        CheckStop();
 
     }
     private void SetInFight()

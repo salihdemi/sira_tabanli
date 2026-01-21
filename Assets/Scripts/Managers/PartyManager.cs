@@ -32,7 +32,6 @@ public class PartyManager : MonoBehaviour
 
         allUnlockedAllies.Add(stats);
 
-        Debug.Log("unlockally " + stats._name);
 
         TryAddToParty(stats);//kaldirilacak
 
@@ -42,7 +41,6 @@ public class PartyManager : MonoBehaviour
     {
         if (partyStats.Count < 4)
         {
-            Debug.Log("addparty " + characterStats._name);
             characterStats.isInParty = true;
             partyStats.Add(characterStats);
         }

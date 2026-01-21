@@ -57,12 +57,12 @@ public class BattleSpawner : MonoBehaviour
 
 
 
-    public List<AllyProfile> SpawnAllies(PersistanceStats[] partyStats)
+    public List<AllyProfile> SpawnAllies(List<PersistanceStats> partyStats)
     {
         List<AllyProfile> allyProfiles = new List<AllyProfile> { };
 
 
-        for (int i = 0; i < partyStats.Length; i++)
+        for (int i = 0; i < partyStats.Count; i++)
         {
             if (!partyStats[i].isDied)
             {
@@ -72,12 +72,12 @@ public class BattleSpawner : MonoBehaviour
         return allyProfiles;
 
     }
-    public List<EnemyProfile> SpawnEnemies(PersistanceStats[] enemyStats)
+    public List<EnemyProfile> SpawnEnemies(List<PersistanceStats> enemyStats)
     {
         List<EnemyProfile> enemyProfiles = new List<EnemyProfile> { };
 
 
-        for (int i = 0; i < enemyStats.Length; i++)
+        for (int i = 0; i < enemyStats.Count; i++)
         {
             enemyProfiles.Add(MakeEnemyProfile(enemyStats[i]));
         }

@@ -19,6 +19,14 @@ public class MainCharacterMoveable : MapMoveable
         float inputY = Input.GetAxisRaw("Vertical");
 
         moveInput = new Vector2(inputX, inputY).normalized;
+
+
+
+        // Tuþ býrakýldýðýnda veya input yoksa hýzý sýfýrla
+        if (moveInput == Vector2.zero || isInFight)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
     }
 
     private void FixedUpdate()
@@ -29,15 +37,6 @@ public class MainCharacterMoveable : MapMoveable
             // Serbest harekette rb.MovePosition yerine velocity (hýz) kullanmak 
             // duvarlarla etkileþim için genellikle daha pürüzsüzdür.
             rb.linearVelocity = moveInput * speed;
-        }
-    }
-
-    protected override void CheckStop()
-    {
-        // Tuþ býrakýldýðýnda veya input yoksa hýzý sýfýrla
-        if (moveInput == Vector2.zero || isInFight)
-        {
-            rb.linearVelocity = Vector2.zero;
         }
     }
 }
