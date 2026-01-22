@@ -5,20 +5,22 @@ using UnityEngine;
 public class EnemyGroup : MonoBehaviour
 {
     [SerializeField] public EnemyMoveable[] moveables;
-    [HideInInspector] public List<PersistanceStats> enemyStats;
+    [HideInInspector] public List<PersistanceStats> enemyStats = new List<PersistanceStats>(); // Liste oluþturuldu (Null hatasý engellendi)
     public bool trigger;
 
     public static event Action<EnemyGroup> OnSomeoneCollideMainCharacterMoveable;
-
     public string loot;
     private void Awake()
     {
-        for (int i = 0; i < moveables.Length; i++)
+        EnemyManager.instance.allNormalGroups.Add(this);
+
+        // Grup içindeki düþmanlarýn verilerini hazýrla
+        foreach (var enemy in moveables)
         {
-            if (moveables.Length > i)
+            if (enemy.data != null)
             {
                 PersistanceStats stat = new PersistanceStats();
-                stat.LoadFromBase(moveables[i].data);
+                stat.LoadFromBase(enemy.data);
                 enemyStats.Add(stat);
             }
         }
@@ -26,36 +28,55 @@ public class EnemyGroup : MonoBehaviour
 
     public void Cath()
     {
+        // Savaþ baþladýðýnda gruptaki herkesi durdur
         foreach (EnemyMoveable moveable in moveables)
         {
-            gameObject.SetActive(false);
+            moveable.ChangeState(EnemyState.InFight);
         }
-        OnSomeoneCollideMainCharacterMoveable.Invoke(this);
+        OnSomeoneCollideMainCharacterMoveable?.Invoke(this);
+    }
+    public void ResetGroup()
+    {
+        // Grubu tekrar görünür yap
+        gameObject.SetActive(true);
+        trigger = false;
+
+        // Ýçindeki her bir düþmaný baþlangýç pozisyonuna al ve canlarýný tazele
+        foreach (EnemyMoveable moveable in moveables)
+        {
+            moveable.ResetEnemy();
+        }
+
+        // PersistanceStats (canlar vb.) listesini yeniden doldur veya tazele
+        foreach (var stat in enemyStats)
+        {
+            stat.currentHealth = stat.maxHealth;
+            stat.isDied = false;
+        }
     }
 
-
-
-    /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!trigger && collision.GetComponent<MainCharacterMoveable>())
+        if (collision.CompareTag("Player"))
         {
             trigger = true;
-            Debug.Log("grup mnziline girdi");
+            // Düþmanlar kendi Update'lerinde bu trigger'ý görüp Chasing'e geçecek
         }
     }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (trigger && collision.GetComponent<MainCharacterMoveable>())
+        if (collision.CompareTag("Player"))
         {
-            // Tüm arkadaþlar takibi býraksýn
-            foreach(EnemyMoveable moveable in moveables)
-            {
-                moveable.trigger = false;
-            }
             trigger = false;
-            Debug.Log("grup mnzilinden çýktý");
+            // Düþmanlar Chasing içindeyken bu false olunca otomatik Idle'a dönecek
         }
     }
-    */
+
+
+    public void LoseFight()
+    {
+        //ölü diye kaydet
+        gameObject.SetActive(false);
+    }
 }

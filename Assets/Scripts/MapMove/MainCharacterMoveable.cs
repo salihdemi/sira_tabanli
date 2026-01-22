@@ -4,7 +4,7 @@ public class MainCharacterMoveable : MapMoveable
 {
     private Vector2 moveInput;
 
-    protected override void Move()
+    private void Move()
     {
         // Eðer savaþtaysak hareket etme
         if (isInFight)
@@ -23,20 +23,16 @@ public class MainCharacterMoveable : MapMoveable
 
 
         // Tuþ býrakýldýðýnda veya input yoksa hýzý sýfýrla
-        if (moveInput == Vector2.zero || isInFight)
+        if (moveInput == Vector2.zero)
         {
             rb.linearVelocity = Vector2.zero;
         }
+
+        rb.linearVelocity = moveInput * speed * Time.deltaTime * 100;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (!isInFight)
-        {
-            // 2. Fiziksel hareket
-            // Serbest harekette rb.MovePosition yerine velocity (hýz) kullanmak 
-            // duvarlarla etkileþim için genellikle daha pürüzsüzdür.
-            rb.linearVelocity = moveInput * speed;
-        }
+        Move();
     }
 }

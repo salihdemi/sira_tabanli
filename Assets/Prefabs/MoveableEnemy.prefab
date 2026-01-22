@@ -107,10 +107,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMoveable
   speed: 10
-  enemies:
-  - {fileID: 11400000, guid: d844d6513d09d0641888d2753d10aef2, type: 2}
-  - {fileID: 11400000, guid: 48cabb20532d1304b8563e71d4c87f4d, type: 2}
-  - {fileID: 11400000, guid: b47710ac3bea2504ca4354a6cccad6ed, type: 2}
+  group: {fileID: 0}
+  data: {fileID: 0}
+  stopDistance: 0.5
+  currentState: 0
+  trigger: 0
 --- !u!61 &4914002065372031050
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -229,4 +230,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4

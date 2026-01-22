@@ -7,7 +7,6 @@ public class PersistanceStats
     //[HideInInspector] public CharacterData originData;
 
     public string _name;
-    public Sprite sprite;
 
 
     public float currentHealth;
@@ -18,14 +17,21 @@ public class PersistanceStats
     public bool isDied;
     public bool isInParty;
 
+
+
+
+    public Sprite sprite;
     [Header("Skills")]
     public _Skill attack;
     public List<_Skill> skills = new List<_Skill>();
+
+
+
     public void LoadFromBase(CharacterData data)
     {
         //originData = data;
         _name = data.name;
-        sprite = data._sprite;
+        sprite = data.sprite;
         maxHealth = data.maxHealth;
         currentHealth = maxHealth;
         basePower = data.basePower;
@@ -34,6 +40,17 @@ public class PersistanceStats
         attack = data.attack;
         skills = new List<_Skill>(data.skills);
     }
+    public void LoadFromSave()
+    {
+
+    }
+
+    public void GetRest()
+    {
+        isDied = false;
+        currentHealth = maxHealth;
+    }
+
 
     public void LearnSkill(_Skill skill)
     {

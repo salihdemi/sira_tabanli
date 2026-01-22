@@ -9,6 +9,7 @@ public class PartyManager : MonoBehaviour
     public BattleSpawner battleSpawner;
     private void Awake()
     {
+
         for (int i = 0; i < partyDatas.Length; i++)
         {
             UnlockAlly(partyDatas[i]);
@@ -21,7 +22,18 @@ public class PartyManager : MonoBehaviour
     [SerializeField] public CharacterData[] partyDatas; //!!!!!!!!!!gereksiz
     [SerializeField] public List<PersistanceStats> partyStats; //static olabilir
 
-    
+
+
+    public void OnPressRestPartyButton()
+    {
+        foreach (PersistanceStats stat in partyStats)
+        {
+            stat.GetRest();
+        }
+        EnemyManager.instance.RespawnAll();
+        // diðer menüyü ac
+    }
+
     public void UnlockAlly(CharacterData data)
     {
         PersistanceStats stats = new PersistanceStats();

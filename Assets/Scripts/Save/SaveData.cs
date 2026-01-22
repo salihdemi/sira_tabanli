@@ -5,11 +5,12 @@ using UnityEngine;
 public class SaveData
 {
     public string saveDate;
-    public float playerX, playerY;//kayýt noktasý olarak deðiþtirilecek!
+    public float playerX, playerY;
 
 
     public List<AllySaveData> savedAllys = new List<AllySaveData>();
 
+    public List<bool> savedEnemyGroups = new List<bool>();
 
     //Yenilen bosslar
     //Hikaye ilerlemeleri()
@@ -18,12 +19,14 @@ public class SaveData
 
 }
 
+
+
 [System.Serializable]
 public class AllySaveData
 {
 
     public string name;
-    public Sprite sprite;
+    public int sprite;
 
     public float currentHealth;
 
@@ -32,4 +35,9 @@ public class AllySaveData
     public float baseSpeed;
     public bool isDied;
     public bool isInParty;
+
+
+
+    public int attackSkill;
+    public List<int> skills;
 }

@@ -7,7 +7,6 @@ public abstract class MapMoveable : MonoBehaviour
     public float speed = 10;
 
 
-    protected float x, y;
 
 
 
@@ -24,18 +23,11 @@ public abstract class MapMoveable : MonoBehaviour
         FightManager.OnFightStart -= SetInFight;
         FightManager.OnFightEnd -= SetNotInFight;
     }
-    void Start()
+    protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    protected abstract void Move();
-    void Update()
-    {
-        Move();
-
-
-    }
     private void SetInFight()
     {
         isInFight = true;

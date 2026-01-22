@@ -1,89 +1,145 @@
 using System;
-using System.Linq;
 using UnityEngine;
+
+public enum EnemyState { Idle, Chasing, InFight }
 
 public class EnemyMoveable : MapMoveable
 {
-    [SerializeField] EnemyGroup group;
-
+    [Header("Settings")]
+    [SerializeField] private EnemyGroup group;
     [SerializeField] public CharacterData data;
+    [SerializeField] private float stopDistance = 0.5f;
 
+    public EnemyState currentState = EnemyState.Idle;
+    private Transform mainCharacter;
+    private Vector3 startPosition;
 
+    public bool trigger; // Bireysel menzil kontrolü
 
-    public bool trigger;
-
-    private MainCharacterMoveable mainCharacter;
-
-
-
-
-
-    protected override void Move()
+    protected override void Start()
     {
-        if (!trigger || isInFight) return;
-        float targetX = mainCharacter.transform.position.x;
-        float targetY = mainCharacter.transform.position.y;
+        base.Start();
+        startPosition = transform.position;
+    }
+    public void ResetEnemy()
+    {
+        transform.position = startPosition; // Baþlangýç koordinatýna ýþýnla
+        currentState = EnemyState.Idle;     // Durumunu normale döndür
+        trigger = false;                    // Takip trigger'ýný sýfýrla
+        rb.linearVelocity = Vector2.zero;   // Hareketini kes
+    }
 
-        float currentX = transform.position.x;
-        float currentY = transform.position.y;
-        //x uzaksa
-        if (Mathf.Abs(currentX - targetX) >= Mathf.Abs(currentY - targetY))
+    private void Update()
+    {
+        HandleState();
+    }
+
+    public void ChangeState(EnemyState newState)
+    {
+        if (currentState == newState) return;
+        currentState = newState;
+    }
+
+    private void HandleState()
+    {
+        switch (currentState)
         {
-            if (y < 0f) { transform.position = new Vector3(transform.position.x, Mathf.Floor(transform.position.y), 0f); }
-            else { transform.position = new Vector3(transform.position.x, Mathf.Ceil(transform.position.y), 0f); }
-
-            y = 0;
-
-            x = Mathf.Sign(targetX - currentX);
+            case EnemyState.Idle:
+                HandleIdleState();
+                break;
+            case EnemyState.Chasing:
+                HandleChasingState();
+                break;
+            case EnemyState.InFight:
+                HandleInFightState();
+                break;
         }
-        //y uzaksa
+    }
+
+    private void HandleIdleState()
+    {
+        rb.linearVelocity = Vector2.zero;
+
+
+        float distance = Vector2.Distance(transform.position, startPosition);
+
+        if (distance > stopDistance)
+        {
+            Vector3 direction = (startPosition - transform.position).normalized;
+            // Fizik motoru (RB) kullanýrken Time.deltaTime kullanmana gerek yoktur, 
+            // hýz (velocity) zaten zamandan baðýmsýz bir deðerdir.
+            rb.linearVelocity = direction * speed;
+        }
         else
         {
-            if (y < 0f) { transform.position = new Vector3(Mathf.Floor(transform.position.x), transform.position.y, 0f); }
-            else { transform.position = new Vector3(Mathf.Ceil(transform.position.x), transform.position.y, 0f); }
-
-            x = 0;
-
-            y = Mathf.Sign(targetY - currentY);
+            rb.linearVelocity = Vector2.zero;
         }
 
-        rb.linearVelocity = new Vector3(x * speed, y * speed, 0);
 
+        // ÇÝFT KONTROL: Hem grup tetiklenmiþ olmalý hem de düþman oyuncuyu görmeli
+        if (trigger && group.trigger && mainCharacter != null)
+        {
+            ChangeState(EnemyState.Chasing);
+        }
+    }
 
+    private void HandleChasingState()
+    {
+        // ÞARTLARDAN BÝRÝ BOZULURSA (Grup menzilinden çýkýþ veya bireysel menzilden çýkýþ)
+        if (mainCharacter == null || !group.trigger || !trigger)
+        {
+            ChangeState(EnemyState.Idle);
+            return;
+        }
 
-        Debug.Log(isInFight +" "+ !trigger + " "+ !group.trigger);
+        float distance = Vector2.Distance(transform.position, mainCharacter.position);
 
-        if (isInFight || !trigger || !group.trigger)
+        if (distance > stopDistance)
+        {
+            Vector3 direction = (mainCharacter.position - transform.position).normalized;
+            // Fizik motoru (RB) kullanýrken Time.deltaTime kullanmana gerek yoktur, 
+            // hýz (velocity) zaten zamandan baðýmsýz bir deðerdir.
+            rb.linearVelocity = direction * speed;
+        }
+        else
         {
             rb.linearVelocity = Vector2.zero;
         }
     }
 
+    private void HandleInFightState()
+    {
+        rb.linearVelocity = Vector2.zero;
+    }
 
-    //Oyuncuyu yakalayýnca
+    // --- TETÝKLEYÝCÝLER ---
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<MainCharacterMoveable>())
+        if (collision.gameObject.CompareTag("Player"))
         {
-            group.Cath();
-        }
-    } 
-    //Oyuncu menzile girince
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if(!trigger && group.trigger && other.gameObject.TryGetComponent<MainCharacterMoveable>(out mainCharacter))
-        {
-            trigger = true;
-            Debug.Log("menzile girdi");
+            if(currentState != EnemyState.InFight)
+            {
+                group.Cath(); // Bu fonksiyon tüm grubu InFight'a sokar
+            }
         }
     }
-    //Oyuncu menzilden çýkýnca
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            trigger = true;
+            mainCharacter = other.transform;
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (trigger && other.gameObject.GetComponent<MainCharacterMoveable>())
+        if (other.CompareTag("Player"))
         {
             trigger = false;
-            Debug.Log("menzilden cýkrý");
+            // Chasing içindeki kontrol sayesinde otomatik Idle'a düþecek
         }
     }
 }

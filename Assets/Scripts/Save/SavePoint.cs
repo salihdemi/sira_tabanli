@@ -17,14 +17,17 @@ public class SavePoint : MonoBehaviour
     {
         saveMenuPanel.SetActive(true);
         // Menü açýldýðýnda karakterin hareketini durdurmak isteyebilirsin
-        Time.timeScale = 0f; // Oyunu duraklat (opsiyonel)
+        //Time.timeScale = 0f; // Oyunu duraklat (opsiyonel)
+
     }
 
     public void CloseSaveMenu()
     {
         saveMenuPanel.SetActive(false);
-        Time.timeScale = 1f; // Oyunu devam ettir
+        //Time.timeScale = 1f; // Oyunu devam ettir
     }
+
+
 
     // Trigger kontrolü
     private void OnTriggerEnter2D(Collider2D other)

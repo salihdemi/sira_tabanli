@@ -21,7 +21,7 @@ public class CharacterData : ScriptableObject
 
 
     [Header("Visuals")]
-    public Sprite _sprite;
+    public Sprite sprite;
 
 
 

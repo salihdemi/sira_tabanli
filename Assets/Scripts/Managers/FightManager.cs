@@ -42,8 +42,8 @@ public class FightManager : MonoBehaviour
 
     public static event Action OnFightStart, OnFightEnd;
 
+    private EnemyGroup currentEnemy;
 
-    private string fightLoot;
     private void Awake()
     {
         instance = this;
@@ -73,7 +73,7 @@ public class FightManager : MonoBehaviour
 
         fightPanel.SetActive(true);
 
-        fightLoot = enemy.loot;
+        currentEnemy = enemy;
 
 
         List<PersistanceStats> allyStats = partyManager.partyStats;
@@ -97,8 +97,10 @@ public class FightManager : MonoBehaviour
     public void WinFight()
     {
         //Ödül ver
-        Debug.Log(fightLoot + "kazanildi");
+        Debug.Log(currentEnemy.loot + "kazanildi");
 
+
+        currentEnemy.LoseFight();
 
 
         //resetstats!
