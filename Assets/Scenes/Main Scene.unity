@@ -4406,6 +4406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11f97b66cc734cc4b9e4c8d28ec494b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveManager
+  dataBase: {fileID: 11400000, guid: 813d7411507d19e418ae9c7a33a689af, type: 2}
   partyManager: {fileID: 503546261}
   player: {fileID: 1998789656}
   enemyGroups: []

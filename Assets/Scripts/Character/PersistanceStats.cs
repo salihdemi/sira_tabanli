@@ -31,12 +31,13 @@ public class PersistanceStats
     {
         //originData = data;
         _name = data.name;
-        sprite = data.sprite;
         maxHealth = data.maxHealth;
         currentHealth = maxHealth;
         basePower = data.basePower;
         baseSpeed = data.baseSpeed;
 
+
+        sprite = data.sprite;
         attack = data.attack;
         skills = new List<_Skill>(data.skills);
     }

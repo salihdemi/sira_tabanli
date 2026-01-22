@@ -16,15 +16,13 @@ public class EnemyMoveable : MapMoveable
 
     public bool trigger; // Bireysel menzil kontrolü
 
-    protected override void Start()
+    private void OnEnable()
     {
-        base.Start();
         startPosition = transform.position;
+        ChangeState(EnemyState.Idle);
     }
     public void ResetEnemy()
     {
-        transform.position = startPosition; // Baþlangýç koordinatýna ýþýnla
-        currentState = EnemyState.Idle;     // Durumunu normale döndür
         trigger = false;                    // Takip trigger'ýný sýfýrla
         rb.linearVelocity = Vector2.zero;   // Hareketini kes
     }

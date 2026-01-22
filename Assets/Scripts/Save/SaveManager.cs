@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
+    public DataBase dataBase;
     public PartyManager partyManager;
     public GameObject player;
 
@@ -21,9 +22,6 @@ public class SaveManager : MonoBehaviour
     {
         SaveData data = new SaveData();
         data.saveDate = System.DateTime.Now.ToString("dd/MM/yyyy HH:mm");
-        Debug.Log(player);
-        Debug.Log(player.transform.position);
-        Debug.Log(player.transform.position.x);
         data.playerX = player.transform.position.x; //position yerine kayýt noktasý olacak!
         data.playerY = player.transform.position.y; //position yerine kayýt noktasý olacak!
 
@@ -113,7 +111,6 @@ public class SaveManager : MonoBehaviour
         foreach (AllySaveData saved in data.savedAllys)
         {
 
-            Debug.Log(saved.name);
             PersistanceStats newStats = new PersistanceStats();
 
             newStats._name = saved.name;
@@ -157,26 +154,26 @@ public class SaveManager : MonoBehaviour
 
     private int GetListNumberFromSprite(Sprite sprite)
     {
-        int spriteIndex = DataBase.instance.spritesDataBase.IndexOf(sprite);
+        int spriteIndex = dataBase.spritesDataBase.IndexOf(sprite);
 
         if (spriteIndex == -1)
         {
             Debug.LogError("Database de olmayan skill");
-            DataBase.instance.spritesDataBase.Add(sprite);
-            spriteIndex = DataBase.instance.spritesDataBase.IndexOf(sprite);
+            dataBase.spritesDataBase.Add(sprite);
+            spriteIndex = dataBase.spritesDataBase.IndexOf(sprite);
         }
 
         return spriteIndex;
     }
     private Sprite GetSpriteFromListNumber(int listNumber)
     {
-        if (DataBase.instance.spritesDataBase.Count < listNumber)
+        if (dataBase.spritesDataBase.Count < listNumber)
         {
             Debug.LogError("Liste dýþýnda");
             return null;
         }
 
-        Sprite sprite = DataBase.instance.spritesDataBase[listNumber];
+        Sprite sprite = dataBase.spritesDataBase[listNumber];
 
 
 
@@ -189,26 +186,26 @@ public class SaveManager : MonoBehaviour
 
     private int GetListNumberFromSkill(_Skill skill)
     {
-        int skillIndex = DataBase.instance.skillsDataBase.IndexOf(skill);
+        int skillIndex = dataBase.skillsDataBase.IndexOf(skill);
 
         if(skillIndex == -1)
         {
             Debug.LogError("Database de olmayan skill");
-            DataBase.instance.skillsDataBase.Add(skill);
-            skillIndex = DataBase.instance.skillsDataBase.IndexOf(skill);
+            dataBase.skillsDataBase.Add(skill);
+            skillIndex = dataBase.skillsDataBase.IndexOf(skill);
         }
 
         return skillIndex;
     }
     private _Skill GetSkillFromListNumber(int listNumber)
     {
-        if (DataBase.instance.skillsDataBase.Count < listNumber)
+        if (dataBase.skillsDataBase.Count < listNumber)
         {
             Debug.LogError("Liste dýþýnda");
             return null;
         }
 
-        _Skill skill = DataBase.instance.skillsDataBase[listNumber];
+        _Skill skill = dataBase.skillsDataBase[listNumber];
 
 
 
