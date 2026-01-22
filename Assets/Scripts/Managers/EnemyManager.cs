@@ -7,12 +7,12 @@ public class EnemyManager : MonoBehaviour
 
     public List<EnemyGroup> allNormalGroups = new List<EnemyGroup>();
 
-    private void Awake()
+    EnemyManager()
     {
         instance = this;
-
-
     }
+
+
     // "DÝNLEN" butonuna basýnca bu fonksiyon çaðrýlacak
     public void RespawnAll()
     {
