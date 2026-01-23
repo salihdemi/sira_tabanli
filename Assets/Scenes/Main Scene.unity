@@ -3364,6 +3364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e21e35e4ec7c2254b938f73d01c80e6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyGroup
+  groupID: group 1
   moveables:
   - {fileID: 4702393532045778458}
   - {fileID: 234504709}
@@ -4586,6 +4587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e21e35e4ec7c2254b938f73d01c80e6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyGroup
+  groupID: boss
   moveables:
   - {fileID: 1665962054}
   enemyStats: []
@@ -5315,7 +5317,6 @@ MonoBehaviour:
   dataBase: {fileID: 11400000, guid: 813d7411507d19e418ae9c7a33a689af, type: 2}
   partyManager: {fileID: 503546261}
   player: {fileID: 1998789656}
-  enemyGroups: []
 --- !u!4 &1979736893 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4908711423324666980, guid: 4fac144ed5e96fb4597a48d4ff8e2dc9, type: 3}

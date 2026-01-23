@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyGroup : MonoBehaviour
 {
+    public string groupID;
     [SerializeField] public EnemyMoveable[] moveables;
     [HideInInspector] public List<PersistanceStats> enemyStats = new List<PersistanceStats>(); // Liste oluþturuldu (Null hatasý engellendi)
     public bool trigger;
@@ -13,7 +14,11 @@ public class EnemyGroup : MonoBehaviour
     private void Awake()
     {
         EnemyManager.instance.allNormalGroups.Add(this);
+        SetUpEnemies();
+    }
 
+    private void SetUpEnemies()
+    {
         // Grup içindeki düþmanlarýn verilerini hazýrla
         foreach (var enemy in moveables)
         {
@@ -23,6 +28,15 @@ public class EnemyGroup : MonoBehaviour
                 stat.LoadFromBase(enemy.data);
                 enemyStats.Add(stat);
             }
+        }
+    }
+
+    void OnDestroy()
+    {
+        // Obje yok olduðunda listeden kendini silmeli!
+        if (EnemyManager.instance != null)
+        {
+            EnemyManager.instance.allNormalGroups.Remove(this);
         }
     }
 

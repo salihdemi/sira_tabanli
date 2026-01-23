@@ -13,7 +13,6 @@ public class SaveManager : MonoBehaviour
     public GameObject player;
 
 
-    public List<EnemyGroup> enemyGroups;
 
 
     private string GetPath(int slotIndex) => Application.persistentDataPath + "/save_" + slotIndex + ".json";
@@ -58,22 +57,43 @@ public class SaveManager : MonoBehaviour
 
     private void SaveEnemies(SaveData data)
     {
-        enemyGroups = EnemyManager.instance.allNormalGroups;
-        data.savedEnemyGroups.Clear();
-        for (int i = 0; i < enemyGroups.Count; i++)
+        // Listeyi temizle
+        data.deadEnemyIDs.Clear();
+
+        // Manager'daki TÜM düþmanlarý (ölü/diri) kontrol et
+        foreach (EnemyGroup group in EnemyManager.instance.allNormalGroups)
         {
-            data.savedEnemyGroups.Add(enemyGroups[i].gameObject.activeSelf);
+            // Eðer obje kapalýysa (ölüyse), ismini listeye yaz
+            if (!group.gameObject.activeSelf)
+            {
+                data.deadEnemyIDs.Add(group.groupID);
+            }
         }
     }
+
+
+
+
     private void LoadEnemies(SaveData data)
     {
-        for (int i = 0; i < enemyGroups.Count; i++)
+        // Sahnedeki bütün düþman gruplarýný tek tek gez
+        foreach (EnemyGroup group in EnemyManager.instance.allNormalGroups)
         {
-            EnemyGroup enemy = enemyGroups[i];
+            // SORU: Bu grubun ID'si, kaydettiðimiz "Ölüler Listesi"nde var mý?
+            bool isDead = data.deadEnemyIDs.Contains(group.groupID);
 
-
-            enemy.gameObject.SetActive(data.savedEnemyGroups[i]);
-
+            if (isDead)
+            {
+                // Listede adý var, demek ki ölmüþ. Kapat.
+                group.gameObject.SetActive(false);
+            }
+            else
+            {
+                // Listede adý yok, demek ki yaþýyor.
+                // Aç ve resetle (Canýný fulle, yerine ýþýnla)
+                group.gameObject.SetActive(true);
+                group.ResetGroup();
+            }
         }
     }
     private void SaveUnlockedAllies(SaveData data)
@@ -158,7 +178,7 @@ public class SaveManager : MonoBehaviour
 
         if (spriteIndex == -1)
         {
-            Debug.LogError("Database de olmayan skill");
+            Debug.LogWarning("Database de olmayan skill eklendi");
             dataBase.spritesDataBase.Add(sprite);
             spriteIndex = dataBase.spritesDataBase.IndexOf(sprite);
         }
