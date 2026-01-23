@@ -1,13 +1,25 @@
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net.Sockets;
-using Unity.Mathematics;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
+    public static SaveManager instance;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); // Sahneler arasý hayatta kal
+        }
+        else
+        {
+            Destroy(gameObject); // Eðer baþka bir tane oluþursa onu yok et
+        }
+
+        //
+    }
+
+    public SaveData currentData;
     public DataBase dataBase;
     public PartyManager partyManager;
     public GameObject player;
@@ -102,24 +114,24 @@ public class SaveManager : MonoBehaviour
         foreach (PersistanceStats ally in partyManager.allUnlockedAllies)
         {
             data.savedAllys.Add(new AllySaveData
-                {
-                    //characterID = ally.originData.name, // ScriptableObject dosya adý
-                    name = ally._name,
+            {
+                //characterID = ally.originData.name, // ScriptableObject dosya adý
+                name = ally._name,
 
 
-                    currentHealth = ally.currentHealth, // Mevcut caný
-                    maxHealth = ally.maxHealth,         // Maksimum caný
-                    basePower = ally.basePower,         // Gücü
-                    baseSpeed = ally.baseSpeed,         // Hýzý
-                    isDied = ally.isDied,               // Ölü olup olmadýðý
-                    isInParty = ally.isInParty,         // Partide olup olmadýðý
+                currentHealth = ally.currentHealth, // Mevcut caný
+                maxHealth = ally.maxHealth,         // Maksimum caný
+                basePower = ally.basePower,         // Gücü
+                baseSpeed = ally.baseSpeed,         // Hýzý
+                isDied = ally.isDied,               // Ölü olup olmadýðý
+                isInParty = ally.isInParty,         // Partide olup olmadýðý
 
-                    sprite = GetListNumberFromSprite(ally.sprite),
+                sprite = GetListNumberFromSprite(ally.sprite),
 
-                    attackSkill = GetListNumberFromSkill(ally.attack)
-                    //skilller listesi
+                attackSkill = GetListNumberFromSkill(ally.attack)
+                //skilller listesi
 
-                });
+            });
 
         }
     }
@@ -208,7 +220,7 @@ public class SaveManager : MonoBehaviour
     {
         int skillIndex = dataBase.skillsDataBase.IndexOf(skill);
 
-        if(skillIndex == -1)
+        if (skillIndex == -1)
         {
             Debug.LogError("Database de olmayan skill");
             dataBase.skillsDataBase.Add(skill);

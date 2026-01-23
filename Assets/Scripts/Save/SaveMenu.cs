@@ -18,4 +18,6 @@ public class SaveMenu : MonoBehaviour
             if (slot != null) slot.Setup(saveManager);
         }
     }
+
+
 }

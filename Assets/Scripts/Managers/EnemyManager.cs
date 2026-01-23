@@ -12,7 +12,6 @@ public class EnemyManager : MonoBehaviour
         instance = this;
     }
 
-
     // "DÝNLEN" butonuna basýnca bu fonksiyon çaðrýlacak
     public void RespawnAll()
     {
