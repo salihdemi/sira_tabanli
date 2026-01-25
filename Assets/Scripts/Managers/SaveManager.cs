@@ -1,5 +1,6 @@
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
 {
@@ -19,7 +20,6 @@ public class SaveManager : MonoBehaviour
         //
     }
 
-    public SaveData currentData;
     public DataBase dataBase;
     public PartyManager partyManager;
     public GameObject player;
@@ -36,6 +36,10 @@ public class SaveManager : MonoBehaviour
         data.playerX = player.transform.position.x; //position yerine kayýt noktasý olacak!
         data.playerY = player.transform.position.y; //position yerine kayýt noktasý olacak!
 
+
+
+
+        SaveScene(data);
 
         SaveEnemies(data);
         SaveUnlockedAllies(data);
@@ -54,13 +58,35 @@ public class SaveManager : MonoBehaviour
         string json = File.ReadAllText(path);
         SaveData data = JsonUtility.FromJson<SaveData>(json);
 
+
+
+
+        LoadScene(data);
+        currentData = data;
+
+        SceneManager.sceneLoaded += OnSceneLoad;
+
+
+
+
+        Debug.Log($"Slot {slotIndex} yüklendi.");
+    }
+    SaveData currentData;
+    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        SceneManager.sceneLoaded -= OnSceneLoad;
+
+        player = GameObject.FindWithTag("Player");
+        partyManager = FindAnyObjectByType<PartyManager>();
+        Load2(currentData);
+    }
+    private void Load2(SaveData data)
+    {
         LoadEnemies(data);
         LoadUnlockedAllies(data);
 
         player.transform.position = new Vector3(data.playerX, data.playerY, 0); //position yerine kayýt noktasý olacak!
-        Debug.Log($"Slot {slotIndex} yüklendi.");
     }
-
 
     public bool HasSave(int slotIndex) => File.Exists(GetPath(slotIndex));
 
@@ -174,7 +200,14 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-
+    private void SaveScene(SaveData data)
+    {
+        data.savedScene = SceneManager.loadedSceneCount;
+    }
+    private void LoadScene(SaveData data)
+    {
+        SceneManager.LoadScene(data.savedScene);
+    }
 
 
 

@@ -24,6 +24,7 @@ public class EnemyMoveable : MapMoveable
     public void ResetEnemy()
     {
         trigger = false;                    // Takip trigger'ýný sýfýrla
+
         rb.linearVelocity = Vector2.zero;   // Hareketini kes
     }
 

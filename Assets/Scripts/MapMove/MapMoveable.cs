@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class MapMoveable : MonoBehaviour
 {
-    protected Rigidbody2D rb;
+    [SerializeField] protected Rigidbody2D rb;
     public float speed = 10;
 
 
@@ -22,10 +22,6 @@ public abstract class MapMoveable : MonoBehaviour
     {
         FightManager.OnFightStart -= SetInFight;
         FightManager.OnFightEnd -= SetNotInFight;
-    }
-    protected virtual void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
     }
 
     private void SetInFight()

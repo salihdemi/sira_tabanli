@@ -8,6 +8,9 @@ public class SaveData
     public float playerX, playerY;
 
 
+    public int savedScene;
+
+
     public List<AllySaveData> savedAllys = new List<AllySaveData>();
 
     public List<bool> savedEnemyGroups = new List<bool>();
