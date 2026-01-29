@@ -9,11 +9,14 @@ public class EnemyGroup : MonoBehaviour
     [HideInInspector] public List<PersistanceStats> enemyStats = new List<PersistanceStats>(); // Liste oluþturuldu (Null hatasý engellendi)
     public bool trigger;
 
+
+
+    public static List<EnemyGroup> GroupsInScene = new List<EnemyGroup>();
     public static event Action<EnemyGroup> OnSomeoneCollideMainCharacterMoveable;
     public string loot;
     private void Awake()
     {
-        EnemyManager.instance.allNormalGroups.Add(this);
+        GroupsInScene.Add(this);
         SetUpEnemies();
     }
 
@@ -33,11 +36,7 @@ public class EnemyGroup : MonoBehaviour
 
     void OnDestroy()
     {
-        // Obje yok olduðunda listeden kendini silmeli!
-        if (EnemyManager.instance != null)
-        {
-            EnemyManager.instance.allNormalGroups.Remove(this);
-        }
+        GroupsInScene.Remove(this);
     }
 
     public void Cath()
@@ -92,5 +91,14 @@ public class EnemyGroup : MonoBehaviour
     {
         //ölü diye kaydet
         gameObject.SetActive(false);
+    }
+
+
+    public static void RespawnAllGroupsInScene()
+    {
+        foreach (EnemyGroup group in GroupsInScene)
+        {
+            group.ResetGroup();
+        }
     }
 }

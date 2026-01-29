@@ -15,7 +15,7 @@ public class SaveData
 
     public List<bool> savedEnemyGroups = new List<bool>();
 
-    public List<string> deadEnemyIDs = new List<string>();
+    public List<string> deadEnemyIDsInScene = new List<string>();
 
     //Yenilen bosslar
     //Hikaye ilerlemeleri()

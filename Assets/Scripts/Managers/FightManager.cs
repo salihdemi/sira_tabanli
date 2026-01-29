@@ -115,7 +115,7 @@ public class FightManager : MonoBehaviour
     {
         Debug.Log("lose");
         //ölüm ekraný* vs
-        SceneManager.LoadScene(0);//save sistemi degisince
+        SceneManager.LoadScene(SceneManager.loadedSceneCount);//save sistemi degisince
 
         FinishFight();
     }

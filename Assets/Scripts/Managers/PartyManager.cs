@@ -30,7 +30,7 @@ public class PartyManager : MonoBehaviour
         {
             stat.GetRest();
         }
-        EnemyManager.instance.RespawnAll();
+        EnemyGroup.RespawnAllGroupsInScene();
         // diðer menüyü ac
     }
 
