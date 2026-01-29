@@ -94,8 +94,8 @@ public class SaveTest : MonoBehaviour
 
     private IEnumerator LoadAsyncProcess(SaveData data)
     {
-        Debug.Log(SceneManager.loadedSceneCount);
-        if (data.savedScene != SceneManager.loadedSceneCount)
+        Debug.Log(SceneManager.GetActiveScene().buildIndex);
+        if (data.savedScene != SceneManager.GetActiveScene().buildIndex)
         {
             Debug.Log("async basliyor");
             // 2. Sahneyi asenkron olarak yükle
