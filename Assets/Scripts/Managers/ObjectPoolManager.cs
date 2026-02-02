@@ -18,9 +18,6 @@ public class ObjectPoolManager : MonoBehaviour
     [SerializeField] private GameObject allyPrefab;
     [SerializeField] private GameObject enemyPrefab;
 
-    [SerializeField] private AllyProfile AllyProfilePrefab;
-    [SerializeField] private EnemyProfile EnemyProfilePrefab;
-
     [Header("Settings")]
     [SerializeField] private int initialPoolSize = 4;
 
