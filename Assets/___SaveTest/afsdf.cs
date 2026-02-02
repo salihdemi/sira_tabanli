@@ -3,7 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class afsdf : MonoBehaviour
 {
-    public void ChangeScene(int a)
+    public void ChangeSceneWithSave(int a)
+    {
+        SceneManager.LoadScene(a);
+    }
+    public void ChangeSceneWithoutSave(int a)
     {
         SceneManager.LoadScene(a);
     }

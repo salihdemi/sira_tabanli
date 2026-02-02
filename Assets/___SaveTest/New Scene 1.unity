@@ -609,7 +609,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 242640387}
         m_TargetAssemblyTypeName: afsdf, Assembly-CSharp
-        m_MethodName: ChangeScene
+        m_MethodName: ChangeSceneWithoutSave
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

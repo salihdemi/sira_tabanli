@@ -12,24 +12,29 @@ public class SaveTest : MonoBehaviour
 
     public static SaveTest instance;
 
-
+    public SaveData data;
     private void Start()
     {
         if (instance == null)
         {
             instance = this;
+
+            GetTexts();
+            GetButtons();
+            SceneManager.sceneLoaded += (s, m) => GetTexts();
+            SceneManager.sceneLoaded += (s, m) => GetButtons();
+
             DontDestroyOnLoad(this);
         }
         else
         {
             Destroy(gameObject);
         }
-        GetTexts();
-        GetButtons();
     }
 
     private void GetButtons()
     {
+        Debug.Log("getbuttons");
         Button save = GameObject.Find("Save").GetComponent<Button>();
         save.onClick.RemoveAllListeners();
         save.onClick.AddListener(() => Save(0));
@@ -41,6 +46,7 @@ public class SaveTest : MonoBehaviour
 
     private void GetTexts()
     {
+        Debug.Log("getText");
         sceneDataText = GameObject.Find("SahneDatasý").GetComponent<TextMeshProUGUI>();
         staticDataText = GameObject.Find("Statik data").GetComponent<TextMeshProUGUI>();
         sceneNoText = GameObject.Find("SahnenoText").GetComponent<TextMeshProUGUI>();
@@ -49,31 +55,31 @@ public class SaveTest : MonoBehaviour
     private string GetPath(int slotIndex) => Application.persistentDataPath + "/save_" + slotIndex + ".json";
     public void Save(int slotIndex)
     {
-        SaveData data = new SaveData();
+        data = new SaveData();
 
-        GetTexts();
         data.savedScene = SceneManager.GetActiveScene().buildIndex;//sahne numarasý
 
         data.deadEnemyIDsInScene.Clear();
 
         data.deadEnemyIDsInScene.Add(sceneDataText.text);//0a sahne datasý
-        Debug.Log(data.deadEnemyIDsInScene[0]);
+
         data.deadEnemyIDsInScene.Add(staticDataText.text);//1e static data
 
 
 
 
-        string json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(GetPath(slotIndex), json);
-        Debug.Log($"Slot {slotIndex} kaydedildi: " + GetPath(slotIndex));
+        //string json = JsonUtility.ToJson(data, true);
+        //File.WriteAllText(GetPath(slotIndex), json);
+        //Debug.Log($"Slot {slotIndex} kaydedildi: " + GetPath(slotIndex));
     }
     public void Load(int slotIndex)
-    {
-        string path = GetPath(slotIndex);
-        if (!File.Exists(path)) return;
 
-        string json = File.ReadAllText(path);
-        SaveData data = JsonUtility.FromJson<SaveData>(json);
+    {
+        //string path = GetPath(slotIndex);
+        //if (!File.Exists(path)) return;
+
+        //string json = File.ReadAllText(path);
+        //SaveData data = JsonUtility.FromJson<SaveData>(json);
 
 
         StartCoroutine(LoadAsyncProcess(data));

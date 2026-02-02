@@ -2031,7 +2031,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveManager
   dataBase: {fileID: 11400000, guid: 813d7411507d19e418ae9c7a33a689af, type: 2}
-  partyManager: {fileID: 0}
   player: {fileID: 0}
 --- !u!4 &1242584713
 Transform:
@@ -2598,6 +2597,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1603273515}
   m_CullTransparentMesh: 1
+--- !u!1 &1718850462
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1718850464}
+  - component: {fileID: 1718850463}
+  m_Layer: 0
+  m_Name: PartyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1718850463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718850462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2bd8bf7b93d21a48869b9fac8e69072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartyManager
+  battleSpawner: {fileID: 0}
+  allUnlockedAllies: []
+  partyDatas:
+  - {fileID: 11400000, guid: b6be121c27ed2ca41961a59342253244, type: 2}
+  - {fileID: 11400000, guid: 510f7f017e7c34b409fb2893ed92353e, type: 2}
+  - {fileID: 11400000, guid: adce3d5ff492bd24385f3f68406579ca, type: 2}
+  partyStats: []
+--- !u!4 &1718850464
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718850462}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.20647, y: 1.20425, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1805337410
 GameObject:
   m_ObjectHideFlags: 0
@@ -3109,3 +3159,4 @@ SceneRoots:
   - {fileID: 869409047}
   - {fileID: 1242584713}
   - {fileID: 772785568}
+  - {fileID: 1718850464}

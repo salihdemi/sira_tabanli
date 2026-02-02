@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d4ad28f4597a24a8f742aa8824a038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSelectMenu
-  partyManager: {fileID: 503546261}
+  partyManager: {fileID: 0}
   cardPrefab: {fileID: 5445322452583006313, guid: ffcf0b369ab262a459ead85a686a0ec9, type: 3}
   contentArea: {fileID: 211144226}
 --- !u!114 &77572304
@@ -919,7 +919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 890cf7c8b4730bd4088a254e934d0917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterUnlocker
-  partyManager: {fileID: 503546261}
+  partyManager: {fileID: 0}
   characterData: {fileID: 11400000, guid: e3fc427995f3e03428fe2ce59f58b89f, type: 2}
 --- !u!61 &368106793
 BoxCollider2D:
@@ -1073,61 +1073,9 @@ Transform:
   - {fileID: 202671503}
   - {fileID: 572215116}
   - {fileID: 2099794846}
-  - {fileID: 503546262}
   - {fileID: 779159526}
   - {fileID: 1979298224}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &503546260
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 503546262}
-  - component: {fileID: 503546261}
-  m_Layer: 0
-  m_Name: PartyManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &503546261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 503546260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2bd8bf7b93d21a48869b9fac8e69072, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PartyManager
-  battleSpawner: {fileID: 202671502}
-  allUnlockedAllies: []
-  partyDatas:
-  - {fileID: 11400000, guid: 510f7f017e7c34b409fb2893ed92353e, type: 2}
-  - {fileID: 11400000, guid: b6be121c27ed2ca41961a59342253244, type: 2}
-  - {fileID: 11400000, guid: adce3d5ff492bd24385f3f68406579ca, type: 2}
-  partyStats: []
---- !u!4 &503546262
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 503546260}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 458957786}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &518877568
 GameObject:
@@ -1160,7 +1108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battleSpawner: {fileID: 202671502}
   turnScheduler: {fileID: 2099794845}
-  partyManager: {fileID: 503546261}
+  partyManager: {fileID: 0}
   fightPanel: {fileID: 940415007}
 --- !u!4 &518877570
 Transform:
@@ -1797,7 +1745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 890cf7c8b4730bd4088a254e934d0917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterUnlocker
-  partyManager: {fileID: 503546261}
+  partyManager: {fileID: 0}
   characterData: {fileID: 11400000, guid: 78fb724a93868534ab08be30f9fbc3bd, type: 2}
 --- !u!61 &623473016
 BoxCollider2D:
@@ -5124,7 +5072,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveManager
   dataBase: {fileID: 11400000, guid: 813d7411507d19e418ae9c7a33a689af, type: 2}
-  partyManager: {fileID: 503546261}
   player: {fileID: 1998789656}
 --- !u!4 &1979736893 stripped
 Transform:
@@ -5678,7 +5625,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 503546261}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PartyManager, Assembly-CSharp
         m_MethodName: OnPressRestPartyButton
         m_Mode: 1

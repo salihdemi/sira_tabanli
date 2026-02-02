@@ -23,7 +23,7 @@ public class SaveManager : MonoBehaviour
     }
 
     public DataBase dataBase;
-    public GameObject player;
+    //public GameObject player;//playerý bulmasý gerek
 
 
 
@@ -65,7 +65,6 @@ public class SaveManager : MonoBehaviour
 
 
 
-        Debug.Log(SceneManager.loadedSceneCount);
         LoadSceneAndData(data);
 
 
@@ -77,13 +76,13 @@ public class SaveManager : MonoBehaviour
 
     private void SaveSceneData(SaveData data)
     {
-        data.playerX = player.transform.position.x; //position yerine kayýt noktasý olacak!
-        data.playerY = player.transform.position.y; //position yerine kayýt noktasý olacak!
+        //data.playerX = player.transform.position.x; //position yerine kayýt noktasý olacak!
+        //data.playerY = player.transform.position.y; //position yerine kayýt noktasý olacak!
         SaveDeadEnemiesInScene(data);
     }
     private void LoadSceneData(SaveData data)
     {
-        player.transform.position = new Vector3(data.playerX, data.playerY, 0);
+        //player.transform.position = new Vector3(data.playerX, data.playerY, 0);
         LoadEnemiesInScene(data);
     }
 
@@ -203,7 +202,6 @@ public class SaveManager : MonoBehaviour
     }
     private void LoadSceneAndData(SaveData data)
     {
-        Debug.Log(SceneManager.loadedSceneCount);
         // Coroutine'i baþlatýyoruz
         instance.StartCoroutine(LoadAsyncProcess(data));
     }
@@ -218,7 +216,6 @@ public class SaveManager : MonoBehaviour
 
     private IEnumerator LoadAsyncProcess(SaveData data)
     {
-        Debug.Log(SceneManager.loadedSceneCount);
         if(data.savedScene != SceneManager.loadedSceneCount)
         {
             Debug.Log(SceneManager.loadedSceneCount);
@@ -232,12 +229,11 @@ public class SaveManager : MonoBehaviour
             Debug.Log("Sahne yüklendi.");
             yield return new WaitForSeconds(1);
         }
-        Debug.Log(SceneManager.loadedSceneCount);
-        // --- BURAYA GELDÝÐÝNDE ARTIK YENÝ SAHNE %100 YÜKLENDÝ ---
 
+        // --- BURAYA GELDÝÐÝNDE ARTIK YENÝ SAHNE %100 YÜKLENDÝ ---
         // 4. Þimdi Find iþlemlerini yapabilirsin, hata almazsýn
 
-        player = GameObject.FindWithTag("Player");
+        //player = GameObject.FindWithTag("Player");
 
         LoadUnlockedAllies(data);
         LoadSceneData(data);
@@ -256,7 +252,7 @@ public class SaveManager : MonoBehaviour
 
         if (spriteIndex == -1)
         {
-            Debug.LogWarning("Database de olmayan skill eklendi");
+            Debug.LogWarning("Database de olmayan sprite eklendi");
             dataBase.spritesDataBase.Add(sprite);
             spriteIndex = dataBase.spritesDataBase.IndexOf(sprite);
         }
@@ -270,7 +266,7 @@ public class SaveManager : MonoBehaviour
             Debug.LogError("Liste dýþýnda");
             return null;
         }
-
+        Debug.Log(dataBase.spritesDataBase.Count);
         Sprite sprite = dataBase.spritesDataBase[listNumber];
 
 
@@ -288,7 +284,7 @@ public class SaveManager : MonoBehaviour
 
         if (skillIndex == -1)
         {
-            Debug.LogError("Database de olmayan skill");
+            Debug.LogWarning("Database de olmayan skill eklendi");
             dataBase.skillsDataBase.Add(skill);
             skillIndex = dataBase.skillsDataBase.IndexOf(skill);
         }

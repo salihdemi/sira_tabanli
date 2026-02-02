@@ -6,13 +6,28 @@ using UnityEngine;
 
 public class PartyManager : MonoBehaviour
 {
+    public static PartyManager instance;
     public BattleSpawner battleSpawner;
     private void Awake()
     {
-
-        for (int i = 0; i < partyDatas.Length; i++)
+        if (instance == null)
         {
-            UnlockAlly(partyDatas[i]);
+
+
+
+            instance = this;
+
+            DontDestroyOnLoad(gameObject);
+
+
+            for (int i = 0; i < partyDatas.Length; i++)
+            {
+                UnlockAlly(partyDatas[i]);
+            }
+        }
+        else
+        {
+            Destroy(gameObject);
         }
 
     }
