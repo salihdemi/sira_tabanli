@@ -1,36 +1,38 @@
-using System.Collections;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-//using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
-public class SaveManager : MonoBehaviour
+public static class SaveManager
 {
-    public static SaveManager instance;
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject); // Sahneler arasý hayatta kal
-        }
-        else
-        {
-            Destroy(gameObject); // Eðer baþka bir tane oluþursa onu yok et
-        }
+    private static DataBase _dataBase; // Bu sadece iç depo
 
-        //
+    public static DataBase dataBase // Doðru eriþim noktasý
+    {
+        get
+        {
+            if (_dataBase == null)
+            {
+                _dataBase = Resources.Load<DataBase>("GameDatabase");
+                if (_dataBase == null) Debug.LogError("DÝKKAT: Resources klasöründe 'GameDatabase' bulunamadý!");
+            }
+            return _dataBase;
+        }
     }
 
-    public DataBase dataBase;
     //public GameObject player;//playerý bulmasý gerek
 
 
 
 
-    private string GetPath(int slotIndex) => Application.persistentDataPath + "/save_" + slotIndex + ".json";
+    private static string GetPath(int slotIndex) => Application.persistentDataPath + "/save_" + slotIndex + ".json";
+    public static bool HasSave(int slotIndex) => File.Exists(GetPath(slotIndex));
 
-    public void Save(int slotIndex)
+
+
+
+
+    public static void Save(int slotIndex)
     {
         SaveData data = new SaveData();
         data.saveDate = System.DateTime.Now.ToString("dd/MM/yyyy HH:mm");
@@ -38,9 +40,9 @@ public class SaveManager : MonoBehaviour
 
 
 
-        SaveScene(data);
         SaveSceneData(data);
-        SaveUnlockedAllies(data);
+        SaveStaticData(data);
+
 
 
 
@@ -49,7 +51,7 @@ public class SaveManager : MonoBehaviour
         File.WriteAllText(GetPath(slotIndex), json);
         Debug.Log($"Slot {slotIndex} kaydedildi: " + GetPath(slotIndex));
     }
-    public void Load(int slotIndex)
+    public static void Load(int slotIndex)
     {
         string path = GetPath(slotIndex);
         if (!File.Exists(path)) return;
@@ -60,34 +62,57 @@ public class SaveManager : MonoBehaviour
 
 
 
+        LoadStaticData(data);
+
+        if (data.savedScene == SceneManager.GetActiveScene().buildIndex)
+        {
+            LoadSceneData(data);
+        }
+        else
+        {
+            LoadSceneAndData(data);
+        }
 
 
 
 
 
-        LoadSceneAndData(data);
 
 
     }
 
 
 
-    public bool HasSave(int slotIndex) => File.Exists(GetPath(slotIndex));
 
-    private void SaveSceneData(SaveData data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #region SceneData
+    private static void SaveSceneData(SaveData data)
     {
         //data.playerX = player.transform.position.x; //position yerine kayýt noktasý olacak!
         //data.playerY = player.transform.position.y; //position yerine kayýt noktasý olacak!
         SaveDeadEnemiesInScene(data);
     }
-    private void LoadSceneData(SaveData data)
+    private static void LoadSceneData(SaveData data)
     {
         //player.transform.position = new Vector3(data.playerX, data.playerY, 0);
         LoadEnemiesInScene(data);
     }
 
 
-    private void SaveDeadEnemiesInScene(SaveData data)
+
+    private static void SaveDeadEnemiesInScene(SaveData data)
     {
         // Listeyi temizle
         data.deadEnemyIDsInScene.Clear();
@@ -103,13 +128,12 @@ public class SaveManager : MonoBehaviour
             }
         }
     }
-    private void LoadEnemiesInScene(SaveData data)
+    private static void LoadEnemiesInScene(SaveData data)
     {
         // Sahnedeki bütün düþman gruplarýný tek tek gez
         foreach (EnemyGroup group in EnemyGroup.GroupsInScene)
         {
             // SORU: Bu grubun ID'si, kaydettiðimiz "Ölüler Listesi"nde var mý?
-            Debug.Log(group +"-------");
             bool isDead = data.deadEnemyIDsInScene.Contains(group.groupID);
 
             if (isDead)
@@ -128,8 +152,26 @@ public class SaveManager : MonoBehaviour
     }
 
 
-    private void SaveUnlockedAllies(SaveData data)
+    #endregion
+
+
+
+
+    #region StaticData
+    private static void SaveStaticData(SaveData data)
     {
+        SaveUnlockedAllies(data);
+        SaveScene(data);
+    }
+    private static void LoadStaticData(SaveData data)
+    {
+        LoadUnlockedAllies(data);
+    }
+
+
+    private static void SaveUnlockedAllies(SaveData data)
+    {
+        data.savedAllys.Clear();
         // Açýlmýþ müttefikleri isimleriyle kaydet
         foreach (PersistanceStats ally in PartyManager.allUnlockedAllies)
         {
@@ -155,7 +197,7 @@ public class SaveManager : MonoBehaviour
 
         }
     }
-    private void LoadUnlockedAllies(SaveData data)
+    private static void LoadUnlockedAllies(SaveData data)
     {
         PartyManager.allUnlockedAllies.Clear();
         PartyManager.partyStats.Clear();
@@ -185,7 +227,6 @@ public class SaveManager : MonoBehaviour
             PartyManager.allUnlockedAllies.Add(newStats);
 
 
-
             if (newStats.isInParty)
             {
                 PartyManager.TryAddToParty(newStats);
@@ -194,58 +235,67 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    private void SaveScene(SaveData data)
+
+    private static void SaveScene(SaveData data)
     {
-        data.savedScene = SceneManager.loadedSceneCount;
+        data.savedScene = SceneManager.GetActiveScene().buildIndex;
     }
-    private void LoadSceneAndData(SaveData data)
+    private static void LoadSceneAndData(SaveData data)
     {
-        // Coroutine'i baþlatýyoruz
-        instance.StartCoroutine(LoadAsyncProcess(data));
-    }
+        SceneManager.sceneLoaded += (scene, mode) => { LoadSceneData(data); };
+
+        SceneManager.LoadScene(data.savedScene);
 
 
 
 
 
+        // 1. Bir eylem (Action) tanýmlýyoruz
+        UnityAction<Scene, LoadSceneMode> handler = null;
 
-
-
-
-    private IEnumerator LoadAsyncProcess(SaveData data)
-    {
-        if(data.savedScene != SceneManager.loadedSceneCount)
+        // 2. Bu eylemin içine ne yapacaðýný yazýyoruz
+        handler = (scene, mode) =>
         {
-            Debug.Log(SceneManager.loadedSceneCount);
-            Debug.Log("async basliyor");
-            // 2. Sahneyi asenkron olarak yükle
-            AsyncOperation operation = SceneManager.LoadSceneAsync(data.savedScene);
+            LoadSceneData(data);
+            SceneManager.sceneLoaded -= handler; // Kendi aboneliðini iptal eder (KRÝTÝK)
+        };
 
-            // 3. Sahne tamamen yüklenene kadar burada DUR ve BEKLE
-            while (!operation.isDone) yield return null;// Sahne yüklenene kadar her frame bekle
+        // 3. Sahne yükleme event'ine bu eylemi baðlýyoruz
+        SceneManager.sceneLoaded += handler;
 
-            Debug.Log("Sahne yüklendi.");
-            yield return new WaitForSeconds(1);
-        }
-
-        // --- BURAYA GELDÝÐÝNDE ARTIK YENÝ SAHNE %100 YÜKLENDÝ ---
-        // 4. Þimdi Find iþlemlerini yapabilirsin, hata almazsýn
-
-        //player = GameObject.FindWithTag("Player");
-
-        LoadUnlockedAllies(data);
-        LoadSceneData(data);
-
+        // 4. Sahneyi yüklüyoruz
+        SceneManager.LoadScene(data.savedScene);
     }
 
+    #endregion
 
 
 
 
 
 
-    private int SpriteToInt(Sprite sprite)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #region Convert fonksiyonlari
+
+
+    private static int SpriteToInt(Sprite sprite)
     {
+        Debug.Log(dataBase);
         int spriteIndex = dataBase.spritesDataBase.IndexOf(sprite);
 
         if (spriteIndex == -1)
@@ -257,14 +307,13 @@ public class SaveManager : MonoBehaviour
 
         return spriteIndex;
     }
-    private Sprite IntToSprite(int listNumber)
+    private static Sprite IntToSprite(int listNumber)
     {
         if (dataBase.spritesDataBase.Count < listNumber)
         {
             Debug.LogError("Liste dýþýnda");
             return null;
         }
-        Debug.Log(dataBase.spritesDataBase.Count);
         Sprite sprite = dataBase.spritesDataBase[listNumber];
 
 
@@ -276,7 +325,7 @@ public class SaveManager : MonoBehaviour
 
 
 
-    private int SkillToInt(_Skill skill)
+    private static int SkillToInt(_Skill skill)
     {
         int skillIndex = dataBase.skillsDataBase.IndexOf(skill);
 
@@ -289,7 +338,7 @@ public class SaveManager : MonoBehaviour
 
         return skillIndex;
     }
-    private _Skill IntToSkill(int listNumber)
+    private static _Skill IntToSkill(int listNumber)
     {
         if (dataBase.skillsDataBase.Count < listNumber)
         {
@@ -303,4 +352,6 @@ public class SaveManager : MonoBehaviour
 
         return skill;
     }
+
+    #endregion
 }

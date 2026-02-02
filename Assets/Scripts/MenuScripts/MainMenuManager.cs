@@ -16,7 +16,7 @@ public class MainMenuManager : MonoBehaviour
         bool canContinue = false;
         for (int i = 0; i < 3; i++) // 3 slotun olduðunu varsayalým
         {
-            if (SaveManager.instance.HasSave(i))
+            if (SaveManager.HasSave(i))
             {
                 canContinue = true;
                 break;

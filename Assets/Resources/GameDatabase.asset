@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b3332121967ab5c4c8ab16d70745f892, type: 3}
-  m_Name: DataBase
+  m_Name: GameDatabase
   m_EditorClassIdentifier: Assembly-CSharp::DataBase
   skillsDataBase: []
   spritesDataBase: []

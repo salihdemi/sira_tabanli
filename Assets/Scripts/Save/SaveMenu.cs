@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class SaveMenu : MonoBehaviour
 {
-    public SaveManager saveManager;
     public SaveSlotUI[] slots;
 
     void OnEnable()
@@ -15,7 +14,7 @@ public class SaveMenu : MonoBehaviour
 
         foreach (SaveSlotUI slot in slots)
         {
-            if (slot != null) slot.Setup(saveManager);
+            if (slot != null) slot.Setup();
         }
     }
 

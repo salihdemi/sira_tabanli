@@ -1,6 +1,7 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class EnemyGroup : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class EnemyGroup : MonoBehaviour
         // Grup içindeki düþmanlarýn verilerini hazýrla
         foreach (var enemy in moveables)
         {
+            Debug.Log(enemy);
             if (enemy.data != null)
             {
                 PersistanceStats stat = new PersistanceStats();

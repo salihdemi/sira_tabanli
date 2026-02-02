@@ -14,7 +14,7 @@ public class EnemyMoveable : MapMoveable
     private Transform mainCharacter;
     private Vector3 startPosition;
 
-    public bool trigger; // Bireysel menzil kontrolü
+    [HideInInspector] public bool trigger; // Bireysel menzil kontrolü
 
     private void OnEnable()
     {

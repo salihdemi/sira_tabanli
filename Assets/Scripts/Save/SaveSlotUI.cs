@@ -7,11 +7,9 @@ public class SaveSlotUI : MonoBehaviour
     public int slotIndex;
     public TextMeshProUGUI dateText;
     public TextMeshProUGUI infoText;
-    private SaveManager saveManager;
 
-    public void Setup(SaveManager manager)
+    public void Setup()
     {
-        saveManager = manager;
         RefreshUI();
     }
 
@@ -35,13 +33,13 @@ public class SaveSlotUI : MonoBehaviour
     // Unity Inspector'da Save butonuna baðla
     public void OnClickSave()
     {
-        saveManager.Save(slotIndex);
+        SaveManager.Save(slotIndex);
         RefreshUI();
     }
 
     // Unity Inspector'da Load butonuna baðla
     public void OnClickLoad()
     {
-        saveManager.Load(slotIndex);
+        SaveManager.Load(slotIndex);
     }
 }
