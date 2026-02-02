@@ -2,29 +2,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Profiling;
 
-public class TargetingSystem : MonoBehaviour
+public static class TargetingSystem
 {
-    private void Awake()
-    {
-        AllyProfile.OnAnyAllyChoseSkill += StartTargeting;
-        ProfileView.OnAnyProfileClicked += OnProfileClicked;
-    }
-    private void OnDestroy()
-    {
-        AllyProfile.OnAnyAllyChoseSkill -= StartTargeting;
-        ProfileView.OnAnyProfileClicked -= OnProfileClicked;
-    }
 
 
 
 
 
 
-    private _Skill selectedSkill;
-    private Profile currentCaster;
+
+    private static _Skill selectedSkill;
+    private static Profile currentCaster;
 
 
-    private List<Profile> activeProfileButtons = new List<Profile> { };
+    private static List<Profile> activeProfileButtons = new List<Profile> { };
     public enum TargetType
     {
         self,
@@ -35,7 +26,7 @@ public class TargetingSystem : MonoBehaviour
     }
 
 
-    public void StartTargeting(Profile caster, _Skill skill)
+    public static void StartTargeting(Profile caster, _Skill skill)
     {
         selectedSkill = skill;
         currentCaster = caster;
@@ -54,7 +45,7 @@ public class TargetingSystem : MonoBehaviour
 
     }
 
-    private bool CheckIfValid(Profile target, TargetType type)
+    private static bool CheckIfValid(Profile target, TargetType type)
     {
         // Hedef geçerli mi kontrolü (Düþman mý? Dost mu?)
         if (type == TargetType.enemy) return target is EnemyProfile;
@@ -62,7 +53,7 @@ public class TargetingSystem : MonoBehaviour
         return true;
     }
 
-    public void OnProfileClicked(Profile clickedProfile)
+    public static void OnProfileClicked(Profile clickedProfile)
     {
         if (selectedSkill == null) return;
 
@@ -70,7 +61,7 @@ public class TargetingSystem : MonoBehaviour
         currentCaster.SetTarget(clickedProfile);
         CloseButtons();
     }
-    private void CloseButtons()
+    private static void CloseButtons()
     {
         foreach (Profile profile in activeProfileButtons)
         {

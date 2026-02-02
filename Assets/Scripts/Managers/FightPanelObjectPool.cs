@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPoolManager : MonoBehaviour
+public class FightPanelObjectPool : MonoBehaviour
 {
     //sistem disable ederken veriyi temizlemedi, enable edince uzerine yaziyor!
-    public static ObjectPoolManager instance;
+    public static FightPanelObjectPool instance;
 
 
     [SerializeField] private FightManager fightManager;

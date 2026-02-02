@@ -12,8 +12,6 @@ public class PartyManager : MonoBehaviour
         if (instance == null)
         {
 
-
-
             instance = this;
 
             DontDestroyOnLoad(gameObject);

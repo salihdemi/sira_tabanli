@@ -22,6 +22,7 @@ public class AllyProfile : Profile
     {
         currentSkill = skill;
         OnAnyAllyChoseSkill?.Invoke(this, skill);
+        TargetingSystem.StartTargeting(this, skill);
 
     }
     //public override void SetTarget(Profile profile)

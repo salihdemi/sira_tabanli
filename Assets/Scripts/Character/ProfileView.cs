@@ -6,7 +6,6 @@ public class ProfileView : MonoBehaviour
 {
     // Statik Event: Herhangi bir profile týklandýðýnda bu profili yayýnlar.
     // TargetingSystem bu sesi dinleyecek.
-    public static event Action<Profile> OnAnyProfileClicked;
 
     [SerializeField] private Button button;
     [SerializeField] private Profile boundProfile;
@@ -21,6 +20,6 @@ public class ProfileView : MonoBehaviour
         if (boundProfile == null) return;
 
 
-        OnAnyProfileClicked?.Invoke(boundProfile);
+        TargetingSystem.OnProfileClicked(boundProfile);
     }
 }

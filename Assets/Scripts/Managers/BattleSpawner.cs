@@ -15,7 +15,7 @@ public static class BattleSpawner
 
     private static AllyProfile MakeAllyProfile(PersistanceStats persistanceStats)
     {
-        AllyProfile profile = ObjectPoolManager.instance.GetAlly();
+        AllyProfile profile = FightPanelObjectPool.instance.GetAlly();
         profile.stats = persistanceStats;
         profile.gameObject.name = persistanceStats._name;
         profile.GetComponent<Image>().sprite = persistanceStats.sprite;
@@ -27,7 +27,7 @@ public static class BattleSpawner
     }
     private static EnemyProfile MakeEnemyProfile(PersistanceStats persistanceStats)
     {
-        EnemyProfile profile = ObjectPoolManager.instance.GetEnemy();
+        EnemyProfile profile = FightPanelObjectPool.instance.GetEnemy();
         profile.stats = persistanceStats;
         profile.gameObject.name = persistanceStats._name;
         profile.GetComponent<Image>().sprite = persistanceStats.sprite;
@@ -70,8 +70,8 @@ public static class BattleSpawner
     }
     public static void ClearBattlefield()
     {
-        ObjectPoolManager.instance.ClearAllies();
-        ObjectPoolManager.instance.ClearEnemies();
+        FightPanelObjectPool.instance.ClearAllies();
+        FightPanelObjectPool.instance.ClearEnemies();
     }
 
 
