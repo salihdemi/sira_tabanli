@@ -30,7 +30,6 @@ public class FightManager : MonoBehaviour
 
 
 
-    [SerializeField] private BattleSpawner battleSpawner;
     [SerializeField] private PartyManager  partyManager;
 
     [SerializeField] private GameObject fightPanel;
@@ -76,10 +75,10 @@ public class FightManager : MonoBehaviour
 
 
         List<PersistanceStats> allyStats = partyManager.partyStats;
-        List<AllyProfile> ActiveAllyProfiles = battleSpawner.SpawnAllies(allyStats);
+        List<AllyProfile> ActiveAllyProfiles = BattleSpawner.SpawnAllies(allyStats);
 
         List<PersistanceStats> enemyStats = enemy.enemyStats;
-        List<EnemyProfile> ActiveEnemyProfiles = battleSpawner.SpawnEnemies(enemyStats);
+        List<EnemyProfile> ActiveEnemyProfiles = BattleSpawner.SpawnEnemies(enemyStats);
 
 
 
@@ -123,7 +122,7 @@ public class FightManager : MonoBehaviour
     {
         OnFightEnd.Invoke();//moveable-setisinfight
 
-        battleSpawner.ClearBattlefield();
+        BattleSpawner.ClearBattlefield();
 
         defaultTargetForEnemies = null;
 

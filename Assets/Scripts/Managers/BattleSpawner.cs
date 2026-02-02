@@ -5,23 +5,17 @@ using UnityEditor.Overlays;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BattleSpawner : MonoBehaviour
+public static class BattleSpawner
 {
 
-    [SerializeField] private ObjectPoolManager objectPoolManager;
-
-    [SerializeField] private AllyProfile AllyProfilePrefab;
-    [SerializeField] private EnemyProfile EnemyProfilePrefab;
-
-    [SerializeField] private Transform AllyProfileParent;
-    [SerializeField] private Transform EnemyProfileParent;
 
 
 
 
-    private AllyProfile MakeAllyProfile(PersistanceStats persistanceStats)
+
+    private static AllyProfile MakeAllyProfile(PersistanceStats persistanceStats)
     {
-        AllyProfile profile = objectPoolManager.GetAlly();
+        AllyProfile profile = ObjectPoolManager.instance.GetAlly();
         profile.stats = persistanceStats;
         profile.gameObject.name = persistanceStats._name;
         profile.GetComponent<Image>().sprite = persistanceStats.sprite;
@@ -31,9 +25,9 @@ public class BattleSpawner : MonoBehaviour
         //deger yazma
         return profile;
     }
-    private EnemyProfile MakeEnemyProfile(PersistanceStats persistanceStats)
+    private static EnemyProfile MakeEnemyProfile(PersistanceStats persistanceStats)
     {
-        EnemyProfile profile = objectPoolManager.GetEnemy();
+        EnemyProfile profile = ObjectPoolManager.instance.GetEnemy();
         profile.stats = persistanceStats;
         profile.gameObject.name = persistanceStats._name;
         profile.GetComponent<Image>().sprite = persistanceStats.sprite;
@@ -44,20 +38,11 @@ public class BattleSpawner : MonoBehaviour
 
         return profile;
     }
-    /*
-    public void ResetStats(List<AllyProfile> AllyProfiles)
-    {
-        for (int i = 0; i < AllyProfiles.Count; i++)
-        {
-            Profile character = AllyProfiles[i];
-            character.ResetStats();
-        }
-    }*/
     
 
 
 
-    public List<AllyProfile> SpawnAllies(List<PersistanceStats> partyStats)
+    public static List<AllyProfile> SpawnAllies(List<PersistanceStats> partyStats)
     {
         List<AllyProfile> allyProfiles = new List<AllyProfile> { };
 
@@ -72,7 +57,7 @@ public class BattleSpawner : MonoBehaviour
         return allyProfiles;
 
     }
-    public List<EnemyProfile> SpawnEnemies(List<PersistanceStats> enemyStats)
+    public static List<EnemyProfile> SpawnEnemies(List<PersistanceStats> enemyStats)
     {
         List<EnemyProfile> enemyProfiles = new List<EnemyProfile> { };
 
@@ -83,10 +68,10 @@ public class BattleSpawner : MonoBehaviour
         }
         return enemyProfiles;
     }
-    public void ClearBattlefield()
+    public static void ClearBattlefield()
     {
-        objectPoolManager.ClearAllies();
-        objectPoolManager.ClearEnemies();
+        ObjectPoolManager.instance.ClearAllies();
+        ObjectPoolManager.instance.ClearEnemies();
     }
 
 

@@ -4,6 +4,8 @@ using UnityEngine;
 public class ObjectPoolManager : MonoBehaviour
 {
     //sistem disable ederken veriyi temizlemedi, enable edince uzerine yaziyor!
+    public static ObjectPoolManager instance;
+
 
     [SerializeField] private FightManager fightManager;
 
@@ -16,6 +18,9 @@ public class ObjectPoolManager : MonoBehaviour
     [SerializeField] private GameObject allyPrefab;
     [SerializeField] private GameObject enemyPrefab;
 
+    [SerializeField] private AllyProfile AllyProfilePrefab;
+    [SerializeField] private EnemyProfile EnemyProfilePrefab;
+
     [Header("Settings")]
     [SerializeField] private int initialPoolSize = 4;
 
@@ -25,10 +30,18 @@ public class ObjectPoolManager : MonoBehaviour
 
     private void Awake()
     {
-        // Oyun baþýnda küçük bir hazýrlýk (Pre-warm)
-        PreparePool();
+        if(instance == null)
+        {
+            instance = this;
+            // Oyun baþýnda küçük bir hazýrlýk (Pre-warm)
+            PreparePool();
 
-        Profile.OnSomeoneDie += HandleReturnToPool;
+            Profile.OnSomeoneDie += HandleReturnToPool;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     private void OnDestroy()
     {

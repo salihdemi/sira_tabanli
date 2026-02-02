@@ -7,7 +7,6 @@ using UnityEngine;
 public class PartyManager : MonoBehaviour
 {
     public static PartyManager instance;
-    public BattleSpawner battleSpawner;
     private void Awake()
     {
         if (instance == null)

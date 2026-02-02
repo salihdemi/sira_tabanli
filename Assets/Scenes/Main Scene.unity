@@ -617,55 +617,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1580470989}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &202671501
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 202671503}
-  - component: {fileID: 202671502}
-  m_Layer: 0
-  m_Name: BattleSpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &202671502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 202671501}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d99c78cdda84e4342842733a106d674c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BattleSpawner
-  objectPoolManager: {fileID: 779159527}
-  AllyProfilePrefab: {fileID: 8979091839921229595, guid: 857798f39e9c69448832bf6dad7e072f, type: 3}
-  EnemyProfilePrefab: {fileID: 742744003490145377, guid: 96f4bc3d0b8c9e742ba2ace51c4740ed, type: 3}
-  AllyProfileParent: {fileID: 1024666692}
-  EnemyProfileParent: {fileID: 567234374}
---- !u!4 &202671503
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 202671501}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 458957786}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &211144225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1070,11 +1021,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 518877570}
-  - {fileID: 202671503}
   - {fileID: 572215116}
-  - {fileID: 2099794846}
   - {fileID: 779159526}
-  - {fileID: 1979298224}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &518877568
@@ -1106,9 +1054,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efe5fd2c0250954e911be006bdaa277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleSpawner: {fileID: 202671502}
-  turnScheduler: {fileID: 2099794845}
-  partyManager: {fileID: 0}
+  partyManager: {fileID: 1535013694}
   fightPanel: {fileID: 940415007}
 --- !u!4 &518877570
 Transform:
@@ -1593,7 +1539,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14672a19af076e5418f559c16c08e3be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TargetingSystem
-  turnScheduler: {fileID: 2099794845}
 --- !u!4 &572215116
 Transform:
   m_ObjectHideFlags: 0
@@ -2492,6 +2437,8 @@ MonoBehaviour:
   enemyParent: {fileID: 567234374}
   allyPrefab: {fileID: 5446839951801960851, guid: 857798f39e9c69448832bf6dad7e072f, type: 3}
   enemyPrefab: {fileID: 5446839951801960851, guid: 96f4bc3d0b8c9e742ba2ace51c4740ed, type: 3}
+  AllyProfilePrefab: {fileID: 0}
+  EnemyProfilePrefab: {fileID: 0}
   initialPoolSize: 4
 --- !u!1 &816841825
 GameObject:
@@ -3798,6 +3745,56 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f46c84b80c2bcaa44910ff0e506e51a0, type: 3}
+--- !u!1 &1535013692
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1535013693}
+  - component: {fileID: 1535013694}
+  m_Layer: 0
+  m_Name: PartyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1535013693
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535013692}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 14.69836, y: 4.38756, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1535013694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535013692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2bd8bf7b93d21a48869b9fac8e69072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartyManager
+  allUnlockedAllies: []
+  partyDatas:
+  - {fileID: 11400000, guid: 510f7f017e7c34b409fb2893ed92353e, type: 2}
+  - {fileID: 11400000, guid: b6be121c27ed2ca41961a59342253244, type: 2}
+  - {fileID: 11400000, guid: adce3d5ff492bd24385f3f68406579ca, type: 2}
+  partyStats: []
 --- !u!1 &1580470988
 GameObject:
   m_ObjectHideFlags: 0
@@ -5052,12 +5049,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1979298223}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 458957786}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1979298225
 MonoBehaviour:
@@ -5072,7 +5069,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveManager
   dataBase: {fileID: 11400000, guid: 813d7411507d19e418ae9c7a33a689af, type: 2}
-  player: {fileID: 1998789656}
 --- !u!4 &1979736893 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4908711423324666980, guid: 4fac144ed5e96fb4597a48d4ff8e2dc9, type: 3}
@@ -5352,11 +5348,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1580470989}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1998789656 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7284168967616106071, guid: 4fac144ed5e96fb4597a48d4ff8e2dc9, type: 3}
-  m_PrefabInstance: {fileID: 8241592257740627760}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2025252473
 GameObject:
   m_ObjectHideFlags: 0
@@ -5493,55 +5484,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2025252473}
   m_CullTransparentMesh: 1
---- !u!1 &2099794844
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2099794846}
-  - component: {fileID: 2099794845}
-  m_Layer: 0
-  m_Name: TurnScheduler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2099794845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2099794844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 752687a1d76fc204dbe026ff42107b64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TurnScheduler
-  fightManager: {fileID: 518877569}
-  aliveProfiles: []
-  orderedProfiles: []
-  ActiveAllyProfiles: []
-  ActiveEnemyProfiles: []
---- !u!4 &2099794846
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2099794844}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 458957786}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2103675572
 GameObject:
   m_ObjectHideFlags: 0
@@ -6156,3 +6098,5 @@ SceneRoots:
   - {fileID: 458957786}
   - {fileID: 641799841}
   - {fileID: 539490848}
+  - {fileID: 1535013693}
+  - {fileID: 1979298224}
