@@ -89,7 +89,7 @@ public class ObjectPoolManager : MonoBehaviour
     }
     public void ClearAllies()
     {
-        List<AllyProfile> activeAllies = fightManager.turnScheduler.ActiveAllyProfiles;
+        List<AllyProfile> activeAllies = TurnScheduler.ActiveAllyProfiles;
 
         for (int i = activeAllies.Count - 1; i >= 0; i--)
         {
@@ -129,7 +129,7 @@ public class ObjectPoolManager : MonoBehaviour
     }
     public void ClearEnemies()
     {
-        List<EnemyProfile> activeEnemies = fightManager.turnScheduler.ActiveEnemyProfiles;
+        List<EnemyProfile> activeEnemies = TurnScheduler.ActiveEnemyProfiles;
 
         for (int i = activeEnemies.Count - 1; i >= 0; i--)
         {

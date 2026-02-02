@@ -16,9 +16,9 @@ public class FightManager : MonoBehaviour
 
     public void SetDefaultTarget()//gecici
     {
-        if (turnScheduler.ActiveAllyProfiles.Count > 0)
+        if (TurnScheduler.ActiveAllyProfiles.Count > 0)
         {
-            defaultTargetForEnemies = turnScheduler.ActiveAllyProfiles[0];//!
+            defaultTargetForEnemies = TurnScheduler.ActiveAllyProfiles[0];//!
         }
     }
 
@@ -31,7 +31,6 @@ public class FightManager : MonoBehaviour
 
 
     [SerializeField] private BattleSpawner battleSpawner;
-    [SerializeField] public TurnScheduler turnScheduler;
     [SerializeField] private PartyManager  partyManager;
 
     [SerializeField] private GameObject fightPanel;
@@ -84,14 +83,14 @@ public class FightManager : MonoBehaviour
 
 
 
-        turnScheduler.SetAliveProfiles(ActiveAllyProfiles, ActiveEnemyProfiles);
-        turnScheduler.SortProfilesWithSpeed();
+        TurnScheduler.SetAliveProfiles(ActiveAllyProfiles, ActiveEnemyProfiles);
+        TurnScheduler.SortProfilesWithSpeed();
 
         //battleSpawner.ResetStats(AllyProfiles);
 
         SetDefaultTarget();//!
 
-        turnScheduler.StartTour();
+        TurnScheduler.StartTour();
     }
     
     public void WinFight()
@@ -104,7 +103,7 @@ public class FightManager : MonoBehaviour
 
 
         //resetstats!
-        foreach (Profile item in turnScheduler.ActiveAllyProfiles)
+        foreach (Profile item in TurnScheduler.ActiveAllyProfiles)
         {
             item.ResetStats();
         }

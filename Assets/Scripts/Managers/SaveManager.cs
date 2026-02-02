@@ -12,7 +12,7 @@ public class SaveManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this); // Sahneler arasý hayatta kal
+            DontDestroyOnLoad(gameObject); // Sahneler arasý hayatta kal
         }
         else
         {

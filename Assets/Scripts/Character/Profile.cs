@@ -4,7 +4,6 @@ using UnityEngine;
 public abstract class Profile : MonoBehaviour
 {
     public static event Action<Profile> OnSomeoneDie;
-    public static event Action OnSomeoneLungeEnd;
     public static event Action<string> OnSomeonePlay;
 
 
@@ -62,7 +61,7 @@ public abstract class Profile : MonoBehaviour
     }
     public void LungeEnd()
     {
-        OnSomeoneLungeEnd?.Invoke();
+        TurnScheduler.CheckNextCharacter();
     }
 
 
@@ -155,8 +154,9 @@ public abstract class Profile : MonoBehaviour
     {
         isDied = true;
         stats.isDied = true;
-        OnSomeoneDie?.Invoke(this);
+        TurnScheduler.HandleProfileDeath(this);
         FightManager.instance.SetDefaultTarget();
+        OnSomeoneDie.Invoke(this);
     }
 
 

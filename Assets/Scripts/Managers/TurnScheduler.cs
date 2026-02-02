@@ -2,38 +2,30 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Profiling;
 
-public class TurnScheduler : MonoBehaviour
+public static class TurnScheduler
 {
-    public FightManager fightManager;
-    /*[HideInInspector]*/ public List<Profile> aliveProfiles;
-    /*[HideInInspector]*/ public List<Profile> orderedProfiles;//hiza gore siralan
-    private int order;
+    public static List<Profile> aliveProfiles;
+    public static List<Profile> orderedProfiles;//hiza gore siralan
+    public static int order;
 
-    /*[HideInInspector]*/ public List<AllyProfile> ActiveAllyProfiles = new List<AllyProfile>();
-    /*[HideInInspector]*/ public List<EnemyProfile> ActiveEnemyProfiles = new List<EnemyProfile>();
+    public static List<AllyProfile> ActiveAllyProfiles = new List<AllyProfile>();
+    public static List<EnemyProfile> ActiveEnemyProfiles = new List<EnemyProfile>();
 
     public static event Action onStartPlay;
     public static event Action onStartTour;
 
-    private Coroutine playCoroutine;
+    private static Coroutine playCoroutine;
+
+    private static CorRunner runner;
 
     //veri tutan
     //hamleler yaparken kullanýlan
-    private void Awake()
-    {
-        Profile.OnSomeoneLungeEnd += CheckNextCharacter;
-        Profile.OnSomeoneDie += HandleProfileDeath;
-    }
-    private void OnDestroy()
-    {
-        Profile.OnSomeoneLungeEnd -= CheckNextCharacter;
-        Profile.OnSomeoneDie -= HandleProfileDeath;
-    }
 
-    public void SetAliveProfiles(List<AllyProfile> AllyProfiles, List<EnemyProfile> EnemyProfiles)
+    public static void SetAliveProfiles(List<AllyProfile> AllyProfiles, List<EnemyProfile> EnemyProfiles)
     {
 
         ActiveAllyProfiles = AllyProfiles;
@@ -44,14 +36,14 @@ public class TurnScheduler : MonoBehaviour
                            .ToList();
     }
 
-    public void SortProfilesWithSpeed()
+    public static void SortProfilesWithSpeed()
     {
         order = 0;
         orderedProfiles = aliveProfiles.OrderByDescending(p => p.GetSpeed()).ToList();
 
     }
 
-    public void RemoveFromQueue(Profile deadProfile)
+    public static void RemoveFromQueue(Profile deadProfile)
     {
         if (aliveProfiles.Contains(deadProfile))
         {
@@ -63,14 +55,14 @@ public class TurnScheduler : MonoBehaviour
 
 
 
-    public void StartTour()
+    public static void StartTour()
     {
         //Debug.Log("starttour");
         onStartTour.Invoke();
         SortProfilesWithSpeed();
         CheckNextCharacter();
     }
-    public void CheckNextCharacter()
+    public static void CheckNextCharacter()
     {
         if (order == aliveProfiles.Count)
         {
@@ -84,12 +76,12 @@ public class TurnScheduler : MonoBehaviour
             LetNextPlayertoPlay();
         }
     }
-    public void LetNextPlayertoPlay()
+    public static void LetNextPlayertoPlay()
     {
         order++;
         aliveProfiles[order - 1].LungeStart();
     }
-    public void FinishTour()
+    public static void FinishTour()
     {
         //Debug.Log("finishtour");
 
@@ -102,17 +94,24 @@ public class TurnScheduler : MonoBehaviour
 
 
 
-    public void PlayF(List<Profile> orderedProfiles)
+    public static void PlayF(List<Profile> orderedProfiles)
     {
         //Debug.Log("Oynat");
         onStartPlay.Invoke();
-        if (playCoroutine == null)
+
+
+        if (runner == null)
         {
-            playCoroutine = StartCoroutine(Play(orderedProfiles));
+            // Yeni bir GameObject oluþtur ve scripti ona ekle
+            GameObject go = new GameObject("TurnCoroutineRunner");
+            runner = go.AddComponent<CorRunner>();
+            // Dövüþ bitince silinmemesi gerekiyorsa: Object.DontDestroyOnLoad(go);
         }
+        playCoroutine = runner.StartCor(Play(orderedProfiles));
+        
     }
 
-    public IEnumerator Play(List<Profile> profiles)
+    public static IEnumerator Play(List<Profile> profiles)
     {
         yield return null;
         for (int i = 0; i < profiles.Count; i++)
@@ -134,7 +133,7 @@ public class TurnScheduler : MonoBehaviour
 
 
 
-    public void HandleProfileDeath(Profile deadProfile)
+    public static void HandleProfileDeath(Profile deadProfile)
     {
         // Listelerden çýkar
         if (deadProfile is AllyProfile ally) ActiveAllyProfiles.Remove(ally);
@@ -147,21 +146,44 @@ public class TurnScheduler : MonoBehaviour
         {
             if (playCoroutine != null)
             {
-                StopCoroutine(playCoroutine);
+                //oynat corosunu durdur
+                runner.StopCor(playCoroutine);
                 playCoroutine = null;
             }
 
-            fightManager.LoseFight();
+            FightManager.instance.LoseFight();
         }
         else if (ActiveEnemyProfiles.Count == 0)
         {
             if (playCoroutine != null)
             {
-                StopCoroutine(playCoroutine);
+                runner.StopCor(playCoroutine);
                 playCoroutine = null;
             }
 
-            fightManager.WinFight();
+            FightManager.instance.WinFight();
+        }
+    }
+}
+public class CorRunner : MonoBehaviour
+{// IEnumerator alýr, Coroutine döndürür
+    public Coroutine StartCor(IEnumerator corMethod)
+    {
+        if (corMethod != null)
+        {
+            return StartCoroutine(corMethod);
+        }
+
+        Debug.LogWarning("Baþlatýlmak istenen IEnumerator null!");
+        return null;
+    }
+
+    // Baþlatýlmýþ bir Coroutine referansýný durdurur
+    public void StopCor(Coroutine runningCor)
+    {
+        if (runningCor != null)
+        {
+            StopCoroutine(runningCor);
         }
     }
 }
