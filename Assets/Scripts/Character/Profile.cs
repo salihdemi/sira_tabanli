@@ -155,7 +155,7 @@ public abstract class Profile : MonoBehaviour
         isDied = true;
         stats.isDied = true;
         TurnScheduler.HandleProfileDeath(this);
-        FightManager.instance.SetDefaultTarget();
+        FightManager.SetDefaultTarget();
         OnSomeoneDie.Invoke(this);
     }
 

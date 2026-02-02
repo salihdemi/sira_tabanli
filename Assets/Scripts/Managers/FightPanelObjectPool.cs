@@ -7,7 +7,6 @@ public class FightPanelObjectPool : MonoBehaviour
     public static FightPanelObjectPool instance;
 
 
-    [SerializeField] private FightManager fightManager;
 
     [Header("Parents")]
     [SerializeField] private Transform allyParent;
@@ -34,6 +33,7 @@ public class FightPanelObjectPool : MonoBehaviour
             PreparePool();
 
             Profile.OnSomeoneDie += HandleReturnToPool;
+            gameObject.SetActive(false);
         }
         else
         {

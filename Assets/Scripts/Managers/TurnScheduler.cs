@@ -151,7 +151,7 @@ public static class TurnScheduler
                 playCoroutine = null;
             }
 
-            FightManager.instance.LoseFight();
+            FightManager.LoseFight();
         }
         else if (ActiveEnemyProfiles.Count == 0)
         {
@@ -161,7 +161,7 @@ public static class TurnScheduler
                 playCoroutine = null;
             }
 
-            FightManager.instance.WinFight();
+            FightManager.WinFight();
         }
     }
 }

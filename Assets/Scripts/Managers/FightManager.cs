@@ -8,13 +8,12 @@ using UnityEngine;
 using UnityEngine.Profiling;
 using UnityEngine.SceneManagement;
 
-public class FightManager : MonoBehaviour
+public static class FightManager
 {
     //düþman kendi hedefini seçebilince silinecek
-    public static FightManager instance;
     public static Profile defaultTargetForEnemies;//!
 
-    public void SetDefaultTarget()//gecici
+    public static void SetDefaultTarget()//gecici
     {
         if (TurnScheduler.ActiveAllyProfiles.Count > 0)
         {
@@ -30,9 +29,8 @@ public class FightManager : MonoBehaviour
 
 
 
-    [SerializeField] private PartyManager  partyManager;
 
-    [SerializeField] private GameObject fightPanel;
+    private static GameObject fightPanel;
 
 
 
@@ -40,17 +38,7 @@ public class FightManager : MonoBehaviour
 
     public static event Action OnFightStart, OnFightEnd;
 
-    private EnemyGroup currentEnemy;
-
-    private void Awake()
-    {
-        instance = this;
-        EnemyGroup.OnSomeoneCollideMainCharacterMoveable += StartFight;
-    }
-    private void OnDestroy()
-    {
-        EnemyGroup.OnSomeoneCollideMainCharacterMoveable -= StartFight;
-    }
+    private static EnemyGroup currentEnemy;
 
 
 
@@ -58,10 +46,11 @@ public class FightManager : MonoBehaviour
 
 
 
-    public void StartFight(EnemyGroup enemy)//fonksiyonla
+
+    public static void StartFight(EnemyGroup enemy)//fonksiyonla
     {
         #region NullCheck
-        if (partyManager.partyStats.Count < 1)
+        if (PartyManager.instance.partyStats.Count < 1)
         { Debug.LogError("Parti boþ"); return; }
         if (enemy.enemyStats.Count < 1)
         { Debug.LogError("Düþman partisi boþ"); return; }
@@ -69,12 +58,15 @@ public class FightManager : MonoBehaviour
 
         OnFightStart.Invoke();
 
+        Debug.Log(FightPanelObjectPool.instance);
+        if(fightPanel == null) fightPanel = FightPanelObjectPool.instance.gameObject;//!
+
         fightPanel.SetActive(true);
 
         currentEnemy = enemy;
 
 
-        List<PersistanceStats> allyStats = partyManager.partyStats;
+        List<PersistanceStats> allyStats = PartyManager.instance.partyStats;
         List<AllyProfile> ActiveAllyProfiles = BattleSpawner.SpawnAllies(allyStats);
 
         List<PersistanceStats> enemyStats = enemy.enemyStats;
@@ -92,7 +84,7 @@ public class FightManager : MonoBehaviour
         TurnScheduler.StartTour();
     }
     
-    public void WinFight()
+    public static void WinFight()
     {
         //Ödül ver
         Debug.Log(currentEnemy.loot + "kazanildi");
@@ -106,10 +98,10 @@ public class FightManager : MonoBehaviour
         {
             item.ResetStats();
         }
-
+        currentEnemy = null;
         FinishFight();
     }
-    public void LoseFight()
+    public static void LoseFight()
     {
         Debug.Log("lose");
         //ölüm ekraný* vs
@@ -118,7 +110,7 @@ public class FightManager : MonoBehaviour
         FinishFight();
     }
     
-    public void FinishFight()
+    public static void FinishFight()
     {
         OnFightEnd.Invoke();//moveable-setisinfight
 

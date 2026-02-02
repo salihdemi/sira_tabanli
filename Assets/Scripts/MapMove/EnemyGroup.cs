@@ -12,7 +12,6 @@ public class EnemyGroup : MonoBehaviour
 
 
     public static List<EnemyGroup> GroupsInScene = new List<EnemyGroup>();
-    public static event Action<EnemyGroup> OnSomeoneCollideMainCharacterMoveable;
     public string loot;
     private void Awake()
     {
@@ -46,7 +45,7 @@ public class EnemyGroup : MonoBehaviour
         {
             moveable.ChangeState(EnemyState.InFight);
         }
-        OnSomeoneCollideMainCharacterMoveable?.Invoke(this);
+        FightManager.StartFight(this);
     }
     public void ResetGroup()
     {
