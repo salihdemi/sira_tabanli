@@ -131,8 +131,7 @@ public class SaveManager : MonoBehaviour
     private void SaveUnlockedAllies(SaveData data)
     {
         // Açýlmýþ müttefikleri isimleriyle kaydet
-        PartyManager partyManager = FindAnyObjectByType<PartyManager>();
-        foreach (PersistanceStats ally in partyManager.allUnlockedAllies)
+        foreach (PersistanceStats ally in PartyManager.allUnlockedAllies)
         {
             data.savedAllys.Add(new AllySaveData
             {
@@ -158,9 +157,8 @@ public class SaveManager : MonoBehaviour
     }
     private void LoadUnlockedAllies(SaveData data)
     {
-        PartyManager partyManager = FindAnyObjectByType<PartyManager>();
-        partyManager.allUnlockedAllies.Clear();
-        partyManager.partyStats.Clear();
+        PartyManager.allUnlockedAllies.Clear();
+        PartyManager.partyStats.Clear();
 
         foreach (AllySaveData saved in data.savedAllys)
         {
@@ -184,13 +182,13 @@ public class SaveManager : MonoBehaviour
             //skilller listesi
 
 
-            partyManager.allUnlockedAllies.Add(newStats);
+            PartyManager.allUnlockedAllies.Add(newStats);
 
 
 
             if (newStats.isInParty)
             {
-                partyManager.TryAddToParty(newStats);
+                PartyManager.TryAddToParty(newStats);
             }
 
         }

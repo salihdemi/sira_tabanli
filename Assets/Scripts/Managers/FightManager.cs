@@ -50,7 +50,7 @@ public static class FightManager
     public static void StartFight(EnemyGroup enemy)//fonksiyonla
     {
         #region NullCheck
-        if (PartyManager.instance.partyStats.Count < 1)
+        if (PartyManager.partyStats.Count < 1)
         { Debug.LogError("Parti boþ"); return; }
         if (enemy.enemyStats.Count < 1)
         { Debug.LogError("Düþman partisi boþ"); return; }
@@ -66,7 +66,7 @@ public static class FightManager
         currentEnemy = enemy;
 
 
-        List<PersistanceStats> allyStats = PartyManager.instance.partyStats;
+        List<PersistanceStats> allyStats = PartyManager.partyStats;
         List<AllyProfile> ActiveAllyProfiles = BattleSpawner.SpawnAllies(allyStats);
 
         List<PersistanceStats> enemyStats = enemy.enemyStats;

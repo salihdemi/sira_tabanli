@@ -4,39 +4,16 @@ using System.Linq;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
-public class PartyManager : MonoBehaviour
+public static class PartyManager
 {
-    public static PartyManager instance;
-    private void Awake()
-    {
-        if (instance == null)
-        {
 
-            instance = this;
-
-            DontDestroyOnLoad(gameObject);
-
-
-            for (int i = 0; i < partyDatas.Length; i++)
-            {
-                UnlockAlly(partyDatas[i]);
-            }
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-    }
-
-    public List<PersistanceStats> allUnlockedAllies = new List<PersistanceStats>();
+    public static List<PersistanceStats> allUnlockedAllies = new List<PersistanceStats>();
     
-    [SerializeField] public CharacterData[] partyDatas; //!!!!!!!!!!gereksiz
-    [SerializeField] public List<PersistanceStats> partyStats; //static olabilir
+    public static List<PersistanceStats> partyStats = new List<PersistanceStats>();
 
 
 
-    public void OnPressRestPartyButton()
+    public static void OnPressRestPartyButton()
     {
         foreach (PersistanceStats stat in partyStats)
         {
@@ -46,7 +23,7 @@ public class PartyManager : MonoBehaviour
         // diðer menüyü ac
     }
 
-    public void UnlockAlly(CharacterData data)
+    public static void UnlockAlly(CharacterData data)
     {
         PersistanceStats stats = new PersistanceStats();
         stats.LoadFromBase(data);
@@ -61,7 +38,7 @@ public class PartyManager : MonoBehaviour
 
     }
 
-    public void TryAddToParty(PersistanceStats characterStats)
+    public static void TryAddToParty(PersistanceStats characterStats)
     {
         if (partyStats.Count < 4)
         {
@@ -74,7 +51,7 @@ public class PartyManager : MonoBehaviour
         }
     }
 
-    public void TryToRemoveFromParty(PersistanceStats characterToRemove)
+    public static void TryToRemoveFromParty(PersistanceStats characterToRemove)
     {
         if (partyStats.Count > 1 && partyStats.Contains(characterToRemove))
         {

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public class CharacterSelectMenu : MonoBehaviour
 {
-    public PartyManager partyManager;
     public GameObject cardPrefab;
     public Transform contentArea; // ScrollView Content
 
@@ -20,7 +19,7 @@ public class CharacterSelectMenu : MonoBehaviour
         foreach (Transform child in contentArea) Destroy(child.gameObject);
         spawnedCards.Clear();
 
-        foreach (var ally in partyManager.allUnlockedAllies)
+        foreach (var ally in PartyManager.allUnlockedAllies)
         {
             GameObject go = Instantiate(cardPrefab, contentArea);
             var card = go.GetComponent<CharacterSelectionCard>();
@@ -33,13 +32,13 @@ public class CharacterSelectMenu : MonoBehaviour
 
     public void HandleSelection(CharacterSelectionCard card)
     {
-        if (card.myStats.isInParty && partyManager.partyStats.Count > 1)
+        if (card.myStats.isInParty && PartyManager.partyStats.Count > 1)
         {
-            partyManager.TryToRemoveFromParty(card.myStats);
+            PartyManager.TryToRemoveFromParty(card.myStats);
         }
-        else if(!card.myStats.isInParty && partyManager.partyStats.Count < 4)
+        else if(!card.myStats.isInParty && PartyManager.partyStats.Count < 4)
         {
-            partyManager.TryAddToParty(card.myStats);
+            PartyManager.TryAddToParty(card.myStats);
         }
 
         // Tüm kartlarý güncelle (Bir karakter eklenince hepsi kontrol etsin)
