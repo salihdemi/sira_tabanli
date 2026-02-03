@@ -1107,6 +1107,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuManager
   saveSlotsPanel: {fileID: 239911477}
   continueButton: {fileID: 371957960}
+  partyDatas:
+  - {fileID: 11400000, guid: 510f7f017e7c34b409fb2893ed92353e, type: 2}
+  - {fileID: 11400000, guid: b6be121c27ed2ca41961a59342253244, type: 2}
+  - {fileID: 11400000, guid: adce3d5ff492bd24385f3f68406579ca, type: 2}
 --- !u!4 &772785568
 Transform:
   m_ObjectHideFlags: 0

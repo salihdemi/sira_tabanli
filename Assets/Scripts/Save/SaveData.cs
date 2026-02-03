@@ -13,8 +13,6 @@ public class SaveData
 
     public List<AllySaveData> savedAllys = new List<AllySaveData>();
 
-    public List<bool> savedEnemyGroups = new List<bool>();
-
     public List<string> deadEnemyIDsInScene = new List<string>();
 
     //Yenilen bosslar

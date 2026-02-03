@@ -12,9 +12,10 @@ public class SaveMenu : MonoBehaviour
             slots = GetComponentsInChildren<SaveSlotUI>();
         }
 
-        foreach (SaveSlotUI slot in slots)
+
+        for (int i = 0; i < slots.Length; i++)
         {
-            if (slot != null) slot.Setup();
+            slots[i].Setup(i);
         }
     }
 

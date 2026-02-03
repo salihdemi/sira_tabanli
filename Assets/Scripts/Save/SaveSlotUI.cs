@@ -4,12 +4,15 @@ using System.IO;
 
 public class SaveSlotUI : MonoBehaviour
 {
-    public int slotIndex;
+    private int slotIndex;
     public TextMeshProUGUI dateText;
     public TextMeshProUGUI infoText;
 
-    public void Setup()
+    public SaveData data;
+
+    public void Setup(int index)
     {
+        slotIndex = index;
         RefreshUI();
     }
 
@@ -33,6 +36,7 @@ public class SaveSlotUI : MonoBehaviour
     // Unity Inspector'da Save butonuna baðla
     public void OnClickSave()
     {
+        data =
         SaveManager.Save(slotIndex);
         RefreshUI();
     }

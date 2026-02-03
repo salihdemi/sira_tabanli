@@ -21,8 +21,7 @@ public static class SaveManager
     }
 
     //public GameObject player;//playerý bulmasý gerek
-
-
+    public static int saveName;
 
 
     private static string GetPath(int slotIndex) => Application.persistentDataPath + "/save_" + slotIndex + ".json";
@@ -32,14 +31,13 @@ public static class SaveManager
 
 
 
-    public static void Save(int slotIndex)
+    public static SaveData Save(int slotIndex)
     {
         Debug.Log("Save");
         SaveData data = new SaveData();
         data.saveDate = System.DateTime.Now.ToString("dd/MM/yyyy HH:mm");
 
-
-
+        saveName++;
 
         SaveSceneData(data);
         SaveStaticData(data);
@@ -48,9 +46,15 @@ public static class SaveManager
 
 
 
+
+
+
+
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(GetPath(slotIndex), json);
         Debug.Log($"Slot {slotIndex} kaydedildi: " + GetPath(slotIndex));
+
+        return data;
     }
     public static void Load(int slotIndex)
     {
@@ -140,11 +144,13 @@ public static class SaveManager
 
             if (isDead)
             {
+                Debug.Log(data.deadEnemyIDsInScene + "öldürülüyor");
                 // Listede adý var, demek ki ölmüþ. Kapat.
                 group.gameObject.SetActive(false);
             }
             else
             {
+                Debug.Log(data.deadEnemyIDsInScene + "diriltiliyor");
                 // Listede adý yok, demek ki yaþýyor.
                 // Aç ve resetle (Canýný fulle, yerine ýþýnla)
                 group.gameObject.SetActive(true);
@@ -350,4 +356,10 @@ public static class SaveManager
     }
 
     #endregion
+}
+
+
+public class DataVisualizer: MonoBehaviour
+{
+    public SaveData data;
 }

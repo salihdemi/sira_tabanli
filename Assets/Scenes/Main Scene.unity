@@ -2638,9 +2638,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f563627aeacf84da4a2629edd18a0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveSlotUI
-  slotIndex: 0
+  slotIndex: 1
   dateText: {fileID: 166242670}
   infoText: {fileID: 988699107}
+  data:
+    saveDate: 
+    dataName: 
+    playerX: 0
+    playerY: 0
+    savedScene: 0
+    savedAllys: []
+    deadEnemyIDsInScene: []
 --- !u!114 &1219953921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4232,6 +4240,14 @@ MonoBehaviour:
   slotIndex: 0
   dateText: {fileID: 750115538}
   infoText: {fileID: 707288747}
+  data:
+    saveDate: 
+    dataName: 
+    playerX: 0
+    playerY: 0
+    savedScene: 0
+    savedAllys: []
+    deadEnemyIDsInScene: []
 --- !u!114 &1924900731
 MonoBehaviour:
   m_ObjectHideFlags: 0
