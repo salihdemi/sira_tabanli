@@ -1,7 +1,8 @@
 using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+using UnityEngine.U2D;
 
 public static class SaveManager
 {
@@ -144,13 +145,11 @@ public static class SaveManager
 
             if (isDead)
             {
-                Debug.Log(data.deadEnemyIDsInScene + "öldürülüyor");
                 // Listede adý var, demek ki ölmüþ. Kapat.
                 group.gameObject.SetActive(false);
             }
             else
             {
-                Debug.Log(data.deadEnemyIDsInScene + "diriltiliyor");
                 // Listede adý yok, demek ki yaþýyor.
                 // Aç ve resetle (Canýný fulle, yerine ýþýnla)
                 group.gameObject.SetActive(true);
@@ -183,28 +182,11 @@ public static class SaveManager
         // Açýlmýþ müttefikleri isimleriyle kaydet
         foreach (PersistanceStats ally in PartyManager.allUnlockedAllies)
         {
-            data.savedAllys.Add(new AllySaveData
-            {
-                //characterID = ally.originData.name, // ScriptableObject dosya adý
-                name = ally._name,
-
-
-                currentHealth = ally.currentHealth, // Mevcut caný
-                maxHealth = ally.maxHealth,         // Maksimum caný
-                basePower = ally.basePower,         // Gücü
-                baseSpeed = ally.baseSpeed,         // Hýzý
-                isDied = ally.isDied,               // Ölü olup olmadýðý
-                isInParty = ally.isInParty,         // Partide olup olmadýðý
-
-                sprite = SpriteToInt(ally.sprite),
-
-                attackSkill = SkillToInt(ally.attack)
-                //skilller listesi
-
-            });
-
+            data.savedAllys.Add(PersistanceStatsToAllyData(ally));
         }
     }
+
+
     private static void LoadUnlockedAllies(SaveData data)
     {
         PartyManager.allUnlockedAllies.Clear();
@@ -213,23 +195,7 @@ public static class SaveManager
         foreach (AllySaveData saved in data.savedAllys)
         {
 
-            PersistanceStats newStats = new PersistanceStats();
-
-            newStats._name = saved.name;
-
-            newStats.maxHealth = saved.maxHealth;
-            newStats.currentHealth = saved.currentHealth;
-            newStats.basePower = saved.basePower;
-            newStats.baseSpeed = saved.baseSpeed;
-            newStats.isDied = saved.isDied;
-            newStats.isInParty = saved.isInParty;
-
-
-
-            newStats.sprite = IntToSprite(saved.sprite);
-
-            newStats.attack = IntToSkill(saved.attackSkill);
-            //skilller listesi
+            PersistanceStats newStats = AllyDataToPersistanceStats(saved);
 
 
             PartyManager.allUnlockedAllies.Add(newStats);
@@ -242,6 +208,7 @@ public static class SaveManager
 
         }
     }
+
 
 
     private static void SaveScene(SaveData data)
@@ -353,6 +320,65 @@ public static class SaveManager
 
 
         return skill;
+    }
+
+
+
+    private static AllySaveData PersistanceStatsToAllyData(PersistanceStats ally)
+    {
+        AllySaveData allySaveData = new AllySaveData();
+        allySaveData.name = ally._name;
+
+        allySaveData.currentHealth = ally.currentHealth; // Mevcut caný
+        allySaveData.maxHealth = ally.maxHealth;         // Maksimum caný
+        allySaveData.basePower = ally.basePower;         // Gücü
+        allySaveData.baseSpeed = ally.baseSpeed;         // Hýzý
+
+
+        allySaveData.isDied = ally.isDied;               // Ölü olup olmadýðý
+        allySaveData.isInParty = ally.isInParty;         // Partide olup olmadýðý
+
+
+        allySaveData.sprite = SpriteToInt(ally.sprite);
+        allySaveData.attackSkill = SkillToInt(ally.attack);
+
+        allySaveData.skills.Clear();
+        for (int i = 0; i < ally.skills.Count; i++)
+        {
+            allySaveData.skills.Add(SkillToInt(ally.skills[i]));
+        }
+
+
+        //skilller listesi
+        return allySaveData;
+    }
+    private static PersistanceStats AllyDataToPersistanceStats(AllySaveData allySaveData)
+    {
+        PersistanceStats persistanceStats = new PersistanceStats();
+
+        persistanceStats._name = allySaveData.name;
+
+        persistanceStats.currentHealth = allySaveData.currentHealth; // Mevcut caný
+        persistanceStats.maxHealth = allySaveData.maxHealth;         // Maksimum caný
+        persistanceStats.basePower = allySaveData.basePower;         // Gücü
+        persistanceStats.baseSpeed = allySaveData.baseSpeed;         // Hýzý
+
+
+        persistanceStats.isDied = allySaveData.isDied;               // Ölü olup olmadýðý
+        persistanceStats.isInParty = allySaveData.isInParty;         // Partide olup olmadýðý
+
+
+        persistanceStats.sprite = IntToSprite(allySaveData.sprite);
+        persistanceStats.attack = IntToSkill(allySaveData.attackSkill);
+
+        persistanceStats.skills.Clear();
+        for (int i = 0; i < persistanceStats.skills.Count; i++)
+        {
+            persistanceStats.skills.Add(IntToSkill(allySaveData.skills[i]));
+        }
+
+
+        return persistanceStats;
     }
 
     #endregion

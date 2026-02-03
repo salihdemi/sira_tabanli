@@ -42,5 +42,5 @@ public class AllySaveData
 
 
     public int attackSkill;
-    public List<int> skills;
+    public List<int> skills = new List<int>();
 }
