@@ -24,10 +24,17 @@ public class MainMenuManager : MonoBehaviour
         }
         continueButton.interactable = canContinue;
     }
+
+    [SerializeField] private CharacterData[] partyDatas;
     public void NewGame()
     {
         // 1. Mevcut (varsayýlan) verileri sýfýrla
         // 2. Ýlk sahneye (Intro/Tutorial) geç
+
+        for (int i = 0; i < partyDatas.Length; i++)
+        {
+            PartyManager.UnlockAlly(partyDatas[i]);
+        }
         SceneManager.LoadScene(1);
     }
 

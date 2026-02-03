@@ -34,6 +34,7 @@ public static class SaveManager
 
     public static void Save(int slotIndex)
     {
+        Debug.Log("Save");
         SaveData data = new SaveData();
         data.saveDate = System.DateTime.Now.ToString("dd/MM/yyyy HH:mm");
 
@@ -53,6 +54,7 @@ public static class SaveManager
     }
     public static void Load(int slotIndex)
     {
+        Debug.Log("Load");
         string path = GetPath(slotIndex);
         if (!File.Exists(path)) return;
 
@@ -242,11 +244,6 @@ public static class SaveManager
     }
     private static void LoadSceneAndData(SaveData data)
     {
-        SceneManager.sceneLoaded += (scene, mode) => { LoadSceneData(data); };
-
-        SceneManager.LoadScene(data.savedScene);
-
-
 
 
 
@@ -295,7 +292,6 @@ public static class SaveManager
 
     private static int SpriteToInt(Sprite sprite)
     {
-        Debug.Log(dataBase);
         int spriteIndex = dataBase.spritesDataBase.IndexOf(sprite);
 
         if (spriteIndex == -1)

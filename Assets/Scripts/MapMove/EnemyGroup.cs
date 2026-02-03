@@ -25,7 +25,6 @@ public class EnemyGroup : MonoBehaviour
         // Grup içindeki düþmanlarýn verilerini hazýrla
         foreach (var enemy in moveables)
         {
-            Debug.Log(enemy);
             if (enemy.data != null)
             {
                 PersistanceStats stat = new PersistanceStats();

@@ -32,6 +32,7 @@ public class CharacterSelectMenu : MonoBehaviour
 
     public void HandleSelection(CharacterSelectionCard card)
     {
+        Debug.Log("HandleSelection");
         if (card.myStats.isInParty && PartyManager.partyStats.Count > 1)
         {
             PartyManager.TryToRemoveFromParty(card.myStats);

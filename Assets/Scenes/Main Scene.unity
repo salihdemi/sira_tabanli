@@ -2930,54 +2930,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1432708885}
   m_CullTransparentMesh: 1
---- !u!1 &1438330608
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1438330610}
-  - component: {fileID: 1438330609}
-  m_Layer: 0
-  m_Name: FirstPartyUnlocker
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1438330609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1438330608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b664e8b2b65b39d4abc3b0752bf37ac3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FirstPartyUnlocker
-  partyDatas:
-  - {fileID: 11400000, guid: 510f7f017e7c34b409fb2893ed92353e, type: 2}
-  - {fileID: 11400000, guid: b6be121c27ed2ca41961a59342253244, type: 2}
-  - {fileID: 11400000, guid: adce3d5ff492bd24385f3f68406579ca, type: 2}
---- !u!4 &1438330610
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1438330608}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1462636517
 GameObject:
   m_ObjectHideFlags: 0
@@ -5449,4 +5401,3 @@ SceneRoots:
   - {fileID: 1467238531}
   - {fileID: 8241592257740627760}
   - {fileID: 641799841}
-  - {fileID: 1438330610}

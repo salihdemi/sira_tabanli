@@ -58,7 +58,6 @@ public static class FightManager
 
         OnFightStart.Invoke();
 
-        Debug.Log(FightPanelObjectPool.instance);
         if(fightPanel == null) fightPanel = FightPanelObjectPool.instance.gameObject;//!
 
         fightPanel.SetActive(true);
