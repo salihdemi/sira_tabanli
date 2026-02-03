@@ -19,3 +19,5 @@ MonoBehaviour:
   attack: {fileID: 11400000, guid: 9d1e90c9bfde37e4b97d4456b48556bb, type: 2}
   skills:
   - {fileID: 11400000, guid: bf0fabd5ef094fa49b9a76c9bb19787c, type: 2}
+  - {fileID: 11400000, guid: 4e2e20dbe6d7bb44cabbb4441bd14e5a, type: 2}
+  - {fileID: 11400000, guid: 251a13860cad8e743998f3e764727bc4, type: 2}

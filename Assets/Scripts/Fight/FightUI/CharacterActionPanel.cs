@@ -20,6 +20,8 @@ public class CharacterActionPanel : MonoBehaviour
     [SerializeField] private GameObject foodsPanel;
     [SerializeField] private GameObject toysPanel;
 
+    [SerializeField] private Button buttonPrefab;
+
 
     private void Awake()
     {
@@ -102,18 +104,12 @@ public class CharacterActionPanel : MonoBehaviour
 
     private Button MakeButton(_Skill skill)
     {
-        //prefab olmali!
-        GameObject go = new GameObject(skill.name + "_Button", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
-        Button button = go.AddComponent<Button>();
-        GameObject textGo = new GameObject(skill.name + "_Button_Text", typeof(RectTransform), typeof(CanvasRenderer));
-        textGo.transform.SetParent(go.transform);
-        TextMeshProUGUI text = textGo.AddComponent<TextMeshProUGUI>();
 
 
+        Button button = Instantiate(buttonPrefab);
+        TextMeshProUGUI text = button.transform.GetComponentInChildren<TextMeshProUGUI>();
 
         button.transform.SetParent(skillsPanel.transform.GetChild(0), false);
-
-
         text.text = skill.name;
 
 
