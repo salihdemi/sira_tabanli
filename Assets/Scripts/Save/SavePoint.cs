@@ -32,7 +32,7 @@ public class SavePoint : MonoBehaviour
 
         if(character == null)
         {
-            MainCharacterMoveable character = GameObject.FindAnyObjectByType<MainCharacterMoveable>();
+            character = GameObject.FindAnyObjectByType<MainCharacterMoveable>();
             if(character == null)
             {
                 Debug.LogError("SavePoint Karakter bulamadý");
