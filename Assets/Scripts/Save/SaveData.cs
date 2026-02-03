@@ -16,9 +16,16 @@ public class SaveData
 
     public List<string> deadEnemyIDsInScene = new List<string>();
 
+    // Yemeklerin isimleri ve adetleri
+    public List<int> foodNumbers = new List<int>();
+    public List<int> foodAmounts = new List<int>();
+
+    // Oyuncaklarýn isimleri ve adetleri
+    public List<int> toyNumbers = new List<int>();
+    public List<int> toyAmounts = new List<int>();
+
     //Yenilen bosslar
     //Hikaye ilerlemeleri()
-    //Kaynaklar
     //sevviye-tecrübe?
 
 }

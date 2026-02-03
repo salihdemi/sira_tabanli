@@ -110,7 +110,8 @@ public static class SaveManager
     }
     private static void LoadSceneData(SaveData data)
     {
-        data.savePoint.PlacePlayer();
+        Debug.Log(data.savePoint);
+        data.savePoint.PlacePlayer();//durdurup baþlatýp direkt load edince hata verebiliyor
 
         LoadEnemiesInScene(data);
     }
@@ -165,48 +166,15 @@ public static class SaveManager
     #region StaticData
     private static void SaveStaticData(SaveData data)
     {
-        SaveUnlockedAllies(data);
         SaveScene(data);
+        SaveUnlockedAllies(data);
+        SaveInventory(data);
     }
     private static void LoadStaticData(SaveData data)
     {
         LoadUnlockedAllies(data);
+        LoadInventory(data);
     }
-
-
-    private static void SaveUnlockedAllies(SaveData data)
-    {
-        data.savedAllys.Clear();
-        // Açýlmýþ müttefikleri isimleriyle kaydet
-        foreach (PersistanceStats ally in PartyManager.allUnlockedAllies)
-        {
-            data.savedAllys.Add(PersistanceStatsToAllyData(ally));
-        }
-    }
-
-
-    private static void LoadUnlockedAllies(SaveData data)
-    {
-        PartyManager.allUnlockedAllies.Clear();
-        PartyManager.partyStats.Clear();
-
-        foreach (AllySaveData saved in data.savedAllys)
-        {
-
-            PersistanceStats newStats = AllyDataToPersistanceStats(saved);
-
-
-            PartyManager.allUnlockedAllies.Add(newStats);
-
-
-            if (newStats.isInParty)
-            {
-                PartyManager.TryAddToParty(newStats);
-            }
-
-        }
-    }
-
 
 
     private static void SaveScene(SaveData data)
@@ -233,6 +201,90 @@ public static class SaveManager
 
         // 4. Sahneyi yüklüyoruz
         SceneManager.LoadScene(data.savedScene);
+    }
+
+
+    private static void SaveUnlockedAllies(SaveData data)
+    {
+        data.savedAllys.Clear();
+        // Açýlmýþ müttefikleri isimleriyle kaydet
+        foreach (PersistanceStats ally in PartyManager.allUnlockedAllies)
+        {
+            data.savedAllys.Add(PersistanceStatsToAllyData(ally));
+        }
+    }
+    private static void LoadUnlockedAllies(SaveData data)
+    {
+        PartyManager.allUnlockedAllies.Clear();
+        PartyManager.partyStats.Clear();
+
+        foreach (AllySaveData saved in data.savedAllys)
+        {
+
+            PersistanceStats newStats = AllyDataToPersistanceStats(saved);
+
+
+            PartyManager.allUnlockedAllies.Add(newStats);
+
+
+            if (newStats.isInParty)
+            {
+                PartyManager.TryAddToParty(newStats);
+            }
+
+        }
+    }
+
+
+    private static void SaveInventory(SaveData data)
+    {
+        data.foodNumbers.Clear();
+        data.foodAmounts.Clear();
+        foreach (var pair in InventoryManager.foods)
+        {
+            data.foodNumbers.Add(UseableToInt(pair.Key)); // SO'nun adýný kaydet
+            data.foodAmounts.Add(pair.Value);  // Adedini kaydet
+        }
+
+        data.toyNumbers.Clear();
+        data.toyAmounts.Clear();
+        foreach (var pair in InventoryManager.toys)
+        {
+            data.toyNumbers.Add(UseableToInt(pair.Key));
+            data.toyAmounts.Add(pair.Value);
+        }
+    }
+    private static void LoadInventory(SaveData data)
+    {
+        InventoryManager.foods.Clear();
+        // Yemekleri Yükle
+        for (int i = 0; i < data.foodNumbers.Count; i++)
+        {
+            // Resources/Foods/ klasörü altýndaki SO'yu isminden bul
+            //Food foodSO = Resources.Load<Food>("Foods/" + data.foodNames[i]);
+
+            Food foodSO = (Food)IntToUseable(data.foodNumbers[i]);
+
+            if (foodSO != null)
+            {
+                InventoryManager.foods.Add(foodSO, data.foodAmounts[i]);
+            }
+        }
+
+        InventoryManager.toys.Clear();
+        // Oyuncaklarý Yükle
+        Debug.Log(data.toyNumbers.Count);
+        for (int i = 0; i < data.toyNumbers.Count; i++)
+        {
+            //Toy toySO = Resources.Load<Toy>("Toys/" + data.toyNames[i]);
+
+            Toy toySO = (Toy)IntToUseable(data.toyNumbers[i]);
+
+            if (toySO != null)
+            {
+                InventoryManager.toys.Add(toySO, data.toyAmounts[i]);
+            }
+        }
     }
 
     #endregion
@@ -292,32 +344,32 @@ public static class SaveManager
 
 
 
-    private static int SkillToInt(Useable skill)
+    private static int UseableToInt(Useable useable)
     {
-        int skillIndex = dataBase.skillsDataBase.IndexOf(skill);
+        int useableIndex = dataBase.useablesDataBase.IndexOf(useable);
 
-        if (skillIndex == -1)
+        if (useableIndex == -1)
         {
             Debug.LogWarning("Database de olmayan skill eklendi");
-            dataBase.skillsDataBase.Add(skill);
-            skillIndex = dataBase.skillsDataBase.IndexOf(skill);
+            dataBase.useablesDataBase.Add(useable);
+            useableIndex = dataBase.useablesDataBase.IndexOf(useable);
         }
 
-        return skillIndex;
+        return useableIndex;
     }
-    private static Useable IntToSkill(int listNumber)
+    private static Useable IntToUseable(int listNumber)
     {
-        if (dataBase.skillsDataBase.Count < listNumber)
+        if (dataBase.useablesDataBase.Count < listNumber)
         {
             Debug.LogError("Liste dýþýnda");
             return null;
         }
 
-        Useable skill = dataBase.skillsDataBase[listNumber];
+        Useable useable = dataBase.useablesDataBase[listNumber];
 
 
 
-        return skill;
+        return useable;
     }
 
 
@@ -338,12 +390,12 @@ public static class SaveManager
 
 
         allySaveData.sprite = SpriteToInt(ally.sprite);
-        allySaveData.attackSkill = SkillToInt(ally.attack);
+        allySaveData.attackSkill = UseableToInt(ally.attack);
 
         allySaveData.skills.Clear();
         for (int i = 0; i < ally.skills.Count; i++)
         {
-            allySaveData.skills.Add(SkillToInt(ally.skills[i]));
+            allySaveData.skills.Add(UseableToInt(ally.skills[i]));
         }
 
 
@@ -367,12 +419,12 @@ public static class SaveManager
 
 
         persistanceStats.sprite = IntToSprite(allySaveData.sprite);
-        persistanceStats.attack = IntToSkill(allySaveData.attackSkill);
+        persistanceStats.attack = IntToUseable(allySaveData.attackSkill);
 
         persistanceStats.skills.Clear();
         for (int i = 0; i < allySaveData.skills.Count; i++)
         {
-            persistanceStats.skills.Add(IntToSkill(allySaveData.skills[i]));
+            persistanceStats.skills.Add(IntToUseable(allySaveData.skills[i]));
         }
 
 
@@ -380,10 +432,4 @@ public static class SaveManager
     }
 
     #endregion
-}
-
-
-public class DataVisualizer: MonoBehaviour
-{
-    public SaveData data;
 }

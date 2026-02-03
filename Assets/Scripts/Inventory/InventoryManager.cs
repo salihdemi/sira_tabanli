@@ -46,6 +46,14 @@ public static class InventoryManager
     }
 
 
+    public static int GetFoodCount(Food food)
+    {
+        // Eðer toy null ise veya sözlükte yoksa 0 döndür, hata verme!
+        if (food == null || !foods.ContainsKey(food)) return 0;
+        return foods[food];
+    }
+
+
 
 
     public static Dictionary<Toy, int> toys = new Dictionary<Toy, int>();
@@ -84,7 +92,12 @@ public static class InventoryManager
     }
 
 
-
+    public static int GetToyCount(Toy toy)
+    {
+        // Eðer toy null ise veya sözlükte yoksa 0 döndür, hata verme!
+        if (toy == null || !toys.ContainsKey(toy)) return 0;
+        return toys[toy];
+    }
 
 
 }
