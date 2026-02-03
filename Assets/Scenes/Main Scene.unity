@@ -3074,15 +3074,13 @@ MonoBehaviour:
   infoText: {fileID: 988699107}
   data:
     saveDate: 
-    playerX: 0
-    playerY: 0
-    savePoint: {fileID: 0}
+    savePointName: 
     savedScene: 0
     savedAllys: []
     deadEnemyIDsInScene: []
-    foodNames: []
+    foodNumbers: 
     foodAmounts: 
-    toyNames: []
+    toyNumbers: 
     toyAmounts: 
 --- !u!114 &1219953921
 MonoBehaviour:
@@ -4181,6 +4179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61c635d138a06154abf33b56e32b7d03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SavePoint
+  _name: 1
   saveMenuPanel: {fileID: 2119294593}
   spawnPos: {x: -5.5, y: 0, z: 0}
   character: {fileID: 8241592257740627762}
@@ -4723,15 +4722,13 @@ MonoBehaviour:
   infoText: {fileID: 707288747}
   data:
     saveDate: 
-    playerX: 0
-    playerY: 0
-    savePoint: {fileID: 0}
+    savePointName: 
     savedScene: 0
     savedAllys: []
     deadEnemyIDsInScene: []
-    foodNames: []
+    foodNumbers: 
     foodAmounts: 
-    toyNames: []
+    toyNumbers: 
     toyAmounts: 
 --- !u!114 &1924900731
 MonoBehaviour:

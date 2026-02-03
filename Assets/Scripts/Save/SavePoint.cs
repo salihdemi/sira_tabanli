@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class SavePoint : MonoBehaviour
 {
+    public string _name;
+
+
     [SerializeField] private GameObject saveMenuPanel; // Inspector'dan SavePanel'i buraya sürükle
     private bool isPlayerInRange = false;
 

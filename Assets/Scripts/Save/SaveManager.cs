@@ -104,18 +104,49 @@ public static class SaveManager
     {
         //data.playerX = player.transform.position.x; //position yerine kayýt noktasý olacak!
         //data.playerY = player.transform.position.y; //position yerine kayýt noktasý olacak!
-
-        data.savePoint = currentSavePoint;
+        SaveSavePoint(data);
         SaveDeadEnemiesInScene(data);
     }
     private static void LoadSceneData(SaveData data)
     {
-        Debug.Log(data.savePoint);
-        data.savePoint.PlacePlayer();//durdurup baþlatýp direkt load edince hata verebiliyor
-
+        LoadSavePoint(data);
         LoadEnemiesInScene(data);
     }
 
+    private static void SaveSavePoint(SaveData data)
+    {
+        data.savePointName = currentSavePoint._name;
+    }
+    private static void LoadSavePoint(SaveData data)
+    {
+        if (!string.IsNullOrEmpty(data.savePointName)) // SaveData içindeki deðiþkenin adý
+        {
+            // 1. Sahnedeki bütün SavePoint scriptlerini bul
+            SavePoint[] allSavePoints = Object.FindObjectsByType<SavePoint>(FindObjectsSortMode.None);
+            SavePoint targetPoint = null;
+
+            // 2. Ýçlerinden _name deðiþkeni bizimkiyle eþleþeni seç
+            foreach (SavePoint sp in allSavePoints)
+            {
+                if (sp._name == data.savePointName)
+                {
+                    targetPoint = sp;
+                    break;
+                }
+            }
+
+            // 3. Eðer bulduysak yerleþtir
+            if (targetPoint != null)
+            {
+                targetPoint.PlacePlayer();
+                currentSavePoint = targetPoint;
+            }
+            else
+            {
+                Debug.LogError($"ID'si '{data.savePointName}' olan SavePoint sahnede bulunamadý!");
+            }
+        }
+    }
 
 
     private static void SaveDeadEnemiesInScene(SaveData data)

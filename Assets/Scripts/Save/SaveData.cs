@@ -5,8 +5,7 @@ using UnityEngine;
 public class SaveData
 {
     public string saveDate;
-    public float playerX, playerY;
-    public SavePoint savePoint;
+    public string savePointName;
 
 
     public int savedScene;
