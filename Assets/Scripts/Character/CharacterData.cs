@@ -27,8 +27,8 @@ public class CharacterData : ScriptableObject
 
 
     [Header("Skills")]
-    public _Skill attack;
-    public List<_Skill> skills = new List<_Skill>();
+    public Useable attack;
+    public List<Useable> skills = new List<Useable>();
 
 
 

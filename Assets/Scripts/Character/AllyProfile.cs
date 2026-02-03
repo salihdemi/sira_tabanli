@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class AllyProfile : Profile
 {
     public static event Action<AllyProfile> OnAnyAllyLungeStart;
-    public static event Action<Profile, _Skill> OnAnyAllyChoseSkill;
+    public static event Action<Profile, Useable> OnAnyAllyChoseSkill;
 
 
 
@@ -18,7 +18,7 @@ public class AllyProfile : Profile
         OnAnyAllyLungeStart.Invoke(this);
 
     }
-    public override void ChooseSkill(_Skill skill)
+    public override void ChooseSkill(Useable skill)
     {
         currentSkill = skill;
         OnAnyAllyChoseSkill?.Invoke(this, skill);

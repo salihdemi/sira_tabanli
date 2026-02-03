@@ -22,8 +22,8 @@ public class PersistanceStats
 
     public Sprite sprite;
     [Header("Skills")]
-    public _Skill attack;
-    public List<_Skill> skills = new List<_Skill>();
+    public Useable attack;
+    public List<Useable> skills = new List<Useable>();
 
 
 
@@ -39,7 +39,7 @@ public class PersistanceStats
 
         sprite = data.sprite;
         attack = data.attack;
-        skills = new List<_Skill>(data.skills);
+        skills = new List<Useable>(data.skills);
     }
     public void LoadFromSave()
     {
@@ -53,7 +53,7 @@ public class PersistanceStats
     }
 
 
-    public void LearnSkill(_Skill skill)
+    public void LearnSkill(Useable skill)
     {
         Debug.Log(skill.ToString());
         if (skills.Contains(skill))

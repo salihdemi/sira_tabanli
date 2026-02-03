@@ -2,6 +2,7 @@ using System.ComponentModel;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Profiling;
 using UnityEngine.UI;
 
 public class CharacterActionPanel : MonoBehaviour
@@ -43,8 +44,8 @@ public class CharacterActionPanel : MonoBehaviour
         WriteName(character);
         WriteAttack(character);
         WriteSkillsPanel(character);
-        WriteFoodsPanel();
-        WriteToysPanel();
+        WriteFoodsPanel(character);
+        WriteToysPanel(character);
     }
 
     public void CloseAndDisableAllPanels()
@@ -56,7 +57,7 @@ public class CharacterActionPanel : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void OnSkillSelectedWrapper(Profile character, _Skill skill)
+    private void OnSkillSelectedWrapper(Profile character, Useable skill)
     {
         // Event fýrladýðýnda buraya gelecek, 
         // biz de asýl kapatma fonksiyonunu tetikleyeceðiz.
@@ -81,31 +82,58 @@ public class CharacterActionPanel : MonoBehaviour
             Destroy(child.gameObject);//pool tipi yap!
         }
         // 2. Buton Oluþturma
-        foreach (_Skill skill in profile.stats.skills)
+        for (int i = 0; i < profile.stats.skills.Count; i++)
         {
+            Useable skill = profile.stats.skills[i];
+
             Button button = MakeButton(skill);
 
-            button.GetComponent<Button>().onClick.AddListener(() => profile.ChooseSkill(profile.stats.attack));
+            button.GetComponent<Button>().onClick.AddListener(() => profile.ChooseSkill(skill));
         }
 
     }
 
 
-    private void WriteFoodsPanel()
+    private void WriteFoodsPanel(AllyProfile profile)
     {
         //Yemekleri yaz, !bu fonksiyona hiç gerek olmayadabilir
+
+
+        if (foodsPanel == null) return;
+        foreach (Transform child in foodsPanel.transform.GetChild(0))
+        {
+            Destroy(child.gameObject);//pool tipi yap!
+        }
+        // 2. Buton Oluþturma
+        foreach (Food food in InventoryManager.instance.useableFoods)
+        {
+            Button button = MakeButton(food);
+
+            button.GetComponent<Button>().onClick.AddListener(() => profile.ChooseSkill(food));
+        }
     }
-    private void WriteToysPanel()
+    private void WriteToysPanel(AllyProfile profile)
     {
         //Oyuncaklarý yaz, !bu fonksiyona hiç gerek olmayadabilir
+
+        if (toysPanel == null) return;
+        foreach (Transform child in toysPanel.transform.GetChild(0))
+        {
+            Destroy(child.gameObject);//pool tipi yap!
+        }
+        // 2. Buton Oluþturma
+        foreach (Toy toy in InventoryManager.instance.useableToys)
+        {
+            Button button = MakeButton(toy);
+
+            button.GetComponent<Button>().onClick.AddListener(() => profile.ChooseSkill(toy));
+        }
     }
     #endregion
 
 
-    private Button MakeButton(_Skill skill)
+    private Button MakeButton(Useable skill)
     {
-
-
         Button button = Instantiate(buttonPrefab);
         TextMeshProUGUI text = button.transform.GetComponentInChildren<TextMeshProUGUI>();
 

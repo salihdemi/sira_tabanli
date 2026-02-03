@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
-public abstract class _Skill : ScriptableObject
+public abstract class Useable : ScriptableObject
 {
     //private AnimationClip clip;
     //private AudioClip clip;

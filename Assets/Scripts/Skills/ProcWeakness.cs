@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ChargedAttack", menuName = "Scriptable Objects/Skills/ChargedAttack")]
-public class ProcWeakness : _Skill
+public class ProcWeakness : Useable
 {
     public override void Method(Profile user, Profile target)
     {

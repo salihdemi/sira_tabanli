@@ -7,10 +7,10 @@ public class EnemyProfile : Profile
     {
         //Debug.Log(name + " hamlesini seçiyor");
 
-        _Skill currentskill = stats.attack; //default hamle
+        Useable currentskill = stats.attack; //default hamle
         ChooseSkill(currentskill);
     }
-    public override void ChooseSkill(_Skill skill)
+    public override void ChooseSkill(Useable skill)
     {
         currentSkill = skill;
         SetTarget(FightManager.defaultTargetForEnemies);//!default hedef!

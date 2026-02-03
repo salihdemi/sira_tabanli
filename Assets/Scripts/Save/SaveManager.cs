@@ -292,7 +292,7 @@ public static class SaveManager
 
 
 
-    private static int SkillToInt(_Skill skill)
+    private static int SkillToInt(Useable skill)
     {
         int skillIndex = dataBase.skillsDataBase.IndexOf(skill);
 
@@ -305,7 +305,7 @@ public static class SaveManager
 
         return skillIndex;
     }
-    private static _Skill IntToSkill(int listNumber)
+    private static Useable IntToSkill(int listNumber)
     {
         if (dataBase.skillsDataBase.Count < listNumber)
         {
@@ -313,7 +313,7 @@ public static class SaveManager
             return null;
         }
 
-        _Skill skill = dataBase.skillsDataBase[listNumber];
+        Useable skill = dataBase.skillsDataBase[listNumber];
 
 
 

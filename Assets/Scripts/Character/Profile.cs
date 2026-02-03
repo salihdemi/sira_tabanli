@@ -30,7 +30,7 @@ public abstract class Profile : MonoBehaviour
     private float currentSpeed;
 
 
-    [HideInInspector] public _Skill currentSkill;
+    [HideInInspector] public Useable currentSkill;
     [HideInInspector] public Profile currentTarget;
 
     [HideInInspector] public event Action<float> onHealthChange, onPowerChange, onSpeedChange;
@@ -46,7 +46,7 @@ public abstract class Profile : MonoBehaviour
 
 
     public abstract void LungeStart();
-    public abstract void ChooseSkill(_Skill skill);
+    public abstract void ChooseSkill(Useable skill);
     public  void SetTarget(Profile profile)
     {
         if(profile == null)//!

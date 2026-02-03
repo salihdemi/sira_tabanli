@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Burst", menuName = "Scriptable Objects/Skills/Burst")]
-public class Heal : _Skill
+public class Heal : Useable
 {
     public override void Method(Profile user, Profile target)
     {

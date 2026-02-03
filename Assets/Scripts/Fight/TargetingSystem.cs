@@ -11,7 +11,7 @@ public static class TargetingSystem
 
 
 
-    private static _Skill selectedSkill;
+    private static Useable selectedSkill;
     private static Profile currentCaster;
 
 
@@ -26,7 +26,7 @@ public static class TargetingSystem
     }
 
 
-    public static void StartTargeting(Profile caster, _Skill skill)
+    public static void StartTargeting(Profile caster, Useable skill)
     {
         selectedSkill = skill;
         currentCaster = caster;

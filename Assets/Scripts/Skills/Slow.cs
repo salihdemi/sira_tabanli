@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Slice", menuName = "Scriptable Objects/Skills/Slice")]
-public class Slow : _Skill
+public class Slow : Useable
 {
     public override void Method(Profile user, Profile target)
     {
