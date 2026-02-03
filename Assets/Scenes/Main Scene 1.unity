@@ -1879,6 +1879,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SavePoint
   saveMenuPanel: {fileID: 2119294593}
+  spawnPos: {x: 0, y: 0, z: 0}
+  character: {fileID: 8241592257740627762}
 --- !u!61 &962509490
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2310,9 +2312,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f563627aeacf84da4a2629edd18a0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveSlotUI
-  slotIndex: 0
   dateText: {fileID: 166242670}
   infoText: {fileID: 988699107}
+  data:
+    saveDate: 
+    playerX: 0
+    playerY: 0
+    savePoint: {fileID: 0}
+    savedScene: 0
+    savedAllys: []
+    deadEnemyIDsInScene: []
 --- !u!114 &1219953921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3927,9 +3936,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f563627aeacf84da4a2629edd18a0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveSlotUI
-  slotIndex: 0
   dateText: {fileID: 750115538}
   infoText: {fileID: 707288747}
+  data:
+    saveDate: 
+    playerX: 0
+    playerY: 0
+    savePoint: {fileID: 0}
+    savedScene: 0
+    savedAllys: []
+    deadEnemyIDsInScene: []
 --- !u!114 &1924900731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4865,6 +4881,17 @@ Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 3913277867808038494, guid: 4fac144ed5e96fb4597a48d4ff8e2dc9, type: 3}
   m_PrefabInstance: {fileID: 8241592257740627760}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8241592257740627762 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1918788014558228644, guid: 4fac144ed5e96fb4597a48d4ff8e2dc9, type: 3}
+  m_PrefabInstance: {fileID: 8241592257740627760}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f301a2bd76ea07c4f925c4cbb088e95b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapMove
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

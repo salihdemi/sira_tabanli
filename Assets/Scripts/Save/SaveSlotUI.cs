@@ -36,8 +36,7 @@ public class SaveSlotUI : MonoBehaviour
     // Unity Inspector'da Save butonuna baðla
     public void OnClickSave()
     {
-        data =
-        SaveManager.Save(slotIndex);
+        data = SaveManager.Save(slotIndex);
         RefreshUI();
     }
 

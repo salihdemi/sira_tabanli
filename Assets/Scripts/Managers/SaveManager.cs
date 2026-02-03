@@ -7,7 +7,6 @@ using UnityEngine.U2D;
 public static class SaveManager
 {
     private static DataBase _dataBase; // Bu sadece iç depo
-
     public static DataBase dataBase // Doðru eriþim noktasý
     {
         get
@@ -21,8 +20,9 @@ public static class SaveManager
         }
     }
 
-    //public GameObject player;//playerý bulmasý gerek
-    public static int saveName;
+    //public GameObject player;//playerý bulmasý gerek!
+
+    public static SavePoint currentSavePoint;
 
 
     private static string GetPath(int slotIndex) => Application.persistentDataPath + "/save_" + slotIndex + ".json";
@@ -38,15 +38,10 @@ public static class SaveManager
         SaveData data = new SaveData();
         data.saveDate = System.DateTime.Now.ToString("dd/MM/yyyy HH:mm");
 
-        saveName++;
+
 
         SaveSceneData(data);
         SaveStaticData(data);
-
-
-
-
-
 
 
 
@@ -109,11 +104,14 @@ public static class SaveManager
     {
         //data.playerX = player.transform.position.x; //position yerine kayýt noktasý olacak!
         //data.playerY = player.transform.position.y; //position yerine kayýt noktasý olacak!
+
+        data.savePoint = currentSavePoint;
         SaveDeadEnemiesInScene(data);
     }
     private static void LoadSceneData(SaveData data)
     {
-        //player.transform.position = new Vector3(data.playerX, data.playerY, 0);
+        data.savePoint.PlacePlayer();
+
         LoadEnemiesInScene(data);
     }
 

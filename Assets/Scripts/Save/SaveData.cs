@@ -6,6 +6,7 @@ public class SaveData
 {
     public string saveDate;
     public float playerX, playerY;
+    public SavePoint savePoint;
 
 
     public int savedScene;
