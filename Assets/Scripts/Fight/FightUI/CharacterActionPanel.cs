@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -72,16 +73,22 @@ public class CharacterActionPanel : MonoBehaviour
     }
     private void WriteSkillsPanel(AllyProfile profile)
     {
+        if (skillsPanel == null) return;
         foreach (Transform child in skillsPanel.transform.GetChild(0))
         {
             Destroy(child.gameObject);//pool tipi yap!
         }
-
+        // 2. Buton Oluþturma
         foreach (_Skill skill in profile.stats.skills)
         {
-            //skill butonu ekle
+            Button button = MakeButton(skill);
+
+            button.GetComponent<Button>().onClick.AddListener(() => profile.ChooseSkill(profile.stats.attack));
         }
+
     }
+
+
     private void WriteFoodsPanel()
     {
         //Yemekleri yaz, !bu fonksiyona hiç gerek olmayadabilir
@@ -91,4 +98,26 @@ public class CharacterActionPanel : MonoBehaviour
         //Oyuncaklarý yaz, !bu fonksiyona hiç gerek olmayadabilir
     }
     #endregion
+
+
+    private Button MakeButton(_Skill skill)
+    {
+        //prefab olmali!
+        GameObject go = new GameObject(skill.name + "_Button", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        Button button = go.AddComponent<Button>();
+        GameObject textGo = new GameObject(skill.name + "_Button_Text", typeof(RectTransform), typeof(CanvasRenderer));
+        textGo.transform.SetParent(go.transform);
+        TextMeshProUGUI text = textGo.AddComponent<TextMeshProUGUI>();
+
+
+
+        button.transform.SetParent(skillsPanel.transform.GetChild(0), false);
+
+
+        text.text = skill.name;
+
+
+
+        return button;
+    }
 }
