@@ -3606,7 +3606,7 @@ GameObject:
   - component: {fileID: 1740477757}
   - component: {fileID: 1740477756}
   - component: {fileID: 1740477755}
-  - component: {fileID: 1740477754}
+  - component: {fileID: 1740477758}
   m_Layer: 0
   m_Name: Triangle
   m_TagString: Untagged
@@ -3614,19 +3614,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1740477754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1740477753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03695ca9ce1b36f40a3f0389c48f3c5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SceneChanger
-  sceneToTeleport: 2
 --- !u!61 &1740477755
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3657,7 +3644,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -3746,6 +3733,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1740477758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1740477753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49becfa6021beab43bf40df78cc746b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneTransiction
+  targetSceneName: Main Scene
+  targetSpawnID: 0
 --- !u!1 &1763003590
 GameObject:
   m_ObjectHideFlags: 0
