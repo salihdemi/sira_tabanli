@@ -1,17 +1,17 @@
 using UnityEngine;
 
-public class Bomb : Toy
+[CreateAssetMenu(fileName = "Attack", menuName = "Scriptable Objects/Skills/Attack")]
+public class Attack : Skill
 {
-    [SerializeField] float damage = 10;
     public override void Method(Profile user, Profile target)
     {
-        base.Method(user, target);//decrease calistiriyor mu?!
+
         //animasyonu oynat
         //sesi oynat
 
         //saldýrýyý yap
 
-        target.AddToHealth(-damage);
+        target.AddToHealth(-user.GetPower());
         //Debug.Log(user.name + " " + target.name + "'a " + name + " ile " + user.GetPower() + " hasar verdi");
     }
 }

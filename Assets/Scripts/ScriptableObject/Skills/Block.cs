@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Block", menuName = "Scriptable Objects/Skills/Block")]
-public class Block : Useable
+public class Block : Skill
 {
     public override void Method(Profile user, Profile target)
     {

@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class Food : Consumable
+public class Toy : Useable
 {
     public override void Method(Profile user, Profile target)
     {
-        InventoryManager.instance.DecreaseFood(this);
+        InventoryManager.RemoveToy(this);
     }
 }

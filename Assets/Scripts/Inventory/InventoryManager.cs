@@ -1,68 +1,90 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class InventoryManager : MonoBehaviour
+public static class InventoryManager
 {
-    public static InventoryManager instance;
 
-    private void Awake()
+
+
+
+
+
+    public static Dictionary<Food, int> foods = new Dictionary<Food, int>();
+
+
+    public static void AddFood(Food food, int amount = 1)
     {
-        if(instance == null)
+        if (foods.ContainsKey(food))//zaten varsa
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
+            foods[food] += amount;
         }
-        else
+        else//yoksa ekle
         {
-            Destroy(gameObject);
+            foods.Add(food, amount);
+        }
+        Debug.Log($"{food.name} eklendi. Yeni adet: {foods[food]}");
+    }
+    public static void RemoveFood(Food food)
+    {
+        if (foods.ContainsKey(food))
+        {
+            foods[food] -= 1;
+            if (foods[food] <= 0)
+            {
+                foods.Remove(food);
+            }
         }
     }
 
-    public List<Food> useableFoods = new List<Food>();
 
-    public void AddFood(Food food)
+    public static List<Food> GetOwnedFoods()
     {
-        food.piece++;
-        if(food.piece == 1)
-        {
-            useableFoods.Add(food);
-        }
-    }
-    public void DecreaseFood(Food food)
-    {
-        food.piece--;
-        if(food.piece == 0)
-        {
-            useableFoods.Remove(food);
-        }
+        return foods.Where(pair => pair.Value > 0)
+                .Select(pair => pair.Key)
+                .ToList();
     }
 
 
 
 
+    public static Dictionary<Toy, int> toys = new Dictionary<Toy, int>();
 
 
-
-
-
-    public List<Toy> useableToys = new List<Toy>();
-
-
-    public void AddToy(Toy toy)
+    public static void AddToy(Toy toy, int amount = 1)
     {
-        toy.piece++;
-        if (toy.piece == 1)
+        if (toys.ContainsKey(toy))//zaten varsa
         {
-            useableToys.Add(toy);
+            toys[toy] += amount;
+        }
+        else//yoksa ekle
+        {
+            toys.Add(toy, amount);
+        }
+        Debug.Log($"{toy.name} eklendi. Yeni adet: {toys[toy]}");
+    }
+    public static void RemoveToy(Toy toy)
+    {
+        if (toys.ContainsKey(toy))
+        {
+            toys[toy] -= 1;
+            if (toys[toy] <= 0)
+            {
+                toys.Remove(toy);
+            }
         }
     }
-    public void DecreaseToy(Toy toy)
+
+
+    public static List<Toy> GetOwnedToys()
     {
-        toy.piece--;
-        if (toy.piece == 0)
-        {
-            useableToys.Remove(toy);
-        }
+        return toys.Where(pair => pair.Value > 0)
+                .Select(pair => pair.Key)
+                .ToList();
     }
+
+
+
+
 
 }

@@ -74,6 +74,9 @@ public class CharacterActionPanel : MonoBehaviour
         attackButton.onClick.RemoveAllListeners();
         attackButton.onClick.AddListener(() => profile.ChooseSkill(profile.stats.attack));
     }
+
+
+    //butonlarý her seferinde silip sýfýrdan oluþturuyor
     private void WriteSkillsPanel(AllyProfile profile)
     {
         if (skillsPanel == null) return;
@@ -86,7 +89,7 @@ public class CharacterActionPanel : MonoBehaviour
         {
             Useable skill = profile.stats.skills[i];
 
-            Button button = MakeButton(skill);
+            Button button = MakeButton(skill, skillsPanel.transform);
 
             button.GetComponent<Button>().onClick.AddListener(() => profile.ChooseSkill(skill));
         }
@@ -105,9 +108,9 @@ public class CharacterActionPanel : MonoBehaviour
             Destroy(child.gameObject);//pool tipi yap!
         }
         // 2. Buton Oluþturma
-        foreach (Food food in InventoryManager.instance.useableFoods)
+        foreach (Food food in InventoryManager.GetOwnedFoods())
         {
-            Button button = MakeButton(food);
+            Button button = MakeButton(food, foodsPanel.transform);
 
             button.GetComponent<Button>().onClick.AddListener(() => profile.ChooseSkill(food));
         }
@@ -122,9 +125,9 @@ public class CharacterActionPanel : MonoBehaviour
             Destroy(child.gameObject);//pool tipi yap!
         }
         // 2. Buton Oluþturma
-        foreach (Toy toy in InventoryManager.instance.useableToys)
+        foreach (Toy toy in InventoryManager.GetOwnedToys())
         {
-            Button button = MakeButton(toy);
+            Button button = MakeButton(toy, toysPanel.transform);
 
             button.GetComponent<Button>().onClick.AddListener(() => profile.ChooseSkill(toy));
         }
@@ -132,12 +135,12 @@ public class CharacterActionPanel : MonoBehaviour
     #endregion
 
 
-    private Button MakeButton(Useable skill)
+    private Button MakeButton(Useable skill, Transform parent)
     {
         Button button = Instantiate(buttonPrefab);
         TextMeshProUGUI text = button.transform.GetComponentInChildren<TextMeshProUGUI>();
 
-        button.transform.SetParent(skillsPanel.transform.GetChild(0), false);
+        button.transform.SetParent(parent.GetChild(0), false);
         text.text = skill.name;
 
 
