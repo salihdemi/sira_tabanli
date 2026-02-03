@@ -370,7 +370,7 @@ public static class SaveManager
         persistanceStats.attack = IntToSkill(allySaveData.attackSkill);
 
         persistanceStats.skills.Clear();
-        for (int i = 0; i < persistanceStats.skills.Count; i++)
+        for (int i = 0; i < allySaveData.skills.Count; i++)
         {
             persistanceStats.skills.Add(IntToSkill(allySaveData.skills[i]));
         }
