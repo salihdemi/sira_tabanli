@@ -1,32 +1,32 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+
 
 [System.Serializable]
 public class PersistanceStats
 {
-    //[HideInInspector] public CharacterData originData;
-
+    [Header("Name")]
     public string _name;
 
-
+    [Header("Status")]
     public float currentHealth, currentStamina, currentMana;
-
-    public bool isDied;
-    public bool isInParty;
-
 
     [Header("Stats")]
     public float maxHealth, maxStamina, maxMana;
-    public float strength, technical, focus; 
-
-    public float baseSpeed;
+    public float strength, technical, focus, baseSpeed;
 
 
+    [Header("Sprite")]
     public Sprite sprite;
+
     [Header("Skills")]
     public Skill attack;
     public List<Skill> skills = new List<Skill>();
 
+    [Header("Other")]
+    public bool isDied;
+    public bool isInParty;
 
 
     public void LoadFromBase(CharacterData data)
@@ -71,5 +71,5 @@ public class PersistanceStats
         Debug.Log("Skill öðrenldi");
         skills.Add(skill);
     }
-    
+
 }

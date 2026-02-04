@@ -8,13 +8,13 @@ public class ConsolePanel : MonoBehaviour
     {
         TurnScheduler.onStartPlay += Enable;
         TurnScheduler.onStartTour += Disable;
-        Profile.OnSomeonePlay += WriteText;
+        Profile.OnSomeonePlay += WriteConsole;
     }
     private void OnDestroy()
     {
         TurnScheduler.onStartPlay -= Enable;
         TurnScheduler.onStartTour -= Disable;
-        Profile.OnSomeonePlay -= WriteText;
+        Profile.OnSomeonePlay -= WriteConsole;
     }
     public void Enable()
     {
@@ -24,7 +24,7 @@ public class ConsolePanel : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    public void WriteText(string text)
+    public void WriteConsole(string text)
     {
         gameObject.SetActive(true);//ayýrmalý
         this.text.text = text;

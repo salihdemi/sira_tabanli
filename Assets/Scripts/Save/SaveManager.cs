@@ -448,30 +448,43 @@ public static class SaveManager
     {
         PersistanceStats persistanceStats = new PersistanceStats();
 
-        persistanceStats._name = allySaveData.name;
+        persistanceStats._name = allySaveData.name;                  // isim
+        //can
+        persistanceStats.currentHealth = allySaveData.currentHealth; // Mevcut can
+        persistanceStats.maxHealth = allySaveData.maxHealth;         // Maksimum can
 
-        persistanceStats.currentHealth = allySaveData.currentHealth; // Mevcut caný
-        persistanceStats.maxHealth = allySaveData.maxHealth;         // Maksimum caný
+        //stamina
+        persistanceStats.currentStamina = allySaveData.currentStamina;// Mevcut stamina
+        persistanceStats.currentStamina = allySaveData.maxStamina;    // Maksimum stamina
 
-        persistanceStats.strength = allySaveData.strength;         
-        persistanceStats.technical = allySaveData.technical;         
-        persistanceStats.focus = allySaveData.focus;         
-        persistanceStats.baseSpeed = allySaveData.baseSpeed;         // Hýzý
-
-
-        persistanceStats.isDied = allySaveData.isDied;               // Ölü olup olmadýðý
-        persistanceStats.isInParty = allySaveData.isInParty;         // Partide olup olmadýðý
+        //mana
+        persistanceStats.currentMana = allySaveData.currentMana;     // Mevcut mana
+        persistanceStats.maxMana = allySaveData.maxMana;             // Maksimum mana
 
 
-        persistanceStats.sprite = IntToSprite(allySaveData.sprite);
-        persistanceStats.attack = (Skill)IntToUseable(allySaveData.attackSkill);
+
+        //statlar
+        persistanceStats.strength = allySaveData.strength;           // strength
+        persistanceStats.technical = allySaveData.technical;         // technical
+        persistanceStats.focus = allySaveData.focus;                 // focus
+        persistanceStats.baseSpeed = allySaveData.baseSpeed;         // Hýz
+
+
+
+        //skiller
+        persistanceStats.attack = (Skill)IntToUseable(allySaveData.attackSkill);//attack
 
         persistanceStats.skills.Clear();
-        for (int i = 0; i < allySaveData.skills.Count; i++)
-        {
+        for (int i = 0; i < allySaveData.skills.Count; i++)          //Skiller listesi
             persistanceStats.skills.Add((Skill)IntToUseable(allySaveData.skills[i]));
-        }
 
+
+
+
+        //diðer
+        persistanceStats.sprite = IntToSprite(allySaveData.sprite);  //görsel
+        persistanceStats.isDied = allySaveData.isDied;               // Ölüm durumu
+        persistanceStats.isInParty = allySaveData.isInParty;         // Partide aktiflik durumu
 
         return persistanceStats;
     }

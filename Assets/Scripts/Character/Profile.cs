@@ -10,25 +10,8 @@ public abstract class Profile : MonoBehaviour
 
 
     [HideInInspector] public PersistanceStats stats;
-    public void Setup(PersistanceStats persistentData)
-    {
-        // Dýþarýdaki kalýcý datayý bu profile baðla
-        stats = persistentData;
-
-        // Sahneye hazýrla
-        gameObject.SetActive(true);
-        onHealthChange.Invoke(stats.currentHealth);
-
-
-        onStrengthChange.Invoke(currentStrength);
-        onTechnicalChange.Invoke(currentTechnical);
-        onFocusChange.Invoke(currentFocus);
-
-
-        onSpeedChange.Invoke(currentSpeed);
-    }
-
     public ProfileView view;
+
 
 
     public float currentStrength, currentTechnical, currentFocus;
@@ -39,7 +22,8 @@ public abstract class Profile : MonoBehaviour
     [HideInInspector] public Useable currentSkill;
     [HideInInspector] public Profile currentTarget;
 
-    [HideInInspector] public event Action<float> onHealthChange, onStrengthChange, onTechnicalChange, onFocusChange, onSpeedChange;
+    [HideInInspector] public event Action<float> onHealthChange, onStaminaChange, onManaChange;
+    [HideInInspector] public event Action<float> onStrengthChange, onTechnicalChange, onFocusChange, onSpeedChange;
 
 
 
@@ -48,6 +32,23 @@ public abstract class Profile : MonoBehaviour
     protected string lastTargetName;
 
 
+    public void Setup(PersistanceStats persistentData)
+    {
+        // Dýþarýdaki kalýcý datayý bu profile baðla
+        stats = persistentData;
+        // Sahneye hazýrla
+        gameObject.SetActive(true);
+
+        onHealthChange.Invoke(stats.currentHealth);
+        onStaminaChange.Invoke(stats.currentStamina);
+        onManaChange.Invoke(stats.currentMana);
+
+
+        onStrengthChange.Invoke(currentStrength);
+        onTechnicalChange.Invoke(currentTechnical);
+        onFocusChange.Invoke(currentFocus);
+        onSpeedChange.Invoke(currentSpeed);
+    }
 
 
 
