@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sovalye
   m_EditorClassIdentifier: Assembly-CSharp::CharacterBase
   maxHealth: 45
-  maxStamina: 1
+  maxStamina: 0
   maxMana: 50
   strength: 3
   technical: 1

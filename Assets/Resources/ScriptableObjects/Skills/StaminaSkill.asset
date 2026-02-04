@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StaminaSkill
   _name: StaminaSkill
   targetType: 0
-  healthNeed: 0
-  staminaNeed: 0
-  manaNeed: 10
+  healthCost: 0
+  staminaCost: 20
+  manaCost: 0
