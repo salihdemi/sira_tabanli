@@ -8,9 +8,16 @@ using UnityEngine.Events;
 public class CharacterData : ScriptableObject
 {
     
+    [Header("Bars")]
+    public float maxHealth;
+    public float maxStamina;
+    public float maxMana;
+
     [Header("Stats")]
-    public float maxHealth, maxStamina, maxMana;
-    public float strength, technical, focus, baseSpeed;
+    public float strength;
+    public float technical;
+    public float focus;
+    public float speed;
 
     [Header("Visuals")]
     public Sprite sprite;

@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public abstract class Profile : MonoBehaviour
@@ -22,7 +23,7 @@ public abstract class Profile : MonoBehaviour
     [HideInInspector] public Useable currentSkill;
     [HideInInspector] public Profile currentTarget;
 
-    [HideInInspector] public event Action<float> onHealthChange, onStaminaChange, onManaChange;
+    [HideInInspector] public event Action onHealthChange, onStaminaChange, onManaChange;
     [HideInInspector] public event Action<float> onStrengthChange, onTechnicalChange, onFocusChange, onSpeedChange;
 
 
@@ -31,7 +32,7 @@ public abstract class Profile : MonoBehaviour
     public bool isDied;
     protected string lastTargetName;
 
-
+  //battlespawnerda kullanýlabilir
     public void Setup(PersistanceStats persistentData)
     {
         // Dýþarýdaki kalýcý datayý bu profile baðla
@@ -39,9 +40,9 @@ public abstract class Profile : MonoBehaviour
         // Sahneye hazýrla
         gameObject.SetActive(true);
 
-        onHealthChange.Invoke(stats.currentHealth);
-        onStaminaChange.Invoke(stats.currentStamina);
-        onManaChange.Invoke(stats.currentMana);
+        onHealthChange.Invoke();
+        onStaminaChange.Invoke();
+        onManaChange.Invoke();
 
 
         onStrengthChange.Invoke(currentStrength);
@@ -49,7 +50,6 @@ public abstract class Profile : MonoBehaviour
         onFocusChange.Invoke(currentFocus);
         onSpeedChange.Invoke(currentSpeed);
     }
-
 
 
     public abstract void LungeStart();
@@ -107,9 +107,17 @@ public abstract class Profile : MonoBehaviour
     public void SetHealth(float amount)
     {
         stats.currentHealth = amount;
-
-
-        onHealthChange?.Invoke(stats.currentHealth);
+        onHealthChange?.Invoke();
+    }
+    public void SetStamina(float amount)
+    {
+        stats.currentStamina = amount;
+        onStaminaChange?.Invoke();
+    }
+    public void SetMana(float amount)
+    {
+        stats.currentMana = amount;
+        onManaChange?.Invoke();
     }
 
     public void ForceChangeHealth(float amount)//Overhealth
@@ -120,7 +128,7 @@ public abstract class Profile : MonoBehaviour
             stats.currentHealth = 0;
             Die();
         }
-        onHealthChange?.Invoke(stats.currentHealth);
+        onHealthChange?.Invoke();
     }
     public void AddToHealth(float amount)
     {
@@ -133,7 +141,7 @@ public abstract class Profile : MonoBehaviour
         {
             Die();
         }
-        onHealthChange?.Invoke(stats.currentHealth);
+        onHealthChange?.Invoke();
     }
 
 

@@ -16,11 +16,15 @@ public static class BattleSpawner
     private static AllyProfile MakeAllyProfile(PersistanceStats persistanceStats)
     {
         AllyProfile profile = FightPanelObjectPool.instance.GetAlly();
+
+        //profilde fonksiyonlanabilir!!!
         profile.stats = persistanceStats;
         profile.gameObject.name = persistanceStats._name;
         profile.GetComponent<Image>().sprite = persistanceStats.sprite;
 
         profile.SetHealth(persistanceStats.currentHealth);
+        profile.SetStamina(persistanceStats.currentStamina);
+        profile.SetMana(persistanceStats.currentMana);
         profile.ResetStats();
         //deger yazma
         return profile;
@@ -33,6 +37,8 @@ public static class BattleSpawner
         profile.GetComponent<Image>().sprite = persistanceStats.sprite;
 
         profile.SetHealth(persistanceStats.maxHealth);
+        profile.SetStamina(persistanceStats.maxStamina);
+        profile.SetMana(persistanceStats.maxMana);
         profile.ResetStats();
         //deger yazma
 

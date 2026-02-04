@@ -17,34 +17,40 @@ public class ProfileUIManager : MonoBehaviour
         profile.onStrengthChange += WriteStrength;
         profile.onTechnicalChange += WriteTechnical;
         profile.onFocusChange += WriteFocus;
-
         profile.onSpeedChange  += WriteSpeed;
     }
     private void OnDisable()
     {
         profile.onHealthChange -= WriteHealth;
-        profile.onHealthChange -= WriteHealth;
-        profile.onHealthChange -= WriteHealth;
+        profile.onStaminaChange -= WriteStamina;
+        profile.onManaChange -= WriteMana;
 
         profile.onStrengthChange -= WriteStrength;
         profile.onTechnicalChange -= WriteTechnical;
         profile.onFocusChange -= WriteFocus;
-
         profile.onSpeedChange -= WriteSpeed;
     }
 
     //Barlar
-    public void WriteHealth(float currentHealth)
+    public void WriteHealth()
     {
-        healthText.text = currentHealth.ToString();
+        PersistanceStats stats = profile.stats;
+        healthText.text = stats.currentHealth + "/" + stats.maxHealth;
     }
-    public void WriteStamina(float currentStamina)
+    public void WriteStamina()
     {
-        staminaText.text = currentStamina.ToString();
+        PersistanceStats stats = profile.stats;
+        staminaText.text = stats.currentStamina + "/" + stats.maxStamina;
     }
-    public void WriteMana(float currentMana)
+    public void WriteMana()
     {
-        manaText.text = currentMana.ToString();
+        PersistanceStats stats = profile.stats;
+        if(stats.maxMana <= 0)
+        {
+            manaText.gameObject.SetActive(false);
+            return;
+        }
+        manaText.text = stats.currentMana + "/" + stats.maxMana;
     }
 
 

@@ -34,8 +34,8 @@ public class PersistanceStats
         //originData = data;
         _name = data.name;
         maxHealth = data.maxHealth;
-        maxStamina = data.maxHealth;
-        maxMana = data.maxHealth;
+        maxStamina = data.maxStamina;
+        maxMana = data.maxMana;
 
         Regen();
 
@@ -43,7 +43,7 @@ public class PersistanceStats
         technical = data.technical;
         focus = data.focus;
 
-        baseSpeed = data.baseSpeed;
+        baseSpeed = data.speed;
 
 
         sprite = data.sprite;
