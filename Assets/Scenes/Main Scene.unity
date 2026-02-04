@@ -5535,6 +5535,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 816841829}
     m_Modifications:
+    - target: {fileID: 301110269000175787, guid: 01d40439daee8d249a0e134131162069, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3452534951037402280, guid: 01d40439daee8d249a0e134131162069, type: 3}
       propertyPath: fightManager
       value: 

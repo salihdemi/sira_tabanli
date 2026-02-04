@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Minigun
   m_EditorClassIdentifier: Assembly-CSharp::CharacterBase
   maxHealth: 56
-  basePower: 3
-  baseSpeed: 1
+  maxStamina: 50
+  maxMana: 0
+  strength: 1
+  technical: 3
+  focus: 1
+  speed: 3
   sprite: {fileID: 4246200125604500827, guid: 64d58308f89e8de40b24e6f1b6c8aea4, type: 3}
   attack: {fileID: 11400000, guid: 9d1e90c9bfde37e4b97d4456b48556bb, type: 2}
   skills: []

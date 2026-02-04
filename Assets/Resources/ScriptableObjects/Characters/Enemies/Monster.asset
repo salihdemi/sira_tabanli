@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Monster
   m_EditorClassIdentifier: Assembly-CSharp::CharacterBase
   maxHealth: 78
-  basePower: 5
-  baseSpeed: 1
+  maxStamina: 50
+  maxMana: 40
+  strength: 3
+  technical: 1
+  focus: 2
+  speed: 2
   sprite: {fileID: 4644523113532460279, guid: 6f35c0078eb4f974185c4a13688d6478, type: 3}
   attack: {fileID: 11400000, guid: 9d1e90c9bfde37e4b97d4456b48556bb, type: 2}
   skills: []

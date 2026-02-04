@@ -26,7 +26,7 @@ public class ConsolePanel : MonoBehaviour
     }
     public void WriteConsole(string text)
     {
-        gameObject.SetActive(true);//ayýrmalý
+        //Enable();//ayýrmalý
         this.text.text = text;
     }
 }

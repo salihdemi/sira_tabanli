@@ -21,28 +21,28 @@ public class AllyProfile : Profile
         currentSkill = skill;
         CharacterActionPanel.instance.CloseAndDisableAllPanels();
 
-        bool needTarget = skill.targetType == TargetingSystem.TargetType.ally
-                       || skill.targetType == TargetingSystem.TargetType.enemy;
+        bool needTarget = skill.targetType == TargetType.ally
+                       || skill.targetType == TargetType.enemy;
         if (needTarget)
         {
             TargetingSystem.StartTargeting(this, skill);
         }
-        else if (skill.targetType == TargetingSystem.TargetType.all)
+        else if (skill.targetType == TargetType.all)
         {
             SetTarget(null);
             lastTargetName = "Herkes";
         }
-        else if (skill.targetType == TargetingSystem.TargetType.allEnemy)
+        else if (skill.targetType == TargetType.allEnemy)
         {
             SetTarget(null);
             lastTargetName = "Tüm düþmanlar";
         }
-        else if (skill.targetType == TargetingSystem.TargetType.allAlly)
+        else if (skill.targetType == TargetType.allAlly)
         {
             SetTarget(null);
             lastTargetName = "Tüm dostlar";
         }
-        else if (skill.targetType == TargetingSystem.TargetType.self)
+        else if (skill.targetType == TargetType.self)
         {
             SetTarget(null);
             lastTargetName = name;

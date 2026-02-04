@@ -16,16 +16,6 @@ public static class TargetingSystem
 
 
     private static List<Profile> activeProfileButtons = new List<Profile> { };
-    public enum TargetType
-    {
-        enemy,
-        ally,
-
-        self,
-        allEnemy,
-        allAlly,
-        all
-    }
 
 
     public static void StartTargeting(Profile caster, Useable skill)

@@ -126,7 +126,7 @@ public static class TurnScheduler
 
             if (playCoroutine != null)
             {
-                profile.Play();
+                profile.PlayIfAlive();
             }
             profile.ClearSkillAndTarget();
             yield return new WaitForSeconds(1f);

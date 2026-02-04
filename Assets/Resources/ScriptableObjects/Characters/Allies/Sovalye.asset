@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Sovalye
   m_EditorClassIdentifier: Assembly-CSharp::CharacterBase
   maxHealth: 45
-  basePower: 100
-  baseSpeed: 6
+  maxStamina: 1
+  maxMana: 50
+  strength: 3
+  technical: 1
+  focus: 1
+  speed: 1
   sprite: {fileID: 4495478712733764576, guid: 838545d8300eb52449d69b1a1ac126d3, type: 3}
   attack: {fileID: 11400000, guid: 9d1e90c9bfde37e4b97d4456b48556bb, type: 2}
   skills: []

@@ -88,7 +88,7 @@ public class CharacterActionPanel : MonoBehaviour
         {
             Useable skill = profile.stats.skills[i];
 
-            Button button = MakeButton(skill, skillsPanel.transform);
+            Button button = MakeButton(skill, skillsPanel.transform, profile);
 
             button.GetComponent<Button>().onClick.AddListener(() => profile.ChooseSkill(skill));
         }
@@ -109,7 +109,7 @@ public class CharacterActionPanel : MonoBehaviour
         // 2. Buton Oluþturma
         foreach (Food food in InventoryManager.GetOwnedFoods())
         {
-            Button button = MakeButton(food, foodsPanel.transform);
+            Button button = MakeButton(food, foodsPanel.transform, profile);
 
             button.GetComponent<Button>().onClick.AddListener(() => profile.ChooseSkill(food));
         }
@@ -126,7 +126,7 @@ public class CharacterActionPanel : MonoBehaviour
         // 2. Buton Oluþturma
         foreach (Toy toy in InventoryManager.GetOwnedToys())
         {
-            Button button = MakeButton(toy, toysPanel.transform);
+            Button button = MakeButton(toy, toysPanel.transform, profile);
 
             button.GetComponent<Button>().onClick.AddListener(() => profile.ChooseSkill(toy));
         }
@@ -134,7 +134,7 @@ public class CharacterActionPanel : MonoBehaviour
     #endregion
 
 
-    private Button MakeButton(Useable skill, Transform parent)
+    private Button MakeButton(Useable skill, Transform parent, AllyProfile profile)
     {
         Button button = Instantiate(buttonPrefab);
         TextMeshProUGUI text = button.transform.GetComponentInChildren<TextMeshProUGUI>();
@@ -142,8 +142,12 @@ public class CharacterActionPanel : MonoBehaviour
         button.transform.SetParent(parent.GetChild(0), false);
         text.text = skill._name;
 
-
+        if (profile.IsEnoughForSkill(skill))
+        { button.interactable = true; }
+        else
+        { button.interactable = false; }
 
         return button;
     }
+
 }

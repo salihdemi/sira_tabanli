@@ -15,9 +15,7 @@ public abstract class Profile : MonoBehaviour
 
 
 
-    public float currentStrength, currentTechnical, currentFocus;
-
-    private float currentSpeed;
+    public float currentStrength, currentTechnical, currentFocus, currentSpeed;
 
 
     [HideInInspector] public Useable currentSkill;
@@ -72,7 +70,7 @@ public abstract class Profile : MonoBehaviour
 
 
 
-    public void Play()
+    public void PlayIfAlive()
     {
         string text;
         if (isDied)
@@ -86,13 +84,19 @@ public abstract class Profile : MonoBehaviour
         else
         {
             text = name + " " + lastTargetName + "'a " + currentSkill.name + " yaptý";
-            currentSkill.Method(this, currentTarget);
+            Play();
         }
         //Debug.Log(text);
-        OnSomeonePlay?.Invoke(text);
+        OnSomeonePlay?.Invoke(text);//WriteConsole
     }
 
-
+    private void Play()
+    {
+        AddToMana(-currentSkill.manaCost); Debug.Log($"Kullanýlan Skill: {currentSkill._name} | Mana Cost: {currentSkill.manaCost}");
+        AddToHealth(-currentSkill.healthCost);
+        AddToStamina(-currentSkill.staminaCost);
+        currentSkill.Method(this, currentTarget);
+    }
 
     public void ClearSkillAndTarget()
     {
@@ -103,7 +107,7 @@ public abstract class Profile : MonoBehaviour
     
 
 
-
+    //setler olustururken calismali sadece
     public void SetHealth(float amount)
     {
         stats.currentHealth = amount;
@@ -120,7 +124,7 @@ public abstract class Profile : MonoBehaviour
         onManaChange?.Invoke();
     }
 
-    public void ForceChangeHealth(float amount)//Overhealth
+    /*public void ForceChangeHealth(float amount)//Overhealth
     {
         stats.currentHealth += amount;
         if (stats.currentHealth <= 0)
@@ -129,7 +133,7 @@ public abstract class Profile : MonoBehaviour
             Die();
         }
         onHealthChange?.Invoke();
-    }
+    }*/
     public void AddToHealth(float amount)
     {
         stats.currentHealth += amount;
@@ -143,24 +147,50 @@ public abstract class Profile : MonoBehaviour
         }
         onHealthChange?.Invoke();
     }
+    public void AddToStamina(float amount)
+    {
+        stats.currentStamina += amount;
+        if (stats.currentStamina > stats.maxStamina)
+        {
+            stats.currentStamina = stats.maxStamina;
+        }
+        if (stats.currentStamina < 0)
+        {
+            Debug.LogWarning(stats._name + " stamina 0'ýn altýna düþtü");
+        }
+        onStaminaChange?.Invoke();
+    }
+    public void AddToMana(float amount)
+    {
+        stats.currentMana += amount;
+        if (stats.currentMana > stats.maxMana)
+        {
+            stats.currentMana = stats.maxMana;
+        }
+        if (stats.currentMana < 0)
+        {
+            Debug.LogWarning(stats._name + " mana 0'ýn altýna düþtü");
+        }
+        onManaChange?.Invoke();
+    }
 
 
-    public void ChangeStrength(float amount)
+    public void AddToStrength(float amount)
     {
         currentStrength += amount;
         onStrengthChange?.Invoke(currentStrength);
     }
-    public void ChangeTechnical(float amount)
+    public void AddToTechnical(float amount)
     {
         currentTechnical += amount;
         onTechnicalChange?.Invoke(currentTechnical);
     }
-    public void ChangeFocus(float amount)
+    public void AddToFocus(float amount)
     {
         currentFocus += amount;
         onFocusChange?.Invoke(currentFocus);
     }
-    public void ChangeSpeed(float amount)
+    public void AddToSpeed(float amount)
     {
         currentSpeed += amount;
         onSpeedChange?.Invoke(currentSpeed);
@@ -193,4 +223,11 @@ public abstract class Profile : MonoBehaviour
 
 
 
+    public bool IsEnoughForSkill(Useable skill)
+    {
+        bool healthEnough = stats.currentHealth >= skill.healthCost;
+        bool staminaEnough = stats.currentStamina >= skill.staminaCost;
+        bool manaEnough = stats.currentMana >= skill.manaCost;
+        return healthEnough && staminaEnough && manaEnough;
+    }
 }

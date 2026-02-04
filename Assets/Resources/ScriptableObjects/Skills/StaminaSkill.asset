@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dc72fbb60a00a44e810fc1998b8a31d, type: 3}
-  m_Name: ProcWeakness
-  m_EditorClassIdentifier: Assembly-CSharp::ChargedAttack
-  _name: Proc Weakness
+  m_Script: {fileID: 11500000, guid: d124ab8d6872bc247b197fc44e6f87aa, type: 3}
+  m_Name: StaminaSkill
+  m_EditorClassIdentifier: Assembly-CSharp::StaminaSkill
+  _name: StaminaSkill
   targetType: 0
+  healthNeed: 0
+  staminaNeed: 0
+  manaNeed: 10

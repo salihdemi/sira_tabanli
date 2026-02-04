@@ -3,10 +3,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Block", menuName = "Scriptable Objects/Skills/Block")]
 public class Block : Skill
 {
-    Block()
-    {
-        targetType = TargetingSystem.TargetType.self;
-    }
     public override void Method(Profile user, Profile target)
     {
 

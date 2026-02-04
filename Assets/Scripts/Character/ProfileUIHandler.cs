@@ -30,7 +30,6 @@ public class ProfileUIManager : MonoBehaviour
         profile.onFocusChange -= WriteFocus;
         profile.onSpeedChange -= WriteSpeed;
     }
-
     //Barlar
     public void WriteHealth()
     {
@@ -45,7 +44,7 @@ public class ProfileUIManager : MonoBehaviour
     public void WriteMana()
     {
         PersistanceStats stats = profile.stats;
-        if(stats.maxMana <= 0)
+        if (stats.maxMana <= 0)
         {
             manaText.gameObject.SetActive(false);
             return;

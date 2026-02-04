@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Okcu
   m_EditorClassIdentifier: Assembly-CSharp::CharacterBase
   maxHealth: 100
-  basePower: 100
-  baseSpeed: 7
+  maxStamina: 50
+  maxMana: 0
+  strength: 2
+  technical: 3
+  focus: 1
+  speed: 2
   sprite: {fileID: 5731584507761909605, guid: f4ac01e0052f15e418b62663d5a94719, type: 3}
   attack: {fileID: 11400000, guid: 9d1e90c9bfde37e4b97d4456b48556bb, type: 2}
   skills:

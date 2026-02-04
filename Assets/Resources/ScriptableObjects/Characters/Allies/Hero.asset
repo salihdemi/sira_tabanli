@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Hero
   m_EditorClassIdentifier: Assembly-CSharp::CharacterBase
   maxHealth: 45
-  basePower: 100
-  baseSpeed: 4
+  maxStamina: 50
+  maxMana: 0
+  strength: 2
+  technical: 1
+  focus: 2
+  speed: 2
   sprite: {fileID: -3525000520256823786, guid: d7e4831bdcf4d4f40952807356296866, type: 3}
   attack: {fileID: 11400000, guid: 9d1e90c9bfde37e4b97d4456b48556bb, type: 2}
   skills: []
