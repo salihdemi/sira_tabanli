@@ -11,7 +11,7 @@ public class ProcWeakness : Skill
 
         //saldýrýyý yap
 
-        target.ChangePower(-5);
+        target.ChangeStrength(-5);
         Debug.Log(user.name + " " + target.name + "'a " + name + " ile " + 5 + " zayýflattý");
     }
 }

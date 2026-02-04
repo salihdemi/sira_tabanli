@@ -15,7 +15,7 @@ public class Block : Skill
 
         //saldýrýyý yap
 
-        user.AddToHealth(user.GetPower());
-        Debug.Log(user.name + " " + user.name + "'i " + name + " ile " + user.GetPower() + " iyileþtirdi");
+        user.AddToHealth(user.currentStrength);
+        Debug.Log(user.name + " " + user.name + "'i " + name + " ile " + user.currentStrength + " iyileþtirdi");
     }
 }

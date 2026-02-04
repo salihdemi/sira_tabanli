@@ -10,7 +10,7 @@ public class Slow : Skill
         //sesi oynat
 
         //saldýrýyý yap
-        target.ChangeSpeed(-user.GetPower());
-        Debug.Log(user.name + " " + target.name + "'i " + name + " ile " + user.GetPower() + " yavaþlattý");
+        target.ChangeSpeed(-user.currentStrength);
+        Debug.Log(user.name + " " + target.name + "'i " + name + " ile " + user.currentStrength + " yavaþlattý");
     }
 }

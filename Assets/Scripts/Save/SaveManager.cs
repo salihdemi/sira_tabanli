@@ -452,7 +452,10 @@ public static class SaveManager
 
         persistanceStats.currentHealth = allySaveData.currentHealth; // Mevcut caný
         persistanceStats.maxHealth = allySaveData.maxHealth;         // Maksimum caný
-        persistanceStats.oldBasePower = allySaveData.basePower;         // Gücü
+
+        persistanceStats.strength = allySaveData.strength;         
+        persistanceStats.technical = allySaveData.technical;         
+        persistanceStats.focus = allySaveData.focus;         
         persistanceStats.baseSpeed = allySaveData.baseSpeed;         // Hýzý
 
 

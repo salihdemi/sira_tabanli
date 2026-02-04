@@ -17,23 +17,29 @@ public abstract class Profile : MonoBehaviour
 
         // Sahneye hazýrla
         gameObject.SetActive(true);
-        Debug.Log(name);
         onHealthChange.Invoke(stats.currentHealth);
-        onPowerChange. Invoke(currentPower);
-        onSpeedChange. Invoke(currentSpeed);
+
+
+        onStrengthChange.Invoke(currentStrength);
+        onTechnicalChange.Invoke(currentTechnical);
+        onFocusChange.Invoke(currentFocus);
+
+
+        onSpeedChange.Invoke(currentSpeed);
     }
 
     public ProfileView view;
 
 
-    private float currentPower;
+    public float currentStrength, currentTechnical, currentFocus;
+
     private float currentSpeed;
 
 
     [HideInInspector] public Useable currentSkill;
     [HideInInspector] public Profile currentTarget;
 
-    [HideInInspector] public event Action<float> onHealthChange, onPowerChange, onSpeedChange;
+    [HideInInspector] public event Action<float> onHealthChange, onStrengthChange, onTechnicalChange, onFocusChange, onSpeedChange;
 
 
 
@@ -128,10 +134,22 @@ public abstract class Profile : MonoBehaviour
         }
         onHealthChange?.Invoke(stats.currentHealth);
     }
-    public void ChangePower(float amount)
+
+
+    public void ChangeStrength(float amount)
     {
-        currentPower += amount;
-        onPowerChange?.Invoke(currentPower);
+        currentStrength += amount;
+        onStrengthChange?.Invoke(currentStrength);
+    }
+    public void ChangeTechnical(float amount)
+    {
+        currentTechnical += amount;
+        onTechnicalChange?.Invoke(currentTechnical);
+    }
+    public void ChangeFocus(float amount)
+    {
+        currentFocus += amount;
+        onFocusChange?.Invoke(currentFocus);
     }
     public void ChangeSpeed(float amount)
     {
@@ -143,10 +161,12 @@ public abstract class Profile : MonoBehaviour
     public void ResetStats()
     {
         isDied = false;
-        currentPower = stats.oldBasePower;
-        currentPower = stats.oldBasePower;
-        currentPower = stats.oldBasePower;
-        onPowerChange?.Invoke(currentPower);
+        currentStrength = stats.strength;
+        onStrengthChange?.Invoke(currentStrength);
+        currentTechnical = stats.technical;
+        onTechnicalChange?.Invoke(currentTechnical);
+        currentFocus = stats.focus;
+        onFocusChange?.Invoke(currentFocus);
 
         currentSpeed = stats.baseSpeed;
         onSpeedChange?.Invoke(currentSpeed);
@@ -164,12 +184,4 @@ public abstract class Profile : MonoBehaviour
 
 
 
-    public float GetPower()
-    {
-        return currentPower;
-    }
-    public float GetSpeed()
-    {
-        return currentSpeed;
-    }
 }

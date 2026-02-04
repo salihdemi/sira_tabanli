@@ -45,7 +45,7 @@ public static class TurnScheduler
     public static void SortProfilesWithSpeed()
     {
         order = 0;
-        orderedProfiles = aliveProfiles.OrderByDescending(p => p.GetSpeed()).ToList();
+        orderedProfiles = aliveProfiles.OrderByDescending(p => p.currentStrength).ToList();
 
     }
 

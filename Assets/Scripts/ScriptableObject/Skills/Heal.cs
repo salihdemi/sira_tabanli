@@ -10,7 +10,7 @@ public class Heal : Skill
         //sesi oynat
 
         //saldýrýyý yap
-        target.AddToHealth(target.GetPower() * 3);
-        Debug.Log(user.name + " " + target.name + "'i " + name + " ile " + user.GetPower() * 3 + " iyileþtirdi");
+        target.AddToHealth(target.currentStrength * 3);
+        Debug.Log(user.name + " " + target.name + "'i " + name + " ile " + user.currentStrength * 3 + " iyileþtirdi");
     }
 }
