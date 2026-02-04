@@ -7,6 +7,10 @@ using UnityEngine.UI;
 
 public class CharacterActionPanel : MonoBehaviour
 {
+    public static CharacterActionPanel instance;
+
+
+    
 
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private Transform buttonsParent;
@@ -26,13 +30,14 @@ public class CharacterActionPanel : MonoBehaviour
 
     private void Awake()
     {
-        AllyProfile.OnAnyAllyLungeStart += OpenWriteThings;
-        AllyProfile.OnAnyAllyChoseSkill += OnSkillSelectedWrapper;
-    }
-    private void OnDestroy()
-    {
-        AllyProfile.OnAnyAllyLungeStart -= OpenWriteThings;
-        AllyProfile.OnAnyAllyChoseSkill -= OnSkillSelectedWrapper;
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
 
@@ -57,12 +62,6 @@ public class CharacterActionPanel : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void OnSkillSelectedWrapper(Profile character, Useable skill)
-    {
-        // Event fýrladýðýnda buraya gelecek, 
-        // biz de asýl kapatma fonksiyonunu tetikleyeceðiz.
-        CloseAndDisableAllPanels();
-    }
 
     #region Write
     private void WriteName(AllyProfile character)

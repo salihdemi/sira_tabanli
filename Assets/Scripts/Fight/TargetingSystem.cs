@@ -18,11 +18,13 @@ public static class TargetingSystem
     private static List<Profile> activeProfileButtons = new List<Profile> { };
     public enum TargetType
     {
-        self,
         enemy,
+        ally,
+
+        self,
         allEnemy,
         allAlly,
-        ally
+        all
     }
 
 
