@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4e1bc5ffa6b9b54cbbbb99a347112e6, type: 3}
-  m_Name: Heal
-  m_EditorClassIdentifier: Assembly-CSharp::Burst
-  _name: Heal
-  targetType: 1
+  m_Script: {fileID: 11500000, guid: 5d32bce7c959f9c4bb5f3e1d80994ae7, type: 3}
+  m_Name: HitAllCharacters
+  m_EditorClassIdentifier: Assembly-CSharp::HitAllCharacters
+  _name: Hit All Characters
+  targetType: 5

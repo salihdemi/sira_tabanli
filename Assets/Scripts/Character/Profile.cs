@@ -39,7 +39,7 @@ public abstract class Profile : MonoBehaviour
 
 
     public bool isDied;
-    private string lastTargetName; 
+    protected string lastTargetName;
 
 
 
@@ -49,17 +49,16 @@ public abstract class Profile : MonoBehaviour
     public abstract void ChooseSkill(Useable skill);
     public  void SetTarget(Profile profile)
     {
-        if(profile == null)//!
+        if(profile == null)//Cok hedefli skillerde
         {
-            LungeEnd();//!
+            FinishLunge();
             return;
         }
         currentTarget = profile;
-        lastTargetName = currentTarget.name;
 
-        LungeEnd();//!
+        FinishLunge();//!
     }
-    public void LungeEnd()
+    public void FinishLunge()
     {
         TurnScheduler.CheckNextCharacter();
     }
@@ -73,7 +72,7 @@ public abstract class Profile : MonoBehaviour
         {
             text = name + " " + lastTargetName + "'a vurmadý çünkü " + name + " öldü";
         }
-        else if (currentTarget.isDied)
+        else if (currentTarget && currentTarget.isDied)
         {
             text = name + " " + lastTargetName + "'a vurmadý çünkü " + lastTargetName + " öldü";
         }

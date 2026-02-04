@@ -66,7 +66,7 @@ public class CharacterActionPanel : MonoBehaviour
     #region Write
     private void WriteName(AllyProfile character)
     {
-        nameText.text = character.name;
+        nameText.text = character.name;//!
     }
     private void WriteAttack(AllyProfile profile)
     {
@@ -140,7 +140,7 @@ public class CharacterActionPanel : MonoBehaviour
         TextMeshProUGUI text = button.transform.GetComponentInChildren<TextMeshProUGUI>();
 
         button.transform.SetParent(parent.GetChild(0), false);
-        text.text = skill.name;
+        text.text = skill._name;
 
 
 

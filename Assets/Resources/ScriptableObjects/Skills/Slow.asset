@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Slow
   m_EditorClassIdentifier: Assembly-CSharp::Slice
   _name: Slow
-  targetType: 1
+  targetType: 0

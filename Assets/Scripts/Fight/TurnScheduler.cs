@@ -8,7 +8,7 @@ using UnityEngine.Profiling;
 
 public static class TurnScheduler
 {
-    public static List<Profile> aliveProfiles;
+    private static List<Profile> aliveProfiles;
     public static List<Profile> orderedProfiles;//hiza gore siralan
     public static int order;
 
@@ -34,6 +34,12 @@ public static class TurnScheduler
         aliveProfiles = AllyProfiles.Cast<Profile>()
                            .Concat(EnemyProfiles.Cast<Profile>())
                            .ToList();
+    }
+
+    public static List<Profile> GetAliveProfiles()
+    {
+        SetAliveProfiles(ActiveAllyProfiles, ActiveEnemyProfiles);
+        return aliveProfiles;
     }
 
     public static void SortProfilesWithSpeed()
@@ -123,7 +129,7 @@ public static class TurnScheduler
                 profile.Play();
             }
             profile.ClearSkillAndTarget();
-            yield return new WaitForSeconds(.1f);
+            yield return new WaitForSeconds(1f);
 
         }
 

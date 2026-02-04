@@ -17,4 +17,5 @@ MonoBehaviour:
   baseSpeed: 7
   sprite: {fileID: 5731584507761909605, guid: f4ac01e0052f15e418b62663d5a94719, type: 3}
   attack: {fileID: 11400000, guid: 9d1e90c9bfde37e4b97d4456b48556bb, type: 2}
-  skills: []
+  skills:
+  - {fileID: 11400000, guid: 5762fa63f146f784a8ca1fd6bb9e0fc9, type: 2}

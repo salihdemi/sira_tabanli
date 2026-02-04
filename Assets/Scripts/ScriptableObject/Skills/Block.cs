@@ -3,6 +3,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Block", menuName = "Scriptable Objects/Skills/Block")]
 public class Block : Skill
 {
+    Block()
+    {
+        targetType = TargetingSystem.TargetType.self;
+    }
     public override void Method(Profile user, Profile target)
     {
 
@@ -12,6 +16,6 @@ public class Block : Skill
         //saldýrýyý yap
 
         user.AddToHealth(user.GetPower());
-        Debug.Log(user.name + " " + target.name + "'i " + name + " ile " + user.GetPower() + " iyileþtirdi");
+        Debug.Log(user.name + " " + user.name + "'i " + name + " ile " + user.GetPower() + " iyileþtirdi");
     }
 }

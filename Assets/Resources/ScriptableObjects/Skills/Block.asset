@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Block
   m_EditorClassIdentifier: Assembly-CSharp::Block
   _name: Block
-  targetType: 1
+  targetType: 2

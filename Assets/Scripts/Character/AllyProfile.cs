@@ -29,15 +29,23 @@ public class AllyProfile : Profile
         }
         else if (skill.targetType == TargetingSystem.TargetType.all)
         {
-
+            SetTarget(null);
+            lastTargetName = "Herkes";
         }
         else if (skill.targetType == TargetingSystem.TargetType.allEnemy)
         {
-
+            SetTarget(null);
+            lastTargetName = "Tüm düþmanlar";
         }
         else if (skill.targetType == TargetingSystem.TargetType.allAlly)
         {
-
+            SetTarget(null);
+            lastTargetName = "Tüm dostlar";
+        }
+        else if (skill.targetType == TargetingSystem.TargetType.self)
+        {
+            SetTarget(null);
+            lastTargetName = name;
         }
 
     }

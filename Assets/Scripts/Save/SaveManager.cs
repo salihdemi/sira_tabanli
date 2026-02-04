@@ -450,12 +450,12 @@ public static class SaveManager
 
 
         persistanceStats.sprite = IntToSprite(allySaveData.sprite);
-        persistanceStats.attack = IntToUseable(allySaveData.attackSkill);
+        persistanceStats.attack = (Skill)IntToUseable(allySaveData.attackSkill);
 
         persistanceStats.skills.Clear();
         for (int i = 0; i < allySaveData.skills.Count; i++)
         {
-            persistanceStats.skills.Add(IntToUseable(allySaveData.skills[i]));
+            persistanceStats.skills.Add((Skill)IntToUseable(allySaveData.skills[i]));
         }
 
 

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Attack
   m_EditorClassIdentifier: Assembly-CSharp::Skill1
   _name: Attack
-  targetType: 1
+  targetType: 0
