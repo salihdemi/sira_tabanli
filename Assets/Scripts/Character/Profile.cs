@@ -143,7 +143,9 @@ public abstract class Profile : MonoBehaviour
     public void ResetStats()
     {
         isDied = false;
-        currentPower = stats.basePower;
+        currentPower = stats.oldBasePower;
+        currentPower = stats.oldBasePower;
+        currentPower = stats.oldBasePower;
         onPowerChange?.Invoke(currentPower);
 
         currentSpeed = stats.baseSpeed;

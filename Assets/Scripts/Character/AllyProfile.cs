@@ -49,6 +49,4 @@ public class AllyProfile : Profile
         }
 
     }
-    //public override void SetTarget(Profile profile)
-    //public override void LungeEnd()
 }

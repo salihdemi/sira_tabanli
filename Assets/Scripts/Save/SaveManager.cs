@@ -410,9 +410,20 @@ public static class SaveManager
         AllySaveData allySaveData = new AllySaveData();
         allySaveData.name = ally._name;
 
-        allySaveData.currentHealth = ally.currentHealth; // Mevcut caný
+        allySaveData.currentHealth = ally.currentHealth;   // Mevcut caný
+        allySaveData.currentStamina = ally.currentStamina; // Mevcut staminasý
+        allySaveData.currentMana = ally.currentMana;       // Mevcut manasý
+
         allySaveData.maxHealth = ally.maxHealth;         // Maksimum caný
-        allySaveData.basePower = ally.basePower;         // Gücü
+        allySaveData.maxStamina = ally.maxStamina;         // Maksimum staminasý
+        allySaveData.maxMana = ally.maxMana;         // Maksimum manasý
+
+
+        allySaveData.strength = ally.strength;      // Gücü
+        allySaveData.technical = ally.technical;    // tekniði
+        allySaveData.focus = ally.focus;            // focusu
+
+
         allySaveData.baseSpeed = ally.baseSpeed;         // Hýzý
 
 
@@ -441,7 +452,7 @@ public static class SaveManager
 
         persistanceStats.currentHealth = allySaveData.currentHealth; // Mevcut caný
         persistanceStats.maxHealth = allySaveData.maxHealth;         // Maksimum caný
-        persistanceStats.basePower = allySaveData.basePower;         // Gücü
+        persistanceStats.oldBasePower = allySaveData.basePower;         // Gücü
         persistanceStats.baseSpeed = allySaveData.baseSpeed;         // Hýzý
 
 

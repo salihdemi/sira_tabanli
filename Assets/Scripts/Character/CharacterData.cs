@@ -9,8 +9,8 @@ public class CharacterData : ScriptableObject
 {
     
     [Header("Stats")]
-    public float maxHealth;
-    public float basePower;
+    public float maxHealth, maxStamina, maxMana;
+    public float strength, technical, focus;
     public float baseSpeed;
     //stamina
     //mana

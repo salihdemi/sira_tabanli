@@ -9,15 +9,17 @@ public class PersistanceStats
     public string _name;
 
 
-    public float currentHealth;
+    public float currentHealth, currentStamina, currentMana;
 
-    public float maxHealth;
-    public float basePower;
-    public float baseSpeed;
     public bool isDied;
     public bool isInParty;
 
 
+    [Header("Stats")]
+    public float maxHealth, maxStamina, maxMana;
+    public float strength, technical, focus; 
+
+    public float baseSpeed;
 
 
     public Sprite sprite;
@@ -32,8 +34,15 @@ public class PersistanceStats
         //originData = data;
         _name = data.name;
         maxHealth = data.maxHealth;
-        currentHealth = maxHealth;
-        basePower = data.basePower;
+        maxStamina = data.maxHealth;
+        maxMana = data.maxHealth;
+
+        Regen();
+
+        strength = data.strength;
+        technical = data.technical;
+        focus = data.focus;
+
         baseSpeed = data.baseSpeed;
 
 
@@ -41,15 +50,13 @@ public class PersistanceStats
         attack = data.attack;
         skills = new List<Skill>(data.skills);
     }
-    public void LoadFromSave()
-    {
 
-    }
-
-    public void GetRest()
+    public void Regen()
     {
         isDied = false;
         currentHealth = maxHealth;
+        currentStamina = maxStamina;
+        currentMana = maxMana;
     }
 
 

@@ -18,7 +18,7 @@ public static class PartyManager
     {
         foreach (PersistanceStats stat in partyStats)
         {
-            stat.GetRest();
+            stat.Regen();
         }
         EnemyGroup.RespawnAllGroupsInScene();
         // diðer menüyü ac

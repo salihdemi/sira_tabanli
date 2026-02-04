@@ -39,9 +39,15 @@ public class AllySaveData
     public int sprite;
 
     public float currentHealth;
+    public float currentStamina;
+    public float currentMana;
 
-    public float maxHealth;
-    public float basePower;
+    public float maxHealth, maxStamina, maxMana;
+
+    public float strength, technical, focus;
+
+
+
     public float baseSpeed;
     public bool isDied;
     public bool isInParty;
