@@ -12,7 +12,6 @@ public class ItemSelectCard : MonoBehaviour
         if (stats.item != null) { stats.item.equipped = false; }
 
         stats.item = item;
-        Debug.Log(item);
         item.equipped = true;
     }
 }
