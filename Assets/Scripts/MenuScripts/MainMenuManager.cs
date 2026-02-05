@@ -22,7 +22,8 @@ public class MainMenuManager : MonoBehaviour
                 break;
             }
         }
-        continueButton.interactable = canContinue;
+        if(continueButton != null)
+            continueButton.interactable = canContinue;
     }
 
     [SerializeField] private CharacterData[] partyDatas;
