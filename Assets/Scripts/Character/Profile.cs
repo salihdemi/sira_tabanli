@@ -60,6 +60,7 @@ public abstract class Profile : MonoBehaviour
             return;
         }
         currentTarget = profile;
+        lastTargetName = currentTarget.name;
 
         FinishLunge();//!
     }
@@ -75,6 +76,7 @@ public abstract class Profile : MonoBehaviour
         string text;
         if (isDied)
         {
+            lastTargetName = 
             text = name + " " + lastTargetName + "'a vurmadý çünkü " + name + " öldü";
         }
         else if (currentTarget && currentTarget.isDied)
