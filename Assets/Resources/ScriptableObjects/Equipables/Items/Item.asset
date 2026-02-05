@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3d826d7027177e49ade699851bba0e5, type: 3}
   m_Name: Item
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  equipped: 0
+  equipped: 1
   sprite: {fileID: 7322885499304307244, guid: 7ad4fbcae2a11b34d90ef5133094c445, type: 3}
+  skill: {fileID: 0}

@@ -31,6 +31,7 @@ public abstract class Profile : MonoBehaviour
     protected string lastTargetName;
 
   //battlespawnerda kullanýlabilir
+  /*
     public void Setup(PersistanceStats persistentData)
     {
         // Dýþarýdaki kalýcý datayý bu profile baðla
@@ -48,7 +49,7 @@ public abstract class Profile : MonoBehaviour
         onFocusChange.Invoke(currentFocus);
         onSpeedChange.Invoke(currentSpeed);
     }
-
+  */
 
     public abstract void LungeStart();
     public abstract void ChooseSkill(Useable skill);
@@ -208,7 +209,6 @@ public abstract class Profile : MonoBehaviour
         onTechnicalChange?.Invoke(currentTechnical);
         currentFocus = stats.focus;
         onFocusChange?.Invoke(currentFocus);
-
         currentSpeed = stats.baseSpeed;
         onSpeedChange?.Invoke(currentSpeed);
     }

@@ -17,7 +17,7 @@ public static class BattleSpawner
     {
         AllyProfile profile = FightPanelObjectPool.instance.GetAlly();
 
-        //profilde fonksiyonlanabilir!!!
+        //profilde fonksiyonlanabilir, setup gibi!!!
         profile.stats = persistanceStats;
         profile.gameObject.name = persistanceStats._name;
         profile.GetComponent<Image>().sprite = persistanceStats.sprite;
