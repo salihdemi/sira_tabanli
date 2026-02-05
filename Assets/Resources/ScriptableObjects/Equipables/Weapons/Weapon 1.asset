@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d911792a1be19e41a9c2bccd714f241, type: 3}
+  m_Name: Weapon 1
+  m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  equipped: 0
+  sprite: {fileID: 1137571274128960489, guid: 506115f443086b34ca207925c7354b57, type: 3}
+  type: 0

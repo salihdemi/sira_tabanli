@@ -7,13 +7,15 @@ public class ColliderThing : MonoBehaviour
     {
         characterUnlocker,
         foodGiver,
-        toyGiver
+        toyGiver,
+        equipableGiver
     }
     public Type type;
 
     public CharacterData characterToUnlock;
     public Food foodToGive;
     public Toy toyToGive;
+    public Equipable equipable;
 
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -31,6 +33,21 @@ public class ColliderThing : MonoBehaviour
         else if (type == Type.toyGiver)
         {
             InventoryManager.AddToy(toyToGive);
+        }
+        else if (type == Type.equipableGiver)
+        {
+            if (equipable is Weapon)
+            {
+                InventoryManager.weapons.Add((Weapon)equipable);
+            }
+            else if (equipable is Item)
+            {
+                InventoryManager.items.Add((Item)equipable);
+            }
+            else if (equipable is Charm)
+            {
+                InventoryManager.charms.Add((Charm)equipable);
+            }
         }
     }
 

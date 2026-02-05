@@ -6,8 +6,9 @@ using UnityEngine;
 [System.Serializable]
 public class PersistanceStats
 {
-    [Header("Name")]
+    [Header("Bio")]
     public string _name;
+    public WeaponType weaponType;
 
     [Header("Status")]
     public float currentHealth, currentStamina, currentMana;
@@ -15,6 +16,11 @@ public class PersistanceStats
     [Header("Stats")]
     public float maxHealth, maxStamina, maxMana;
     public float strength, technical, focus, baseSpeed;
+
+    [Header("Stuff")]
+    public Weapon weapon;
+    public Item item;
+    public Charm charm;
 
 
     [Header("Sprite")]
@@ -33,6 +39,9 @@ public class PersistanceStats
     {
         //originData = data;
         _name = data.name;
+        weaponType= data.weaponType;
+
+
         maxHealth = data.maxHealth;
         maxStamina = data.maxStamina;
         maxMana = data.maxMana;

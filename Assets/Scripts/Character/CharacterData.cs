@@ -7,7 +7,8 @@ using UnityEngine.Events;
 [CreateAssetMenu(fileName = "CharacterData", menuName = "Scriptable Objects/CharacterData")]
 public class CharacterData : ScriptableObject
 {
-    
+    public WeaponType weaponType;
+
     [Header("Bars")]
     public float maxHealth;
     public float maxStamina;

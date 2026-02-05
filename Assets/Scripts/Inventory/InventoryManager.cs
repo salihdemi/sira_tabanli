@@ -13,6 +13,14 @@ public static class InventoryManager
     public static Dictionary<Food, int> foods = new Dictionary<Food, int>();
 
 
+
+    public static List<Weapon> weapons = new List<Weapon>();
+    public static List<Item> items = new List<Item>();
+    public static List<Charm> charms = new List<Charm>();
+
+
+
+
     public static void AddFood(Food food, int amount = 1)
     {
         if (foods.ContainsKey(food))//zaten varsa
