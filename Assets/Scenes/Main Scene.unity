@@ -770,7 +770,6 @@ MonoBehaviour:
   type: 0
   characterToUnlock: {fileID: 11400000, guid: e3fc427995f3e03428fe2ce59f58b89f, type: 2}
   foodToGive: {fileID: 0}
-  toyToGive: {fileID: 0}
   equipable: {fileID: 0}
 --- !u!61 &368106793
 BoxCollider2D:
@@ -983,6 +982,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1979736893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &535973465 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4694535692650718491, guid: 01d40439daee8d249a0e134131162069, type: 3}
+  m_PrefabInstance: {fileID: 8600549230136165601}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &539490844
 GameObject:
   m_ObjectHideFlags: 0
@@ -1317,10 +1327,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 890cf7c8b4730bd4088a254e934d0917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColliderThing
-  type: 3
+  type: 2
   characterToUnlock: {fileID: 0}
   foodToGive: {fileID: 0}
-  toyToGive: {fileID: 11400000, guid: 282b4634ed5d699499e3dc2ec78b0bfd, type: 2}
   equipable: {fileID: 0}
 --- !u!61 &577661727
 BoxCollider2D:
@@ -1565,7 +1574,6 @@ MonoBehaviour:
   type: 0
   characterToUnlock: {fileID: 11400000, guid: 78fb724a93868534ab08be30f9fbc3bd, type: 2}
   foodToGive: {fileID: 0}
-  toyToGive: {fileID: 0}
   equipable: {fileID: 0}
 --- !u!61 &623473016
 BoxCollider2D:
@@ -2764,10 +2772,8 @@ MonoBehaviour:
     savedScene: 0
     savedAllys: []
     deadEnemyIDsInScene: []
-    foodNumbers: 
-    foodAmounts: 
-    toyNumbers: 
-    toyAmounts: 
+    consumableNumbers: 
+    consumableAmounts: 
 --- !u!114 &1219953921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2913,10 +2919,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 890cf7c8b4730bd4088a254e934d0917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColliderThing
-  type: 3
+  type: 0
   characterToUnlock: {fileID: 0}
   foodToGive: {fileID: 0}
-  toyToGive: {fileID: 11400000, guid: 282b4634ed5d699499e3dc2ec78b0bfd, type: 2}
   equipable: {fileID: 0}
 --- !u!61 &1397067126
 BoxCollider2D:
@@ -4612,10 +4617,8 @@ MonoBehaviour:
     savedScene: 0
     savedAllys: []
     deadEnemyIDsInScene: []
-    foodNumbers: 
-    foodAmounts: 
-    toyNumbers: 
-    toyAmounts: 
+    consumableNumbers: 
+    consumableAmounts: 
 --- !u!114 &1924900731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5804,6 +5807,22 @@ PrefabInstance:
       propertyPath: fightManager
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4228803976774950359, guid: 01d40439daee8d249a0e134131162069, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4594840230283733887, guid: 01d40439daee8d249a0e134131162069, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4786883528646764468, guid: 01d40439daee8d249a0e134131162069, type: 3}
+      propertyPath: itemButton
+      value: 
+      objectReference: {fileID: 535973465}
+    - target: {fileID: 6018860198753903759, guid: 01d40439daee8d249a0e134131162069, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6636449670396639941, guid: 01d40439daee8d249a0e134131162069, type: 3}
       propertyPath: m_Name
       value: FightPanel
@@ -5811,6 +5830,14 @@ PrefabInstance:
     - target: {fileID: 6636449670396639941, guid: 01d40439daee8d249a0e134131162069, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545012705607759106, guid: 01d40439daee8d249a0e134131162069, type: 3}
+      propertyPath: m_Name
+      value: ConsumablesButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611942414063197594, guid: 01d40439daee8d249a0e134131162069, type: 3}
+      propertyPath: m_Name
+      value: ItemButton
       objectReference: {fileID: 0}
     - target: {fileID: 8684634868334995227, guid: 01d40439daee8d249a0e134131162069, type: 3}
       propertyPath: m_Pivot.x

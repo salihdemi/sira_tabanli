@@ -199,12 +199,12 @@ public static class SaveManager
     {
         SaveScene(data);
         SaveUnlockedAllies(data);
-        SaveInventory(data);
+        SaveConsumables(data);
     }
     private static void LoadStaticData(SaveData data)
     {
         LoadUnlockedAllies(data);
-        LoadInventory(data);
+        LoadConsumables(data);
     }
 
 
@@ -267,53 +267,31 @@ public static class SaveManager
     }
 
 
-    private static void SaveInventory(SaveData data)
+    private static void SaveConsumables(SaveData data)
     {
-        data.foodNumbers.Clear();
-        data.foodAmounts.Clear();
-        foreach (var pair in InventoryManager.foods)
+        data.consumableNumbers.Clear();
+        data.consumableAmounts.Clear();
+        foreach (var pair in InventoryManager.consumables)
         {
-            data.foodNumbers.Add(UseableToInt(pair.Key)); // SO'nun adýný kaydet
-            data.foodAmounts.Add(pair.Value);  // Adedini kaydet
+            data.consumableNumbers.Add(UseableToInt(pair.Key)); // SO'nun adýný kaydet
+            data.consumableAmounts.Add(pair.Value);  // Adedini kaydet
         }
 
-        data.toyNumbers.Clear();
-        data.toyAmounts.Clear();
-        foreach (var pair in InventoryManager.toys)
-        {
-            data.toyNumbers.Add(UseableToInt(pair.Key));
-            data.toyAmounts.Add(pair.Value);
-        }
     }
-    private static void LoadInventory(SaveData data)
+    private static void LoadConsumables(SaveData data)
     {
-        InventoryManager.foods.Clear();
+        InventoryManager.consumables.Clear();
         // Yemekleri Yükle
-        for (int i = 0; i < data.foodNumbers.Count; i++)
+        for (int i = 0; i < data.consumableNumbers.Count; i++)
         {
             // Resources/Foods/ klasörü altýndaki SO'yu isminden bul
             //Food foodSO = Resources.Load<Food>("Foods/" + data.foodNames[i]);
 
-            Food foodSO = (Food)IntToUseable(data.foodNumbers[i]);
+            Consumable foodSO = (Consumable)IntToUseable(data.consumableNumbers[i]);
 
             if (foodSO != null)
             {
-                InventoryManager.foods.Add(foodSO, data.foodAmounts[i]);
-            }
-        }
-
-        InventoryManager.toys.Clear();
-        // Oyuncaklarý Yükle
-        Debug.Log(data.toyNumbers.Count);
-        for (int i = 0; i < data.toyNumbers.Count; i++)
-        {
-            //Toy toySO = Resources.Load<Toy>("Toys/" + data.toyNames[i]);
-
-            Toy toySO = (Toy)IntToUseable(data.toyNumbers[i]);
-
-            if (toySO != null)
-            {
-                InventoryManager.toys.Add(toySO, data.toyAmounts[i]);
+                InventoryManager.consumables.Add(foodSO, data.consumableAmounts[i]);
             }
         }
     }

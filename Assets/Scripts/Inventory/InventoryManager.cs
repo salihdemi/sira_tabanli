@@ -10,7 +10,7 @@ public static class InventoryManager
 
 
 
-    public static Dictionary<Food, int> foods = new Dictionary<Food, int>();
+    public static Dictionary<Consumable, int> consumables = new Dictionary<Consumable, int>();
 
 
 
@@ -21,91 +21,49 @@ public static class InventoryManager
 
 
 
-    public static void AddFood(Food food, int amount = 1)
+    public static void AddConsumable(Consumable consumable, int amount = 1)
     {
-        if (foods.ContainsKey(food))//zaten varsa
+        if (consumables.ContainsKey(consumable))//zaten varsa
         {
-            foods[food] += amount;
+            consumables[consumable] += amount;
         }
         else//yoksa ekle
         {
-            foods.Add(food, amount);
+            consumables.Add(consumable, amount);
         }
-        Debug.Log($"{food.name} eklendi. Yeni adet: {foods[food]}");
+        Debug.Log($"{consumable.name} eklendi. Yeni adet: {consumables[consumable]}");
     }
-    public static void RemoveFood(Food food)
+    public static void RemoveConsumable(Consumable consumable)
     {
-        if (foods.ContainsKey(food))
+        if (consumables.ContainsKey(consumable))
         {
-            foods[food] -= 1;
-            if (foods[food] <= 0)
+            consumables[consumable] -= 1;
+            if (consumables[consumable] <= 0)
             {
-                foods.Remove(food);
+                consumables.Remove(consumable);
             }
         }
     }
 
 
-    public static List<Food> GetOwnedFoods()
+    public static List<Consumable> GetOwnedConsumable()
     {
-        return foods.Where(pair => pair.Value > 0)
+        return consumables.Where(pair => pair.Value > 0)
                 .Select(pair => pair.Key)
                 .ToList();
     }
 
 
-    public static int GetFoodCount(Food food)
+    public static int GetConsumableCount(Consumable consumable)
     {
         // Eðer toy null ise veya sözlükte yoksa 0 döndür, hata verme!
-        if (food == null || !foods.ContainsKey(food)) return 0;
-        return foods[food];
+        if (consumable == null || !consumables.ContainsKey(consumable)) return 0;
+        return consumables[consumable];
     }
 
 
 
 
-    public static Dictionary<Toy, int> toys = new Dictionary<Toy, int>();
-
-
-    public static void AddToy(Toy toy, int amount = 1)
-    {
-        if (toys.ContainsKey(toy))//zaten varsa
-        {
-            toys[toy] += amount;
-        }
-        else//yoksa ekle
-        {
-            toys.Add(toy, amount);
-        }
-        Debug.Log($"{toy.name} eklendi. Yeni adet: {toys[toy]}");
-    }
-    public static void RemoveToy(Toy toy)
-    {
-        if (toys.ContainsKey(toy))
-        {
-            toys[toy] -= 1;
-            if (toys[toy] <= 0)
-            {
-                toys.Remove(toy);
-            }
-        }
-    }
-
-
-    public static List<Toy> GetOwnedToys()
-    {
-        return toys.Where(pair => pair.Value > 0)
-                .Select(pair => pair.Key)
-                .ToList();
-    }
-
-
-    public static int GetToyCount(Toy toy)
-    {
-        // Eðer toy null ise veya sözlükte yoksa 0 döndür, hata verme!
-        if (toy == null || !toys.ContainsKey(toy)) return 0;
-        return toys[toy];
-    }
 
 
 }

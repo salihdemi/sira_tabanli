@@ -6,15 +6,13 @@ public class ColliderThing : MonoBehaviour
     public enum Type
     {
         characterUnlocker,
-        foodGiver,
-        toyGiver,
+        consumableGiver,
         equipableGiver
     }
     public Type type;
 
     public CharacterData characterToUnlock;
-    public Food foodToGive;
-    public Toy toyToGive;
+    public Consumable foodToGive;
     public Equipable equipable;
 
 
@@ -26,13 +24,9 @@ public class ColliderThing : MonoBehaviour
             PartyManager.UnlockAlly(characterToUnlock);
             Destroy(this);
         }
-        else if (type == Type.foodGiver)
+        else if (type == Type.consumableGiver)
         {
-            InventoryManager.AddFood(foodToGive);
-        }
-        else if (type == Type.toyGiver)
-        {
-            InventoryManager.AddToy(toyToGive);
+            InventoryManager.AddConsumable(foodToGive);
         }
         else if (type == Type.equipableGiver)
         {

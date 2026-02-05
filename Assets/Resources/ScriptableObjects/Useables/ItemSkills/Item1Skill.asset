@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 381a9db57390da245a3643f4b4cd7096, type: 3}
-  m_Name: Bomb
-  m_EditorClassIdentifier: Assembly-CSharp::Bomb
+  m_Script: {fileID: 11500000, guid: 56587efd46e39be4884618a0edb50bff, type: 3}
+  m_Name: Item1Skill
+  m_EditorClassIdentifier: Assembly-CSharp::Item1Skill
   _name: 
-  targetType: 1
-  damage: 10
+  targetType: 0
+  healthCost: 0
+  staminaCost: 0
+  manaCost: 0

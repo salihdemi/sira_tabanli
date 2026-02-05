@@ -19,7 +19,7 @@ public class CharacterActionPanel : MonoBehaviour
     [SerializeField] private Button attackButton;
     [SerializeField] private Button skillsButton;
     [SerializeField] private Button foodsButton;
-    [SerializeField] private Button toysButton;
+    [SerializeField] private Button itemButton;
 
     [SerializeField] private GameObject skillsPanel;
     [SerializeField] private GameObject foodsPanel;
@@ -50,7 +50,7 @@ public class CharacterActionPanel : MonoBehaviour
         WriteAttack(character);
         WriteSkillsPanel(character);
         WriteFoodsPanel(character);
-        WriteToysPanel(character);
+        WriteItemButton(character);
     }
 
     public void CloseAndDisableAllPanels()
@@ -107,28 +107,24 @@ public class CharacterActionPanel : MonoBehaviour
             Destroy(child.gameObject);//pool tipi yap!
         }
         // 2. Buton Oluþturma
-        foreach (Food food in InventoryManager.GetOwnedFoods())
+        foreach (Consumable food in InventoryManager.GetOwnedConsumable())
         {
             Button button = MakeButton(food, foodsPanel.transform, profile);
 
             button.GetComponent<Button>().onClick.AddListener(() => profile.ChooseSkill(food));
         }
     }
-    private void WriteToysPanel(AllyProfile profile)
+    private void WriteItemButton(AllyProfile profile)
     {
-        //Oyuncaklarý yaz, !bu fonksiyona hiç gerek olmayadabilir
-
-        if (toysPanel == null) return;
-        foreach (Transform child in toysPanel.transform.GetChild(0))
+        itemButton.onClick.RemoveAllListeners();
+        if (profile.stats.item == null)
         {
-            Destroy(child.gameObject);//pool tipi yap!
+            itemButton.interactable = false;
         }
-        // 2. Buton Oluþturma
-        foreach (Toy toy in InventoryManager.GetOwnedToys())
+        else
         {
-            Button button = MakeButton(toy, toysPanel.transform, profile);
-
-            button.GetComponent<Button>().onClick.AddListener(() => profile.ChooseSkill(toy));
+            itemButton.interactable = true;
+            itemButton.onClick.AddListener(() => profile.ChooseSkill(profile.stats.item.skill));
         }
     }
     #endregion

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "StaminaSkill", menuName = "Scriptable Objects/Skills/StaminaSkill")]
+[CreateAssetMenu(fileName = "StaminaSkill", menuName = "Scriptable Objects/Useables/Skills/StaminaSkill")]
 public class StaminaSkill : Skill
 {
     public override void Method(Profile user, Profile target)

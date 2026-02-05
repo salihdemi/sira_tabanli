@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Sald\u0131r"
+  m_text: Attack
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Yetenek
+  m_text: Skill
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -817,7 +817,7 @@ MonoBehaviour:
   attackButton: {fileID: 1671137845621695900}
   skillsButton: {fileID: 6567993507521604671}
   foodsButton: {fileID: 8405600568702872393}
-  toysButton: {fileID: 8404823631447534955}
+  itemButton: {fileID: 8404823631447534955}
   skillsPanel: {fileID: 934719877482468335}
   foodsPanel: {fileID: 5180853260727118561}
   toysPanel: {fileID: 3415667625571011333}
@@ -1123,8 +1123,8 @@ RectTransform:
   m_Children:
   - {fileID: 3254483438321489309}
   - {fileID: 2759711918597884863}
-  - {fileID: 1245801484010032028}
   - {fileID: 2270749842419264219}
+  - {fileID: 1245801484010032028}
   m_Father: {fileID: 4010566934894550474}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1670,7 +1670,7 @@ GameObject:
   - component: {fileID: 4623756050235318541}
   - component: {fileID: 8404823631447534955}
   m_Layer: 5
-  m_Name: ToysButton
+  m_Name: ItemButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1693,7 +1693,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 250, y: -68.5}
+  m_AnchoredPosition: {x: -250, y: -68.5}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &740560701402851119
@@ -1803,7 +1803,7 @@ GameObject:
   - component: {fileID: 5504459173076334607}
   - component: {fileID: 8405600568702872393}
   m_Layer: 5
-  m_Name: FoodsButton
+  m_Name: ConsumablesButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1826,7 +1826,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -250, y: -68.5}
+  m_AnchoredPosition: {x: 250, y: -68.5}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4151973229994074315
@@ -2668,7 +2668,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Yemek
+  m_text: Consume
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3300,7 +3300,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Oyuncak
+  m_text: Item
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "HealAllAllies", menuName = "Scriptable Objects/Skills/HealAllAllies")]
+[CreateAssetMenu(fileName = "HealAllAllies", menuName = "Scriptable Objects/Useables/Skills/HealAllAllies")]
 public class HealAllAllies : Skill
 {
     public override void Method(Profile user, Profile target)
