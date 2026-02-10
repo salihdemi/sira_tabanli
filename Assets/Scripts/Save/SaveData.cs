@@ -33,7 +33,7 @@ public class AllySaveData
 {
 
     public string name;
-    public int sprite;
+    public string weaponType;
 
     public float currentHealth, currentStamina, currentMana;
 
@@ -42,12 +42,17 @@ public class AllySaveData
     public float strength, technical, focus, baseSpeed;
 
     //weapon-item-charm!
+    public int weapon;
+    public int item;
+    public int charm;
+
 
     public bool isDied;
     public bool isInParty;
 
 
-
+    public int sprite;
     public int attackSkill;
     public List<int> skills = new List<int>();
+
 }

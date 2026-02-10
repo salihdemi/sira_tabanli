@@ -382,11 +382,94 @@ public static class SaveManager
     }
 
 
+    private static int WeaponToInt(Weapon weapon)
+    {
+        int weaponIndex = dataBase.weaponsDataBase.IndexOf(weapon);
+
+        if (weaponIndex == -1)
+        {
+            Debug.LogWarning("Database de olmayan sprite eklendi");
+            dataBase.weaponsDataBase.Add(weapon);
+            weaponIndex = dataBase.weaponsDataBase.IndexOf(weapon);
+        }
+
+        return weaponIndex;
+    }
+    private static Weapon IntToWeapon(int listNumber)
+    {
+        if (dataBase.weaponsDataBase.Count < listNumber)
+        {
+            Debug.LogError("Liste dýþýnda");
+            return null;
+        }
+        Weapon weapon = dataBase.weaponsDataBase[listNumber];
+
+
+
+        return weapon;
+    }
+
+
+    private static int ItemToInt(Item item)
+    {
+        int weaponIndex = dataBase.itemsDataBase.IndexOf(item);
+
+        if (weaponIndex == -1)
+        {
+            Debug.LogWarning("Database de olmayan sprite eklendi");
+            dataBase.itemsDataBase.Add(item);
+            weaponIndex = dataBase.itemsDataBase.IndexOf(item);
+        }
+
+        return weaponIndex;
+    }
+    private static Item IntToItem(int listNumber)
+    {
+        if (dataBase.itemsDataBase.Count < listNumber)
+        {
+            Debug.LogError("Liste dýþýnda");
+            return null;
+        }
+        Item item = dataBase.itemsDataBase[listNumber];
+
+
+
+        return item;
+    }
+
+
+    private static int CharmToInt(Charm charm)
+    {
+        int weaponIndex = dataBase.charmsDataBase.IndexOf(charm);
+
+        if (weaponIndex == -1)
+        {
+            Debug.LogWarning("Database de olmayan sprite eklendi");
+            dataBase.charmsDataBase.Add(charm);
+            weaponIndex = dataBase.charmsDataBase.IndexOf(charm);
+        }
+
+        return weaponIndex;
+    }
+    private static Charm IntToCharm(int listNumber)
+    {
+        if (dataBase.charmsDataBase.Count < listNumber)
+        {
+            Debug.LogError("Liste dýþýnda");
+            return null;
+        }
+        Charm charm = dataBase.charmsDataBase[listNumber];
+
+
+
+        return charm;
+    }
 
     private static AllySaveData PersistanceStatsToAllyData(PersistanceStats ally)
     {
         AllySaveData allySaveData = new AllySaveData();
         allySaveData.name = ally._name;
+        allySaveData.weaponType = ally.weaponType.ToString();
 
         allySaveData.currentHealth = ally.currentHealth;   // Mevcut caný
         allySaveData.currentStamina = ally.currentStamina; // Mevcut staminasý
@@ -409,6 +492,10 @@ public static class SaveManager
         allySaveData.isInParty = ally.isInParty;         // Partide olup olmadýðý
 
 
+        allySaveData.weapon = WeaponToInt(ally.weapon);
+        allySaveData.item = ItemToInt(ally.item);
+        allySaveData.charm = CharmToInt(ally.charm);
+
         allySaveData.sprite = SpriteToInt(ally.sprite);
         allySaveData.attackSkill = UseableToInt(ally.attack);
 
@@ -426,7 +513,9 @@ public static class SaveManager
     {
         PersistanceStats persistanceStats = new PersistanceStats();
 
-        persistanceStats._name = allySaveData.name;                  // isim
+        persistanceStats._name = allySaveData.name;                 // isim
+        persistanceStats.weaponType = (WeaponType)System.Enum.Parse(typeof(WeaponType), allySaveData.weaponType);//test edilmedi
+
         //can
         persistanceStats.currentHealth = allySaveData.currentHealth; // Mevcut can
         persistanceStats.maxHealth = allySaveData.maxHealth;         // Maksimum can
@@ -448,6 +537,10 @@ public static class SaveManager
         persistanceStats.baseSpeed = allySaveData.baseSpeed;         // Hýz
 
 
+
+        persistanceStats.weapon = IntToWeapon(allySaveData.weapon);
+        persistanceStats.item = IntToItem(allySaveData.item);
+        persistanceStats.charm = IntToCharm(allySaveData.charm);
 
         //skiller
         persistanceStats.attack = (Skill)IntToUseable(allySaveData.attackSkill);//attack
