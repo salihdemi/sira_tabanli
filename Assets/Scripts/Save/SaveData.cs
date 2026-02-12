@@ -56,3 +56,20 @@ public class AllySaveData
     public List<int> skills = new List<int>();
 
 }
+[System.Serializable]
+public class InventorySaveData
+{
+    // Dictionary için: Ýsimler ve Adetler
+    public List<string> consumableNames = new List<string>();
+    public List<int> consumableAmounts = new List<int>();
+
+    // Listeler ve HashSetler için: Sadece isimler
+    public List<string> ownedWeaponNames = new List<string>();
+    public List<string> equippedWeaponNames = new List<string>();
+
+    public List<string> ownedTalismanNames = new List<string>();
+    public List<string> equippedTalismanNames = new List<string>();
+
+    public List<string> ownedItemNames = new List<string>();
+    public List<string> equippedItemNames = new List<string>();
+}

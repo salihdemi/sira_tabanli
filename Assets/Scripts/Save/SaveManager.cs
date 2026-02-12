@@ -304,12 +304,88 @@ public static class SaveManager
 
 
 
+    // --- SAVE FONKSÝYONU ---
+    public static InventorySaveData CaptureSaveData()
+    {
+        InventorySaveData data = new InventorySaveData();
+
+        // 1. Consumables Paketle
+        foreach (var pair in InventoryManager.consumables)
+        {
+            data.consumableNames.Add(pair.Key.name);
+            data.consumableAmounts.Add(pair.Value);
+        }
+
+        // 2. Talismanlarý Paketle (Hem sahip olunanlar hem takýlý olanlar)
+        foreach (var t in InventoryManager.ownedTalismas) data.ownedTalismanNames.Add(t.name);
+        foreach (var t in InventoryManager.equippedTalismans) data.equippedTalismanNames.Add(t.name);
+
+        // 3. Silahlarý Paketle
+        foreach (var w in InventoryManager.ownedWeapons) data.ownedWeaponNames.Add(w.name);
+        foreach (var w in InventoryManager.equippedWeapons) data.equippedWeaponNames.Add(w.name);
+
+        return data;
+    }
+
+    // --- LOAD FONKSÝYONU ---
+    public static void LoadFromSaveData(InventorySaveData data)
+    {
+        // Önce mevcut listeleri temizle ki üst üste binmesin
+        InventoryManager.consumables.Clear();
+        InventoryManager.ownedTalismas.Clear();
+        InventoryManager.equippedTalismans.Clear();
+        InventoryManager.ownedWeapons.Clear();
+        InventoryManager.equippedWeapons.Clear();
+
+        // 1. Consumables Geri Yükle
+        for (int i = 0; i < data.consumableNames.Count; i++)
+        {
+            // Þimdilik null check ile geçiyoruz, Resources kýsmýnda baðlayacaðýz
+            var so = FindSOByName<Consumable>(data.consumableNames[i]);
+            if (so != null) InventoryManager.consumables.Add(so, data.consumableAmounts[i]);
+        }
+
+        // 2. Talismanlarý Geri Yükle
+        foreach (var name in data.ownedTalismanNames)
+        {
+            var so = FindSOByName<Talisman>(name);
+            if (so != null) InventoryManager.ownedTalismas.Add(so);
+        }
+        foreach (var name in data.equippedTalismanNames)
+        {
+            var so = FindSOByName<Talisman>(name);
+            if (so != null) InventoryManager.equippedTalismans.Add(so);
+        }
+
+        // ... Silahlar için de aynýsý yapýlacak ...
+    }
 
 
 
 
+    private static T FindSOByName<T>(string name) where T : ScriptableObject
+    {
+        if (string.IsNullOrEmpty(name)) return null;
 
+        string folderPath = "";
 
+        // Tip kontrolü yaparak doðru klasöre yönlendiriyoruz
+        if (typeof(T) == typeof(Talisman)) folderPath = "Talismans/";
+        else if (typeof(T) == typeof(Weapon)) folderPath = "Weapons/";
+        else if (typeof(T) == typeof(Skill)) folderPath = "Skills/";
+        else if (typeof(T) == typeof(Consumable)) folderPath = "Consumables/";
+        else if (typeof(T) == typeof(Item)) folderPath = "Items/";
+
+        // Resources.Load, belirtilen klasördeki ismi arar
+        T foundSO = Resources.Load<T>(folderPath + name);
+
+        if (foundSO == null)
+        {
+            Debug.LogError($"HATA: '{name}' isimli {typeof(T).Name} dosyasý 'Resources/{folderPath}' içinde bulunamadý!");
+        }
+
+        return foundSO;
+    }
 
 
 
@@ -438,27 +514,27 @@ public static class SaveManager
     }
 
 
-    private static int CharmToInt(Talisman charm)
+    private static int TalismanToInt(Talisman talisman)
     {
-        int weaponIndex = dataBase.charmsDataBase.IndexOf(charm);
+        int weaponIndex = dataBase.talismansDataBase.IndexOf(talisman);
 
         if (weaponIndex == -1)
         {
             Debug.LogWarning("Database de olmayan sprite eklendi");
-            dataBase.charmsDataBase.Add(charm);
-            weaponIndex = dataBase.charmsDataBase.IndexOf(charm);
+            dataBase.talismansDataBase.Add(talisman);
+            weaponIndex = dataBase.talismansDataBase.IndexOf(talisman);
         }
 
         return weaponIndex;
     }
-    private static Talisman IntToCharm(int listNumber)
+    private static Talisman IntToTalisman(int listNumber)
     {
-        if (dataBase.charmsDataBase.Count < listNumber)
+        if (dataBase.talismansDataBase.Count < listNumber)
         {
             Debug.LogError("Liste dýþýnda");
             return null;
         }
-        Talisman charm = dataBase.charmsDataBase[listNumber];
+        Talisman charm = dataBase.talismansDataBase[listNumber];
 
 
 
@@ -494,7 +570,7 @@ public static class SaveManager
 
         allySaveData.weapon = WeaponToInt(ally.weapon);
         allySaveData.item = ItemToInt(ally.item);
-        allySaveData.charm = CharmToInt(ally.talimsan);
+        allySaveData.charm = TalismanToInt(ally.talimsan);
 
         allySaveData.sprite = SpriteToInt(ally.sprite);
         allySaveData.attackSkill = UseableToInt(ally.attack);
@@ -540,7 +616,7 @@ public static class SaveManager
 
         persistanceStats.weapon = IntToWeapon(allySaveData.weapon);
         persistanceStats.item = IntToItem(allySaveData.item);
-        persistanceStats.talimsan = IntToCharm(allySaveData.charm);
+        persistanceStats.talimsan = IntToTalisman(allySaveData.charm);
 
         //skiller
         persistanceStats.attack = (Skill)IntToUseable(allySaveData.attackSkill);//attack

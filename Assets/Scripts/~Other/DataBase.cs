@@ -9,7 +9,7 @@ public class DataBase : ScriptableObject
     public List<Sprite> spritesDataBase;
     public List<Weapon> weaponsDataBase;
     public List<Item> itemsDataBase;
-    public List<Talisman> charmsDataBase;
+    public List<Talisman> talismansDataBase;
 
 
 
