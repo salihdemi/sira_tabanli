@@ -5,7 +5,7 @@ using UnityEngine;
 public class SaveData
 {
     public string saveDate;
-    public string savePointName;
+    public string savePointID;
 
 
     public int savedScene;
@@ -16,7 +16,7 @@ public class SaveData
     public List<string> deadEnemyIDsInScene = new List<string>();
 
     // Yemeklerin isimleri ve adetleri
-    public List<int> consumableNumbers = new List<int>();
+    public List<string> consumableNumbers = new List<string>();
     public List<int> consumableAmounts = new List<int>();
 
 
@@ -42,9 +42,9 @@ public class AllySaveData
     public float strength, technical, focus, baseSpeed;
 
     //weapon-item-charm!
-    public int weapon;
-    public int item;
-    public int charm;
+    public string weapon;
+    public string item;
+    public string talisman;
 
 
     public bool isDied;
@@ -52,8 +52,8 @@ public class AllySaveData
 
 
     public int sprite;
-    public int attackSkill;
-    public List<int> skills = new List<int>();
+    public string attackSkill;
+    public List<string> skills = new List<string>();
 
 }
 [System.Serializable]

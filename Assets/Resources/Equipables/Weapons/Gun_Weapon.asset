@@ -10,8 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d911792a1be19e41a9c2bccd714f241, type: 3}
-  m_Name: Zwailhandler_Weapon 1
+  m_Name: Gun_Weapon
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
-  equipped: 0
-  sprite: {fileID: 1482676923347653215, guid: 4b31f11bc01403846b271c9cf6e4bcc1, type: 3}
-  type: 1
+  sprite: {fileID: 6879118450950661895, guid: c9d38fd8709840243bdab5abf7160ad0, type: 3}
+  type: 0

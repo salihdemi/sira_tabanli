@@ -10,8 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3d826d7027177e49ade699851bba0e5, type: 3}
-  m_Name: Electric_Crystal_Item
+  m_Name: Sparkler_Item
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  equipped: 1
-  sprite: {fileID: 1395120533442366415, guid: fb66e7e57635b7c42ae2829a8493bb4c, type: 3}
-  skill: {fileID: 0}
+  sprite: {fileID: 9037559636393237883, guid: d3534bf804a9ce44aaf0f50844874293, type: 3}
+  skill: {fileID: 11400000, guid: 4542b0163d3c6a844b7ecfe7e30ab6dd, type: 2}

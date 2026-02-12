@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d911792a1be19e41a9c2bccd714f241, type: 3}
   m_Name: LongSword_Weapon 1
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
-  equipped: 0
   sprite: {fileID: 4189628086944609009, guid: 9c0d589464110924cac6880336e6b115, type: 3}
   type: 1

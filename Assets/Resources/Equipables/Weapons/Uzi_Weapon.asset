@@ -10,8 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d911792a1be19e41a9c2bccd714f241, type: 3}
-  m_Name: Blood_Staff_Weapon 1
+  m_Name: Uzi_Weapon
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
-  equipped: 0
-  sprite: {fileID: -2292039584808317819, guid: c25482965c125a74e81066d888e59fd9, type: 3}
-  type: 2
+  sprite: {fileID: 6446061410222754207, guid: 1e9052d44ea90c6449ccc610bba586de, type: 3}
+  type: 0

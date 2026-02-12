@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SavePoint : MonoBehaviour
 {
-    public string _name;
+    public string ID;
 
 
     [SerializeField] private GameObject saveMenuPanel; // Inspector'dan SavePanel'i buraya sürükle

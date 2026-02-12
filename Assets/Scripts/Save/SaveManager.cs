@@ -6,6 +6,7 @@ using UnityEngine.U2D;
 
 public static class SaveManager
 {
+    
     private static DataBase _dataBase; // Bu sadece iç depo
     public static DataBase dataBase // Doðru eriþim noktasý
     {
@@ -19,7 +20,7 @@ public static class SaveManager
             return _dataBase;
         }
     }
-
+    
     //public GameObject player;//playerý bulmasý gerek!
 
     public static SavePoint currentSavePoint;
@@ -115,11 +116,11 @@ public static class SaveManager
 
     private static void SaveSavePoint(SaveData data)
     {
-        data.savePointName = currentSavePoint._name;
+        data.savePointID = currentSavePoint.ID;
     }
     private static void LoadSavePoint(SaveData data)
     {
-        if (!string.IsNullOrEmpty(data.savePointName)) // SaveData içindeki deðiþkenin adý
+        if (!string.IsNullOrEmpty(data.savePointID)) // SaveData içindeki deðiþkenin adý
         {
             // 1. Sahnedeki bütün SavePoint scriptlerini bul
             SavePoint[] allSavePoints = Object.FindObjectsByType<SavePoint>(FindObjectsSortMode.None);
@@ -128,7 +129,7 @@ public static class SaveManager
             // 2. Ýçlerinden _name deðiþkeni bizimkiyle eþleþeni seç
             foreach (SavePoint sp in allSavePoints)
             {
-                if (sp._name == data.savePointName)
+                if (sp.ID == data.savePointID)
                 {
                     targetPoint = sp;
                     break;
@@ -143,7 +144,7 @@ public static class SaveManager
             }
             else
             {
-                Debug.LogError($"ID'si '{data.savePointName}' olan SavePoint sahnede bulunamadý!");
+                Debug.LogError($"ID'si '{data.savePointID}' olan SavePoint sahnede bulunamadý!");
             }
         }
     }
@@ -273,7 +274,12 @@ public static class SaveManager
         data.consumableAmounts.Clear();
         foreach (var pair in InventoryManager.consumables)
         {
-            data.consumableNumbers.Add(UseableToInt(pair.Key)); // SO'nun adýný kaydet
+            data.consumableNumbers.Add(pair.Key.name); // SO'nun adýný kaydet
+
+
+            data.consumableNumbers.Add(pair.Key.name); // SO'nun adýný kaydet
+
+            
             data.consumableAmounts.Add(pair.Value);  // Adedini kaydet
         }
 
@@ -287,7 +293,7 @@ public static class SaveManager
             // Resources/Foods/ klasörü altýndaki SO'yu isminden bul
             //Food foodSO = Resources.Load<Food>("Foods/" + data.foodNames[i]);
 
-            Consumable foodSO = (Consumable)IntToUseable(data.consumableNumbers[i]);
+            Consumable foodSO = FindSOByName<Consumable>(data.consumableNumbers[i]);
 
             if (foodSO != null)
             {
@@ -299,6 +305,145 @@ public static class SaveManager
     #endregion
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #region Convert fonksiyonlari
+
+    private static int SpriteToInt(Sprite sprite)
+    {
+        int spriteIndex = dataBase.spritesDataBase.IndexOf(sprite);
+
+        if (spriteIndex == -1)
+        {
+            Debug.LogWarning("Database de olmayan sprite eklendi");
+            dataBase.spritesDataBase.Add(sprite);
+            spriteIndex = dataBase.spritesDataBase.IndexOf(sprite);
+        }
+
+        return spriteIndex;
+    }
+    private static Sprite IntToSprite(int listNumber)
+    {
+        if (dataBase.spritesDataBase.Count < listNumber)
+        {
+            Debug.LogError("Liste dýþýnda");
+            return null;
+        }
+        Sprite sprite = dataBase.spritesDataBase[listNumber];
+
+
+
+        return sprite;
+    }
+    
+    private static AllySaveData PersistanceStatsToAllyData(PersistanceStats ally)
+    {
+        AllySaveData allySaveData = new AllySaveData();
+        allySaveData.name = ally._name;
+        allySaveData.weaponType = ally.weaponType.ToString();
+
+        allySaveData.currentHealth = ally.currentHealth;   // Mevcut caný
+        allySaveData.currentStamina = ally.currentStamina; // Mevcut staminasý
+        allySaveData.currentMana = ally.currentMana;       // Mevcut manasý
+
+        allySaveData.maxHealth = ally.maxHealth;         // Maksimum caný
+        allySaveData.maxStamina = ally.maxStamina;         // Maksimum staminasý
+        allySaveData.maxMana = ally.maxMana;         // Maksimum manasý
+
+
+        allySaveData.strength = ally.strength;      // Gücü
+        allySaveData.technical = ally.technical;    // tekniði
+        allySaveData.focus = ally.focus;            // focusu
+
+
+        allySaveData.baseSpeed = ally.baseSpeed;         // Hýzý
+
+
+        allySaveData.isDied = ally.isDied;               // Ölü olup olmadýðý
+        allySaveData.isInParty = ally.isInParty;         // Partide olup olmadýðý
+
+
+        if (ally.weapon) allySaveData.weapon = ally.weapon.name;
+        if (ally.item) allySaveData.item = ally.item.name;
+        if (ally.talimsan) allySaveData.talisman = ally.talimsan.name;
+
+        allySaveData.sprite = SpriteToInt(ally.sprite);
+        allySaveData.attackSkill = ally.attack.name;
+
+        allySaveData.skills.Clear();
+        for (int i = 0; i < ally.skills.Count; i++)
+        {
+            allySaveData.skills.Add(ally.skills[i].name);
+        }
+
+
+        //skilller listesi
+        return allySaveData;
+    }
+    private static PersistanceStats AllyDataToPersistanceStats(AllySaveData allySaveData)
+    {
+        PersistanceStats persistanceStats = new PersistanceStats();
+
+        persistanceStats._name = allySaveData.name;                 // isim
+        persistanceStats.weaponType = (WeaponType)System.Enum.Parse(typeof(WeaponType), allySaveData.weaponType);//test edilmedi
+
+        //can
+        persistanceStats.currentHealth = allySaveData.currentHealth; // Mevcut can
+        persistanceStats.maxHealth = allySaveData.maxHealth;         // Maksimum can
+
+        //stamina
+        persistanceStats.currentStamina = allySaveData.currentStamina;// Mevcut stamina
+        persistanceStats.currentStamina = allySaveData.maxStamina;    // Maksimum stamina
+
+        //mana
+        persistanceStats.currentMana = allySaveData.currentMana;     // Mevcut mana
+        persistanceStats.maxMana = allySaveData.maxMana;             // Maksimum mana
+
+
+
+        //statlar
+        persistanceStats.strength = allySaveData.strength;           // strength
+        persistanceStats.technical = allySaveData.technical;         // technical
+        persistanceStats.focus = allySaveData.focus;                 // focus
+        persistanceStats.baseSpeed = allySaveData.baseSpeed;         // Hýz
+
+
+
+        persistanceStats.weapon = FindSOByName<Weapon>(allySaveData.weapon);
+        persistanceStats.item = FindSOByName<Item>(allySaveData.item);
+        persistanceStats.talimsan = FindSOByName<Talisman>(allySaveData.talisman);
+
+        //skiller
+        persistanceStats.attack = FindSOByName<Skill>(allySaveData.attackSkill);//attack
+
+        persistanceStats.skills.Clear();
+        for (int i = 0; i < allySaveData.skills.Count; i++)          //Skiller listesi
+            persistanceStats.skills.Add(FindSOByName<Skill>(allySaveData.skills[i]));
+
+
+
+
+        //diðer
+        persistanceStats.sprite = IntToSprite(allySaveData.sprite);  //görsel
+        persistanceStats.isDied = allySaveData.isDied;               // Ölüm durumu
+        persistanceStats.isInParty = allySaveData.isInParty;         // Partide aktiflik durumu
+
+        return persistanceStats;
+    }
+
+    #endregion
 
 
 
@@ -370,11 +515,12 @@ public static class SaveManager
         string folderPath = "";
 
         // Tip kontrolü yaparak doðru klasöre yönlendiriyoruz
-        if (typeof(T) == typeof(Talisman)) folderPath = "Talismans/";
-        else if (typeof(T) == typeof(Weapon)) folderPath = "Weapons/";
+        if (typeof(T) == typeof(Talisman)) folderPath = "Equipables/Talismans/";
+        else if (typeof(T) == typeof(Weapon)) folderPath = "Equipables/Weapons/";
+        else if (typeof(T) == typeof(Item)) folderPath = "Equipables/Items/";
         else if (typeof(T) == typeof(Skill)) folderPath = "Skills/";
         else if (typeof(T) == typeof(Consumable)) folderPath = "Consumables/";
-        else if (typeof(T) == typeof(Item)) folderPath = "Items/";
+        else if (typeof(T) == typeof(Sprite)) folderPath = "Sprites/";
 
         // Resources.Load, belirtilen klasördeki ismi arar
         T foundSO = Resources.Load<T>(folderPath + name);
@@ -386,255 +532,4 @@ public static class SaveManager
 
         return foundSO;
     }
-
-
-
-
-
-
-
-
-
-    #region Convert fonksiyonlari
-
-
-    private static int SpriteToInt(Sprite sprite)
-    {
-        int spriteIndex = dataBase.spritesDataBase.IndexOf(sprite);
-
-        if (spriteIndex == -1)
-        {
-            Debug.LogWarning("Database de olmayan sprite eklendi");
-            dataBase.spritesDataBase.Add(sprite);
-            spriteIndex = dataBase.spritesDataBase.IndexOf(sprite);
-        }
-
-        return spriteIndex;
-    }
-    private static Sprite IntToSprite(int listNumber)
-    {
-        if (dataBase.spritesDataBase.Count < listNumber)
-        {
-            Debug.LogError("Liste dýþýnda");
-            return null;
-        }
-        Sprite sprite = dataBase.spritesDataBase[listNumber];
-
-
-
-        return sprite;
-    }
-
-
-
-
-
-    private static int UseableToInt(Useable useable)
-    {
-        int useableIndex = dataBase.useablesDataBase.IndexOf(useable);
-
-        if (useableIndex == -1)
-        {
-            Debug.LogWarning("Database de olmayan skill eklendi");
-            dataBase.useablesDataBase.Add(useable);
-            useableIndex = dataBase.useablesDataBase.IndexOf(useable);
-        }
-
-        return useableIndex;
-    }
-    private static Useable IntToUseable(int listNumber)
-    {
-        if (dataBase.useablesDataBase.Count < listNumber)
-        {
-            Debug.LogError("Liste dýþýnda");
-            return null;
-        }
-
-        Useable useable = dataBase.useablesDataBase[listNumber];
-
-
-
-        return useable;
-    }
-
-
-    private static int WeaponToInt(Weapon weapon)
-    {
-        int weaponIndex = dataBase.weaponsDataBase.IndexOf(weapon);
-
-        if (weaponIndex == -1)
-        {
-            Debug.LogWarning("Database de olmayan sprite eklendi");
-            dataBase.weaponsDataBase.Add(weapon);
-            weaponIndex = dataBase.weaponsDataBase.IndexOf(weapon);
-        }
-
-        return weaponIndex;
-    }
-    private static Weapon IntToWeapon(int listNumber)
-    {
-        if (dataBase.weaponsDataBase.Count < listNumber)
-        {
-            Debug.LogError("Liste dýþýnda");
-            return null;
-        }
-        Weapon weapon = dataBase.weaponsDataBase[listNumber];
-
-
-
-        return weapon;
-    }
-
-
-    private static int ItemToInt(Item item)
-    {
-        int weaponIndex = dataBase.itemsDataBase.IndexOf(item);
-
-        if (weaponIndex == -1)
-        {
-            Debug.LogWarning("Database de olmayan sprite eklendi");
-            dataBase.itemsDataBase.Add(item);
-            weaponIndex = dataBase.itemsDataBase.IndexOf(item);
-        }
-
-        return weaponIndex;
-    }
-    private static Item IntToItem(int listNumber)
-    {
-        if (dataBase.itemsDataBase.Count < listNumber)
-        {
-            Debug.LogError("Liste dýþýnda");
-            return null;
-        }
-        Item item = dataBase.itemsDataBase[listNumber];
-
-
-
-        return item;
-    }
-
-
-    private static int TalismanToInt(Talisman talisman)
-    {
-        int weaponIndex = dataBase.talismansDataBase.IndexOf(talisman);
-
-        if (weaponIndex == -1)
-        {
-            Debug.LogWarning("Database de olmayan sprite eklendi");
-            dataBase.talismansDataBase.Add(talisman);
-            weaponIndex = dataBase.talismansDataBase.IndexOf(talisman);
-        }
-
-        return weaponIndex;
-    }
-    private static Talisman IntToTalisman(int listNumber)
-    {
-        if (dataBase.talismansDataBase.Count < listNumber)
-        {
-            Debug.LogError("Liste dýþýnda");
-            return null;
-        }
-        Talisman charm = dataBase.talismansDataBase[listNumber];
-
-
-
-        return charm;
-    }
-
-    private static AllySaveData PersistanceStatsToAllyData(PersistanceStats ally)
-    {
-        AllySaveData allySaveData = new AllySaveData();
-        allySaveData.name = ally._name;
-        allySaveData.weaponType = ally.weaponType.ToString();
-
-        allySaveData.currentHealth = ally.currentHealth;   // Mevcut caný
-        allySaveData.currentStamina = ally.currentStamina; // Mevcut staminasý
-        allySaveData.currentMana = ally.currentMana;       // Mevcut manasý
-
-        allySaveData.maxHealth = ally.maxHealth;         // Maksimum caný
-        allySaveData.maxStamina = ally.maxStamina;         // Maksimum staminasý
-        allySaveData.maxMana = ally.maxMana;         // Maksimum manasý
-
-
-        allySaveData.strength = ally.strength;      // Gücü
-        allySaveData.technical = ally.technical;    // tekniði
-        allySaveData.focus = ally.focus;            // focusu
-
-
-        allySaveData.baseSpeed = ally.baseSpeed;         // Hýzý
-
-
-        allySaveData.isDied = ally.isDied;               // Ölü olup olmadýðý
-        allySaveData.isInParty = ally.isInParty;         // Partide olup olmadýðý
-
-
-        allySaveData.weapon = WeaponToInt(ally.weapon);
-        allySaveData.item = ItemToInt(ally.item);
-        allySaveData.charm = TalismanToInt(ally.talimsan);
-
-        allySaveData.sprite = SpriteToInt(ally.sprite);
-        allySaveData.attackSkill = UseableToInt(ally.attack);
-
-        allySaveData.skills.Clear();
-        for (int i = 0; i < ally.skills.Count; i++)
-        {
-            allySaveData.skills.Add(UseableToInt(ally.skills[i]));
-        }
-
-
-        //skilller listesi
-        return allySaveData;
-    }
-    private static PersistanceStats AllyDataToPersistanceStats(AllySaveData allySaveData)
-    {
-        PersistanceStats persistanceStats = new PersistanceStats();
-
-        persistanceStats._name = allySaveData.name;                 // isim
-        persistanceStats.weaponType = (WeaponType)System.Enum.Parse(typeof(WeaponType), allySaveData.weaponType);//test edilmedi
-
-        //can
-        persistanceStats.currentHealth = allySaveData.currentHealth; // Mevcut can
-        persistanceStats.maxHealth = allySaveData.maxHealth;         // Maksimum can
-
-        //stamina
-        persistanceStats.currentStamina = allySaveData.currentStamina;// Mevcut stamina
-        persistanceStats.currentStamina = allySaveData.maxStamina;    // Maksimum stamina
-
-        //mana
-        persistanceStats.currentMana = allySaveData.currentMana;     // Mevcut mana
-        persistanceStats.maxMana = allySaveData.maxMana;             // Maksimum mana
-
-
-
-        //statlar
-        persistanceStats.strength = allySaveData.strength;           // strength
-        persistanceStats.technical = allySaveData.technical;         // technical
-        persistanceStats.focus = allySaveData.focus;                 // focus
-        persistanceStats.baseSpeed = allySaveData.baseSpeed;         // Hýz
-
-
-
-        persistanceStats.weapon = IntToWeapon(allySaveData.weapon);
-        persistanceStats.item = IntToItem(allySaveData.item);
-        persistanceStats.talimsan = IntToTalisman(allySaveData.charm);
-
-        //skiller
-        persistanceStats.attack = (Skill)IntToUseable(allySaveData.attackSkill);//attack
-
-        persistanceStats.skills.Clear();
-        for (int i = 0; i < allySaveData.skills.Count; i++)          //Skiller listesi
-            persistanceStats.skills.Add((Skill)IntToUseable(allySaveData.skills[i]));
-
-
-
-
-        //diðer
-        persistanceStats.sprite = IntToSprite(allySaveData.sprite);  //görsel
-        persistanceStats.isDied = allySaveData.isDied;               // Ölüm durumu
-        persistanceStats.isInParty = allySaveData.isInParty;         // Partide aktiflik durumu
-
-        return persistanceStats;
-    }
-
-    #endregion
 }

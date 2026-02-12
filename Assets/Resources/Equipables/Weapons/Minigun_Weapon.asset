@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d911792a1be19e41a9c2bccd714f241, type: 3}
   m_Name: Minigun_Weapon
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
-  equipped: 0
   sprite: {fileID: 1130123410398433707, guid: 5962f5f63c4a578438e001a32b845c53, type: 3}
   type: 0
