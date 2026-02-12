@@ -32,15 +32,15 @@ public class ColliderThing : MonoBehaviour
         {
             if (equipable is Weapon)
             {
-                InventoryManager.weapons.Add((Weapon)equipable);
+                InventoryManager.ownedWeapons.Add((Weapon)equipable);
             }
             else if (equipable is Item)
             {
-                InventoryManager.items.Add((Item)equipable);
+                InventoryManager.ownedItems.Add((Item)equipable);
             }
-            else if (equipable is Charm)
+            else if (equipable is Talisman)
             {
-                InventoryManager.charms.Add((Charm)equipable);
+                InventoryManager.ownedTalismas.Add((Talisman)equipable);
             }
         }
     }

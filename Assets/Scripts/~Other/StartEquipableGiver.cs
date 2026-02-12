@@ -5,14 +5,14 @@ public class StartEquipableGiver : MonoBehaviour
 
     public Weapon[] weapons;
     public Item[] items;
-    public Charm[] charms;
+    public Talisman[] charms;
 
 
     void Start()
     {
-        foreach (Weapon weapon in weapons) InventoryManager.weapons.Add(weapon);
-        foreach (Item item in items) InventoryManager.items.Add(item);
-        foreach (Charm charm in charms) InventoryManager.charms.Add(charm);
+        foreach (Weapon weapon in weapons) InventoryManager.ownedWeapons.Add(weapon);
+        foreach (Item item in items) InventoryManager.ownedItems.Add(item);
+        foreach (Talisman charm in charms) InventoryManager.ownedTalismas.Add(charm);
 
     }
 }

@@ -28,7 +28,7 @@ public class PersistanceStats
     [Header("Stuff")]
     public Weapon weapon;
     public Item item;
-    public Charm charm;
+    public Talisman talimsan;
 
 
     [Header("Sprite")]

@@ -8,9 +8,9 @@ public class WeaponSelectCard : MonoBehaviour
     public Image image;
     public void OnCardClicked(PersistanceStats stats)
     {
-        if(stats.weapon != null){ stats.weapon.equipped = false; }
+        if(stats.weapon != null){ InventoryManager.equippedWeapons.Remove(stats.weapon); }
 
         stats.weapon = weapon;
-        weapon.equipped = true;
+        InventoryManager.equippedWeapons.Add(weapon);
     }
 }

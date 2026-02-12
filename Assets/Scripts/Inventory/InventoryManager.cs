@@ -14,9 +14,14 @@ public static class InventoryManager
 
 
 
-    public static List<Weapon> weapons = new List<Weapon>();
-    public static List<Item> items = new List<Item>();
-    public static List<Charm> charms = new List<Charm>();
+    public static List<Weapon> ownedWeapons = new List<Weapon>();
+    public static HashSet<Weapon> equippedWeapons = new HashSet<Weapon>();
+
+    public static List<Item> ownedItems = new List<Item>();
+    public static HashSet<Item> equippedItems = new HashSet<Item>();
+
+    public static List<Talisman> ownedTalismas = new List<Talisman>();
+    public static HashSet<Talisman> equippedTalismans = new HashSet<Talisman>();
 
 
 
@@ -64,6 +69,17 @@ public static class InventoryManager
 
 
 
-
+    public static bool IsWeaponEquipped(Weapon weapon)
+    {
+        return equippedWeapons.Contains(weapon);
+    }
+    public static bool IsItemEquipped(Item item)
+    {
+        return equippedItems.Contains(item);
+    }
+    public static bool IsTalismanEquipped(Talisman talisman)
+    {
+        return equippedTalismans.Contains(talisman);
+    }
 
 }

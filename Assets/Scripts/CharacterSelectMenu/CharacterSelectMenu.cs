@@ -7,7 +7,7 @@ public class CharacterSelectMenu : MonoBehaviour
     public GameObject characterCardPrefab;
     public WeaponSelectCard weaponCardPrefab;
     public ItemSelectCard ItemSelectCard;
-    public CharmSelectCard charmSelectCard;
+    public TalismanSelectCard charmSelectCard;
     public Transform contentArea; // ScrollView Content
 
 
@@ -67,10 +67,10 @@ public class CharacterSelectMenu : MonoBehaviour
 
         weaponsTab.SetActive(true);
         //uygun olanlarý ac
-        foreach (Weapon weapon in InventoryManager.weapons)
+        foreach (Weapon weapon in InventoryManager.ownedWeapons)
         {
             //tipi uygun mu, kullanýlýyor mu
-            if(weapon.type == weaponType && !weapon.equipped)
+            if(weapon.type == weaponType && !InventoryManager.IsWeaponEquipped(weapon))
             {
                 WeaponSelectCard card = Instantiate(weaponCardPrefab, weaponsTab.transform);
 
@@ -97,10 +97,10 @@ public class CharacterSelectMenu : MonoBehaviour
         itemsTab.SetActive(true);
 
 
-        foreach (Item item in InventoryManager.items)
+        foreach (Item item in InventoryManager.ownedItems)
         {
             //tipi uygun mu, kullanýlýyor mu
-            if (!item.equipped)
+            if (!InventoryManager.IsItemEquipped(item))
             {
                 ItemSelectCard card = Instantiate(ItemSelectCard, itemsTab.transform);
 
@@ -127,16 +127,16 @@ public class CharacterSelectMenu : MonoBehaviour
         charmsTab.SetActive(true);
 
 
-        foreach (Charm charm in InventoryManager.charms)
+        foreach (Talisman talisman in InventoryManager.ownedTalismas)
         {
             //tipi uygun mu, kullanýlýyor mu
-            if (!charm.equipped)
+            if (!InventoryManager.IsTalismanEquipped(talisman))
             {
-                CharmSelectCard card = Instantiate(charmSelectCard, charmsTab.transform);
+                TalismanSelectCard card = Instantiate(charmSelectCard, charmsTab.transform);
 
-                card.image.sprite = charm.sprite;
+                card.image.sprite = talisman.sprite;
 
-                card.charm = charm;
+                card.talisman = talisman;
                 card.button.onClick.RemoveAllListeners();
                 card.button.onClick.AddListener(() => card.OnCardClicked(stats));
                 card.button.onClick.AddListener(() => charmsTab.SetActive(false));

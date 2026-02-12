@@ -9,9 +9,9 @@ public class ItemSelectCard : MonoBehaviour
     public Image image;
     public void OnCardClicked(PersistanceStats stats)
     {
-        if (stats.item != null) { stats.item.equipped = false; }
+        if (stats.item != null) { InventoryManager.equippedItems.Remove(stats.item); }
 
         stats.item = item;
-        item.equipped = true;
+        InventoryManager.equippedItems.Add(item);
     }
 }

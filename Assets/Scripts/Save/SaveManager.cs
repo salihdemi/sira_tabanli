@@ -438,7 +438,7 @@ public static class SaveManager
     }
 
 
-    private static int CharmToInt(Charm charm)
+    private static int CharmToInt(Talisman charm)
     {
         int weaponIndex = dataBase.charmsDataBase.IndexOf(charm);
 
@@ -451,14 +451,14 @@ public static class SaveManager
 
         return weaponIndex;
     }
-    private static Charm IntToCharm(int listNumber)
+    private static Talisman IntToCharm(int listNumber)
     {
         if (dataBase.charmsDataBase.Count < listNumber)
         {
             Debug.LogError("Liste dýþýnda");
             return null;
         }
-        Charm charm = dataBase.charmsDataBase[listNumber];
+        Talisman charm = dataBase.charmsDataBase[listNumber];
 
 
 
@@ -494,7 +494,7 @@ public static class SaveManager
 
         allySaveData.weapon = WeaponToInt(ally.weapon);
         allySaveData.item = ItemToInt(ally.item);
-        allySaveData.charm = CharmToInt(ally.charm);
+        allySaveData.charm = CharmToInt(ally.talimsan);
 
         allySaveData.sprite = SpriteToInt(ally.sprite);
         allySaveData.attackSkill = UseableToInt(ally.attack);
@@ -540,7 +540,7 @@ public static class SaveManager
 
         persistanceStats.weapon = IntToWeapon(allySaveData.weapon);
         persistanceStats.item = IntToItem(allySaveData.item);
-        persistanceStats.charm = IntToCharm(allySaveData.charm);
+        persistanceStats.talimsan = IntToCharm(allySaveData.charm);
 
         //skiller
         persistanceStats.attack = (Skill)IntToUseable(allySaveData.attackSkill);//attack
