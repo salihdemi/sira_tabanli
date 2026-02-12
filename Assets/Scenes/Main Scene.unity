@@ -2308,11 +2308,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b8f0a63dd23ae374284519e9c5938b0d, type: 2}
   - {fileID: 11400000, guid: 6bb8525c1b2766c4aac70e0bc2362512, type: 2}
   - {fileID: 11400000, guid: 928c6ef4d5fbef14193f2258515b18f7, type: 2}
+  - {fileID: 11400000, guid: 582105e56c83ed945ae1adb39b6ab233, type: 2}
+  - {fileID: 11400000, guid: a141f301bcbbafb4f8fad235d8e60e41, type: 2}
+  - {fileID: 11400000, guid: db86955a6e8cf924783830fbcdd0f33b, type: 2}
+  - {fileID: 11400000, guid: d2652d2532c0e1f4f81045b077ab3b73, type: 2}
+  - {fileID: 11400000, guid: 1943adf5b02c1fd42a54e7d3c1526166, type: 2}
+  - {fileID: 11400000, guid: 2b6693e110c2994428471208a91f0197, type: 2}
   items:
   - {fileID: 11400000, guid: 03f026f0b986d3f49a2d926b76f5c98a, type: 2}
   - {fileID: 11400000, guid: 30d17f61a70ee0440b65ffbb16616e2c, type: 2}
+  - {fileID: 11400000, guid: 4f522da02618bd44a863815104ce4ca0, type: 2}
   charms:
+  - {fileID: 11400000, guid: 42f3915b1ec3114478aca011ef97ccce, type: 2}
+  - {fileID: 11400000, guid: b37abf20663307744a80289653c3b86c, type: 2}
   - {fileID: 11400000, guid: 197c87f5a64672c42bd3b9fabf9a2ed7, type: 2}
+  - {fileID: 11400000, guid: 88f8033cf27bbca4d9b5d131e3f935ad, type: 2}
 --- !u!4 &801262476
 Transform:
   m_ObjectHideFlags: 0

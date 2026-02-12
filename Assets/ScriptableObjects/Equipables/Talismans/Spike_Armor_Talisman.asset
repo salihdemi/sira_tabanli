@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3d826d7027177e49ade699851bba0e5, type: 3}
-  m_Name: Item
-  m_EditorClassIdentifier: Assembly-CSharp::Item
-  equipped: 1
-  sprite: {fileID: 7322885499304307244, guid: 7ad4fbcae2a11b34d90ef5133094c445, type: 3}
-  skill: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: a89e7928587c10c43847a3b00581db40, type: 3}
+  m_Name: Spike_Armor_Talisman
+  m_EditorClassIdentifier: Assembly-CSharp::Charm
+  equipped: 0
+  sprite: {fileID: -5817137838908407947, guid: a6b9026df3800fa4a9976e33488394aa, type: 3}

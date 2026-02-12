@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3d826d7027177e49ade699851bba0e5, type: 3}
-  m_Name: Item 1
+  m_Name: Ring_Item
   m_EditorClassIdentifier: Assembly-CSharp::Item
   equipped: 0
-  sprite: {fileID: -1311454706999046921, guid: 1f74c3184d13b39458cdb0ba2cc6c230, type: 3}
+  sprite: {fileID: -2532087816333192471, guid: caf5facc3b5edbb46a0d96f46e234264, type: 3}
   skill: {fileID: 11400000, guid: 4542b0163d3c6a844b7ecfe7e30ab6dd, type: 2}

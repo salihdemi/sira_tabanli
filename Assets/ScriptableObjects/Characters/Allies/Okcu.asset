@@ -10,18 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17bc0e10ad87e7844acbdf3d692570e6, type: 3}
-  m_Name: Buyucu
+  m_Name: Okcu
   m_EditorClassIdentifier: Assembly-CSharp::CharacterBase
-  maxHealth: 67
+  weaponType: 1
+  maxHealth: 100
   maxStamina: 50
-  maxMana: 50
-  strength: 1
-  technical: 1
-  focus: 3
-  speed: 3
-  sprite: {fileID: 3422849895820167655, guid: 350468460324d7f4ea9703444d789cf2, type: 3}
+  maxMana: 0
+  strength: 2
+  technical: 3
+  focus: 1
+  speed: 2
+  sprite: {fileID: 5731584507761909605, guid: f4ac01e0052f15e418b62663d5a94719, type: 3}
   attack: {fileID: 11400000, guid: 9d1e90c9bfde37e4b97d4456b48556bb, type: 2}
   skills:
-  - {fileID: 11400000, guid: bf0fabd5ef094fa49b9a76c9bb19787c, type: 2}
-  - {fileID: 11400000, guid: 4e2e20dbe6d7bb44cabbb4441bd14e5a, type: 2}
-  - {fileID: 11400000, guid: 9a107b48194f39b439ca309895a0c933, type: 2}
+  - {fileID: 11400000, guid: 5762fa63f146f784a8ca1fd6bb9e0fc9, type: 2}

@@ -37,9 +37,12 @@ public static class PartyManager
 
         TryAddToParty(stats);//kaldirilacak?
 
-        GameObject go = new GameObject("PartyVisualizer");
-        visualizer = go.AddComponent<PartyVisualizer>();
-        visualizer.partyStats = partyStats;
+        if(visualizer == null)
+        {
+            GameObject go = new GameObject("PartyVisualizer");
+            visualizer = go.AddComponent<PartyVisualizer>();
+            visualizer.partyStats = partyStats;
+        }
     }
 
     public static void TryAddToParty(PersistanceStats characterStats)

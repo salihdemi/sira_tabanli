@@ -11,11 +11,19 @@ public class PersistanceStats
     public WeaponType weaponType;
 
     [Header("Status")]
-    public float currentHealth, currentStamina, currentMana;
+    public float currentHealth;
+    public float currentStamina;
+    public float currentMana;
 
+    [Header("MaxStats")]
+    public float maxHealth;
+    public float maxStamina;
+    public float maxMana;
     [Header("Stats")]
-    public float maxHealth, maxStamina, maxMana;
-    public float strength, technical, focus, baseSpeed;
+    public float strength;
+    public float technical;
+    public float focus;
+    public float baseSpeed;
 
     [Header("Stuff")]
     public Weapon weapon;

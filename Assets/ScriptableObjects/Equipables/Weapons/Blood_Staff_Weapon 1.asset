@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d911792a1be19e41a9c2bccd714f241, type: 3}
-  m_Name: Weapon 1
+  m_Name: Blood_Staff_Weapon 1
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
   equipped: 0
-  sprite: {fileID: 1137571274128960489, guid: 506115f443086b34ca207925c7354b57, type: 3}
-  type: 0
+  sprite: {fileID: -2292039584808317819, guid: c25482965c125a74e81066d888e59fd9, type: 3}
+  type: 2

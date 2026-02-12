@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d911792a1be19e41a9c2bccd714f241, type: 3}
-  m_Name: Weapon 2
+  m_Name: Sorcery_Staff_Weapon
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
   equipped: 0
-  sprite: {fileID: -4029819251187114856, guid: 0df3cde8e3e9f66439b05ecf95980e46, type: 3}
-  type: 0
+  sprite: {fileID: -7624506770092689854, guid: 7039d4d9cdd1473479903de1c5992435, type: 3}
+  type: 2
