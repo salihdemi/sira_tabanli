@@ -13,7 +13,7 @@ public class HitAllCharacters : Skill
 
         foreach (AllyProfile profile in TurnScheduler.GetAliveProfiles())
         {
-            profile.AddToHealth(-5);
+            profile.AddToHealth(-5, user);
         }
     }
 }

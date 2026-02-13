@@ -1,7 +1,10 @@
+using UnityEditor;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Talisman", menuName = "Scriptable Objects/Equipables/Talisman")]
 public class Talisman : Equipable
 {
+    public string talismanName;
+    public Sprite icon;
 
+    public virtual void OnTakeDamage(Profile owner, float damage) { }
 }

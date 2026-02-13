@@ -12,7 +12,7 @@ public class Item1Skill : ItemSkill
 
         //saldýrýyý yap
 
-        target.AddToHealth(-user.currentStrength);
+        target.AddToHealth(-user.currentStrength, user);
         Debug.Log("item kullanýldý");
     }
 }

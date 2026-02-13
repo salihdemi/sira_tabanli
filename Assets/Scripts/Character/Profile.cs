@@ -96,7 +96,7 @@ public abstract class Profile : MonoBehaviour
     private void Play()
     {
         AddToMana(-currentSkill.manaCost); Debug.Log($"Kullanýlan Skill: {currentSkill._name} | Mana Cost: {currentSkill.manaCost}");
-        AddToHealth(-currentSkill.healthCost);
+        AddToHealth(-currentSkill.healthCost, this);
         AddToStamina(-currentSkill.staminaCost);
         currentSkill.Method(this, currentTarget);
     }
@@ -137,7 +137,7 @@ public abstract class Profile : MonoBehaviour
         }
         onHealthChange?.Invoke();
     }*/
-    public void AddToHealth(float amount)
+    public void AddToHealth(float amount, Profile owner)
     {
         stats.currentHealth += amount;
         if (stats.currentHealth > stats.maxHealth)
@@ -149,6 +149,13 @@ public abstract class Profile : MonoBehaviour
             Die();
         }
         onHealthChange?.Invoke();
+        if (amount < 0)
+        {
+            if (stats.talimsan)
+            {
+                stats?.talimsan.OnTakeDamage(owner, -amount);
+            }
+        }
     }
     public void AddToStamina(float amount)
     {

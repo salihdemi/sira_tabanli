@@ -10,6 +10,6 @@ public class StaminaSkill : Skill
         //sesi oynat
 
         //saldýrýyý yap
-        target.AddToHealth(user.currentFocus);
+        target.AddToHealth(user.currentFocus, user);
     }
 }

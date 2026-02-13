@@ -11,7 +11,7 @@ public class HealthPot : Consumable
 
         //saldýrýyý yap
 
-        user.AddToHealth(10);
+        user.AddToHealth(10, user);
         InventoryManager.RemoveConsumable(this);
     }
 }

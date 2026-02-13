@@ -11,7 +11,7 @@ public class Attack : Skill
 
         //saldýrýyý yap
 
-        target.AddToHealth(-user.currentStrength);
+        target.AddToHealth(-user.currentStrength, user);
         Debug.Log(user.name + " " + target.name + "'a " + name + " ile " + user.currentStrength + " hasar verdi");
     }
 }

@@ -13,7 +13,7 @@ public class HitAllEnemies : Skill
 
         foreach (EnemyProfile enemy in TurnScheduler.ActiveEnemyProfiles)
         {
-            enemy.AddToHealth(-5);
+            enemy.AddToHealth(-5, user);
         }
     }
 }

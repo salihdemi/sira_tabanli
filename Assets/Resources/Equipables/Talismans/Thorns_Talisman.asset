@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 120335c657c612145bd31a75e19f8cf4, type: 3}
+  m_Name: Thorns_Talisman
+  m_EditorClassIdentifier: Assembly-CSharp::Thorns_Talisman
+  sprite: {fileID: 0}
+  talismanName: 
+  icon: {fileID: 0}
+  owner:
+    _name: 
+    weaponType: 0
+    currentHealth: 0
+    currentStamina: 0
+    currentMana: 0
+    maxHealth: 0
+    maxStamina: 0
+    maxMana: 0
+    strength: 0
+    technical: 0
+    focus: 0
+    baseSpeed: 0
+    weapon: {fileID: 0}
+    item: {fileID: 0}
+    talimsan: {fileID: 0}
+    sprite: {fileID: 0}
+    attack: {fileID: 0}
+    skills: []
+    isDied: 0
+    isInParty: 0
+  reflectDamage: 5

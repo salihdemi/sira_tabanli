@@ -11,7 +11,7 @@ public class Block : Skill
 
         //saldýrýyý yap
 
-        user.AddToHealth(user.currentStrength);
+        user.AddToHealth(user.currentStrength, user);
         Debug.Log(user.name + " " + user.name + "'i " + name + " ile " + user.currentStrength + " iyileþtirdi");
     }
 }

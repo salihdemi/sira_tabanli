@@ -13,7 +13,7 @@ public class HealAllAllies : Skill
 
         foreach (AllyProfile enemy in TurnScheduler.ActiveAllyProfiles)
         {
-            enemy.AddToHealth(5);
+            enemy.AddToHealth(5, user);
         }
     }
 }
