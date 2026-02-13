@@ -4,7 +4,6 @@ using UnityEngine;
 public class Talisman : Equipable
 {
     public string talismanName;
-    public Sprite icon;
 
     public virtual void OnTalismanEquipped(PersistanceStats owner) { }
     public virtual void OnTalismanUnequipped(PersistanceStats owner) { }

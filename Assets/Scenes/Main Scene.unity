@@ -2319,11 +2319,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 30d17f61a70ee0440b65ffbb16616e2c, type: 2}
   - {fileID: 11400000, guid: 4f522da02618bd44a863815104ce4ca0, type: 2}
   talismans:
-  - {fileID: 11400000, guid: 197c87f5a64672c42bd3b9fabf9a2ed7, type: 2}
-  - {fileID: 11400000, guid: 42f3915b1ec3114478aca011ef97ccce, type: 2}
   - {fileID: 11400000, guid: 8192f84abe0fcc944ae7072eaaa1b2e8, type: 2}
-  - {fileID: 11400000, guid: b37abf20663307744a80289653c3b86c, type: 2}
-  - {fileID: 11400000, guid: 43db7b679b62dfb4dbddc9a98f8c1112, type: 2}
+  - {fileID: 11400000, guid: 72b0587cd475f6a42bcfccbe299f3ac6, type: 2}
 --- !u!4 &801262476
 Transform:
   m_ObjectHideFlags: 0
@@ -5590,6 +5587,10 @@ PrefabInstance:
     - target: {fileID: 7717105153088513531, guid: d872547563624fc4d900bea69da16197, type: 3}
       propertyPath: m_Name
       value: PartyPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 7717105153088513531, guid: d872547563624fc4d900bea69da16197, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,4 +1,5 @@
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -427,16 +428,16 @@ public static class SaveManager
         }
 
         // 2. Silahlarý Paketle
-        foreach (var w in InventoryManager.ownedWeapons) inventoryData.ownedWeaponNames.Add(w.name);
-        foreach (var w in InventoryManager.equippedWeapons) inventoryData.equippedWeaponNames.Add(w.name);
+        foreach (Weapon w in InventoryManager.ownedWeapons) inventoryData.ownedWeaponNames.Add(w.name);
+        foreach (Weapon w in InventoryManager.equippedWeapons) inventoryData.equippedWeaponNames.Add(w.name);
 
         // 3. Itemleri Paketle (Hem sahip olunanlar hem takýlý olanlar)
-        foreach (var t in InventoryManager.ownedItems) inventoryData.ownedItemNames.Add(t.name);
-        foreach (var t in InventoryManager.equippedItems) inventoryData.equippedItemNames.Add(t.name);
+        foreach (Item i in InventoryManager.ownedItems) inventoryData.ownedItemNames.Add(i.name);
+        foreach (Item i in InventoryManager.equippedItems) inventoryData.equippedItemNames.Add(i.name);
 
         // 4. Talismanlarý Paketle (Hem sahip olunanlar hem takýlý olanlar)
-        foreach (var t in InventoryManager.ownedTalismas) inventoryData.ownedTalismanNames.Add(t.name);
-        foreach (var t in InventoryManager.equippedTalismans) inventoryData.equippedTalismanNames.Add(t.name);
+        foreach (Talisman t in InventoryManager.ownedTalismas) inventoryData.ownedTalismanNames.Add(t.name);
+        foreach (Talisman t in InventoryManager.equippedTalismans) inventoryData.equippedTalismanNames.Add(t.name);
 
 
 
