@@ -2299,7 +2299,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 801262474}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a365b314f6f68c14ca4825825866ba5d, type: 3}
   m_Name: 
@@ -2318,11 +2318,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 03f026f0b986d3f49a2d926b76f5c98a, type: 2}
   - {fileID: 11400000, guid: 30d17f61a70ee0440b65ffbb16616e2c, type: 2}
   - {fileID: 11400000, guid: 4f522da02618bd44a863815104ce4ca0, type: 2}
-  charms:
-  - {fileID: 11400000, guid: 42f3915b1ec3114478aca011ef97ccce, type: 2}
-  - {fileID: 11400000, guid: b37abf20663307744a80289653c3b86c, type: 2}
+  talismans:
   - {fileID: 11400000, guid: 197c87f5a64672c42bd3b9fabf9a2ed7, type: 2}
+  - {fileID: 11400000, guid: 42f3915b1ec3114478aca011ef97ccce, type: 2}
   - {fileID: 11400000, guid: 88f8033cf27bbca4d9b5d131e3f935ad, type: 2}
+  - {fileID: 11400000, guid: b37abf20663307744a80289653c3b86c, type: 2}
+  - {fileID: 11400000, guid: 43db7b679b62dfb4dbddc9a98f8c1112, type: 2}
 --- !u!4 &801262476
 Transform:
   m_ObjectHideFlags: 0
@@ -2782,8 +2783,15 @@ MonoBehaviour:
     savedScene: 0
     savedAllys: []
     deadEnemyIDsInScene: []
-    consumableNumbers: []
-    consumableAmounts: 
+    inventorySaveData:
+      consumableNames: []
+      consumableAmounts: 
+      ownedWeaponNames: []
+      equippedWeaponNames: []
+      ownedTalismanNames: []
+      equippedTalismanNames: []
+      ownedItemNames: []
+      equippedItemNames: []
 --- !u!114 &1219953921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4627,8 +4635,15 @@ MonoBehaviour:
     savedScene: 0
     savedAllys: []
     deadEnemyIDsInScene: []
-    consumableNumbers: []
-    consumableAmounts: 
+    inventorySaveData:
+      consumableNames: []
+      consumableAmounts: 
+      ownedWeaponNames: []
+      equippedWeaponNames: []
+      ownedTalismanNames: []
+      equippedTalismanNames: []
+      ownedItemNames: []
+      equippedItemNames: []
 --- !u!114 &1924900731
 MonoBehaviour:
   m_ObjectHideFlags: 0

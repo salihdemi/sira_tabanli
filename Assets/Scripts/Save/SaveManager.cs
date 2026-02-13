@@ -103,8 +103,7 @@ public static class SaveManager
     #region SceneData
     private static void SaveSceneData(SaveData data)
     {
-        //data.playerX = player.transform.position.x; //position yerine kayýt noktasý olacak!
-        //data.playerY = player.transform.position.y; //position yerine kayýt noktasý olacak!
+        SaveScene(data);
         SaveSavePoint(data);
         SaveDeadEnemiesInScene(data);
     }
@@ -198,14 +197,13 @@ public static class SaveManager
     #region StaticData
     private static void SaveStaticData(SaveData data)
     {
-        SaveScene(data);
         SaveUnlockedAllies(data);
-        SaveConsumables(data);
+        SaveInventoryData(data);
     }
     private static void LoadStaticData(SaveData data)
     {
         LoadUnlockedAllies(data);
-        LoadConsumables(data);
+        LoadInventoryData(data);
     }
 
 
@@ -268,39 +266,6 @@ public static class SaveManager
     }
 
 
-    private static void SaveConsumables(SaveData data)
-    {
-        data.consumableNumbers.Clear();
-        data.consumableAmounts.Clear();
-        foreach (var pair in InventoryManager.consumables)
-        {
-            data.consumableNumbers.Add(pair.Key.name); // SO'nun adýný kaydet
-
-
-            data.consumableNumbers.Add(pair.Key.name); // SO'nun adýný kaydet
-
-            
-            data.consumableAmounts.Add(pair.Value);  // Adedini kaydet
-        }
-
-    }
-    private static void LoadConsumables(SaveData data)
-    {
-        InventoryManager.consumables.Clear();
-        // Yemekleri Yükle
-        for (int i = 0; i < data.consumableNumbers.Count; i++)
-        {
-            // Resources/Foods/ klasörü altýndaki SO'yu isminden bul
-            //Food foodSO = Resources.Load<Food>("Foods/" + data.foodNames[i]);
-
-            Consumable foodSO = FindSOByName<Consumable>(data.consumableNumbers[i]);
-
-            if (foodSO != null)
-            {
-                InventoryManager.consumables.Add(foodSO, data.consumableAmounts[i]);
-            }
-        }
-    }
 
     #endregion
 
@@ -338,7 +303,7 @@ public static class SaveManager
     {
         if (dataBase.spritesDataBase.Count < listNumber)
         {
-            Debug.LogError("Liste dýþýnda");
+            Debug.LogWarning("Liste dýþýnda");
             return null;
         }
         Sprite sprite = dataBase.spritesDataBase[listNumber];
@@ -450,59 +415,90 @@ public static class SaveManager
 
 
     // --- SAVE FONKSÝYONU ---
-    public static InventorySaveData CaptureSaveData()
+    public static void SaveInventoryData(SaveData data)
     {
-        InventorySaveData data = new InventorySaveData();
+        InventorySaveData inventoryData = new InventorySaveData();
 
         // 1. Consumables Paketle
         foreach (var pair in InventoryManager.consumables)
         {
-            data.consumableNames.Add(pair.Key.name);
-            data.consumableAmounts.Add(pair.Value);
+            inventoryData.consumableNames.Add(pair.Key.name);
+            inventoryData.consumableAmounts.Add(pair.Value);
         }
 
-        // 2. Talismanlarý Paketle (Hem sahip olunanlar hem takýlý olanlar)
-        foreach (var t in InventoryManager.ownedTalismas) data.ownedTalismanNames.Add(t.name);
-        foreach (var t in InventoryManager.equippedTalismans) data.equippedTalismanNames.Add(t.name);
+        // 2. Silahlarý Paketle
+        foreach (var w in InventoryManager.ownedWeapons) inventoryData.ownedWeaponNames.Add(w.name);
+        foreach (var w in InventoryManager.equippedWeapons) inventoryData.equippedWeaponNames.Add(w.name);
 
-        // 3. Silahlarý Paketle
-        foreach (var w in InventoryManager.ownedWeapons) data.ownedWeaponNames.Add(w.name);
-        foreach (var w in InventoryManager.equippedWeapons) data.equippedWeaponNames.Add(w.name);
+        // 3. Itemleri Paketle (Hem sahip olunanlar hem takýlý olanlar)
+        foreach (var t in InventoryManager.ownedItems) inventoryData.ownedItemNames.Add(t.name);
+        foreach (var t in InventoryManager.equippedItems) inventoryData.equippedItemNames.Add(t.name);
 
-        return data;
+        // 4. Talismanlarý Paketle (Hem sahip olunanlar hem takýlý olanlar)
+        foreach (var t in InventoryManager.ownedTalismas) inventoryData.ownedTalismanNames.Add(t.name);
+        foreach (var t in InventoryManager.equippedTalismans) inventoryData.equippedTalismanNames.Add(t.name);
+
+
+
+
+        data.inventorySaveData = inventoryData;
     }
 
     // --- LOAD FONKSÝYONU ---
-    public static void LoadFromSaveData(InventorySaveData data)
+    public static void LoadInventoryData(SaveData data)
     {
-        // Önce mevcut listeleri temizle ki üst üste binmesin
-        InventoryManager.consumables.Clear();
-        InventoryManager.ownedTalismas.Clear();
-        InventoryManager.equippedTalismans.Clear();
-        InventoryManager.ownedWeapons.Clear();
-        InventoryManager.equippedWeapons.Clear();
+        InventorySaveData inventoryData = data.inventorySaveData;
 
         // 1. Consumables Geri Yükle
-        for (int i = 0; i < data.consumableNames.Count; i++)
+        InventoryManager.consumables.Clear();
+        for (int i = 0; i < inventoryData.consumableNames.Count; i++)
         {
             // Þimdilik null check ile geçiyoruz, Resources kýsmýnda baðlayacaðýz
-            var so = FindSOByName<Consumable>(data.consumableNames[i]);
-            if (so != null) InventoryManager.consumables.Add(so, data.consumableAmounts[i]);
+            var so = FindSOByName<Consumable>(inventoryData.consumableNames[i]);
+            if (so != null) InventoryManager.consumables.Add(so, inventoryData.consumableAmounts[i]);
         }
 
-        // 2. Talismanlarý Geri Yükle
-        foreach (var name in data.ownedTalismanNames)
+        // 2. Silahlarý Geri Yükle
+        InventoryManager.ownedWeapons.Clear();
+        InventoryManager.equippedWeapons.Clear();
+        foreach (string name in inventoryData.ownedWeaponNames)
         {
-            var so = FindSOByName<Talisman>(name);
+            Weapon so = FindSOByName<Weapon>(name);
+            if (so != null) InventoryManager.ownedWeapons.Add(so);
+        }
+        foreach (string name in inventoryData.equippedWeaponNames)
+        {
+            Weapon so = FindSOByName<Weapon>(name);
+            if (so != null) InventoryManager.equippedWeapons.Add(so);
+        }
+
+        // 3. Itemleri Geri Yükle
+        InventoryManager.ownedItems.Clear();
+        InventoryManager.equippedItems.Clear();
+        foreach (string name in inventoryData.ownedItemNames)
+        {
+            Item so = FindSOByName<Item>(name);
+            if (so != null) InventoryManager.ownedItems.Add(so);
+        }
+        foreach (string name in inventoryData.equippedItemNames)
+        {
+            Item so = FindSOByName<Item>(name);
+            if (so != null) InventoryManager.equippedItems.Add(so);
+        }
+
+        // 4. Talismanlarý Geri Yükle
+        InventoryManager.ownedTalismas.Clear();
+        InventoryManager.equippedTalismans.Clear();
+        foreach (string name in inventoryData.ownedTalismanNames)
+        {
+            Talisman so = FindSOByName<Talisman>(name);
             if (so != null) InventoryManager.ownedTalismas.Add(so);
         }
-        foreach (var name in data.equippedTalismanNames)
+        foreach (string name in inventoryData.equippedTalismanNames)
         {
-            var so = FindSOByName<Talisman>(name);
+            Talisman so = FindSOByName<Talisman>(name);
             if (so != null) InventoryManager.equippedTalismans.Add(so);
         }
-
-        // ... Silahlar için de aynýsý yapýlacak ...
     }
 
 

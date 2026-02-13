@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a89e7928587c10c43847a3b00581db40, type: 3}
-  m_Name: Stoe_Talisman
+  m_Script: {fileID: 11500000, guid: 20043e18166697d4b952bda8934051fd, type: 3}
+  m_Name: Talisman_Talisman 1
   m_EditorClassIdentifier: Assembly-CSharp::Charm
-  equipped: 0
-  sprite: {fileID: 8399011212269539787, guid: 7ed610876eddb8e46b931c67cc903d10, type: 3}
+  sprite: {fileID: 8611074957390933979, guid: b9e0b785a9526244983f58c6d9abfd27, type: 3}

@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a89e7928587c10c43847a3b00581db40, type: 3}
+  m_Script: {fileID: 11500000, guid: 20043e18166697d4b952bda8934051fd, type: 3}
   m_Name: Charm_Talisman
   m_EditorClassIdentifier: Assembly-CSharp::Charm
-  equipped: 0
   sprite: {fileID: -7076594436838970948, guid: e4df80e4013c74e4fadae5e45c588b51, type: 3}

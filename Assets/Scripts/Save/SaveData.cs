@@ -16,8 +16,7 @@ public class SaveData
     public List<string> deadEnemyIDsInScene = new List<string>();
 
     // Yemeklerin isimleri ve adetleri
-    public List<string> consumableNumbers = new List<string>();
-    public List<int> consumableAmounts = new List<int>();
+    public InventorySaveData inventorySaveData;
 
 
     //Yenilen bosslar
