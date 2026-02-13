@@ -1,6 +1,8 @@
 using System;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using UnityEngine.Profiling;
+using UnityEngine.UI;
 
 public abstract class Profile : MonoBehaviour
 {
@@ -30,26 +32,31 @@ public abstract class Profile : MonoBehaviour
     public bool isDied;
     protected string lastTargetName;
 
-  //battlespawnerda kullanýlabilir
-  /*
-    public void Setup(PersistanceStats persistentData)
+    //battlespawnerda kullanýlabilir
+
+    public void Setup(PersistanceStats persistanceStats)
     {
-        // Dýþarýdaki kalýcý datayý bu profile baðla
-        stats = persistentData;
-        // Sahneye hazýrla
         gameObject.SetActive(true);
 
-        onHealthChange.Invoke();
-        onStaminaChange.Invoke();
-        onManaChange.Invoke();
+        stats = persistanceStats;
+        gameObject.name = persistanceStats._name + " profile";
+
+        GetComponent<Image>().sprite = persistanceStats.sprite;
 
 
-        onStrengthChange.Invoke(currentStrength);
-        onTechnicalChange.Invoke(currentTechnical);
-        onFocusChange.Invoke(currentFocus);
-        onSpeedChange.Invoke(currentSpeed);
+        ResetStatus(persistanceStats);
+        ResetStats();
+
+        //Talisman
+
     }
-  */
+
+    private void ResetStatus(PersistanceStats persistanceStats)
+    {
+        SetHealth(persistanceStats.currentHealth);
+        SetStamina(persistanceStats.currentStamina);
+        SetMana(persistanceStats.currentMana);
+    }
 
     public abstract void LungeStart();
     public abstract void ChooseSkill(Useable skill);
@@ -212,11 +219,14 @@ public abstract class Profile : MonoBehaviour
         isDied = false;
         currentStrength = stats.strength;
         onStrengthChange?.Invoke(currentStrength);
+
         currentTechnical = stats.technical;
         onTechnicalChange?.Invoke(currentTechnical);
+
         currentFocus = stats.focus;
         onFocusChange?.Invoke(currentFocus);
-        currentSpeed = stats.baseSpeed;
+
+        currentSpeed = stats.speed;
         onSpeedChange?.Invoke(currentSpeed);
     }
     public void Die()

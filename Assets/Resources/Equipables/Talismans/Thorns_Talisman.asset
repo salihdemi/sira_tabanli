@@ -12,28 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 120335c657c612145bd31a75e19f8cf4, type: 3}
   m_Name: Thorns_Talisman
   m_EditorClassIdentifier: Assembly-CSharp::Thorns_Talisman
-  sprite: {fileID: 0}
-  talismanName: 
-  icon: {fileID: 0}
-  owner:
-    _name: 
-    weaponType: 0
-    currentHealth: 0
-    currentStamina: 0
-    currentMana: 0
-    maxHealth: 0
-    maxStamina: 0
-    maxMana: 0
-    strength: 0
-    technical: 0
-    focus: 0
-    baseSpeed: 0
-    weapon: {fileID: 0}
-    item: {fileID: 0}
-    talimsan: {fileID: 0}
-    sprite: {fileID: 0}
-    attack: {fileID: 0}
-    skills: []
-    isDied: 0
-    isInParty: 0
+  sprite: {fileID: -5817137838908407947, guid: a6b9026df3800fa4a9976e33488394aa, type: 3}
+  talismanName: Thorns
+  icon: {fileID: -5817137838908407947, guid: a6b9026df3800fa4a9976e33488394aa, type: 3}
   reflectDamage: 5

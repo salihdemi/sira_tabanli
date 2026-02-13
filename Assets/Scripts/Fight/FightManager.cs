@@ -91,12 +91,13 @@ public static class FightManager
 
         currentEnemy.LoseFight();
 
-
+        /*Test et
         //resetstats!
         foreach (Profile item in TurnScheduler.ActiveAllyProfiles)
         {
             item.ResetStats();
         }
+        */
         currentEnemy = null;
         FinishFight();
     }

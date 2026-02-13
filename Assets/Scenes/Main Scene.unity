@@ -2321,7 +2321,7 @@ MonoBehaviour:
   talismans:
   - {fileID: 11400000, guid: 197c87f5a64672c42bd3b9fabf9a2ed7, type: 2}
   - {fileID: 11400000, guid: 42f3915b1ec3114478aca011ef97ccce, type: 2}
-  - {fileID: 11400000, guid: 88f8033cf27bbca4d9b5d131e3f935ad, type: 2}
+  - {fileID: 11400000, guid: 8192f84abe0fcc944ae7072eaaa1b2e8, type: 2}
   - {fileID: 11400000, guid: b37abf20663307744a80289653c3b86c, type: 2}
   - {fileID: 11400000, guid: 43db7b679b62dfb4dbddc9a98f8c1112, type: 2}
 --- !u!4 &801262476

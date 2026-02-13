@@ -17,37 +17,15 @@ public static class BattleSpawner
     {
         AllyProfile profile = FightPanelObjectPool.instance.GetAlly();
 
-        //profilde fonksiyonlanabilir, setup gibi!!!
-        profile.stats = persistanceStats;
-        profile.gameObject.name = persistanceStats._name;
+        profile.Setup(persistanceStats);
 
-        Debug.Log(profile);
-        Debug.Log(profile.GetComponent<Image>());
-        Debug.Log(profile.GetComponent<Image>().sprite);
-        Debug.Log(persistanceStats);
-        Debug.Log(persistanceStats.sprite);
-
-        profile.GetComponent<Image>().sprite = persistanceStats.sprite;
-
-        profile.SetHealth(persistanceStats.currentHealth);
-        profile.SetStamina(persistanceStats.currentStamina);
-        profile.SetMana(persistanceStats.currentMana);
-        profile.ResetStats();
-        //deger yazma
         return profile;
     }
     private static EnemyProfile MakeEnemyProfile(PersistanceStats persistanceStats)
     {
         EnemyProfile profile = FightPanelObjectPool.instance.GetEnemy();
-        profile.stats = persistanceStats;
-        profile.gameObject.name = persistanceStats._name;
-        profile.GetComponent<Image>().sprite = persistanceStats.sprite;
 
-        profile.SetHealth(persistanceStats.maxHealth);
-        profile.SetStamina(persistanceStats.maxStamina);
-        profile.SetMana(persistanceStats.maxMana);
-        profile.ResetStats();
-        //deger yazma
+        profile.Setup(persistanceStats);
 
         return profile;
     }

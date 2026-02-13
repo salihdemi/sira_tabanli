@@ -23,7 +23,7 @@ public class PersistanceStats
     public float strength;
     public float technical;
     public float focus;
-    public float baseSpeed;
+    public float speed;
 
     [Header("Stuff")]
     public Weapon weapon;
@@ -60,7 +60,7 @@ public class PersistanceStats
         technical = data.technical;
         focus = data.focus;
 
-        baseSpeed = data.speed;
+        speed = data.speed;
 
 
         sprite = data.sprite;

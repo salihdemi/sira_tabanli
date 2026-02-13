@@ -333,7 +333,7 @@ public static class SaveManager
         allySaveData.focus = ally.focus;            // focusu
 
 
-        allySaveData.baseSpeed = ally.baseSpeed;         // Hýzý
+        allySaveData.baseSpeed = ally.speed;         // Hýzý
 
 
         allySaveData.isDied = ally.isDied;               // Ölü olup olmadýðý
@@ -382,7 +382,7 @@ public static class SaveManager
         persistanceStats.strength = allySaveData.strength;           // strength
         persistanceStats.technical = allySaveData.technical;         // technical
         persistanceStats.focus = allySaveData.focus;                 // focus
-        persistanceStats.baseSpeed = allySaveData.baseSpeed;         // Hýz
+        persistanceStats.speed = allySaveData.baseSpeed;         // Hýz
 
 
 
