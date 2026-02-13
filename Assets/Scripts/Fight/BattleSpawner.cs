@@ -20,6 +20,13 @@ public static class BattleSpawner
         //profilde fonksiyonlanabilir, setup gibi!!!
         profile.stats = persistanceStats;
         profile.gameObject.name = persistanceStats._name;
+
+        Debug.Log(profile);
+        Debug.Log(profile.GetComponent<Image>());
+        Debug.Log(profile.GetComponent<Image>().sprite);
+        Debug.Log(persistanceStats);
+        Debug.Log(persistanceStats.sprite);
+
         profile.GetComponent<Image>().sprite = persistanceStats.sprite;
 
         profile.SetHealth(persistanceStats.currentHealth);

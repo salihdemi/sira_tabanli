@@ -63,7 +63,7 @@ public class PersistanceStats
         baseSpeed = data.speed;
 
 
-        //sprite = data.sprite;
+        sprite = data.sprite;
         attack = data.attack;
         skills = new List<Skill>(data.skills);
     }

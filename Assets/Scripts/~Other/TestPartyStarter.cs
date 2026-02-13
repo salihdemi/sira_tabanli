@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TestStarter : MonoBehaviour
+public class TestPartyStarter : MonoBehaviour
 {
     [SerializeField] private CharacterData[] partyDatas;
     private void Awake()
