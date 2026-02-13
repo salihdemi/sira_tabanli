@@ -391,7 +391,7 @@ public static class SaveManager
         persistanceStats.talimsan = FindSOByName<Talisman>(allySaveData.talisman);
 
         //skiller
-        persistanceStats.attack = FindSOByName<Skill>(allySaveData.attackSkill);//attack
+        persistanceStats.attack = FindSOByName<Attack>(allySaveData.attackSkill);//attack
 
         persistanceStats.skills.Clear();
         for (int i = 0; i < allySaveData.skills.Count; i++)          //Skiller listesi
@@ -515,6 +515,7 @@ public static class SaveManager
         else if (typeof(T) == typeof(Weapon)) folderPath = "Equipables/Weapons/";
         else if (typeof(T) == typeof(Item)) folderPath = "Equipables/Items/";
         else if (typeof(T) == typeof(Skill)) folderPath = "Skills/";
+        else if (typeof(T) == typeof(Attack)) folderPath = "Attacks/";
         else if (typeof(T) == typeof(Consumable)) folderPath = "Consumables/";
         else if (typeof(T) == typeof(Sprite)) folderPath = "Sprites/";
 

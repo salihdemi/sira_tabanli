@@ -35,7 +35,7 @@ public class PersistanceStats
     public Sprite sprite;
 
     [Header("Skills")]
-    public Skill attack;
+    public Attack attack;
     public List<Skill> skills = new List<Skill>();
 
     [Header("Other")]

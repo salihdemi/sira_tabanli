@@ -20,7 +20,7 @@ public abstract class Profile : MonoBehaviour
     public float currentStrength, currentTechnical, currentFocus, currentSpeed;
 
 
-    [HideInInspector] public Useable currentSkill;
+    [HideInInspector] public Useable currentUseable;
     [HideInInspector] public Profile currentTarget;
 
     [HideInInspector] public event Action onHealthChange, onStaminaChange, onManaChange;
@@ -93,7 +93,7 @@ public abstract class Profile : MonoBehaviour
         }
         else
         {
-            text = name + " " + lastTargetName + "'a " + currentSkill.name + " yaptý";
+            text = name + " " + lastTargetName + "'a " + currentUseable.name + " yaptý";
             Play();
         }
         //Debug.Log(text);
@@ -102,16 +102,16 @@ public abstract class Profile : MonoBehaviour
 
     private void Play()
     {
-        AddToMana(-currentSkill.manaCost); Debug.Log($"Kullanýlan Skill: {currentSkill._name} | Mana Cost: {currentSkill.manaCost}");
-        AddToHealth(-currentSkill.healthCost, this);
-        AddToStamina(-currentSkill.staminaCost);
-        currentSkill.Method(this, currentTarget);
+        AddToMana(-currentUseable.manaCost); Debug.Log($"Kullanýlan Skill: {currentUseable._name} | Mana Cost: {currentUseable.manaCost}");
+        AddToHealth(-currentUseable.healthCost, this);
+        AddToStamina(-currentUseable.staminaCost);
+        currentUseable.Method(this, currentTarget);
     }
 
     public void ClearSkillAndTarget()
     {
         currentTarget = null;
-        currentSkill = null;
+        currentUseable = null;
     }
 
     

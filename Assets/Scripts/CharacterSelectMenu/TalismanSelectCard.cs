@@ -8,9 +8,14 @@ public class TalismanSelectCard : MonoBehaviour
     public Image image;
     public void OnCardClicked(PersistanceStats stats)
     {
-        if (stats.talimsan != null) { InventoryManager.equippedTalismans.Remove(stats.talimsan); }
+        if (stats.talimsan != null)
+        {
+            stats.talimsan.OnTalismanUnequipped(stats);
+            InventoryManager.equippedTalismans.Remove(stats.talimsan);
+        }
 
         stats.talimsan = talisman;
+        talisman.OnTalismanEquipped(stats);
         InventoryManager.equippedTalismans.Add(talisman);
     }
 }

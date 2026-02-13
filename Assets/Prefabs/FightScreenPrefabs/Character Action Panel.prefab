@@ -816,11 +816,11 @@ MonoBehaviour:
   panelsParent: {fileID: 2989173070378636950}
   attackButton: {fileID: 1671137845621695900}
   skillsButton: {fileID: 6567993507521604671}
-  foodsButton: {fileID: 8405600568702872393}
+  consumablesButton: {fileID: 8405600568702872393}
   itemButton: {fileID: 8404823631447534955}
   skillsPanel: {fileID: 934719877482468335}
-  foodsPanel: {fileID: 5180853260727118561}
-  toysPanel: {fileID: 3415667625571011333}
+  consumablesPanel: {fileID: 5180853260727118561}
+  itemsPanel: {fileID: 3415667625571011333}
   buttonPrefab: {fileID: 1269799340924804842, guid: f6e74afdfe467e242ba589a8fa89d5b5, type: 3}
 --- !u!1 &3171253030444145168
 GameObject:
@@ -895,7 +895,7 @@ GameObject:
   - component: {fileID: 4488165566973079650}
   - component: {fileID: 8736482509750390334}
   m_Layer: 5
-  m_Name: ToysPanel
+  m_Name: ItemsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1398,7 +1398,7 @@ GameObject:
   - component: {fileID: 2522044230446819390}
   - component: {fileID: 7643352939464427869}
   m_Layer: 5
-  m_Name: FoodsPanel
+  m_Name: ConsumablesPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

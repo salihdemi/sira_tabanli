@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17bc0e10ad87e7844acbdf3d692570e6, type: 3}
   m_Name: Viking
   m_EditorClassIdentifier: Assembly-CSharp::CharacterBase
+  weaponType: 0
   maxHealth: 45
   maxStamina: 0
   maxMana: 50
@@ -20,5 +21,5 @@ MonoBehaviour:
   focus: 1
   speed: 2
   sprite: {fileID: -7684046354676129167, guid: eeaaaef878a00154b828322d35a8faa7, type: 3}
-  attack: {fileID: 11400000, guid: 9d1e90c9bfde37e4b97d4456b48556bb, type: 2}
+  attack: {fileID: 11400000, guid: 8c821746c27c4c14c9a94217078284be, type: 2}
   skills: []

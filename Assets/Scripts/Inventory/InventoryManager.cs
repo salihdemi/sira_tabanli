@@ -24,10 +24,9 @@ public static class InventoryManager
     public static HashSet<Talisman> equippedTalismans = new HashSet<Talisman>();
 
 
-
-
     public static void AddConsumable(Consumable consumable, int amount = 1)
     {
+
         if (consumables.ContainsKey(consumable))//zaten varsa
         {
             consumables[consumable] += amount;
@@ -37,7 +36,12 @@ public static class InventoryManager
             consumables.Add(consumable, amount);
         }
         Debug.Log($"{consumable.name} eklendi. Yeni adet: {consumables[consumable]}");
+
+
+        UpdateVisualizer();
     }
+
+
     public static void RemoveConsumable(Consumable consumable)
     {
         if (consumables.ContainsKey(consumable))
@@ -82,4 +86,51 @@ public static class InventoryManager
         return equippedTalismans.Contains(talisman);
     }
 
+
+
+
+    private static InventoryVisualizer visualizer;
+
+    private static void UpdateVisualizer()
+    {
+        if (visualizer == null)
+        {
+            GameObject go = new GameObject("InventoryVisualizer");
+            visualizer = go.AddComponent<InventoryVisualizer>();
+
+        }
+        visualizer.consumables.Clear();
+        visualizer.consumableNumbers.Clear();
+        foreach (var pair in consumables)
+        {
+            visualizer.consumableNumbers.Add(pair.Key);
+            visualizer.consumables.Add(pair.Value);
+        }
+        visualizer.ownedWeapons = ownedWeapons;
+        visualizer.equippedWeapons = equippedWeapons;
+
+        visualizer.ownedItems = ownedItems;
+        visualizer.equippedItems = equippedItems;
+
+        visualizer.ownedTalismas = ownedTalismas;
+        visualizer.equippedTalismans = equippedTalismans;
+    }
+
+}
+public class InventoryVisualizer : MonoBehaviour
+{
+
+    public List<Consumable> consumableNumbers = new List<Consumable>();
+    public List<int> consumables = new List<int>();
+
+
+
+    public List<Weapon> ownedWeapons = new List<Weapon>();
+    public HashSet<Weapon> equippedWeapons = new HashSet<Weapon>();
+
+    public List<Item> ownedItems = new List<Item>();
+    public HashSet<Item> equippedItems = new HashSet<Item>();
+
+    public List<Talisman> ownedTalismas = new List<Talisman>();
+    public HashSet<Talisman> equippedTalismans = new HashSet<Talisman>();
 }

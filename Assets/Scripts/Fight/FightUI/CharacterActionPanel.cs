@@ -18,12 +18,12 @@ public class CharacterActionPanel : MonoBehaviour
 
     [SerializeField] private Button attackButton;
     [SerializeField] private Button skillsButton;
-    [SerializeField] private Button foodsButton;
+    [SerializeField] private Button consumablesButton;
     [SerializeField] private Button itemButton;
 
     [SerializeField] private GameObject skillsPanel;
-    [SerializeField] private GameObject foodsPanel;
-    [SerializeField] private GameObject toysPanel;
+    [SerializeField] private GameObject consumablesPanel;
+    [SerializeField] private GameObject itemsPanel;
 
     [SerializeField] private Button buttonPrefab;
 
@@ -49,15 +49,15 @@ public class CharacterActionPanel : MonoBehaviour
         WriteName(character);
         WriteAttack(character);
         WriteSkillsPanel(character);
-        WriteFoodsPanel(character);
+        WriteConsumablesPanel(character);
         WriteItemButton(character);
     }
 
     public void CloseAndDisableAllPanels()
     {
         skillsPanel.SetActive(false);
-        foodsPanel.SetActive(false);
-        toysPanel.SetActive(false);
+        consumablesPanel.SetActive(false);
+        itemsPanel.SetActive(false);
 
         gameObject.SetActive(false);
     }
@@ -96,22 +96,22 @@ public class CharacterActionPanel : MonoBehaviour
     }
 
 
-    private void WriteFoodsPanel(AllyProfile profile)
+    private void WriteConsumablesPanel(AllyProfile profile)
     {
         //Yemekleri yaz, !bu fonksiyona hiç gerek olmayadabilir
 
 
-        if (foodsPanel == null) return;
-        foreach (Transform child in foodsPanel.transform.GetChild(0))
-        {
-            Destroy(child.gameObject);//pool tipi yap!
-        }
+        if (consumablesPanel == null) return;
+        foreach (Transform child in consumablesPanel.transform.GetChild(0)) Destroy(child.gameObject);//pool tipi yap!
+        
         // 2. Buton Oluþturma
-        foreach (Consumable food in InventoryManager.GetOwnedConsumable())
+        foreach (Consumable consumable in InventoryManager.GetOwnedConsumable())
         {
-            Button button = MakeButton(food, foodsPanel.transform, profile);
+            Debug.Log("buton eklendi");
+            Button button = MakeButton(consumable, consumablesPanel.transform, profile);
 
-            button.GetComponent<Button>().onClick.AddListener(() => profile.ChooseSkill(food));
+            button.GetComponent<Button>().onClick.AddListener(() => InventoryManager.RemoveConsumable(consumable));
+            button.GetComponent<Button>().onClick.AddListener(() => profile.ChooseSkill(consumable));
         }
     }
     private void WriteItemButton(AllyProfile profile)
@@ -138,10 +138,8 @@ public class CharacterActionPanel : MonoBehaviour
         button.transform.SetParent(parent.GetChild(0), false);
         text.text = skill._name;
 
-        if (profile.IsEnoughForSkill(skill))
-        { button.interactable = true; }
-        else
-        { button.interactable = false; }
+        if (profile.IsEnoughForSkill(skill)) button.interactable = true;
+        else button.interactable = false;
 
         return button;
     }

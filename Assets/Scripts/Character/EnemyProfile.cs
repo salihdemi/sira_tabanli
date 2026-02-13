@@ -12,7 +12,7 @@ public class EnemyProfile : Profile
     }
     public override void ChooseSkill(Useable skill)
     {
-        currentSkill = skill;
+        currentUseable = skill;
         SetTarget(FightManager.defaultTargetForEnemies);//!default hedef!
 
     }

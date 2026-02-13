@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17bc0e10ad87e7844acbdf3d692570e6, type: 3}
   m_Name: Hero
   m_EditorClassIdentifier: Assembly-CSharp::CharacterBase
+  weaponType: 0
   maxHealth: 45
   maxStamina: 50
   maxMana: 0
@@ -20,5 +21,5 @@ MonoBehaviour:
   focus: 2
   speed: 2
   sprite: {fileID: -3525000520256823786, guid: d7e4831bdcf4d4f40952807356296866, type: 3}
-  attack: {fileID: 11400000, guid: 9d1e90c9bfde37e4b97d4456b48556bb, type: 2}
+  attack: {fileID: 11400000, guid: 8c821746c27c4c14c9a94217078284be, type: 2}
   skills: []

@@ -2937,9 +2937,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 890cf7c8b4730bd4088a254e934d0917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColliderThing
-  type: 0
+  type: 1
   characterToUnlock: {fileID: 0}
-  foodToGive: {fileID: 0}
+  foodToGive: {fileID: 11400000, guid: 98aee708c73d6ff4781b303bef0abb61, type: 2}
   equipable: {fileID: 0}
 --- !u!61 &1397067126
 BoxCollider2D:
