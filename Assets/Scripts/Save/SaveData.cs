@@ -50,7 +50,7 @@ public class AllySaveData
     public bool isInParty;
 
 
-    public int sprite;
+    public string sprite;
     public string attackSkill;
     public List<string> unlockedSkills = new List<string>();
     public List<string> currentSkills = new List<string>();
