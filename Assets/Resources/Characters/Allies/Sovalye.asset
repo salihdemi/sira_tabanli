@@ -20,6 +20,6 @@ MonoBehaviour:
   technical: 1
   focus: 1
   speed: 1
-  sprite: {fileID: 4495478712733764576, guid: 838545d8300eb52449d69b1a1ac126d3, type: 3}
+  sprite: {fileID: 21300000, guid: 838545d8300eb52449d69b1a1ac126d3, type: 3}
   attack: {fileID: 11400000, guid: 8c821746c27c4c14c9a94217078284be, type: 2}
   skills: []
