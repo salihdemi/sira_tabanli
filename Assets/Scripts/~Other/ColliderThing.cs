@@ -18,7 +18,11 @@ public class ColliderThing : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(type == Type.characterUnlocker)
+        Give();
+    }
+    public void Give()
+    {
+        if (type == Type.characterUnlocker)
         {
             if (characterToUnlock == null) return;
             PartyManager.UnlockAlly(characterToUnlock);

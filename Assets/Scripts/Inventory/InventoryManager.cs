@@ -87,6 +87,27 @@ public static class InventoryManager
     }
 
 
+    public static void Equip(PersistanceStats character, Equipable equipable)
+    {
+        if (equipable is Weapon weapon)
+        {
+            if(character.weapon) equippedWeapons.Remove(character.weapon);
+            character.weapon = weapon;
+            equippedWeapons.Add(weapon);
+        }
+        else if (equipable is Item item)
+        {
+            if (character.item) equippedItems.Remove(character.item);
+            character.item = item;
+            equippedItems.Add(item);
+        }
+        else if (equipable is Talisman talisman)
+        {
+            if (character.talimsan) equippedTalismans.Remove(character.talimsan);
+            character.talimsan = talisman;
+            equippedTalismans.Add(talisman);
+        }
+    }
 
 
     private static InventoryVisualizer visualizer;

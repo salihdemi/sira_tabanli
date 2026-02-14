@@ -79,10 +79,10 @@ public class PersistanceStats
 
     public void LearnSkill(Skill skill)
     {
-        Debug.Log(skill.ToString());
+        //Debug.Log(skill.ToString());
         if (skills.Contains(skill))
         {
-            Debug.Log("bu skill zaten öðrenilmiþ");
+            Debug.LogWarning("bu skill zaten öðrenilmiþ");
             return;
         }
         Debug.Log("Skill öðrenldi");

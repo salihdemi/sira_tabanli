@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4209214629270885707}
   - component: {fileID: 1341752681656955740}
   - component: {fileID: 1514722348846758869}
-  - component: {fileID: 6221792568751182477}
+  - component: {fileID: 7290034575330068572}
   m_Layer: 5
-  m_Name: CharmSelectCard
+  m_Name: EquipableSelectCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &6221792568751182477
+--- !u!114 &7290034575330068572
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,10 +131,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5445322452583006313}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6bb0ac49aaa45c499476022a2ecfab0, type: 3}
+  m_Script: {fileID: 11500000, guid: 5100dd6b2f170d24ca1667336c61272a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharmSelectCard
-  charm: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponSelectCard
   button: {fileID: 1514722348846758869}
   image: {fileID: 1341752681656955740}
 --- !u!1 &6372707410065195303

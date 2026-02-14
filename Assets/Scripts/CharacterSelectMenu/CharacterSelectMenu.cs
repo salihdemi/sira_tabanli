@@ -1,20 +1,16 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEditor.Progress;
 
 public class CharacterSelectMenu : MonoBehaviour
 {
     public GameObject characterCardPrefab;
-    public WeaponSelectCard weaponCardPrefab;
-    public ItemSelectCard ItemSelectCard;
-    public TalismanSelectCard charmSelectCard;
-    public Transform contentArea; // ScrollView Content
 
+    public Transform contentArea;
 
-    public GameObject weaponsTab;
-    public GameObject itemsTab;
-    public GameObject charmsTab;
-
+    public CharacterMenu characterMenu;
 
     //private List<CharacterSelectionCard> spawnedCards = new List<CharacterSelectionCard>();
 
@@ -35,112 +31,12 @@ public class CharacterSelectMenu : MonoBehaviour
             card.Setup(ally, this);
             //spawnedCards.Add(card);
         }
-
-        //foreach (Transform t in contentArea) t.GetComponent<CharacterSelectionCard>().UpdateUI();
     }
-
-    public void HandleSelection(CharacterSelectionCard card)
+    
+    
+    public void OpenCharacterMenu(PersistanceStats stats)
     {
-        Debug.Log("HandleSelection");
-        if (card.stats.isInParty && PartyManager.partyStats.Count > 1)
-        {
-            PartyManager.TryToRemoveFromParty(card.stats);
-        }
-        else if(!card.stats.isInParty && PartyManager.partyStats.Count < 4)
-        {
-            PartyManager.TryAddToParty(card.stats);
-        }
-
-        // Tüm kartlarý güncelle (Bir karakter eklenince hepsi kontrol etsin)
-        foreach (Transform t in contentArea) t.GetComponent<CharacterSelectionCard>().UpdateUI();//?
-    }
-
-    public void OpenOrCloseWeaponsTab(PersistanceStats stats, WeaponType weaponType)
-    {
-        if (weaponsTab.activeSelf)
-        {
-            weaponsTab.SetActive(false);
-            return;
-        }
-
-        foreach (Transform child in weaponsTab.transform) Destroy(child.gameObject);
-
-        weaponsTab.SetActive(true);
-        //uygun olanlarý ac
-        foreach (Weapon weapon in InventoryManager.ownedWeapons)
-        {
-            //tipi uygun mu, kullanýlýyor mu
-            if(weapon.type == weaponType && !InventoryManager.IsWeaponEquipped(weapon))
-            {
-                WeaponSelectCard card = Instantiate(weaponCardPrefab, weaponsTab.transform);
-
-                card.image.sprite = weapon.sprite;
-
-                card.weapon = weapon;
-                card.button.onClick.RemoveAllListeners();
-                card.button.onClick.AddListener(() => card.OnCardClicked(stats));
-                card.button.onClick.AddListener(() => weaponsTab.SetActive(false));
-            }
-        }
-    }
-    public void OpenOrCloseItemsTab(PersistanceStats stats)
-    {
-        if (itemsTab.activeSelf)
-        {
-            itemsTab.SetActive(false);
-            return;
-        }
-
-
-        foreach (Transform child in itemsTab.transform) Destroy(child.gameObject);
-
-        itemsTab.SetActive(true);
-
-
-        foreach (Item item in InventoryManager.ownedItems)
-        {
-            //tipi uygun mu, kullanýlýyor mu
-            if (!InventoryManager.IsItemEquipped(item))
-            {
-                ItemSelectCard card = Instantiate(ItemSelectCard, itemsTab.transform);
-
-                card.image.sprite = item.sprite;
-
-                card.item = item;
-                card.button.onClick.RemoveAllListeners();
-                card.button.onClick.AddListener(() => card.OnCardClicked(stats));
-                card.button.onClick.AddListener(() => itemsTab.SetActive(false));
-            }
-        }
-    }
-    public void OpenOrCloseCharmsTab(PersistanceStats stats)
-    {
-        if (charmsTab.activeSelf)
-        {
-            charmsTab.SetActive(false);
-            return;
-        }
-
-
-        foreach (Transform child in charmsTab.transform) Destroy(child.gameObject);
-
-        charmsTab.SetActive(true);
-
-
-        foreach (Talisman talisman in InventoryManager.ownedTalismas)
-        {
-            //tipi uygun mu, kullanýlýyor mu
-            if (!InventoryManager.IsTalismanEquipped(talisman))
-            {
-                TalismanSelectCard card = Instantiate(charmSelectCard, charmsTab.transform);
-
-                card.image.sprite = talisman.sprite;
-
-                card.talisman = talisman;
-                card.button.onClick.RemoveAllListeners();
-                card.button.onClick.AddListener(() => card.OnCardClicked(stats));
-                card.button.onClick.AddListener(() => charmsTab.SetActive(false));
-            }
-        }
+        characterMenu.gameObject.SetActive(true);
+        characterMenu.OpenCharacterMenu(stats);
     }
 }
