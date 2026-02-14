@@ -32,6 +32,18 @@ public abstract class Profile : MonoBehaviour
     public bool isDied;
     protected string lastTargetName;
 
+
+
+
+    public bool mute;
+
+
+
+
+
+
+
+
     //battlespawnerda kullanýlabilir
 
     public void Setup(PersistanceStats persistanceStats)
@@ -90,6 +102,11 @@ public abstract class Profile : MonoBehaviour
         else if (currentTarget && currentTarget.isDied)
         {
             text = name + " " + lastTargetName + "'a vurmadý çünkü " + lastTargetName + " öldü";
+        }
+        else if (mute)
+        {
+            mute = false;
+            text = name + " susturuldu";
         }
         else
         {
