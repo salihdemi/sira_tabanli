@@ -84,9 +84,9 @@ public class CharacterActionPanel : MonoBehaviour
             Destroy(child.gameObject);//pool tipi yap!
         }
         // 2. Buton Oluþturma
-        for (int i = 0; i < profile.stats.skills.Count; i++)
+        for (int i = 0; i < profile.stats.currentSkills.Count; i++)
         {
-            Useable skill = profile.stats.skills[i];
+            Useable skill = profile.stats.currentSkills[i];
 
             Button button = MakeButton(skill, skillsPanel.transform, profile);
 

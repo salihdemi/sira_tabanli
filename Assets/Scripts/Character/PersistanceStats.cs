@@ -36,7 +36,8 @@ public class PersistanceStats
 
     [Header("Skills")]
     public Attack attack;
-    public List<Skill> skills = new List<Skill>();
+    public List<Skill> currentSkills = new List<Skill>();
+    public List<Skill> unlockedSkills = new List<Skill>();
 
     [Header("Other")]
     public bool isDied;
@@ -65,7 +66,9 @@ public class PersistanceStats
 
         sprite = data.sprite;
         attack = data.attack;
-        skills = new List<Skill>(data.skills);
+
+        unlockedSkills = new List<Skill>(data.skills);
+        foreach (Skill skill in unlockedSkills) TryEquipSkill(skill);
     }
 
     public void Regen()
@@ -77,16 +80,39 @@ public class PersistanceStats
     }
 
 
-    public void LearnSkill(Skill skill)
+    public void UnlockSkill(Skill skill)
     {
         //Debug.Log(skill.ToString());
-        if (skills.Contains(skill))
+        if (unlockedSkills.Contains(skill))
         {
             Debug.LogWarning("bu skill zaten öðrenilmiþ");
             return;
         }
         Debug.Log("Skill öðrenldi");
-        skills.Add(skill);
+        unlockedSkills.Add(skill);
+        TryEquipSkill(skill);
     }
 
+    public void TryEquipSkill(Skill skill)
+    {
+        if (currentSkills.Count < 4)
+        {
+            //characterStats.isInParty = true;
+            currentSkills.Add(skill);
+        }
+        else
+        {
+            Debug.Log("skiller dolu");
+        }
+    }
+
+    public void TryUnequipSkill(Skill skill)
+    {
+        if (currentSkills.Count > 1 && currentSkills.Contains(skill))
+        {
+            //characterToRemove.isInParty = false;
+            currentSkills.Remove(skill);
+        }
+
+    }
 }

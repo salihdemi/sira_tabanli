@@ -1,7 +1,8 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class CharacterMenu : MonoBehaviour
 {
@@ -9,7 +10,6 @@ public class CharacterMenu : MonoBehaviour
 
     public Image characterPortrait;
     public TextMeshProUGUI healthText, manaText, staminaText, strengthText, technicalText, focusText, speedText;
-    //public Toggle skillsToggle, weaponsToggle, itemsToggle, talismansToggle;
     public GameObject skillMenu, weaponMenu, itemMenu, talismanMenu;
 
 
@@ -22,7 +22,12 @@ public class CharacterMenu : MonoBehaviour
 
 
         characterPortrait.sprite = currentCharacter.sprite;
+        WriteStats();
 
+    }
+
+    private void WriteStats()
+    {
         healthText.text = currentCharacter.currentHealth + "/" + currentCharacter.maxHealth;
         manaText.text = currentCharacter.currentMana + "/" + currentCharacter.maxMana;
         staminaText.text = currentCharacter.currentStamina + "/" + currentCharacter.maxStamina;
@@ -31,10 +36,7 @@ public class CharacterMenu : MonoBehaviour
         technicalText.text = currentCharacter.technical.ToString();
         focusText.text = currentCharacter.focus.ToString();
         speedText.text = currentCharacter.speed.ToString();
-
-
     }
-
 
 
 
@@ -107,11 +109,39 @@ public class CharacterMenu : MonoBehaviour
 
 
 
-
     public void OpenSkillsTab(PersistanceStats stats)
     {
+        foreach (Transform child in skillMenu.transform.GetChild(0)) Destroy(child.gameObject);
 
+
+        foreach (Skill skill in stats.unlockedSkills)
+        {
+
+            EquipableSelectionCard card = Instantiate(equipableCardPrefab, skillMenu.transform.GetChild(0));
+
+
+            ChangeSkillButtonEvent(card.button, skill, stats);
+        }
     }
+    private void ChangeSkillButtonEvent(Button button, Skill skill, PersistanceStats stats)
+    {
+        bool isEquipped = stats.currentSkills.Contains(skill);
+
+        if (isEquipped)
+        {
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => stats.TryUnequipSkill(skill));
+            button.onClick.AddListener(() => ChangeSkillButtonEvent(button, skill, stats));
+        }
+        else
+        {
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => stats.TryEquipSkill(skill));
+            button.onClick.AddListener(() => ChangeSkillButtonEvent(button, skill, stats));
+        }
+    }
+
+    //DRY
     public void OpenWeaponsTab(PersistanceStats stats)
     {
         Debug.Log("OnItemToggleValueChanged");
@@ -129,7 +159,7 @@ public class CharacterMenu : MonoBehaviour
                 card.image.sprite = weapon.sprite;
 
 
-                if (InventoryManager.IsWeaponEquipped(weapon))
+                if (InventoryManager.IsEquipped(weapon))
                 {
                     card.button.interactable = false;
                 }
@@ -153,7 +183,7 @@ public class CharacterMenu : MonoBehaviour
             EquipableSelectionCard card = Instantiate(equipableCardPrefab, itemMenu.transform.GetChild(0));
 
             card.image.sprite = item.sprite;
-            if (InventoryManager.IsItemEquipped(item))
+            if (InventoryManager.IsEquipped(item))
             {
                 card.button.interactable = false;
             }
@@ -178,7 +208,7 @@ public class CharacterMenu : MonoBehaviour
 
             card.image.sprite = talisman.sprite;
 
-            if (InventoryManager.IsTalismanEquipped(talisman))
+            if (InventoryManager.IsEquipped(talisman))
             {
                 card.button.interactable = false;
             }
@@ -186,6 +216,7 @@ public class CharacterMenu : MonoBehaviour
             {
                 card.button.onClick.RemoveAllListeners();
                 card.button.onClick.AddListener(() => InventoryManager.Equip(stats, talisman));
+                card.button.onClick.AddListener(WriteStats);
                 card.button.onClick.AddListener(() => talismanMenu.SetActive(false));
             }
 
@@ -198,9 +229,4 @@ public class CharacterMenu : MonoBehaviour
 
 
 
-
-    public void MakeTalismanCard()
-    {
-
-    }
 }

@@ -23,7 +23,7 @@ public static class InventoryManager
     public static List<Talisman> ownedTalismas = new List<Talisman>();
     public static HashSet<Talisman> equippedTalismans = new HashSet<Talisman>();
 
-
+    #region consumable
     public static void AddConsumable(Consumable consumable, int amount = 1)
     {
 
@@ -70,18 +70,38 @@ public static class InventoryManager
         return consumables[consumable];
     }
 
+    #endregion
 
 
-
-    public static bool IsWeaponEquipped(Weapon weapon)
+    public static bool IsEquipped(Equipable equipable)
+    {
+        if (equipable is Weapon weapon)
+        {
+            return IsWeaponEquipped(weapon);
+        }
+        else if (equipable is Item item)
+        {
+            return IsItemEquipped(item);
+        }
+        else if (equipable is Talisman talisman)
+        {
+            return IsTalismanEquipped(talisman);
+        }
+        else
+        {
+            Debug.LogWarning("Tanýnmayan equipable inheriti");
+            return false;
+        }
+    }
+    private static bool IsWeaponEquipped(Weapon weapon)
     {
         return equippedWeapons.Contains(weapon);
     }
-    public static bool IsItemEquipped(Item item)
+    private static bool IsItemEquipped(Item item)
     {
         return equippedItems.Contains(item);
     }
-    public static bool IsTalismanEquipped(Talisman talisman)
+    private static bool IsTalismanEquipped(Talisman talisman)
     {
         return equippedTalismans.Contains(talisman);
     }
@@ -103,9 +123,15 @@ public static class InventoryManager
         }
         else if (equipable is Talisman talisman)
         {
-            if (character.talimsan) equippedTalismans.Remove(character.talimsan);
+            if (character.talimsan)
+            {
+                character.talimsan.OnTalismanUnequipped(character);
+                equippedTalismans.Remove(character.talimsan);
+            }
+
             character.talimsan = talisman;
             equippedTalismans.Add(talisman);
+            talisman.OnTalismanEquipped(character);
         }
     }
 

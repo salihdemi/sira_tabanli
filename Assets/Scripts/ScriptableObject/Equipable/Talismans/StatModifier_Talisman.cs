@@ -14,8 +14,11 @@ public class StatModifier_Talisman : Talisman
     public override void OnTalismanEquipped(PersistanceStats owner)
     {
         owner.maxHealth += healthBonus;
+        owner.currentHealth += healthBonus;
         owner.maxMana += manaBonus;
+        owner.currentMana += manaBonus;
         owner.maxStamina += staminaBonus;
+        owner.currentStamina += staminaBonus;
         owner.strength += strengthBonus;
         owner.technical += technicalBonus;
         owner.focus += focusBonus;
@@ -24,8 +27,11 @@ public class StatModifier_Talisman : Talisman
     public override void OnTalismanUnequipped(PersistanceStats owner)
     {
         owner.maxHealth -= healthBonus;
+        owner.currentHealth -= healthBonus;
         owner.maxMana -= manaBonus;
+        owner.currentMana -= manaBonus;
         owner.maxStamina -= staminaBonus;
+        owner.currentStamina -= staminaBonus;
         owner.strength -= strengthBonus;
         owner.technical -= technicalBonus;
         owner.focus -= focusBonus;

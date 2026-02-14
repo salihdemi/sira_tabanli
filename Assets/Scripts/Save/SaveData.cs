@@ -52,7 +52,8 @@ public class AllySaveData
 
     public int sprite;
     public string attackSkill;
-    public List<string> skills = new List<string>();
+    public List<string> unlockedSkills = new List<string>();
+    public List<string> currentSkills = new List<string>();
 
 }
 [System.Serializable]

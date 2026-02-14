@@ -348,14 +348,19 @@ public static class SaveManager
         allySaveData.sprite = SpriteToInt(ally.sprite);
         allySaveData.attackSkill = ally.attack.name;
 
-        allySaveData.skills.Clear();
-        for (int i = 0; i < ally.skills.Count; i++)
+        allySaveData.unlockedSkills.Clear();
+        for (int i = 0; i < ally.unlockedSkills.Count; i++)
         {
-            allySaveData.skills.Add(ally.skills[i].name);
+            allySaveData.unlockedSkills.Add(ally.unlockedSkills[i].name);
+        }
+
+        allySaveData.currentSkills.Clear();
+        for (int i = 0; i < ally.currentSkills.Count; i++)
+        {
+            allySaveData.currentSkills.Add(ally.currentSkills[i].name);
         }
 
 
-        //skilller listesi
         return allySaveData;
     }
     private static PersistanceStats AllyDataToPersistanceStats(AllySaveData allySaveData)
@@ -394,10 +399,13 @@ public static class SaveManager
         //skiller
         persistanceStats.attack = FindSOByName<Attack>(allySaveData.attackSkill);//attack
 
-        persistanceStats.skills.Clear();
-        for (int i = 0; i < allySaveData.skills.Count; i++)          //Skiller listesi
-            persistanceStats.skills.Add(FindSOByName<Skill>(allySaveData.skills[i]));
+        persistanceStats.unlockedSkills.Clear();
+        for (int i = 0; i < allySaveData.unlockedSkills.Count; i++)          //Skiller listesi
+            persistanceStats.unlockedSkills.Add(FindSOByName<Skill>(allySaveData.unlockedSkills[i]));
 
+        persistanceStats.currentSkills.Clear();
+        for (int i = 0; i < allySaveData.currentSkills.Count; i++)          //Skiller listesi
+            persistanceStats.currentSkills.Add(FindSOByName<Skill>(allySaveData.currentSkills[i]));
 
 
 
