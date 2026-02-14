@@ -2,9 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Profiling;
 
 public static class TurnScheduler
 {
@@ -16,7 +14,8 @@ public static class TurnScheduler
     public static List<EnemyProfile> ActiveEnemyProfiles = new List<EnemyProfile>();
 
     public static event Action onStartPlay;
-    public static event Action onStartTour;
+    public static event Action onTourStart;
+    public static event Action onTourEnd;
 
     private static Coroutine playCoroutine;
 
@@ -64,7 +63,7 @@ public static class TurnScheduler
     public static void StartTour()
     {
         //Debug.Log("starttour");
-        onStartTour.Invoke();
+        onTourStart.Invoke();
         SortProfilesWithSpeed();
         CheckNextCharacter();
     }
@@ -91,8 +90,8 @@ public static class TurnScheduler
     {
         //Debug.Log("finishtour");
 
+        onTourEnd.Invoke();
 
-        //Debug.Log("fintour");
         StartTour();
     }
 

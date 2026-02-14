@@ -23,9 +23,9 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 350468460324d7f4ea9703444d789cf2, type: 3}
   attack: {fileID: 11400000, guid: 8c821746c27c4c14c9a94217078284be, type: 2}
   skills:
-  - {fileID: 11400000, guid: bf0fabd5ef094fa49b9a76c9bb19787c, type: 2}
-  - {fileID: 11400000, guid: 4e2e20dbe6d7bb44cabbb4441bd14e5a, type: 2}
+  - {fileID: 11400000, guid: e6fe562b1b469c7419a8653b9a4d053b, type: 2}
   - {fileID: 11400000, guid: 9a107b48194f39b439ca309895a0c933, type: 2}
+  - {fileID: 11400000, guid: 25c5ec5149075e74b8560a801d8da983, type: 2}
   - {fileID: 11400000, guid: 5762fa63f146f784a8ca1fd6bb9e0fc9, type: 2}
   - {fileID: 11400000, guid: 118c6c29a419a154b9f5a03c874776d9, type: 2}
   - {fileID: 11400000, guid: bf078c690da052c438ff07e7240339bb, type: 2}

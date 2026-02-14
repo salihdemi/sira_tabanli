@@ -1,7 +1,8 @@
+using NUnit.Framework;
 using System;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.Profiling;
 using UnityEngine.UI;
 
 public abstract class Profile : MonoBehaviour
@@ -34,8 +35,10 @@ public abstract class Profile : MonoBehaviour
 
 
 
-
-    public bool mute;
+    //private
+    public int hitCountForTour;
+    public int mute;
+    public int fire;
 
 
 
@@ -59,6 +62,10 @@ public abstract class Profile : MonoBehaviour
         ResetStatus(persistanceStats);
         ResetStats();
 
+
+        TurnScheduler.onTourEnd += DamageIfBurning;
+        TurnScheduler.onTourEnd += DecreaseStatus;
+        TurnScheduler.onTourEnd += ResetHitCount;
         //Talisman
 
     }
@@ -103,9 +110,8 @@ public abstract class Profile : MonoBehaviour
         {
             text = name + " " + lastTargetName + "'a vurmadý çünkü " + lastTargetName + " öldü";
         }
-        else if (mute)
+        else if (mute > 0)
         {
-            mute = false;
             text = name + " susturuldu";
         }
         else
@@ -119,8 +125,9 @@ public abstract class Profile : MonoBehaviour
 
     private void Play()
     {
-        AddToMana(-currentUseable.manaCost); Debug.Log($"Kullanýlan Skill: {currentUseable._name} | Mana Cost: {currentUseable.manaCost}");
+        Debug.Log($"Kullanýlan Skill: {currentUseable._name} | Mana Cost: {currentUseable.manaCost}");
         AddToHealth(-currentUseable.healthCost, this);
+        AddToMana(-currentUseable.manaCost);
         AddToStamina(-currentUseable.staminaCost);
         currentUseable.Method(this, currentTarget);
     }
@@ -175,7 +182,8 @@ public abstract class Profile : MonoBehaviour
         onHealthChange?.Invoke();
         if (amount < 0)
         {
-            if (stats.talimsan)
+            hitCountForTour++;
+            if (stats.talimsan && owner)
             {
                 stats?.talimsan.OnTakeDamage(owner, -amount);
             }
@@ -206,6 +214,10 @@ public abstract class Profile : MonoBehaviour
             Debug.LogWarning(stats._name + " mana 0'ýn altýna düþtü");
         }
         onManaChange?.Invoke();
+        if (amount < 0)
+        {
+            OnConsumeMana(-amount);
+        }
     }
 
 
@@ -265,5 +277,39 @@ public abstract class Profile : MonoBehaviour
         bool staminaEnough = stats.currentStamina >= skill.staminaCost;
         bool manaEnough = stats.currentMana >= skill.manaCost;
         return healthEnough && staminaEnough && manaEnough;
+    }
+
+
+    private void ResetHitCount()
+    {
+        hitCountForTour = 0;
+    }
+    private void DamageIfBurning()
+    {
+        if (fire > 0) AddToHealth(-5, null);
+    }
+    private void DecreaseStatus()
+    {
+        if (mute > 0) mute--;
+        if (fire > 0) fire--;
+    }
+
+    private void OnConsumeMana(float amount)
+    {
+        List<Profile> etherics = new List<Profile>();//Eterik tür
+        int ethericCount = 0;
+
+        foreach (Profile enemy in TurnScheduler.ActiveEnemyProfiles)
+        {
+            if (enemy != null)//eterikse!!!
+            {
+                etherics.Add(enemy);
+                ethericCount++;
+            }
+        }
+        foreach (Profile etheric in etherics)//profile yerine eterik!!!
+        {
+            etheric.AddToMana(amount / ethericCount);
+        }
     }
 }

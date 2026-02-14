@@ -6,6 +6,6 @@ public class Mute : Skill
     public override void Method(Profile user, Profile target)
     {
 
-        target.mute=true;
+        target.mute++;
     }
 }
