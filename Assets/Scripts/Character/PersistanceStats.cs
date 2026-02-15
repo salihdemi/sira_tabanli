@@ -102,7 +102,7 @@ public class PersistanceStats
         }
         else
         {
-            Debug.Log("skiller dolu");
+            Debug.LogWarning("skiller dolu");
         }
     }
 

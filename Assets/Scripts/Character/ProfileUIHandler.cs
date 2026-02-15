@@ -49,6 +49,7 @@ public class ProfileUIManager : MonoBehaviour
             manaText.gameObject.SetActive(false);
             return;
         }
+        Debug.Log(stats.currentMana + " " + stats._name);
         manaText.text = stats.currentMana + "/" + stats.maxMana;
     }
 

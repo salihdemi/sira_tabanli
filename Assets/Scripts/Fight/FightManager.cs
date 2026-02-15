@@ -11,6 +11,9 @@ using UnityEngine.SceneManagement;
 public static class FightManager
 {
     //düþman kendi hedefini seçebilince silinecek
+    public static AllyProfile tauntedAlly;
+    public static EnemyProfile tauntedEnemy;
+
     public static Profile defaultTargetForEnemies;//!
 
     public static void SetDefaultTarget()//gecici

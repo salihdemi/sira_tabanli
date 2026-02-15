@@ -21,9 +21,14 @@ public class AllyProfile : Profile
         currentUseable = useable;
         CharacterActionPanel.instance.CloseAndDisableAllPanels();
 
-        bool needTarget = useable.targetType == TargetType.ally
+        bool needTargetýng = useable.targetType == TargetType.ally
                        || useable.targetType == TargetType.enemy;
-        if (needTarget)
+        if (useable.targetType == TargetType.enemy)
+        {
+            if (FightManager.tauntedEnemy) SetTarget(FightManager.tauntedEnemy);
+            else TargetingSystem.StartTargeting(this, useable);
+        }
+        else if (useable.targetType == TargetType.ally)
         {
             TargetingSystem.StartTargeting(this, useable);
         }
@@ -44,7 +49,7 @@ public class AllyProfile : Profile
         }
         else if (useable.targetType == TargetType.self)
         {
-            SetTarget(null);
+            SetTarget(this);
             lastTargetName = name;
         }
 

@@ -13,7 +13,14 @@ public class EnemyProfile : Profile
     public override void ChooseSkill(Useable skill)
     {
         currentUseable = skill;
-        SetTarget(FightManager.defaultTargetForEnemies);//!default hedef!
+        if (FightManager.tauntedAlly)
+        {
+            SetTarget(FightManager.tauntedAlly);
+        }
+        else
+        {
+            SetTarget(FightManager.defaultTargetForEnemies);//!default hedef!
+        }
 
     }
     //public override void SetTarget(Profile profile)

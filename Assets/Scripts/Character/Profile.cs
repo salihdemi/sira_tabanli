@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public abstract class Profile : MonoBehaviour
 {
@@ -39,6 +40,7 @@ public abstract class Profile : MonoBehaviour
     public int hitCountForTour;
     public int mute;
     public int fire;
+    public bool taunt;
 
 
 
@@ -243,6 +245,26 @@ public abstract class Profile : MonoBehaviour
     }
 
 
+    public void Taunt()
+    {
+        if (this is AllyProfile ally)
+        {
+            FightManager.tauntedAlly = ally;
+        }
+        else if (this is EnemyProfile enemy)
+        {
+            FightManager.tauntedEnemy = enemy;
+        }
+        taunt = true;
+    }
+    public void FinishTaunt()
+    {
+        if (this is AllyProfile) FightManager.tauntedAlly = null;
+        else if (this is EnemyProfile) FightManager.tauntedEnemy = null;
+        taunt = false;
+    }
+
+
     public void ResetStats()
     {
         isDied = false;
@@ -292,6 +314,10 @@ public abstract class Profile : MonoBehaviour
     {
         if (mute > 0) mute--;
         if (fire > 0) fire--;
+
+
+
+        FinishTaunt();
     }
 
     private void OnConsumeMana(float amount)
@@ -312,4 +338,7 @@ public abstract class Profile : MonoBehaviour
             etheric.AddToMana(amount / ethericCount);
         }
     }
+
+
+
 }
