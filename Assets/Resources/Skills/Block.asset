@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Block
   _name: Block
   targetType: 2
+  healthCost: 0
+  staminaCost: 0
+  manaCost: 0
+  sprite: {fileID: 0}

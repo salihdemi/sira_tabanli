@@ -7,13 +7,13 @@ public class ConsolePanel : MonoBehaviour
     private void Awake()
     {
         TurnScheduler.onStartPlay += Enable;
-        TurnScheduler.onTourStart += Disable;
+        TurnScheduler.onTourLungesStart += Disable;
         Profile.OnSomeonePlay += WriteConsole;
     }
     private void OnDestroy()
     {
         TurnScheduler.onStartPlay -= Enable;
-        TurnScheduler.onTourStart -= Disable;
+        TurnScheduler.onTourLungesStart -= Disable;
         Profile.OnSomeonePlay -= WriteConsole;
     }
     public void Enable()

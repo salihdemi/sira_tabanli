@@ -18,3 +18,4 @@ MonoBehaviour:
   staminaCost: 0
   manaCost: 0
   sprite: {fileID: 7322885499304307244, guid: 7ad4fbcae2a11b34d90ef5133094c445, type: 3}
+  hitCount: 5

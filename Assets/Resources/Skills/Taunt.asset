@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2509c538d5122524f8ee91e8cdc766a5, type: 3}
   m_Name: Taunt
   m_EditorClassIdentifier: Assembly-CSharp::Taunt
-  _name: 
-  targetType: 0
+  _name: Taunt
+  targetType: 2
   healthCost: 0
   staminaCost: 0
   manaCost: 0

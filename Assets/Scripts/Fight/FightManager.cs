@@ -82,8 +82,8 @@ public static class FightManager
         //battleSpawner.ResetStats(AllyProfiles);
 
         SetDefaultTarget();//!
-
-        TurnScheduler.StartTour();
+        Debug.Log("startfight");
+        TurnScheduler.StartTourLunges();
     }
     
     public static void WinFight()

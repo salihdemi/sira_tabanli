@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 public static class TurnScheduler
 {
@@ -14,7 +15,7 @@ public static class TurnScheduler
     public static List<EnemyProfile> ActiveEnemyProfiles = new List<EnemyProfile>();
 
     public static event Action onStartPlay;
-    public static event Action onTourStart;
+    public static event Action onTourLungesStart;
     public static event Action onTourEnd;
 
     private static Coroutine playCoroutine;
@@ -34,21 +35,18 @@ public static class TurnScheduler
                            .Concat(EnemyProfiles.Cast<Profile>())
                            .ToList();
     }
-
     public static List<Profile> GetAliveProfiles()
     {
         SetAliveProfiles(ActiveAllyProfiles, ActiveEnemyProfiles);
         return aliveProfiles;
     }
-
     public static void SortProfilesWithSpeed()
     {
         order = 0;
         orderedProfiles = aliveProfiles.OrderByDescending(p => p.currentStrength).ToList();
 
     }
-
-    public static void RemoveFromQueue(Profile deadProfile)
+    private static void RemoveFromQueue(Profile deadProfile)
     {
         if (aliveProfiles.Contains(deadProfile))
         {
@@ -60,10 +58,10 @@ public static class TurnScheduler
 
 
 
-    public static void StartTour()
+    public static void StartTourLunges()
     {
-        //Debug.Log("starttour");
-        onTourStart.Invoke();
+        Debug.Log("starttourLunges");
+        onTourLungesStart.Invoke();
         SortProfilesWithSpeed();
         CheckNextCharacter();
     }
@@ -74,67 +72,69 @@ public static class TurnScheduler
             //Debug.Log("tüm hamleler yapýldý");
 
             //oynat
-            PlayF(orderedProfiles);
+            Play(orderedProfiles);
         }
         else
         {
             LetNextPlayertoPlay();
         }
     }
-    public static void LetNextPlayertoPlay()
+    private static void LetNextPlayertoPlay()
     {
         order++;
         aliveProfiles[order - 1].LungeStart();
     }
-    public static void FinishTour()
+    private static void FinishTour()
     {
-        //Debug.Log("finishtour");
+        Debug.Log("finishtour");
 
         onTourEnd.Invoke();
 
-        StartTour();
+        StartTourLunges();
     }
 
 
 
 
 
-    public static void PlayF(List<Profile> orderedProfiles)
+    private static void Play(List<Profile> profiles)
     {
-        //Debug.Log("Oynat");
+        Debug.Log("Oynat");
         onStartPlay.Invoke();
 
+        MakeRunner();
 
-        if (runner == null)
-        {
-            // Yeni bir GameObject oluþtur ve scripti ona ekle
-            GameObject go = new GameObject("TurnCoroutineRunner");
-            runner = go.AddComponent<CorRunner>();
-            // Dövüþ bitince silinmemesi gerekiyorsa: Object.DontDestroyOnLoad(go);
-        }
-        playCoroutine = runner.StartCor(Play(orderedProfiles));
-        
+        playCoroutine = runner.StartCor(PlaySomeone(profiles, 0));
+
     }
-
-    public static IEnumerator Play(List<Profile> profiles)
+    private static IEnumerator PlaySomeone(List<Profile> profiles, int i)
     {
-        yield return null;
-        for (int i = 0; i < profiles.Count; i++)
+        Profile profile = profiles[i];
+
+        profile.PlayIfAlive();
+
+        yield return new WaitForSeconds(profile.currentUseable.GetTime());
+
+        profile.ClearSkillAndTarget();
+
+        if(i + 1 < profiles.Count) playCoroutine = runner.StartCor(PlaySomeone(profiles, i + 1));
+        else
         {
-            Profile profile = profiles[i];
+            playCoroutine = null;
 
-            if (playCoroutine != null)
-            {
-                profile.PlayIfAlive();
-            }
-            profile.ClearSkillAndTarget();
-            yield return new WaitForSeconds(1f);
-
+            FinishTour();
         }
-
-        FinishTour();
-        playCoroutine = null;
     }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -167,6 +167,25 @@ public static class TurnScheduler
             }
 
             FightManager.WinFight();
+        }
+    }
+
+
+
+
+
+
+
+
+
+    private static void MakeRunner()
+    {
+        if (runner == null)
+        {
+            // Yeni bir GameObject oluþtur ve scripti ona ekle
+            GameObject go = new GameObject("TurnCoroutineRunner");
+            runner = go.AddComponent<CorRunner>();
+            // Dövüþ bitince silinmemesi gerekiyorsa: Object.DontDestroyOnLoad(go);
         }
     }
 }
