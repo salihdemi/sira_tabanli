@@ -40,7 +40,7 @@ public abstract class Profile : MonoBehaviour
     public int hitCountForTour;
     public int mute;
     public int fire;
-    public bool taunt;
+    public int taunt;
 
 
 
@@ -127,7 +127,6 @@ public abstract class Profile : MonoBehaviour
 
     private void Play()
     {
-        Debug.Log($"Kullanýlan Skill: {currentUseable._name} | Mana Cost: {currentUseable.manaCost}");
         AddToHealth(-currentUseable.healthCost, this);
         AddToMana(-currentUseable.manaCost);
         AddToStamina(-currentUseable.staminaCost);
@@ -249,19 +248,23 @@ public abstract class Profile : MonoBehaviour
     {
         if (this is AllyProfile ally)
         {
+            Debug.Log(ally + "tauntlandý");
             FightManager.tauntedAlly = ally;
         }
         else if (this is EnemyProfile enemy)
         {
             FightManager.tauntedEnemy = enemy;
         }
-        taunt = true;
+        taunt = 2;
     }
-    public void FinishTaunt()
+    public void DecreaseTaunt()
     {
-        if (this is AllyProfile) FightManager.tauntedAlly = null;
-        else if (this is EnemyProfile) FightManager.tauntedEnemy = null;
-        taunt = false;
+        taunt --;
+        if( taunt == 0 )
+        {
+            if (this is AllyProfile) FightManager.tauntedAlly = null;
+            else if (this is EnemyProfile) FightManager.tauntedEnemy = null;
+        }
     }
 
 
@@ -317,8 +320,11 @@ public abstract class Profile : MonoBehaviour
 
 
 
-        FinishTaunt();
+        DecreaseTaunt();
     }
+
+
+
 
     private void OnConsumeMana(float amount)
     {
