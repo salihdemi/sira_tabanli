@@ -69,6 +69,8 @@ public class PersistanceStats
 
         unlockedSkills = new List<Skill>(data.skills);
         foreach (Skill skill in unlockedSkills) TryEquipSkill(skill);
+
+        talimsan = data.talisman;
     }
 
     public void Regen()

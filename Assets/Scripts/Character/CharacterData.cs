@@ -28,6 +28,9 @@ public class CharacterData : ScriptableObject
     public List<Skill> skills = new List<Skill>();
 
 
+    [Header("DefaultTalisman")]
+    public Talisman talisman;
+
 
 
 

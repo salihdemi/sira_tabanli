@@ -11,7 +11,7 @@ public class HitAllCharacters : Skill
 
         //saldýrýyý yap
 
-        foreach (AllyProfile profile in TurnScheduler.GetAliveProfiles())
+        foreach (Profile profile in TurnScheduler.GetAliveProfiles())
         {
             profile.AddToHealth(-5, user);
         }

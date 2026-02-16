@@ -14,4 +14,6 @@ public class Talisman : Equipable
     public virtual void OnDealDamage(Profile owner, float damage) { }
     public virtual void OnTakeDamage(Profile owner, float damage) { }//Thorns
 
+    public virtual void OnDie(Profile owner, float damage) { }
+
 }
