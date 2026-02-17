@@ -93,7 +93,7 @@ public abstract class Profile : MonoBehaviour
     }
     public void FinishLunge()
     {
-        TurnScheduler.CheckNextCharacter();
+        TurnScheduler.CheckNextCharacterToLunge();
     }
 
 

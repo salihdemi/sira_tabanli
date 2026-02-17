@@ -63,15 +63,22 @@ public static class TurnScheduler
         Debug.Log("starttourLunges");
         onTourLungesStart.Invoke();
         SortProfilesWithSpeed();
-        CheckNextCharacter();
+
+
+
+        MakeRunner();
+        runner.StartCor(Play(orderedProfiles));
+        CheckNextCharacterToLunge();
     }
-    public static void CheckNextCharacter()
+    
+    public static void CheckNextCharacterToLunge()
     {
         if (order == aliveProfiles.Count)
         {
             //Debug.Log("tüm hamleler yapýldý");
 
             //oynat
+            MakeRunner();
             Play(orderedProfiles);
         }
         else
@@ -97,14 +104,19 @@ public static class TurnScheduler
 
 
 
-    private static void Play(List<Profile> profiles)
+    private static IEnumerator Play(List<Profile> profiles)
     {
         Debug.Log("Oynat");
         onStartPlay.Invoke();
 
-        MakeRunner();
 
-        //runner.StartCor(PlaySomeone(profiles, 0));
+        foreach (Profile profile in profiles)
+        {
+            yield return runner.StartCor(profile.Play());
+        }
+
+
+        
 
 
         ///listeyi al
@@ -190,6 +202,7 @@ public class CorRunner : MonoBehaviour
     {
         if (corMethod != null)
         {
+            Debug.Log(corMethod);
             return StartCoroutine(corMethod);
         }
 
