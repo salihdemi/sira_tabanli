@@ -5,9 +5,9 @@ public class Thorns_Talisman : Talisman
 {
     public float reflectDamage = 5f;
 
-    public override void OnTakeDamage(Profile owner, float damage)
+    public override void OnTakeDamage(Profile owner, Profile dealer, float damage)
     {
-        owner.AddToHealth(-reflectDamage, owner);
+        dealer.AddToHealth(-reflectDamage, owner);
         Debug.Log($"Düþmana {reflectDamage} hasar yansýtýldý!");
         // Buraya düþmana hasar veren kodunu ekleyebilirsin
     }

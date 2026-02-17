@@ -1,15 +1,13 @@
-using NUnit.Framework;
+
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
 
 public abstract class Profile : MonoBehaviour
 {
     public static event Action<Profile> OnSomeoneDie;
-    public static event Action<string> OnSomeonePlay;
 
 
 
@@ -32,7 +30,7 @@ public abstract class Profile : MonoBehaviour
 
 
     public bool isDied;
-    protected string lastTargetName;
+    public string lastTargetName;
 
 
 
@@ -100,37 +98,27 @@ public abstract class Profile : MonoBehaviour
 
 
 
-    public void PlayIfAlive()
-    {
-        string text;
-        if (isDied)
-        {
-            lastTargetName = 
-            text = name + " " + lastTargetName + "'a vurmadý çünkü " + name + " öldü";
-        }
-        else if (currentTarget && currentTarget.isDied)
-        {
-            text = name + " " + lastTargetName + "'a vurmadý çünkü " + lastTargetName + " öldü";
-        }
-        else if (mute > 0)
-        {
-            text = name + " susturuldu";
-        }
-        else
-        {
-            text = name + " " + lastTargetName + "'a " + currentUseable.name + " yaptý";
-            Play();
-        }
-        //Debug.Log(text);
-        OnSomeonePlay?.Invoke(text);//WriteConsole
-    }
 
-    private void Play()
+    public IEnumerator Play()
     {
-        AddToHealth(-currentUseable.healthCost, this);
-        AddToMana(-currentUseable.manaCost);
-        AddToStamina(-currentUseable.staminaCost);
+
+        float time = 1f;
+        if (currentUseable) time = currentUseable.GetTime();
+
+        yield return StartCoroutine(TurnScheduler.OnSomethingHappen(GetActionText(this), time));
+
         currentUseable.Method(this, currentTarget);
+
+        //playnext!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    }
+    private static string GetActionText(Profile profile)
+    {
+        if (profile.isDied) return $"{profile.name} öldüðü için hamle yapamadý.";
+        if (profile.mute > 0) return $"{profile.name} susturulduðu için büyü yapamadý.";
+        if (profile.currentTarget != null && profile.currentTarget.isDied) return $"{profile.name}, hedefi öldüðü için vuruþunu boþa salladý.";
+
+        return $"{profile.name}, {profile.lastTargetName} hedefine {profile.currentUseable.name} kullandý.";
     }
 
     public void ClearSkillAndTarget()
@@ -169,7 +157,7 @@ public abstract class Profile : MonoBehaviour
         }
         onHealthChange?.Invoke();
     }*/
-    public void AddToHealth(float amount, Profile owner)
+    public void AddToHealth(float amount, Profile dealer)
     {
         stats.currentHealth += amount;
         if (stats.currentHealth > stats.maxHealth)
@@ -178,15 +166,16 @@ public abstract class Profile : MonoBehaviour
         }
         if (stats.currentHealth <= 0)
         {
+            stats.talimsan.OnDie(this, dealer, -amount);
             Die();
         }
         onHealthChange?.Invoke();
         if (amount < 0)
         {
             hitCountForTour++;
-            if (stats.talimsan && owner)
+            if (stats.talimsan && dealer)
             {
-                stats?.talimsan.OnTakeDamage(owner, -amount);
+                stats?.talimsan.OnTakeDamage(this, dealer, -amount);
             }
         }
     }

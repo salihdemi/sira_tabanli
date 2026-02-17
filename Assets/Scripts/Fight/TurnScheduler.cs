@@ -104,30 +104,25 @@ public static class TurnScheduler
 
         MakeRunner();
 
-        playCoroutine = runner.StartCor(PlaySomeone(profiles, 0));
+        //runner.StartCor(PlaySomeone(profiles, 0));
+
+
+        ///listeyi al
+        ///listenin birincisinin hamlesini yaz
+        ///araya gir ve yaz
+        ///listenin ikincisini yaz
 
     }
-    private static IEnumerator PlaySomeone(List<Profile> profiles, int i)
+
+    public static IEnumerator OnSomethingHappen(string str, float time)
     {
-        Profile profile = profiles[i];
+        ConsolePanel.instance.WriteConsole(str);
 
-        profile.PlayIfAlive();
+        yield return new WaitForSeconds(time);
 
-        yield return new WaitForSeconds(profile.currentUseable.GetTime());
+        //sonraki
 
-        profile.ClearSkillAndTarget();
-
-        if(i + 1 < profiles.Count) playCoroutine = runner.StartCor(PlaySomeone(profiles, i + 1));
-        else
-        {
-            playCoroutine = null;
-
-            FinishTour();
-        }
     }
-
-
-
 
 
 

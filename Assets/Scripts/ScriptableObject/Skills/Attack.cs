@@ -12,6 +12,6 @@ public class Attack : Useable
         //saldýrýyý yap
 
         target.AddToHealth(-user.currentStrength, user);
-        Debug.Log(user.name + " " + target.name + "'a " + name + " ile " + user.currentStrength + " hasar verdi");
+        //Debug.Log(user.name + " " + target.name + "'a " + name + " ile " + user.currentStrength + " hasar verdi");
     }
 }

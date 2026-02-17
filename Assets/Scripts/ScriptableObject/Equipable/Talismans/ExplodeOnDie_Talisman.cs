@@ -1,24 +1,35 @@
+using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Scriptable Objects/Equipables/Talismans/ExplodeOnDie_Talisman")]
 public class ExplodeOnDie_Talisman : Talisman
 {
-    public float dieDamage = 5f;
-    public float reflectDamage = 10f;
-    //sadece dostlara da vurabilir
-    public override void OnTakeDamage(Profile owner, float damage)
+    public float reflectDamage = 5f;
+    public float dieDamage = 10f;
+    //sadece allylara da vurabilir
+    public override void OnTakeDamage(Profile owner, Profile dealer, float damage)
     {
-        foreach (Profile profile in TurnScheduler.GetAliveProfiles())
-        {
-            profile.AddToHealth(-reflectDamage, null);
-        }
+        HitAll(owner, reflectDamage);
     }
 
-    public override void OnDie(Profile owner, float damage)
+    public override void OnDie(Profile owner, Profile dealer, float damage)
     {
-        foreach (Profile profile in TurnScheduler.GetAliveProfiles())
+        HitAll(owner, dieDamage);
+    }
+
+    private void HitAll(Profile owner, float damage)
+    {
+        Profile[] profiles = TurnScheduler.GetAliveProfiles().ToArray();
+
+        foreach (Profile profile in profiles)
         {
-            profile.AddToHealth(-dieDamage, null);
+            if (profile != null && profile != owner && !profile.isDied)
+            {
+                profile.AddToHealth(-damage, null);
+            }
         }
+        owner.StartCoroutine(TurnScheduler.OnSomethingHappen(owner + " patlayarak herkese" + damage + " hasat vurdu", 1));
     }
 }
