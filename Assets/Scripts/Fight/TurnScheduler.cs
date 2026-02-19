@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Profiling;
 
 public static class TurnScheduler
 {
@@ -66,8 +65,6 @@ public static class TurnScheduler
 
 
 
-        MakeRunner();
-        runner.StartCor(Play(orderedProfiles));
         CheckNextCharacterToLunge();
     }
     
@@ -79,14 +76,15 @@ public static class TurnScheduler
 
             //oynat
             MakeRunner();
-            Play(orderedProfiles);
+            onStartPlay?.Invoke();
+            runner.StartCor(PlayNextPerson());
         }
         else
         {
-            LetNextPlayertoPlay();
+            LetNextPlayertoLunge();
         }
     }
-    private static void LetNextPlayertoPlay()
+    private static void LetNextPlayertoLunge()
     {
         order++;
         aliveProfiles[order - 1].LungeStart();
@@ -103,18 +101,20 @@ public static class TurnScheduler
 
 
 
-
-    private static IEnumerator Play(List<Profile> profiles)
+    private static int i = 0;
+    public static IEnumerator PlayNextPerson()
     {
-        Debug.Log("Oynat");
-        onStartPlay.Invoke();
-
-
-        foreach (Profile profile in profiles)
+        Debug.Log("Oynat" + i);
+        if (orderedProfiles.Count > i)
         {
+            Profile profile = orderedProfiles[i];
+            i++;
             yield return runner.StartCor(profile.Play());
         }
-
+        else
+        {
+            FinishTour();
+        }
 
         
 
@@ -128,6 +128,7 @@ public static class TurnScheduler
 
     public static IEnumerator OnSomethingHappen(string str, float time)
     {
+        Debug.Log("something");
         ConsolePanel.instance.WriteConsole(str);
 
         yield return new WaitForSeconds(time);
@@ -202,7 +203,6 @@ public class CorRunner : MonoBehaviour
     {
         if (corMethod != null)
         {
-            Debug.Log(corMethod);
             return StartCoroutine(corMethod);
         }
 

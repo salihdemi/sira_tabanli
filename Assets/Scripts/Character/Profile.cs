@@ -102,14 +102,17 @@ public abstract class Profile : MonoBehaviour
     public IEnumerator Play()
     {
 
+        Debug.Log("Oyna");
         float time = 1f;
         if (currentUseable) time = currentUseable.GetTime();
 
         yield return StartCoroutine(TurnScheduler.OnSomethingHappen(GetActionText(this), time));
 
+        Debug.Log("aftersoemthing");
         currentUseable.Method(this, currentTarget);
 
-        //playnext!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        Debug.Log("aftersoemthing2");
+        StartCoroutine(TurnScheduler.PlayNextPerson());
 
     }
     private static string GetActionText(Profile profile)
@@ -160,16 +163,16 @@ public abstract class Profile : MonoBehaviour
     public void AddToHealth(float amount, Profile dealer)
     {
         stats.currentHealth += amount;
-        if (stats.currentHealth > stats.maxHealth)
-        {
-            stats.currentHealth = stats.maxHealth;
-        }
+        if (stats.currentHealth > stats.maxHealth) stats.currentHealth = stats.maxHealth;
+
         if (stats.currentHealth <= 0)
         {
-            stats.talimsan.OnDie(this, dealer, -amount);
+            stats?.talimsan.OnDie(this, dealer, -amount);
             Die();
         }
+
         onHealthChange?.Invoke();
+
         if (amount < 0)
         {
             hitCountForTour++;
