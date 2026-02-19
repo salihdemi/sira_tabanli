@@ -19,8 +19,6 @@ public static class TurnScheduler
 
     private static Coroutine playCoroutine;
 
-    private static CorRunner runner;
-
     //veri tutan
     //hamleler yaparken kullanýlan
 
@@ -75,9 +73,9 @@ public static class TurnScheduler
             //Debug.Log("tüm hamleler yapýldý");
 
             //oynat
-            MakeRunner();
             onStartPlay?.Invoke();
-            runner.StartCor(PlayNextPerson());
+            i = 0;
+            PlayNextPerson();
         }
         else
         {
@@ -91,32 +89,32 @@ public static class TurnScheduler
     }
     private static void FinishTour()
     {
-        Debug.Log("finishtour");
-
         onTourEnd.Invoke();
 
         StartTourLunges();
     }
 
 
-
+    #region PlaySequence
 
     private static int i = 0;
-    public static IEnumerator PlayNextPerson()
+    public static void PlayNextPerson()
     {
-        Debug.Log("Oynat" + i);
+
         if (orderedProfiles.Count > i)
         {
+            Debug.Log("Oynat" + orderedProfiles[i].name);
             Profile profile = orderedProfiles[i];
             i++;
-            yield return runner.StartCor(profile.Play());
+            profile.Play();
         }
         else
         {
+            Debug.Log("FinishTour");
             FinishTour();
         }
 
-        
+
 
 
         ///listeyi al
@@ -125,18 +123,23 @@ public static class TurnScheduler
         ///listenin ikincisini yaz
 
     }
-
-    public static IEnumerator OnSomethingHappen(string str, float time)
+    public static void Something(float time, Action onComplete)
     {
-        Debug.Log("something");
-        ConsolePanel.instance.WriteConsole(str);
+        FightPanelObjectPool.instance.StartCoroutine(SomethingHappen(time, onComplete));
+    }
+    private static IEnumerator SomethingHappen(float time, Action onComplete)
+    {
+
+        Debug.Log("SomethingHappen");
+        if (onComplete != null) onComplete.Invoke();
 
         yield return new WaitForSeconds(time);
 
-        //sonraki
 
+        PlayNextPerson();
     }
 
+    #endregion
 
 
 
@@ -160,7 +163,7 @@ public static class TurnScheduler
             if (playCoroutine != null)
             {
                 //oynat corosunu durdur
-                runner.StopCor(playCoroutine);
+                //runner.StopCor(playCoroutine);
                 playCoroutine = null;
             }
 
@@ -170,7 +173,7 @@ public static class TurnScheduler
         {
             if (playCoroutine != null)
             {
-                runner.StopCor(playCoroutine);
+                //runner.StopCor(playCoroutine);
                 playCoroutine = null;
             }
 
@@ -186,36 +189,4 @@ public static class TurnScheduler
 
 
 
-    private static void MakeRunner()
-    {
-        if (runner == null)
-        {
-            // Yeni bir GameObject oluþtur ve scripti ona ekle
-            GameObject go = new GameObject("TurnCoroutineRunner");
-            runner = go.AddComponent<CorRunner>();
-            // Dövüþ bitince silinmemesi gerekiyorsa: Object.DontDestroyOnLoad(go);
-        }
-    }
-}
-public class CorRunner : MonoBehaviour
-{// IEnumerator alýr, Coroutine döndürür
-    public Coroutine StartCor(IEnumerator corMethod)
-    {
-        if (corMethod != null)
-        {
-            return StartCoroutine(corMethod);
-        }
-
-        Debug.LogWarning("Baþlatýlmak istenen IEnumerator null!");
-        return null;
-    }
-
-    // Baþlatýlmýþ bir Coroutine referansýný durdurur
-    public void StopCor(Coroutine runningCor)
-    {
-        if (runningCor != null)
-        {
-            StopCoroutine(runningCor);
-        }
-    }
 }

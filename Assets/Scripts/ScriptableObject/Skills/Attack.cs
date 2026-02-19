@@ -9,9 +9,15 @@ public class Attack : Useable
         //animasyonu oynat
         //sesi oynat
 
-        //saldýrýyý yap
 
+        string text = user.name + " " + name + " " + target.name;
+        ConsolePanel.instance.WriteConsole(text);
+
+
+        //saldýrýyý yap
         target.AddToHealth(-user.currentStrength, user);
-        //Debug.Log(user.name + " " + target.name + "'a " + name + " ile " + user.currentStrength + " hasar verdi");
+        Debug.Log(user.name + " " + target.name + "'a " + name + " ile " + user.currentStrength + " hasar verdi");
+
+
     }
 }

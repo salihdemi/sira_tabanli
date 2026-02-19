@@ -99,20 +99,16 @@ public abstract class Profile : MonoBehaviour
 
 
 
-    public IEnumerator Play()
+    public void Play()
     {
 
-        Debug.Log("Oyna");
         float time = 1f;
         if (currentUseable) time = currentUseable.GetTime();
 
-        yield return StartCoroutine(TurnScheduler.OnSomethingHappen(GetActionText(this), time));
+        //yield return StartCoroutine(TurnScheduler.OnSomethingHappen(GetActionText(this), time));
+        Debug.Log("Play" + name);
+        TurnScheduler.Something(1, () => currentUseable.Method(this, currentTarget));
 
-        Debug.Log("aftersoemthing");
-        currentUseable.Method(this, currentTarget);
-
-        Debug.Log("aftersoemthing2");
-        StartCoroutine(TurnScheduler.PlayNextPerson());
 
     }
     private static string GetActionText(Profile profile)

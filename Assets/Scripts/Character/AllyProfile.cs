@@ -9,7 +9,6 @@ public class AllyProfile : Profile
 {
 
 
-
     public override void LungeStart()
     {
         //Debug.Log(name + " hamlesini seçiyor");

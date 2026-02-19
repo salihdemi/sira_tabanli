@@ -11,17 +11,21 @@ public class ExplodeOnDie_Talisman : Talisman
     //sadece allylara da vurabilir
     public override void OnTakeDamage(Profile owner, Profile dealer, float damage)
     {
-        HitAll(owner, reflectDamage);
+        Debug.Log("ontakeDamage");
+        TurnScheduler.Something(1, () => HitAll(owner, damage));
     }
 
     public override void OnDie(Profile owner, Profile dealer, float damage)
     {
-        HitAll(owner, dieDamage);
+        TurnScheduler.Something(1, () => HitAll(owner, damage));
     }
 
     private void HitAll(Profile owner, float damage)
     {
         Profile[] profiles = TurnScheduler.GetAliveProfiles().ToArray();
+
+        string log = owner + " patlayarak herkese" + damage + " hasar vurdu";
+        ConsolePanel.instance.WriteConsole(log);
 
         foreach (Profile profile in profiles)
         {
@@ -30,6 +34,8 @@ public class ExplodeOnDie_Talisman : Talisman
                 profile.AddToHealth(-damage, null);
             }
         }
-        owner.StartCoroutine(TurnScheduler.OnSomethingHappen(owner + " patlayarak herkese" + damage + " hasat vurdu", 1));
+
+
+
     }
 }
