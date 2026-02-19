@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,22 +12,31 @@ public class ExplodeOnDie_Talisman : Talisman
     //sadece allylara da vurabilir
     public override void OnTakeDamage(Profile owner, Profile dealer, float damage)
     {
-        Debug.Log("ontakeDamage");
-        TurnScheduler.Something(1, () => HitAll(owner, damage));
+        // Patlama olayýný Aubrey'nin saldýrýsýnýn arkasýna sýraya ekle
+        CombatManager.AddAction(TalismanEffectRoutine(owner, damage));
     }
 
     public override void OnDie(Profile owner, Profile dealer, float damage)
     {
         TurnScheduler.Something(1, () => HitAll(owner, damage));
     }
+    private IEnumerator TalismanEffectRoutine(Profile owner, float damage)
+    {
+        string log = $"{owner.name} patlayarak tepki verdi!";
+        ConsolePanel.instance.WriteConsole(log);
+        HitAll(owner, damage);
+        yield return new WaitForSeconds(1f); // 1 saniye bekle
 
+        // Hasar verme mantýðýný buraya yaz (HitAll gibi)
+        // ...
+    }
     private void HitAll(Profile owner, float damage)
     {
+
+        //string log = owner + " patlayarak herkese" + damage + " hasar vurdu";
+        //ConsolePanel.instance.WriteConsole(log);
+
         Profile[] profiles = TurnScheduler.GetAliveProfiles().ToArray();
-
-        string log = owner + " patlayarak herkese" + damage + " hasar vurdu";
-        ConsolePanel.instance.WriteConsole(log);
-
         foreach (Profile profile in profiles)
         {
             if (profile != null && profile != owner && !profile.isDied)

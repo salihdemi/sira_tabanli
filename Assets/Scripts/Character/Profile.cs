@@ -98,7 +98,7 @@ public abstract class Profile : MonoBehaviour
 
 
 
-
+    /*
     public void Play()
     {
 
@@ -110,6 +110,21 @@ public abstract class Profile : MonoBehaviour
         TurnScheduler.Something(1, () => currentUseable.Method(this, currentTarget));
 
 
+    }*/
+    public void Play()
+    {
+        // Kendi saldýrýmý odaya (kuyruða) ekliyorum
+        CombatManager.AddAction(ExecuteActionRoutine());
+    }
+
+    private IEnumerator ExecuteActionRoutine()
+    {
+        string log = $"{name}, {currentTarget.name} hedefine vurdu!";
+        ConsolePanel.instance.WriteConsole(log); // Konsola yaz
+        yield return new WaitForSeconds(1f);     // 1 saniye bekle
+
+        // Hasarý uygula (Bu iþlem týlsýmý tetikleyebilir)
+        currentUseable.Method(this, currentTarget);
     }
     private static string GetActionText(Profile profile)
     {

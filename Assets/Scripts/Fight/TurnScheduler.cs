@@ -19,8 +19,6 @@ public static class TurnScheduler
 
     private static Coroutine playCoroutine;
 
-    //veri tutan
-    //hamleler yaparken kullanýlan
 
     public static void SetAliveProfiles(List<AllyProfile> AllyProfiles, List<EnemyProfile> EnemyProfiles)
     {
@@ -55,6 +53,7 @@ public static class TurnScheduler
 
 
 
+    #region LungeSequence
     public static void StartTourLunges()
     {
         Debug.Log("starttourLunges");
@@ -65,7 +64,6 @@ public static class TurnScheduler
 
         CheckNextCharacterToLunge();
     }
-    
     public static void CheckNextCharacterToLunge()
     {
         if (order == aliveProfiles.Count)
@@ -87,13 +85,8 @@ public static class TurnScheduler
         order++;
         aliveProfiles[order - 1].LungeStart();
     }
-    private static void FinishTour()
-    {
-        onTourEnd.Invoke();
 
-        StartTourLunges();
-    }
-
+    #endregion
 
     #region PlaySequence
 
@@ -106,7 +99,7 @@ public static class TurnScheduler
             Debug.Log("Oynat" + orderedProfiles[i].name);
             Profile profile = orderedProfiles[i];
             i++;
-            profile.Play();
+            profile.Play();//oluyse de calisir mi?
         }
         else
         {
@@ -137,6 +130,12 @@ public static class TurnScheduler
 
 
         PlayNextPerson();
+    }
+    private static void FinishTour()
+    {
+        onTourEnd.Invoke();
+
+        StartTourLunges();
     }
 
     #endregion
