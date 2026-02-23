@@ -12,31 +12,31 @@ public class ExplodeOnDie_Talisman : Talisman
     //sadece allylara da vurabilir
     public override void OnTakeDamage(Profile owner, Profile dealer, float damage)
     {
-        // Patlama olayýný Aubrey'nin saldýrýsýnýn arkasýna sýraya ekle
-        CombatManager.AddAction(TalismanEffectRoutine(owner, damage));
+        if (!owner.isDied)
+        {
+            CombatManager.AddAction(TalismanEffectRoutine(owner, damage));
+        }
     }
 
     public override void OnDie(Profile owner, Profile dealer, float damage)
     {
+        string log = $"{owner.name} patlayarak tepki verdi!";
+        ConsolePanel.instance.WriteConsole(log);
         TurnScheduler.Something(1, () => HitAll(owner, damage));
     }
     private IEnumerator TalismanEffectRoutine(Profile owner, float damage)
     {
-        string log = $"{owner.name} patlayarak tepki verdi!";
-        ConsolePanel.instance.WriteConsole(log);
         HitAll(owner, damage);
         yield return new WaitForSeconds(1f); // 1 saniye bekle
-
-        // Hasar verme mantýðýný buraya yaz (HitAll gibi)
-        // ...
     }
     private void HitAll(Profile owner, float damage)
     {
+        string log = $"{owner.name} patlayarak tepki verdi!";
 
-        //string log = owner + " patlayarak herkese" + damage + " hasar vurdu";
-        //ConsolePanel.instance.WriteConsole(log);
+        ConsolePanel.instance.WriteConsole(log);
 
         Profile[] profiles = TurnScheduler.GetAliveProfiles().ToArray();
+        
         foreach (Profile profile in profiles)
         {
             if (profile != null && profile != owner && !profile.isDied)
@@ -44,8 +44,6 @@ public class ExplodeOnDie_Talisman : Talisman
                 profile.AddToHealth(-damage, null);
             }
         }
-
-
 
     }
 }

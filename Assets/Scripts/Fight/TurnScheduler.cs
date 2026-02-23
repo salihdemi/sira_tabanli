@@ -99,7 +99,14 @@ public static class TurnScheduler
             Debug.Log("Oynat" + orderedProfiles[i].name);
             Profile profile = orderedProfiles[i];
             i++;
-            profile.Play();//oluyse de calisir mi?
+            if (!profile.isDied)
+            {
+                profile.Play();
+            }
+            else
+            {
+                PlayNextPerson();
+            }
         }
         else
         {

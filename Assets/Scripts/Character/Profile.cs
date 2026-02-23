@@ -105,12 +105,8 @@ public abstract class Profile : MonoBehaviour
 
     private IEnumerator ExecuteActionRoutine()
     {
-        string log = $"{name}, {currentTarget.name} hedefine vurdu!";//parametre olacak!
-        ConsolePanel.instance.WriteConsole(log); // Konsola yaz
-        yield return new WaitForSeconds(1f);     // 1 saniye bekle
-
-        // Hasarý uygula (Bu iþlem týlsýmý tetikleyebilir)
         currentUseable.Method(this, currentTarget);
+        yield return new WaitForSeconds(1f);     // 1 saniye bekle
     }
     private static string GetActionText(Profile profile)
     {
@@ -201,7 +197,7 @@ public abstract class Profile : MonoBehaviour
 
                 if (stats.currentHealth <= 0)
                 {
-                    stats?.talimsan.OnDie(this, dealer, damage);
+                    stats.talimsan?.OnDie(this, dealer, damage);
                     Die();
                 }
 
@@ -215,7 +211,13 @@ public abstract class Profile : MonoBehaviour
         }
             
     }
+    public void AddShield(float amount)
+    {
+        stats.currentShields.Add(amount);
 
+        onHealthChange?.Invoke(); // ondamageShield???
+        return;
+    }
     private void DamageShield(float damage)
     {
         stats.currentShields[0] -= damage;
