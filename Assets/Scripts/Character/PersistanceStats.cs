@@ -14,11 +14,13 @@ public class PersistanceStats
     public float currentHealth;
     public float currentStamina;
     public float currentMana;
+    public List<float> currentShields = new List<float>();
 
     [Header("MaxStats")]
     public float maxHealth;
     public float maxStamina;
     public float maxMana;
+    public List<float> maxShields = new List<float>();
     [Header("Stats")]
     public float strength;
     public float technical;
@@ -48,13 +50,13 @@ public class PersistanceStats
     {
         //originData = data;
         _name = data.name;
-        weaponType= data.weaponType;
+        weaponType = data.weaponType;
 
 
         maxHealth = data.maxHealth;
         maxStamina = data.maxStamina;
         maxMana = data.maxMana;
-
+        maxShields = new List<float>(data.shieldLayers);
         Regen();
 
         strength = data.strength;
@@ -79,6 +81,7 @@ public class PersistanceStats
         currentHealth = maxHealth;
         currentStamina = maxStamina;
         currentMana = maxMana;
+        currentShields = maxShields = new List<float>(maxShields);
     }
 
 

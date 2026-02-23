@@ -98,28 +98,14 @@ public abstract class Profile : MonoBehaviour
 
 
 
-    /*
     public void Play()
     {
-
-        float time = 1f;
-        if (currentUseable) time = currentUseable.GetTime();
-
-        //yield return StartCoroutine(TurnScheduler.OnSomethingHappen(GetActionText(this), time));
-        Debug.Log("Play" + name);
-        TurnScheduler.Something(1, () => currentUseable.Method(this, currentTarget));
-
-
-    }*/
-    public void Play()
-    {
-        // Kendi saldýrýmý odaya (kuyruða) ekliyorum
         CombatManager.AddAction(ExecuteActionRoutine());
     }
 
     private IEnumerator ExecuteActionRoutine()
     {
-        string log = $"{name}, {currentTarget.name} hedefine vurdu!";
+        string log = $"{name}, {currentTarget.name} hedefine vurdu!";//parametre olacak!
         ConsolePanel.instance.WriteConsole(log); // Konsola yaz
         yield return new WaitForSeconds(1f);     // 1 saniye bekle
 
@@ -134,15 +120,14 @@ public abstract class Profile : MonoBehaviour
 
         return $"{profile.name}, {profile.lastTargetName} hedefine {profile.currentUseable.name} kullandý.";
     }
-
     public void ClearSkillAndTarget()
     {
         currentTarget = null;
         currentUseable = null;
     }
 
-    
 
+    #region Status
 
     //setler olustururken calismali sadece
     public void SetHealth(float amount)
@@ -171,7 +156,7 @@ public abstract class Profile : MonoBehaviour
         }
         onHealthChange?.Invoke();
     }*/
-    public void AddToHealth(float amount, Profile dealer)
+    /*public void AddToHealth(float amount, Profile dealer)
     {
         stats.currentHealth += amount;
         if (stats.currentHealth > stats.maxHealth) stats.currentHealth = stats.maxHealth;
@@ -192,7 +177,64 @@ public abstract class Profile : MonoBehaviour
                 stats?.talimsan.OnTakeDamage(this, dealer, -amount);
             }
         }
+    }*/
+    
+    
+    public void AddToHealth(float amount, Profile dealer)
+    {
+        //kalkaný varsa
+        if (stats.currentShields.Count > 0 && amount < 0) DamageShield(-amount);
+        else
+        {
+            stats.currentHealth += amount;
+
+            //0-max arasýna sabitle
+            stats.currentHealth = Mathf.Clamp(stats.currentHealth, 0, stats.maxHealth);
+
+            onHealthChange?.Invoke();
+
+            if (amount < 0)
+            {
+                float damage = -amount;
+
+                hitCountForTour++;
+
+                if (stats.currentHealth <= 0)
+                {
+                    stats?.talimsan.OnDie(this, dealer, damage);
+                    Die();
+                }
+
+                if (stats.talimsan && dealer)
+                {
+                    stats?.talimsan.OnTakeDamage(this, dealer, damage);
+                }
+
+
+            }
+        }
+            
     }
+
+    private void DamageShield(float damage)
+    {
+        stats.currentShields[0] -= damage;
+
+        if (stats.currentShields[0] <= 0)
+        {
+            stats.currentShields.RemoveAt(0); // En üstteki kalkaný yok et
+            Debug.Log($"{name} kalkaný kýrýldý! Kalan hasar emildi.");
+
+        }
+        else
+        {
+            Debug.Log($"{name} kalkaný darbe aldý. Kalan kalkan caný: {stats.currentShields[0]}");
+        }
+
+        onHealthChange?.Invoke(); // ondamageShield???
+        return;
+    }
+
     public void AddToStamina(float amount)
     {
         stats.currentStamina += amount;
@@ -295,7 +337,7 @@ public abstract class Profile : MonoBehaviour
         OnSomeoneDie.Invoke(this);
     }
 
-
+    #endregion
 
 
 

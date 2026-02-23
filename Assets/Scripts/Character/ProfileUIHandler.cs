@@ -6,11 +6,12 @@ public class ProfileUIManager : MonoBehaviour
 
     [SerializeField] private Profile profile;
 
-    [SerializeField] private TextMeshProUGUI healthText, staminaText, manaText;
+    [SerializeField] private TextMeshProUGUI healthText, shieldText, staminaText, manaText;
     [SerializeField] private TextMeshProUGUI strengthText, technicalText, focusText, speedText;
     private void OnEnable()
     {
         profile.onHealthChange += WriteHealth;
+        profile.onHealthChange += WriteShield;
         profile.onStaminaChange += WriteStamina;
         profile.onManaChange += WriteMana;
 
@@ -22,6 +23,7 @@ public class ProfileUIManager : MonoBehaviour
     private void OnDisable()
     {
         profile.onHealthChange -= WriteHealth;
+        profile.onHealthChange -= WriteShield;
         profile.onStaminaChange -= WriteStamina;
         profile.onManaChange -= WriteMana;
 
@@ -35,6 +37,16 @@ public class ProfileUIManager : MonoBehaviour
     {
         PersistanceStats stats = profile.stats;
         healthText.text = stats.currentHealth + "/" + stats.maxHealth;
+    }
+    public void WriteShield()
+    {
+        PersistanceStats stats = profile.stats;
+        if (stats.currentShields.Count <= 0)
+        {
+            shieldText.gameObject.SetActive(false);
+            return;
+        }
+        shieldText.text = stats.currentShields[0] + " (" + stats.currentShields.Count + ")";
     }
     public void WriteStamina()
     {

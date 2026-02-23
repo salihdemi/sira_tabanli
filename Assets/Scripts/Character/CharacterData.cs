@@ -13,6 +13,7 @@ public class CharacterData : ScriptableObject
     public float maxHealth;
     public float maxStamina;
     public float maxMana;
+    public List<float> shieldLayers = new List<float>();
 
     [Header("Stats")]
     public float strength;
