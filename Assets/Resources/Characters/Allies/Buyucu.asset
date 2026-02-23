@@ -16,6 +16,7 @@ MonoBehaviour:
   maxHealth: 67
   maxStamina: 50
   maxMana: 50
+  shieldLayers: []
   strength: 1
   technical: 1
   focus: 3
@@ -29,3 +30,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5762fa63f146f784a8ca1fd6bb9e0fc9, type: 2}
   - {fileID: 11400000, guid: 118c6c29a419a154b9f5a03c874776d9, type: 2}
   - {fileID: 11400000, guid: bf078c690da052c438ff07e7240339bb, type: 2}
+  talisman: {fileID: 0}

@@ -123,6 +123,7 @@ public static class TurnScheduler
         ///listenin ikincisini yaz
 
     }
+    /*
     public static void Something(float time, Action onComplete)
     {
         FightPanelObjectPool.instance.StartCoroutine(SomethingHappen(time, onComplete));
@@ -138,6 +139,7 @@ public static class TurnScheduler
 
         PlayNextPerson();
     }
+    */
     private static void FinishTour()
     {
         onTourEnd.Invoke();

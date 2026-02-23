@@ -393,5 +393,18 @@ public abstract class Profile : MonoBehaviour
     }
 
 
+    private void Parryy(Profile owner, Profile target)
+    {
+        string log = owner.name + " ";
+        ConsolePanel.instance.WriteConsole(log);
+        CombatManager.AddAction(Parry(owner, target));
+    }
+    private IEnumerator Parry(Profile owner, Profile target)
+    {
+
+        target.AddToHealth(5, null);
+
+        yield return new WaitForSeconds(1);
+    }
 
 }

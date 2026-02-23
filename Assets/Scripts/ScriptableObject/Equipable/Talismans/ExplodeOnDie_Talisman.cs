@@ -14,15 +14,17 @@ public class ExplodeOnDie_Talisman : Talisman
     {
         if (!owner.isDied)
         {
+            string log = $"{owner.name} patlayarak tepki verdi!";
+            ConsolePanel.instance.WriteConsole(log);
             CombatManager.AddAction(TalismanEffectRoutine(owner, damage));
         }
     }
 
     public override void OnDie(Profile owner, Profile dealer, float damage)
     {
-        string log = $"{owner.name} patlayarak tepki verdi!";
+        string log = $"{owner.name} ölüm hasarý verdi!";
         ConsolePanel.instance.WriteConsole(log);
-        TurnScheduler.Something(1, () => HitAll(owner, damage));
+        CombatManager.AddAction(TalismanEffectRoutine(owner, damage));
     }
     private IEnumerator TalismanEffectRoutine(Profile owner, float damage)
     {

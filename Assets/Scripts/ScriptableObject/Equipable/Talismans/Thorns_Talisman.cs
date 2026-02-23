@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Scriptable Objects/Equipables/Talismans/Thorns")]
@@ -7,8 +8,19 @@ public class Thorns_Talisman : Talisman
 
     public override void OnTakeDamage(Profile owner, Profile dealer, float damage)
     {
-        dealer.AddToHealth(-reflectDamage, owner);
-        Debug.Log($"Düþmana {reflectDamage} hasar yansýtýldý!");
-        // Buraya düþmana hasar veren kodunu ekleyebilirsin
+        string log = owner.name + " hasarý yansýttý";
+        ConsolePanel.instance.WriteConsole(log);
+        CombatManager.AddAction(ads(owner, dealer));
+
+
     }
+    private IEnumerator ads(Profile owner, Profile dealer)
+    {
+        dealer.AddToHealth(-reflectDamage, owner);
+        yield return new WaitForSeconds(1);
+    }
+
+
+
+
 }
