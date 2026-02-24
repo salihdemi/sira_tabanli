@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Profiling;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public abstract class Profile : MonoBehaviour
 {
@@ -28,8 +29,17 @@ public abstract class Profile : MonoBehaviour
     [HideInInspector] public event Action onHealthChange, onStaminaChange, onManaChange;
     [HideInInspector] public event Action<float> onStrengthChange, onTechnicalChange, onFocusChange, onSpeedChange;
 
-    public static event Action<Profile, float> OnAnyManaConsumed;
-
+    
+    private void OnConsumeMana(float amount)
+    {
+        foreach (Profile enemy in TurnScheduler.ActiveEnemyProfiles)//profile yerine eterik!!!
+        {
+            if (enemy.stats?.talimsan is ManaLeech_Talisman talisman)
+            {
+                talisman.AbsorbMana(enemy, this, amount);
+            }
+        }
+    }//yeri ve parametreleri deðiþtirilmesi gerekebilir?!
 
 
     public bool isDied;
@@ -242,11 +252,6 @@ public abstract class Profile : MonoBehaviour
         {
             Debug.LogWarning(stats._name + " stamina 0'ýn altýna düþtü");
         }
-
-        if(amount < 0)
-        {
-            OnAnyManaConsumed(this, amount);
-        }
         onStaminaChange?.Invoke();
     }
     public void AddToMana(float amount)
@@ -267,9 +272,8 @@ public abstract class Profile : MonoBehaviour
             //mana azaltan herhangi birþey sebeð olabilir!
             if(this is AllyProfile)
             {
-
+                OnConsumeMana(-amount);//belki burda caðýrýlmamalý!?
             }
-            OnAnyManaConsumed?.Invoke(this, -amount);//?
         }
     }
 

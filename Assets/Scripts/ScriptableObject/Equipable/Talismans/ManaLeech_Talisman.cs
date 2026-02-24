@@ -11,12 +11,10 @@ public class ManaLeech_Talisman : Talisman
     public override void OnFightStart(Profile owner)
     {
         ownerCount++;
-        Profile.OnAnyManaConsumed += HandleGlobalManaConsumption;
     }
     public override void OnFightEnd(Profile owner)
     {
         ownerCount--;
-        Profile.OnAnyManaConsumed -= HandleGlobalManaConsumption;
     }
 
 
@@ -24,9 +22,8 @@ public class ManaLeech_Talisman : Talisman
 
 
 
-    private void HandleGlobalManaConsumption(Profile spender, float amount)
+    public void AbsorbMana(Profile owner, Profile spender, float amount)
     {
-        //ownera erişmek gerek!
-        //TurnScheduler.AddAction(skill.Method(owner, spender, amount / ownerCount));
+        TurnScheduler.AddAction(skill.Method(owner, spender, amount / ownerCount));
     }
 }
