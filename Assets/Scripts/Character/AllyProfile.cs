@@ -31,6 +31,7 @@ public class AllyProfile : Profile
         {
             TargetingSystem.StartTargeting(this, skill);
         }
+        //gerek var mý?
         else if (skill.targetType == TargetType.all)
         {
             SetTarget(null);

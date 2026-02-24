@@ -82,7 +82,9 @@ public static class FightManager
         //battleSpawner.ResetStats(AllyProfiles);
 
         SetDefaultTarget();//!
-        Debug.Log("startfight");
+
+        foreach (Profile profile in ActiveAllyProfiles) profile.stats.talimsan?.OnFightStart(profile);
+        foreach (Profile profile in ActiveEnemyProfiles) profile.stats.talimsan?.OnFightStart(profile);
         TurnScheduler.StartTourLunges();
     }
     
@@ -115,6 +117,8 @@ public static class FightManager
     
     public static void FinishFight()
     {
+        foreach (Profile profile in TurnScheduler.ActiveAllyProfiles) profile.stats.talimsan?.OnFightEnd(profile);
+
         OnFightEnd.Invoke();//moveable-setisinfight
 
         BattleSpawner.ClearBattlefield();

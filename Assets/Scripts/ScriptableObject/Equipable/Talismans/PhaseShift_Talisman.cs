@@ -10,16 +10,17 @@ public class PhaseShift_Talisman : Talisman
     public float damageThreshold = 20f; // Tek seferde alýnmasý gereken sýnýr hasar
     public Sprite transformedSprite;    // Dönüþeceði yeni görsel
 
+
     public override void OnTakeDamage(Profile owner, Profile dealer, float damage)
     {
         if (damage >= damageThreshold)
         {
             // Dönüþüm sürecini sýraya sokalým (CombatManager kullanarak)
-            TurnScheduler.AddAction(TriggerTransformation(owner));
+            TurnScheduler.AddAction(Evolve(owner));
         }
     }
 
-    private IEnumerator TriggerTransformation(Profile owner)
+    private IEnumerator Evolve(Profile owner)
     {
         string log = owner.name + " dönüþüyor";
         ConsolePanel.instance.WriteConsole(log);

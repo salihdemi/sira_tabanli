@@ -56,7 +56,9 @@ public static class TurnScheduler
     #region LungeSequence
     public static void StartTourLunges()
     {
-        Debug.Log("starttourLunges");
+        foreach (Profile profile in ActiveAllyProfiles) profile.stats.talimsan?.OnTourStart(profile);
+        foreach (Profile profile in ActiveEnemyProfiles) profile.stats.talimsan?.OnTourStart(profile);
+
         onTourLungesStart.Invoke();
         SortProfilesWithSpeed();
 
@@ -74,13 +76,18 @@ public static class TurnScheduler
         }
         else//devam et
         {
+            foreach (Profile profile in ActiveAllyProfiles) profile.stats.talimsan?.OnTourEnd(profile);
+            foreach (Profile profile in ActiveEnemyProfiles) profile.stats.talimsan?.OnTourEnd(profile);
             LetNextPlayertoLunge();
         }
     }
     private static void LetNextPlayertoLunge()
     {
         order++;
-        aliveProfiles[order - 1].LungeStart();
+        Profile profile = aliveProfiles[order - 1];//-1?
+
+        profile.stats.talimsan?.OnTourStart(profile);
+        profile.LungeStart();
     }
 
     #endregion

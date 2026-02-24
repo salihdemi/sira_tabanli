@@ -28,6 +28,7 @@ public abstract class Profile : MonoBehaviour
     [HideInInspector] public event Action onHealthChange, onStaminaChange, onManaChange;
     [HideInInspector] public event Action<float> onStrengthChange, onTechnicalChange, onFocusChange, onSpeedChange;
 
+    public static event Action<Profile, float> OnAnyManaConsumed;
 
 
 
@@ -241,6 +242,11 @@ public abstract class Profile : MonoBehaviour
         {
             Debug.LogWarning(stats._name + " stamina 0'ýn altýna düþtü");
         }
+
+        if(amount < 0)
+        {
+            OnAnyManaConsumed(this, amount);
+        }
         onStaminaChange?.Invoke();
     }
     public void AddToMana(float amount)
@@ -255,9 +261,15 @@ public abstract class Profile : MonoBehaviour
             Debug.LogWarning(stats._name + " mana 0'ýn altýna düþtü");
         }
         onManaChange?.Invoke();
+
         if (amount < 0)
         {
-            OnConsumeMana(-amount);
+            //mana azaltan herhangi birþey sebeð olabilir!
+            if(this is AllyProfile)
+            {
+
+            }
+            OnAnyManaConsumed?.Invoke(this, -amount);//?
         }
     }
 
@@ -355,25 +367,6 @@ public abstract class Profile : MonoBehaviour
 
 
 
-
-    private void OnConsumeMana(float amount)
-    {
-        List<Profile> etherics = new List<Profile>();//Eterik tür
-        int ethericCount = 0;
-
-        foreach (Profile enemy in TurnScheduler.ActiveEnemyProfiles)
-        {
-            if (enemy != null)//eterikse!!!
-            {
-                etherics.Add(enemy);
-                ethericCount++;
-            }
-        }
-        foreach (Profile etheric in etherics)//profile yerine eterik!!!
-        {
-            etheric.AddToMana(amount / ethericCount);
-        }
-    }//!
 
 
     private void Parryy(Profile owner, Profile target)

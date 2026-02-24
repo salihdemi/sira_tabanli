@@ -17,6 +17,7 @@ public class Attack : Skill
         yield return new WaitForSeconds(1);
 
         //saldýrýyý yap
+        user.AddToMana(-3);
         target.AddToHealth(-user.currentStrength, user);
         //Debug.Log(user.name + " " + target.name + "'a " + name + " ile " + user.currentStrength + " hasar verdi");
     }
