@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class ManaLeech_Talisman : MonoBehaviour
+[CreateAssetMenu(menuName = "Scriptable Objects/Equipables/Talismans/ManaLeech_Talisman")]
+public class ManaLeech_Talisman : Talisman
 {
 
 }

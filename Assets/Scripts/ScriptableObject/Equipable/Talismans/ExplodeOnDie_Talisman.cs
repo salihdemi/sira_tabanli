@@ -15,13 +15,13 @@ public class ExplodeOnDie_Talisman : Talisman
     {
         if (!owner.isDied)
         {
-            CombatManager.AddAction(explode.Method(owner, null, reflectDamage));
+            TurnScheduler.AddAction(explode.Method(owner, null, reflectDamage));
         }
     }
 
     public override void OnDie(Profile owner, Profile dealer, float damage)
     {
-        CombatManager.AddAction(explode.Method(owner, null, dieDamage));
+        TurnScheduler.AddAction(explode.Method(owner, null, dieDamage));
     }
 
 }

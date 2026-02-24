@@ -12,8 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09898e4aa1598844dbad809c0db3cf54, type: 3}
   m_Name: ThornsTalismanSkill
   m_EditorClassIdentifier: Assembly-CSharp::ThornsTalismanSkill
-  _name: 
-  targetType: 0
-  healthCost: 0
-  staminaCost: 0
-  manaCost: 0
+  _name: ThornsTalisman
+  targetType: 1

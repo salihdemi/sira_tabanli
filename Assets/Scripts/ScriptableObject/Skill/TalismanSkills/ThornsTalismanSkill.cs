@@ -15,14 +15,7 @@ public class ThornsTalismanSkill : TalismanSkill
         ConsolePanel.instance.WriteConsole(log);
 
         //saldýrýyý yap
-        Profile[] profiles = TurnScheduler.GetAliveProfiles().ToArray();
-        foreach (Profile profile in profiles)
-        {
-            if (profile != null && profile != user && !profile.isDied)
-            {
-                profile.AddToHealth(-damage, null);
-            }
-        }
+        target.AddToHealth(-damage, null);
 
         //beklet
         yield return new WaitForSeconds(1f); // 1 saniye bekle

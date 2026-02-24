@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ExplodeOnDie_Talisman
   sprite: {fileID: 0}
   talismanName: Crystal
-  dieDamage: 5
   reflectDamage: 10
+  dieDamage: 5
+  explode: {fileID: 11400000, guid: 27ad2fbd85bb4784eb1671b83b023a4c, type: 2}

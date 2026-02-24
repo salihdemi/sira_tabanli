@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "HitAllCharacters", menuName = "Scriptable Objects/Useables/Skills/HitAllCharacters")]
+[CreateAssetMenu(fileName = "HitAllCharacters", menuName = "Scriptable Objects/Skills/CharacterSkills/HitAllCharacters")]
 public class HitAllCharacters : CharacterSkill
 {
     public float damage;

@@ -12,9 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4009e6cb08b10488ee9bc17a187c9b, type: 3}
   m_Name: ExplodeTalismanSkill
   m_EditorClassIdentifier: Assembly-CSharp::ExplodeTalismanSkill
-  _name: 
-  targetType: 0
-  healthCost: 0
-  staminaCost: 0
-  manaCost: 0
-  damage: 0
+  _name: Explode
+  targetType: 5

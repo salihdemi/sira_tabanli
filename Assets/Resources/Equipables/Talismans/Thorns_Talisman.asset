@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Thorns_Talisman
   sprite: {fileID: -5817137838908407947, guid: a6b9026df3800fa4a9976e33488394aa, type: 3}
   talismanName: Thorns
-  icon: {fileID: -5817137838908407947, guid: a6b9026df3800fa4a9976e33488394aa, type: 3}
   reflectDamage: 5
+  parry: {fileID: 11400000, guid: 27db105281401d24bb25ab965ecf2d4c, type: 2}

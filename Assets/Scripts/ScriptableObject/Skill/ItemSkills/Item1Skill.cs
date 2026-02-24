@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Item1Skill", menuName = "Scriptable Objects/Useables/ItemSkills/Item1Skill")]
+[CreateAssetMenu(fileName = "Item1Skill", menuName = "Scriptable Objects/Skills/ItemSkills/Item1Skill")]
 public class Item1Skill : ItemSkill
 {
     public override IEnumerator Method(Profile user, Profile target)

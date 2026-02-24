@@ -2,7 +2,7 @@ using System.Buffers;
 using System.Collections;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MultiHit", menuName = "Scriptable Objects/Useables/Skills/MultiHit")]
+[CreateAssetMenu(fileName = "MultiHit", menuName = "Scriptable Objects/Skills/CharacterSkills/MultiHit")]
 public class MultiHit : CharacterSkill
 {
     [Header("MultiHit")]

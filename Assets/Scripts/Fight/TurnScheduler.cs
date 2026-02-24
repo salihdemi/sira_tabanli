@@ -19,7 +19,7 @@ public static class TurnScheduler
 
     private static Coroutine playCoroutine;
 
-
+    #region ProfileHandlers
     public static void SetAliveProfiles(List<AllyProfile> AllyProfiles, List<EnemyProfile> EnemyProfiles)
     {
 
@@ -49,7 +49,7 @@ public static class TurnScheduler
         }
     }
 
-
+    #endregion
 
 
 
@@ -90,19 +90,23 @@ public static class TurnScheduler
     private static int i = 0;
     public static void PlayNextPerson()
     {
-        if (orderedProfiles.Count <= i)
-        { FinishTour(); return; }
+        if (i >= orderedProfiles.Count)
+        {
+            i = 0;
+            FinishTour();
+            return;
+        }
 
+        Profile profile = orderedProfiles[i++];
 
-        Profile profile = orderedProfiles[i];
-        i++;
-        if (!profile.isDied) profile.Play();
-        else PlayNextPerson();
-        
+        bool isPlayed = profile.Play();
 
-
+        if (!isPlayed)
+        {
+            PlayNextPerson();
+        }
     }
-   
+
     private static void FinishTour()
     {
         onTourEnd.Invoke();
@@ -111,6 +115,40 @@ public static class TurnScheduler
     }
 
     #endregion
+
+
+
+
+
+
+
+
+
+    private static Queue<IEnumerator> actionQueue = new Queue<IEnumerator>();
+    public static bool isBusy = false;
+
+
+    // Yeni bir olay (saldýrý veya týlsým) eklendiðinde buraya gelir
+    public static void AddAction(IEnumerator action)
+    {
+        actionQueue.Enqueue(action);
+        if (!isBusy) FightPanelObjectPool.instance.StartCoroutine(ProcessQueue());
+    }
+
+    private static IEnumerator ProcessQueue()
+    {
+        isBusy = true;
+        while (actionQueue.Count > 0)
+        {
+            yield return FightPanelObjectPool.instance.StartCoroutine(actionQueue.Dequeue());
+        }
+        isBusy = false;
+
+        // TÜM EFEKTLER BÝTTÝ, ÞÝMDÝ SIRADAKÝ KÝÞÝYE GEÇEBÝLÝRÝZ
+        PlayNextPerson();
+    }
+
+
 
 
 

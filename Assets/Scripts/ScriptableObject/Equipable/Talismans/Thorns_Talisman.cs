@@ -9,10 +9,6 @@ public class Thorns_Talisman : Talisman
     public TalismanSkill parry;
     public override void OnTakeDamage(Profile owner, Profile dealer, float damage)
     {
-        CombatManager.AddAction(parry.Method(owner, dealer, reflectDamage));
+        TurnScheduler.AddAction(parry.Method(owner, dealer, reflectDamage));
     }
-
-
-
-
 }

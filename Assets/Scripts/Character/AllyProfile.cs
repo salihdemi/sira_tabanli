@@ -17,7 +17,7 @@ public class AllyProfile : Profile
     }
     public override void ChooseSkill(Skill skill)
     {
-        currentUseable = skill;
+        currentSkill = skill;
         CharacterActionPanel.instance.CloseAndDisableAllPanels();
 
         bool needTargetýng = skill.targetType == TargetType.ally

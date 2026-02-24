@@ -15,7 +15,7 @@ public class PhaseShift_Talisman : Talisman
         if (damage >= damageThreshold)
         {
             // Dönüþüm sürecini sýraya sokalým (CombatManager kullanarak)
-            CombatManager.AddAction(TriggerTransformation(owner));
+            TurnScheduler.AddAction(TriggerTransformation(owner));
         }
     }
 

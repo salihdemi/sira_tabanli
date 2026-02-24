@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Profiling;
 using UnityEngine.UI;
 
 public abstract class Profile : MonoBehaviour
@@ -21,7 +22,7 @@ public abstract class Profile : MonoBehaviour
     public float currentStrength, currentTechnical, currentFocus, currentSpeed;
 
 
-    [HideInInspector] public Skill currentUseable;
+    [HideInInspector] public Skill currentSkill;
     [HideInInspector] public Profile currentTarget;
 
     [HideInInspector] public event Action onHealthChange, onStaminaChange, onManaChange;
@@ -47,9 +48,7 @@ public abstract class Profile : MonoBehaviour
 
 
 
-
-    //battlespawnerda kullanýlabilir
-
+    #region Setup
     public void Setup(PersistanceStats persistanceStats)
     {
         gameObject.SetActive(true);
@@ -67,22 +66,40 @@ public abstract class Profile : MonoBehaviour
         TurnScheduler.onTourEnd += DamageIfBurning;
         TurnScheduler.onTourEnd += DecreaseStatus;
         TurnScheduler.onTourEnd += ResetHitCount;
-        //Talisman
+        //Talisman?
 
     }
-
     private void ResetStatus(PersistanceStats persistanceStats)
     {
         SetHealth(persistanceStats.currentHealth);
         SetStamina(persistanceStats.currentStamina);
         SetMana(persistanceStats.currentMana);
     }
+    public void ResetStats()
+    {
+        isDied = false;
+        currentStrength = stats.strength;
+        onStrengthChange?.Invoke(currentStrength);
 
+        currentTechnical = stats.technical;
+        onTechnicalChange?.Invoke(currentTechnical);
+
+        currentFocus = stats.focus;
+        onFocusChange?.Invoke(currentFocus);
+
+        currentSpeed = stats.speed;
+        onSpeedChange?.Invoke(currentSpeed);
+    }
+
+    #endregion
+
+
+    #region LungeSequence
     public abstract void LungeStart();
     public abstract void ChooseSkill(Skill skill);
-    public  void SetTarget(Profile profile)
+    public void SetTarget(Profile profile)
     {
-        if(profile == null)//Cok hedefli skillerde
+        if (profile == null)//Cok hedefli skillerde
         {
             FinishLunge();
             return;
@@ -97,27 +114,31 @@ public abstract class Profile : MonoBehaviour
         TurnScheduler.CheckNextCharacterToLunge();
     }
 
+    #endregion
 
-
-    public void Play()
+    #region PlaySequence
+    public bool Play()
     {
-        CombatManager.AddAction(currentUseable.Method(this, currentTarget));
+        if (isDied) return false;
+
+        bool needTarget = currentSkill.targetType == TargetType.enemy || currentSkill.targetType == TargetType.ally;
+        bool targetValid = !needTarget || (currentTarget != null && !currentTarget.isDied);
+
+        if (targetValid)
+        {
+            TurnScheduler.AddAction(currentSkill.Method(this, currentTarget));
+            return true; // Baþarýyla sýraya eklendi
+        }
+
+        return false; // Oynayamadý
     }
 
-    private static string GetActionText(Profile profile)
-    {
-        if (profile.isDied) return $"{profile.name} öldüðü için hamle yapamadý.";
-        if (profile.mute > 0) return $"{profile.name} susturulduðu için büyü yapamadý.";
-        if (profile.currentTarget != null && profile.currentTarget.isDied) return $"{profile.name}, hedefi öldüðü için vuruþunu boþa salladý.";
-
-        return $"{profile.name}, {profile.lastTargetName} hedefine {profile.currentUseable.name} kullandý.";
-    }//!
-    public void ClearSkillAndTarget()
+    public void ClearSkillAndTarget()//gereksiz mi, birden fazla savaþ desteklemek için?
     {
         currentTarget = null;
-        currentUseable = null;
+        currentSkill = null;
     }
-
+    #endregion
 
     #region Status
 
@@ -148,30 +169,7 @@ public abstract class Profile : MonoBehaviour
         }
         onHealthChange?.Invoke();
     }*/
-    /*public void AddToHealth(float amount, Profile dealer)
-    {
-        stats.currentHealth += amount;
-        if (stats.currentHealth > stats.maxHealth) stats.currentHealth = stats.maxHealth;
 
-        if (stats.currentHealth <= 0)
-        {
-            stats?.talimsan.OnDie(this, dealer, -amount);
-            Die();
-        }
-
-        onHealthChange?.Invoke();
-
-        if (amount < 0)
-        {
-            hitCountForTour++;
-            if (stats.talimsan && dealer)
-            {
-                stats?.talimsan.OnTakeDamage(this, dealer, -amount);
-            }
-        }
-    }*/
-    
-    
     public void AddToHealth(float amount, Profile dealer)
     {
         //kalkaný varsa
@@ -204,7 +202,7 @@ public abstract class Profile : MonoBehaviour
 
             }
         }
-            
+
     }
     public void AddShield(float amount)
     {
@@ -220,12 +218,12 @@ public abstract class Profile : MonoBehaviour
         if (stats.currentShields[0] <= 0)
         {
             stats.currentShields.RemoveAt(0); // En üstteki kalkaný yok et
-            Debug.Log($"{name} kalkaný kýrýldý! Kalan hasar emildi.");
+            //Debug.Log($"{name} kalkaný kýrýldý! Kalan hasar emildi.");
 
         }
         else
         {
-            Debug.Log($"{name} kalkaný darbe aldý. Kalan kalkan caný: {stats.currentShields[0]}");
+            //Debug.Log($"{name} kalkaný darbe aldý. Kalan kalkan caný: {stats.currentShields[0]}");
         }
 
         onHealthChange?.Invoke(); // ondamageShield???
@@ -298,11 +296,11 @@ public abstract class Profile : MonoBehaviour
             FightManager.tauntedEnemy = enemy;
         }
         taunt = 2;
-    }
+    }//!
     public void DecreaseTaunt()
     {
-        taunt --;
-        if( taunt == 0 )
+        taunt--;
+        if (taunt == 0)
         {
             if (this is AllyProfile) FightManager.tauntedAlly = null;
             else if (this is EnemyProfile) FightManager.tauntedEnemy = null;
@@ -310,21 +308,6 @@ public abstract class Profile : MonoBehaviour
     }
 
 
-    public void ResetStats()
-    {
-        isDied = false;
-        currentStrength = stats.strength;
-        onStrengthChange?.Invoke(currentStrength);
-
-        currentTechnical = stats.technical;
-        onTechnicalChange?.Invoke(currentTechnical);
-
-        currentFocus = stats.focus;
-        onFocusChange?.Invoke(currentFocus);
-
-        currentSpeed = stats.speed;
-        onSpeedChange?.Invoke(currentSpeed);
-    }
     public void Die()
     {
         stats.talimsan?.OnDie(this, null, 0);//sýra yanlýþ olabilir
@@ -390,21 +373,41 @@ public abstract class Profile : MonoBehaviour
         {
             etheric.AddToMana(amount / ethericCount);
         }
-    }
+    }//!
 
 
     private void Parryy(Profile owner, Profile target)
     {
         string log = owner.name + " ";
         ConsolePanel.instance.WriteConsole(log);
-        CombatManager.AddAction(Parry(owner, target));
-    }
+        TurnScheduler.AddAction(Parry(owner, target));
+    }//!
     private IEnumerator Parry(Profile owner, Profile target)
     {
 
         target.AddToHealth(5, null);
 
         yield return new WaitForSeconds(1);
-    }
+    }//!
 
+
+
+
+
+
+
+
+
+
+
+
+    /*
+    private static string GetActionText(Profile profile)
+    {
+        if (profile.isDied) return $"{profile.name} öldüðü için hamle yapamadý.";
+        if (profile.mute > 0) return $"{profile.name} susturulduðu için büyü yapamadý.";
+        if (profile.currentTarget != null && profile.currentTarget.isDied) return $"{profile.name}, hedefi öldüðü için vuruþunu boþa salladý.";
+
+        return $"{profile.name}, {profile.lastTargetName} hedefine {profile.currentUseable.name} kullandý.";
+    }*/
 }

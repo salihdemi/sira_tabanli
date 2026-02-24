@@ -12,7 +12,7 @@ public class EnemyProfile : Profile
     }
     public override void ChooseSkill(Skill skill)
     {
-        currentUseable = skill;
+        currentSkill = skill;
         if (FightManager.tauntedAlly)
         {
             Debug.Log(FightManager.tauntedAlly + " tauntlu");

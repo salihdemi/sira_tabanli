@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "HealAllAllies", menuName = "Scriptable Objects/Useables/Skills/HealAllAllies")]
+[CreateAssetMenu(fileName = "HealAllAllies", menuName = "Scriptable Objects/Skills/CharacterSkills/HealAllAllies")]
 public class HealAllAllies : CharacterSkill
 {
     public override IEnumerator Method(Profile user, Profile target)

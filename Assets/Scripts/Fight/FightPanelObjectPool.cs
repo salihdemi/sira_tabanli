@@ -35,10 +35,7 @@ public class FightPanelObjectPool : MonoBehaviour
             Profile.OnSomeoneDie += HandleReturnToPool;
             gameObject.SetActive(false);
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+        else Destroy(gameObject);
     }
     private void OnDestroy()
     {
