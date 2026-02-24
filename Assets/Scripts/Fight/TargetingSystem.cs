@@ -11,14 +11,14 @@ public static class TargetingSystem
 
 
 
-    private static Useable selectedSkill;
+    private static Skill selectedSkill;
     private static Profile currentCaster;
 
 
     private static List<Profile> activeProfileButtons = new List<Profile> { };
 
 
-    public static void StartTargeting(Profile caster, Useable skill)
+    public static void StartTargeting(Profile caster, Skill skill)
     {
         selectedSkill = skill;
         currentCaster = caster;

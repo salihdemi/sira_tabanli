@@ -26,7 +26,7 @@ public class CharacterData : ScriptableObject
 
     [Header("Skills")]
     public Attack attack;
-    public List<Skill> skills = new List<Skill>();
+    public List<CharacterSkill> skills = new List<CharacterSkill>();
 
 
     [Header("DefaultTalisman")]

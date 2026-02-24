@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +21,7 @@ public abstract class Profile : MonoBehaviour
     public float currentStrength, currentTechnical, currentFocus, currentSpeed;
 
 
-    [HideInInspector] public Useable currentUseable;
+    [HideInInspector] public Skill currentUseable;
     [HideInInspector] public Profile currentTarget;
 
     [HideInInspector] public event Action onHealthChange, onStaminaChange, onManaChange;
@@ -34,7 +35,7 @@ public abstract class Profile : MonoBehaviour
 
 
 
-    //private
+    //private?
     public int hitCountForTour;
     public int mute;
     public int fire;
@@ -78,7 +79,7 @@ public abstract class Profile : MonoBehaviour
     }
 
     public abstract void LungeStart();
-    public abstract void ChooseSkill(Useable skill);
+    public abstract void ChooseSkill(Skill skill);
     public  void SetTarget(Profile profile)
     {
         if(profile == null)//Cok hedefli skillerde
@@ -100,14 +101,9 @@ public abstract class Profile : MonoBehaviour
 
     public void Play()
     {
-        CombatManager.AddAction(ExecuteActionRoutine());
+        CombatManager.AddAction(currentUseable.Method(this, currentTarget));
     }
 
-    private IEnumerator ExecuteActionRoutine()
-    {
-        currentUseable.Method(this, currentTarget);
-        yield return new WaitForSeconds(1f);     // 1 saniye bekle
-    }
     private static string GetActionText(Profile profile)
     {
         if (profile.isDied) return $"{profile.name} öldüðü için hamle yapamadý.";
@@ -115,7 +111,7 @@ public abstract class Profile : MonoBehaviour
         if (profile.currentTarget != null && profile.currentTarget.isDied) return $"{profile.name}, hedefi öldüðü için vuruþunu boþa salladý.";
 
         return $"{profile.name}, {profile.lastTargetName} hedefine {profile.currentUseable.name} kullandý.";
-    }
+    }//!
     public void ClearSkillAndTarget()
     {
         currentTarget = null;
@@ -197,7 +193,6 @@ public abstract class Profile : MonoBehaviour
 
                 if (stats.currentHealth <= 0)
                 {
-                    stats.talimsan?.OnDie(this, dealer, damage);
                     Die();
                 }
 
@@ -332,10 +327,15 @@ public abstract class Profile : MonoBehaviour
     }
     public void Die()
     {
+        stats.talimsan?.OnDie(this, null, 0);//sýra yanlýþ olabilir
+
         isDied = true;
         stats.isDied = true;
         TurnScheduler.HandleProfileDeath(this);
         FightManager.SetDefaultTarget();
+
+        //CombatManager.AddAction(Method(Died);//ölüm mesajý!!
+
         OnSomeoneDie.Invoke(this);
     }
 
@@ -343,7 +343,7 @@ public abstract class Profile : MonoBehaviour
 
 
 
-    public bool IsEnoughForSkill(Useable skill)
+    public bool IsEnoughForSkill(CharacterSkill skill)
     {
         bool healthEnough = stats.currentHealth >= skill.healthCost;
         bool staminaEnough = stats.currentStamina >= skill.staminaCost;

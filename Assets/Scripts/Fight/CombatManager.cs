@@ -4,11 +4,9 @@ using UnityEngine;
 
 public static class CombatManager
 {
-    //public static CombatManager instance;
     private static Queue<IEnumerator> actionQueue = new Queue<IEnumerator>();
     public static bool isBusy = false;
 
-    //void Awake() => instance = this;
 
     // Yeni bir olay (saldýrý veya týlsým) eklendiðinde buraya gelir
     public static void AddAction(IEnumerator action)

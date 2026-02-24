@@ -7,10 +7,10 @@ public class EnemyProfile : Profile
     {
         //Debug.Log(name + " hamlesini seçiyor");
 
-        Useable currentskill = stats.attack; //default hamle
+        Skill currentskill = stats.attack; //default hamle
         ChooseSkill(currentskill);
     }
-    public override void ChooseSkill(Useable skill)
+    public override void ChooseSkill(Skill skill)
     {
         currentUseable = skill;
         if (FightManager.tauntedAlly)

@@ -1,11 +1,12 @@
+using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Block", menuName = "Scriptable Objects/Useables/Skills/Block")]
-public class Block : Skill
+public class Block : CharacterSkill
 {
-    public override void Method(Profile user, Profile target)
+    public override IEnumerator Method(Profile user, Profile target)
     {
-
+        yield return null;//!
         //animasyonu oynat
         //sesi oynat
 

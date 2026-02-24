@@ -10,7 +10,7 @@ public static class InventoryManager
 
 
 
-    public static Dictionary<Consumable, int> consumables = new Dictionary<Consumable, int>();
+    public static Dictionary<ConsumableSkill, int> consumables = new Dictionary<ConsumableSkill, int>();
 
 
 
@@ -24,7 +24,7 @@ public static class InventoryManager
     public static HashSet<Talisman> equippedTalismans = new HashSet<Talisman>();
 
     #region consumable
-    public static void AddConsumable(Consumable consumable, int amount = 1)
+    public static void AddConsumable(ConsumableSkill consumable, int amount = 1)
     {
 
         if (consumables.ContainsKey(consumable))//zaten varsa
@@ -42,7 +42,7 @@ public static class InventoryManager
     }
 
 
-    public static void RemoveConsumable(Consumable consumable)
+    public static void RemoveConsumable(ConsumableSkill consumable)
     {
         if (consumables.ContainsKey(consumable))
         {
@@ -55,7 +55,7 @@ public static class InventoryManager
     }
 
 
-    public static List<Consumable> GetOwnedConsumable()
+    public static List<ConsumableSkill> GetOwnedConsumable()
     {
         return consumables.Where(pair => pair.Value > 0)
                 .Select(pair => pair.Key)
@@ -63,7 +63,7 @@ public static class InventoryManager
     }
 
 
-    public static int GetConsumableCount(Consumable consumable)
+    public static int GetConsumableCount(ConsumableSkill consumable)
     {
         // Eðer toy null ise veya sözlükte yoksa 0 döndür, hata verme!
         if (consumable == null || !consumables.ContainsKey(consumable)) return 0;
@@ -167,7 +167,7 @@ public static class InventoryManager
 public class InventoryVisualizer : MonoBehaviour
 {
 
-    public List<Consumable> consumableNumbers = new List<Consumable>();
+    public List<ConsumableSkill> consumableNumbers = new List<ConsumableSkill>();
     public List<int> consumables = new List<int>();
 
 

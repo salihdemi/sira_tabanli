@@ -15,38 +15,38 @@ public class AllyProfile : Profile
         CharacterActionPanel.instance.OpenWriteThings(this);
 
     }
-    public override void ChooseSkill(Useable useable)
+    public override void ChooseSkill(Skill skill)
     {
-        currentUseable = useable;
+        currentUseable = skill;
         CharacterActionPanel.instance.CloseAndDisableAllPanels();
 
-        bool needTargetýng = useable.targetType == TargetType.ally
-                       || useable.targetType == TargetType.enemy;
-        if (useable.targetType == TargetType.enemy)
+        bool needTargetýng = skill.targetType == TargetType.ally
+                       || skill.targetType == TargetType.enemy;
+        if (skill.targetType == TargetType.enemy)
         {
             if (FightManager.tauntedEnemy) SetTarget(FightManager.tauntedEnemy);
-            else TargetingSystem.StartTargeting(this, useable);
+            else TargetingSystem.StartTargeting(this, skill);
         }
-        else if (useable.targetType == TargetType.ally)
+        else if (skill.targetType == TargetType.ally)
         {
-            TargetingSystem.StartTargeting(this, useable);
+            TargetingSystem.StartTargeting(this, skill);
         }
-        else if (useable.targetType == TargetType.all)
+        else if (skill.targetType == TargetType.all)
         {
             SetTarget(null);
             lastTargetName = "Herkes";
         }
-        else if (useable.targetType == TargetType.allEnemy)
+        else if (skill.targetType == TargetType.allEnemy)
         {
             SetTarget(null);
             lastTargetName = "Tüm düþmanlar";
         }
-        else if (useable.targetType == TargetType.allAlly)
+        else if (skill.targetType == TargetType.allAlly)
         {
             SetTarget(null);
             lastTargetName = "Tüm dostlar";
         }
-        else if (useable.targetType == TargetType.self)
+        else if (skill.targetType == TargetType.self)
         {
             SetTarget(this);
             lastTargetName = name;

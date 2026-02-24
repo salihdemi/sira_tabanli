@@ -86,7 +86,7 @@ public class CharacterActionPanel : MonoBehaviour
         // 2. Buton Oluþturma
         for (int i = 0; i < profile.stats.currentSkills.Count; i++)
         {
-            Useable skill = profile.stats.currentSkills[i];
+            CharacterSkill skill = profile.stats.currentSkills[i];
 
             Button button = MakeButton(skill, skillsPanel.transform, profile);
 
@@ -105,7 +105,7 @@ public class CharacterActionPanel : MonoBehaviour
         foreach (Transform child in consumablesPanel.transform.GetChild(0)) Destroy(child.gameObject);//pool tipi yap!
         
         // 2. Buton Oluþturma
-        foreach (Consumable consumable in InventoryManager.GetOwnedConsumable())
+        foreach (ConsumableSkill consumable in InventoryManager.GetOwnedConsumable())
         {
             Debug.Log("buton eklendi");
             Button button = MakeButton(consumable, consumablesPanel.transform, profile);
@@ -130,7 +130,19 @@ public class CharacterActionPanel : MonoBehaviour
     #endregion
 
 
-    private Button MakeButton(Useable skill, Transform parent, AllyProfile profile)
+    private Button MakeButton(ConsumableSkill skill, Transform parent, AllyProfile profile)
+    {
+        Button button = Instantiate(buttonPrefab);
+        TextMeshProUGUI text = button.transform.GetComponentInChildren<TextMeshProUGUI>();
+
+        button.transform.SetParent(parent.GetChild(0), false);
+        text.text = skill._name;
+
+        button.interactable = true;
+
+        return button;
+    }
+    private Button MakeButton(CharacterSkill skill, Transform parent, AllyProfile profile)
     {
         Button button = Instantiate(buttonPrefab);
         TextMeshProUGUI text = button.transform.GetComponentInChildren<TextMeshProUGUI>();

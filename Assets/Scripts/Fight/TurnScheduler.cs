@@ -66,16 +66,13 @@ public static class TurnScheduler
     }
     public static void CheckNextCharacterToLunge()
     {
-        if (order == aliveProfiles.Count)
+        if (order == aliveProfiles.Count)//oynat
         {
-            //Debug.Log("tüm hamleler yapýldý");
-
-            //oynat
             onStartPlay?.Invoke();
             i = 0;
             PlayNextPerson();
         }
-        else
+        else//devam et
         {
             LetNextPlayertoLunge();
         }
@@ -93,53 +90,19 @@ public static class TurnScheduler
     private static int i = 0;
     public static void PlayNextPerson()
     {
-
-        if (orderedProfiles.Count > i)
-        {
-            Debug.Log("Oynat" + orderedProfiles[i].name);
-            Profile profile = orderedProfiles[i];
-            i++;
-            if (!profile.isDied)
-            {
-                profile.Play();
-            }
-            else
-            {
-                PlayNextPerson();
-            }
-        }
-        else
-        {
-            Debug.Log("FinishTour");
-            FinishTour();
-        }
+        if (orderedProfiles.Count <= i)
+        { FinishTour(); return; }
 
 
+        Profile profile = orderedProfiles[i];
+        i++;
+        if (!profile.isDied) profile.Play();
+        else PlayNextPerson();
+        
 
-
-        ///listeyi al
-        ///listenin birincisinin hamlesini yaz
-        ///araya gir ve yaz
-        ///listenin ikincisini yaz
 
     }
-    /*
-    public static void Something(float time, Action onComplete)
-    {
-        FightPanelObjectPool.instance.StartCoroutine(SomethingHappen(time, onComplete));
-    }
-    private static IEnumerator SomethingHappen(float time, Action onComplete)
-    {
-
-        Debug.Log("SomethingHappen");
-        if (onComplete != null) onComplete.Invoke();
-
-        yield return new WaitForSeconds(time);
-
-
-        PlayNextPerson();
-    }
-    */
+   
     private static void FinishTour()
     {
         onTourEnd.Invoke();

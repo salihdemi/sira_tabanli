@@ -1,11 +1,12 @@
+using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "StaminaSkill", menuName = "Scriptable Objects/Useables/Skills/StaminaSkill")]
-public class StaminaSkill : Skill
+public class StaminaSkill : CharacterSkill
 {
-    public override void Method(Profile user, Profile target)
+    public override IEnumerator Method(Profile user, Profile target)
     {
-
+        yield return null;//!
         //animasyonu oynat
         //sesi oynat
 

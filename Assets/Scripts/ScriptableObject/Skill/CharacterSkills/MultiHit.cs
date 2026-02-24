@@ -3,13 +3,13 @@ using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "MultiHit", menuName = "Scriptable Objects/Useables/Skills/MultiHit")]
-public class MultiHit : Skill
+public class MultiHit : CharacterSkill
 {
     [Header("MultiHit")]
     public int hitCount;
-    public override void Method(Profile user, Profile target)
+    public override IEnumerator Method(Profile user, Profile target)
     {
-
+        yield return null;//!
         //animasyonu oynat
         //sesi oynat
 
@@ -27,13 +27,5 @@ public class MultiHit : Skill
             target.AddToHealth(-user.currentTechnical, user);
             yield return new WaitForSeconds(0.2f);
         }
-    }
-
-
-
-
-    public override int GetTime()
-    {
-        return 1 * hitCount;
     }
 }

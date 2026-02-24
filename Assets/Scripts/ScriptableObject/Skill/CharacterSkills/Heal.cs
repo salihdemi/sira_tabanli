@@ -1,11 +1,12 @@
+using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Burst", menuName = "Scriptable Objects/Useables/Skills/Heal")]
-public class Heal : Skill
+public class Heal : CharacterSkill
 {
-    public override void Method(Profile user, Profile target)
+    public override IEnumerator Method(Profile user, Profile target)
     {
-
+        yield return null;//!
         //animasyonu oynat
         //sesi oynat
 
