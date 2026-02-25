@@ -13,14 +13,14 @@ public class ConsolePanel : MonoBehaviour
         {
             instance = this;
             TurnScheduler.onStartPlay += Enable;
-            TurnScheduler.onTourLungesStart += Disable;
+            TurnScheduler.onTourStart += Disable;
         }
         else Destroy(gameObject);
     }
     private void OnDestroy()
     {
         TurnScheduler.onStartPlay -= Enable;
-        TurnScheduler.onTourLungesStart -= Disable;
+        TurnScheduler.onTourStart -= Disable;
     }
     public void Enable()
     {

@@ -14,7 +14,7 @@ public static class TurnScheduler
     public static List<EnemyProfile> ActiveEnemyProfiles = new List<EnemyProfile>();
 
     public static event Action onStartPlay;
-    public static event Action onTourLungesStart;
+    public static event Action onTourStart;
     public static event Action onTourEnd;
 
     private static Coroutine playCoroutine;
@@ -59,7 +59,7 @@ public static class TurnScheduler
         foreach (Profile profile in ActiveAllyProfiles) profile.stats.talimsan?.OnTourStart(profile);
         foreach (Profile profile in ActiveEnemyProfiles) profile.stats.talimsan?.OnTourStart(profile);
 
-        onTourLungesStart.Invoke();
+        onTourStart.Invoke();
         SortProfilesWithSpeed();
 
 

@@ -49,9 +49,10 @@ public abstract class Profile : MonoBehaviour
 
     //private?
     public int hitCountForTour;
-    public int mute;
+    public int mute;//aktif degil
     public int fire;
-    public int taunt;
+    public bool taunt;
+    public bool willTaunt;
 
 
 
@@ -74,8 +75,8 @@ public abstract class Profile : MonoBehaviour
         ResetStats();
 
 
-        TurnScheduler.onTourEnd += DamageIfBurning;
-        TurnScheduler.onTourEnd += DecreaseStatus;
+        TurnScheduler.onTourEnd += BurnProcess;
+        TurnScheduler.onTourEnd += StatusProcess;//event birikmesi olur mu??!!
         TurnScheduler.onTourEnd += ResetHitCount;
         //Talisman?
 
@@ -300,31 +301,35 @@ public abstract class Profile : MonoBehaviour
     }
 
 
+
+
+
     public void Taunt()
     {
-        if (this is AllyProfile ally)
-        {
-            Debug.Log(ally + "tauntlandý");
-            FightManager.tauntedAlly = ally;
-        }
-        else if (this is EnemyProfile enemy)
-        {
-            FightManager.tauntedEnemy = enemy;
-        }
-        taunt = 2;
-    }//!
-    public void DecreaseTaunt()
+        willTaunt = true;
+    }
+    private void TauntProcess()
     {
-        taunt--;
-        if (taunt == 0)
-        {
-            if (this is AllyProfile) FightManager.tauntedAlly = null;
-            else if (this is EnemyProfile) FightManager.tauntedEnemy = null;
-        }
+        if (taunt) LeaveTaunt();
+
+        else if (willTaunt) EnterTaunt();
     }
 
+    private void EnterTaunt()
+    {
+        if (this is AllyProfile ally) FightManager.tauntedAlly = ally;
+        else if (this is EnemyProfile enemy) FightManager.tauntedEnemy = enemy;
+        willTaunt = false;
+        taunt = true;
+    }
+    private void LeaveTaunt()
+    {
+        if (this is AllyProfile) FightManager.tauntedAlly = null;
+        else if (this is EnemyProfile) FightManager.tauntedEnemy = null;
+        taunt = false;
+    }
 
-    public void Die()
+    private void Die()
     {
         stats.talimsan?.OnDie(this, null, 0);//sýra yanlýþ olabilir
 
@@ -355,18 +360,16 @@ public abstract class Profile : MonoBehaviour
     {
         hitCountForTour = 0;
     }
-    private void DamageIfBurning()
+    private void BurnProcess()
     {
+        fire--;
         if (fire > 0) AddToHealth(-5, null);
     }
-    private void DecreaseStatus()
+    private void StatusProcess()
     {
         if (mute > 0) mute--;
-        if (fire > 0) fire--;
-
-
-
-        DecreaseTaunt();
+        BurnProcess();
+        TauntProcess();
     }
 
 
