@@ -15,7 +15,7 @@ public class ExplodeTalismanSkill : TalismanSkill
         ConsolePanel.instance.WriteConsole(log);
 
         //saldýrýyý yap
-        ProfileLungeHandler[] profiles = TurnScheduler.GetAliveProfiles().ToArray();//sadece allylara da vurabilir
+        ProfileLungeHandler[] profiles = TurnScheduler.orderedProfiles.ToArray();//sadece allylara da vurabilir
         foreach (ProfileLungeHandler lungeHandler in profiles)
         {
             if (lungeHandler != null && lungeHandler != user && !lungeHandler.profile.isDied)

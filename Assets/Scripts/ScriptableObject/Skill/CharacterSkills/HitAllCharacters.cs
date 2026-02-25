@@ -7,6 +7,7 @@ public class HitAllCharacters : CharacterSkill
     public float damage;
     public override IEnumerator Method(Profile user, Profile target)
     {
+        /*
         //animasyonu oynat
         //sesi oynat
 
@@ -16,7 +17,7 @@ public class HitAllCharacters : CharacterSkill
         ConsolePanel.instance.WriteConsole(log);
 
         //saldýrýyý yap
-        ProfileLungeHandler[] profiles = TurnScheduler.GetAliveProfiles().ToArray();//sadece allylara da vurabilir
+        ProfileLungeHandler[] profiles = FightManager.AllyProfiles.ToArray();//sadece allylara da vurabilir
         foreach (ProfileLungeHandler lungeHandler in profiles)
         {
             if (lungeHandler != null && lungeHandler.profile != user && !lungeHandler.profile.isDied)
@@ -24,7 +25,7 @@ public class HitAllCharacters : CharacterSkill
                 lungeHandler.profile.AddToHealth(-damage, null);
             }
         }
-
+        */
         //beklet
         yield return new WaitForSeconds(1f); // 1 saniye bekle
     }

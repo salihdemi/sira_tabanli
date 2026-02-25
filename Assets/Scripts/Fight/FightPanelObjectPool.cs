@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 using UnityEngine;
 
 public class FightPanelObjectPool : MonoBehaviour
@@ -23,6 +25,10 @@ public class FightPanelObjectPool : MonoBehaviour
     // Uyuyan objeleri tutan listeler
     private List<Profile> allyPool = new List<Profile>();
     private List<Profile> enemyPool = new List<Profile>();
+
+
+
+
 
     private void Awake()
     {
@@ -89,18 +95,18 @@ public class FightPanelObjectPool : MonoBehaviour
     private Profile CreateNewAlly()
     {
         GameObject obj = Instantiate(allyPrefab, allyParent);
-        Profile profile = obj.GetComponent<Profile>();
+        AllyProfileLungeHandler lungeHandler = obj.GetComponent<AllyProfileLungeHandler>();
         obj.SetActive(false);//! denemek gerek
         allyPool.Add(profile);
         return profile;
     }
     public void ClearAllies()
     {
-        List<AllyProfileLungeHandler> activeAllies = TurnScheduler.ActiveAllyProfiles;
+        List<Profile> activeAllies = FightManager.AllyProfiles;
 
         for (int i = activeAllies.Count - 1; i >= 0; i--)
         {
-            ReturnAllyToPool(activeAllies[i].profile);
+            ReturnAllyToPool(activeAllies[i]);
         }
     }
     #endregion
@@ -129,18 +135,19 @@ public class FightPanelObjectPool : MonoBehaviour
     private Profile CreateNewEnemy()
     {
         GameObject obj = Instantiate(enemyPrefab, enemyParent);
-        Profile profile = obj.GetComponent<Profile>();
+        EnemyProfileLungeHandler lungeHandler = obj.GetComponent<EnemyProfileLungeHandler>();
+        Profile profile = obj.AddComponent<Profile>();
         obj.SetActive(false);//! denemek gerek
         enemyPool.Add(profile);
         return profile;
     }
     public void ClearEnemies()
     {
-        List<EnemyProfileLungeHandler> activeEnemies = TurnScheduler.ActiveEnemyProfiles;
+        List<Profile> activeEnemies = FightManager.EnemyProfiles;
 
         for (int i = activeEnemies.Count - 1; i >= 0; i--)
         {
-            ReturnEnemyToPool(activeEnemies[i].profile);
+            ReturnEnemyToPool(activeEnemies[i]);
         }
     }
     #endregion

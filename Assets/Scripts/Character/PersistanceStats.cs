@@ -44,7 +44,7 @@ public class PersistanceStats
     [Header("Other")]
     public bool isDied;
     public bool isInParty;
-
+    public CharacterType type;
 
     public void LoadFromBase(CharacterData data)
     {
@@ -120,4 +120,10 @@ public class PersistanceStats
         }
 
     }
+}
+public enum CharacterType
+{
+    a,
+    b,
+    c
 }

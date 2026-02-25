@@ -6,54 +6,27 @@ using UnityEngine;
 
 public static class TurnScheduler
 {
-    private static List<ProfileLungeHandler> aliveProfiles;
     public static List<ProfileLungeHandler> orderedProfiles;//hiza gore siralan
     public static int order;
 
-    public static List<AllyProfileLungeHandler> ActiveAllyProfiles = new List<AllyProfileLungeHandler>();
-    public static List<EnemyProfileLungeHandler> ActiveEnemyProfiles = new List<EnemyProfileLungeHandler>();
 
     public static event Action onStartPlay;
     public static event Action onTourStart;
     public static event Action onTourEnd;
 
-    private static Coroutine playCoroutine;
+    public static Coroutine playCoroutine;
 
     #region ProfileHandlers
-    public static void SetAliveProfiles(List<Profile> allyProfiles, List<Profile> enemyProfiles)
-    {
-        ActiveAllyProfiles = allyProfiles
-        .Select(p => (AllyProfileLungeHandler)p.lungeHandler)
-        .ToList();
-        ActiveEnemyProfiles = enemyProfiles
-        .Select(p => (EnemyProfileLungeHandler)p.lungeHandler)
-        .ToList();
-
-        aliveProfiles = allyProfiles.Cast<ProfileLungeHandler>()
-                                .Concat(enemyProfiles.Cast<ProfileLungeHandler>())
-                                .ToList();
-    }
-    public static List<ProfileLungeHandler> GetAliveProfiles()
-    {
-        return aliveProfiles ?? new List<ProfileLungeHandler>();//Ne yaptýgýný bilmiyorum??!!
-        /*
-        SetAliveProfiles(ActiveAllyProfiles, ActiveEnemyProfiles);
-        return aliveProfiles;*/
-    }
     public static void SortProfilesWithSpeed()
     {
         order = 0;
-        orderedProfiles = aliveProfiles.OrderByDescending(p => p.profile.currentStrength).ToList();
+        orderedProfiles = FightManager.AllyProfiles
+        .Concat(FightManager.EnemyProfiles) // Ýki listeyi birleþtir
+        .OrderByDescending(p => p.stats.speed) // Profile içindeki hýza göre sýrala
+        .Select(p => p.lungeHandler) // Profile'dan Handler'a geçiþ yap
+        .ToList(); // Listeye dök
 
     }
-    private static void RemoveFromQueue(Profile deadProfile)
-    {
-        if (aliveProfiles.Contains(deadProfile.lungeHandler))
-        {
-            aliveProfiles.Remove(deadProfile.lungeHandler);
-        }
-    }
-
     #endregion
 
 
@@ -61,8 +34,10 @@ public static class TurnScheduler
     #region LungeSequence
     public static void StartTourLunges()
     {
-        foreach (AllyProfileLungeHandler lungeHandler in ActiveAllyProfiles) lungeHandler.profile.stats.talimsan?.OnTourStart(lungeHandler.profile);
-        foreach (EnemyProfileLungeHandler lungeHandler in ActiveEnemyProfiles) lungeHandler.profile.stats.talimsan?.OnTourStart(lungeHandler.profile);
+
+
+        foreach (Profile profile in FightManager.AllyProfiles)  profile.stats.talimsan?.OnTourStart(profile);
+        foreach (Profile profile in FightManager.EnemyProfiles) profile.stats.talimsan?.OnTourStart(profile);
 
         onTourStart.Invoke();
         SortProfilesWithSpeed();
@@ -73,7 +48,7 @@ public static class TurnScheduler
     }
     public static void CheckNextCharacterToLunge()
     {
-        if (order == aliveProfiles.Count)//oynat
+        if (order == orderedProfiles.Count)//oynat
         {
             onStartPlay?.Invoke();
             i = 0;
@@ -81,15 +56,15 @@ public static class TurnScheduler
         }
         else//devam et
         {
-            foreach (AllyProfileLungeHandler profile in ActiveAllyProfiles) profile.profile.stats.talimsan?.OnTourEnd(profile.profile);
-            foreach (EnemyProfileLungeHandler profile in ActiveEnemyProfiles) profile.profile.stats.talimsan?.OnTourEnd(profile.profile);
+            foreach (Profile profile in FightManager.AllyProfiles) profile.stats.talimsan?.OnTourEnd(profile);
+            foreach (Profile profile in FightManager.EnemyProfiles) profile.stats.talimsan?.OnTourEnd(profile);
             LetNextPlayertoLunge();
         }
     }
     private static void LetNextPlayertoLunge()
     {
         order++;
-        Profile profile = aliveProfiles[order - 1].profile;//-1?
+        Profile profile = FightManager.AllyProfiles[order - 1];//-1?
 
         profile.stats.talimsan?.OnTourStart(profile);
         profile.lungeHandler.LungeStart();
@@ -170,37 +145,6 @@ public static class TurnScheduler
 
 
 
-    public static void HandleProfileDeath(Profile deadProfile)
-    {
-        // Listelerden çýkar
-        if (deadProfile is Profile ally) ActiveAllyProfiles.Remove((AllyProfileLungeHandler)ally.lungeHandler);
-        else if (deadProfile is Profile enemy) ActiveEnemyProfiles.Remove((EnemyProfileLungeHandler)enemy.lungeHandler);
-
-        RemoveFromQueue(deadProfile);
-
-        // Savaþ bitti mi kontrol et
-        if (ActiveAllyProfiles.Count == 0)
-        {
-            if (playCoroutine != null)
-            {
-                //oynat corosunu durdur
-                //runner.StopCor(playCoroutine);
-                playCoroutine = null;
-            }
-
-            FightManager.LoseFight();
-        }
-        else if (ActiveEnemyProfiles.Count == 0)
-        {
-            if (playCoroutine != null)
-            {
-                //runner.StopCor(playCoroutine);
-                playCoroutine = null;
-            }
-
-            FightManager.WinFight();
-        }
-    }
 
 
 

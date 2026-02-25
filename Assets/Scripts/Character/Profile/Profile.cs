@@ -41,11 +41,11 @@ public abstract class Profile : MonoBehaviour
     
     private void OnConsumeMana(float amount)
     {
-        foreach (EnemyProfileLungeHandler enemy in TurnScheduler.ActiveEnemyProfiles)
+        foreach (Profile enemy in FightManager.EnemyProfiles)
         {
-            if (enemy.profile.stats?.talimsan is ManaLeech_Talisman talisman)
+            if (enemy.stats?.talimsan is ManaLeech_Talisman talisman)
             {
-                talisman.AbsorbMana(enemy.profile, this, amount);
+                talisman.AbsorbMana(enemy, this, amount);
             }
         }
     }//yeri ve parametreleri deðiþtirilmesi gerekebilir?!
@@ -114,51 +114,10 @@ public abstract class Profile : MonoBehaviour
 
     #endregion
 
-    /*
-    #region LungeSequence
-    public abstract void LungeStart();
-    public abstract void ChooseSkill(Skill skill);
-    public void SetTarget(Profile profile)
-    {
-        if (profile == null)//Cok hedefli skillerde
-        {
-            FinishLunge();
-            return;
-        }
-        currentTarget = profile;
-        lastTargetName = currentTarget.name;
-
-        FinishLunge();//!
-    }
-    public void FinishLunge()
-    {
-        TurnScheduler.CheckNextCharacterToLunge();
-    }
-
-    #endregion
     
-    #region PlaySequence
-    public bool Play()
-    {
-        if (isDied) return false;
-
-        bool needTarget = currentSkill.targetType == TargetType.enemy || currentSkill.targetType == TargetType.ally;
-        bool targetValid = !needTarget || (currentTarget != null && !currentTarget.isDied);
-
-        if (targetValid)
-        {
-            TurnScheduler.AddAction(currentSkill.Method(this, currentTarget));
-            return true; // Baþarýyla sýraya eklendi
-        }
-
-        return false; // Oynayamadý
-    }
-
-    #endregion
-    */
 
 
-    #region Status
+    #region SetValue
 
     //setler olustururken calismali sadece
     public void SetHealth(float amount)
@@ -176,7 +135,8 @@ public abstract class Profile : MonoBehaviour
         stats.currentMana = amount;
         onManaChange?.Invoke();
     }
-
+    #endregion
+    #region StatusChange
     /*public void ForceChangeHealth(float amount)//Overhealth
     {
         stats.currentHealth += amount;
@@ -187,7 +147,6 @@ public abstract class Profile : MonoBehaviour
         }
         onHealthChange?.Invoke();
     }*/
-
     public void AddToHealth(float amount, Profile dealer)
     {
         //kalkaný varsa
@@ -284,7 +243,21 @@ public abstract class Profile : MonoBehaviour
         }
     }
 
+    private void Die()
+    {
+        stats.talimsan?.OnDie(this, null, 0);//sýra yanlýþ olabilir
 
+        isDied = true;
+        stats.isDied = true;
+        FightManager.HandleProfileDeath(this);
+        FightManager.SetDefaultTarget();
+
+        //CombatManager.AddAction(Method(Died);//ölüm mesajý!!
+
+        OnSomeoneDie.Invoke(this);
+    }
+    #endregion
+    #region Stats
     public void AddToStrength(float amount)
     {
         currentStrength += amount;
@@ -305,11 +278,11 @@ public abstract class Profile : MonoBehaviour
         currentSpeed += amount;
         onSpeedChange?.Invoke(currentSpeed);
     }
+    #endregion
 
 
 
-
-
+    #region Effects
     public void Taunt()
     {
         willTaunt = true;
@@ -320,7 +293,6 @@ public abstract class Profile : MonoBehaviour
 
         else if (willTaunt) EnterTaunt();
     }
-
     private void EnterTaunt()
     {
         if (this is Profile ally) FightManager.tauntedAlly = ally;//ally-enemy kontrolü!!!!!!!!!!!!1
@@ -335,21 +307,25 @@ public abstract class Profile : MonoBehaviour
         taunt = false;
     }
 
-    private void Die()
+
+
+    private void BurnProcess()
     {
-        stats.talimsan?.OnDie(this, null, 0);//sýra yanlýþ olabilir
-
-        isDied = true;
-        stats.isDied = true;
-        TurnScheduler.HandleProfileDeath(this);
-        FightManager.SetDefaultTarget();
-
-        //CombatManager.AddAction(Method(Died);//ölüm mesajý!!
-
-        OnSomeoneDie.Invoke(this);
+        fire--;
+        if (fire > 0) AddToHealth(-5, null);
     }
-
+    private void StatusProcess()
+    {
+        if (mute > 0) mute--;
+        BurnProcess();
+        TauntProcess();
+    }
     #endregion
+
+    private void ResetHitCount()
+    {
+        hitCountForTour = 0;
+    }
 
 
 
@@ -362,21 +338,6 @@ public abstract class Profile : MonoBehaviour
     }
 
 
-    private void ResetHitCount()
-    {
-        hitCountForTour = 0;
-    }
-    private void BurnProcess()
-    {
-        fire--;
-        if (fire > 0) AddToHealth(-5, null);
-    }
-    private void StatusProcess()
-    {
-        if (mute > 0) mute--;
-        BurnProcess();
-        TauntProcess();
-    }
 
 
 
@@ -407,8 +368,7 @@ public abstract class Profile : MonoBehaviour
 
 
 
-    /*
-    private static string GetActionText(Profile profile)
+    /*private static string GetActionText(Profile profile)
     {
         if (profile.isDied) return $"{profile.name} öldüðü için hamle yapamadý.";
         if (profile.mute > 0) return $"{profile.name} susturulduðu için büyü yapamadý.";

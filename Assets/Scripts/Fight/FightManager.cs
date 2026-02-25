@@ -10,42 +10,37 @@ using UnityEngine.SceneManagement;
 
 public static class FightManager
 {
-    //düþman kendi hedefini seçebilince silinecek
+    public static List<Profile> AllyProfiles = new List<Profile>();
+    public static List<Profile> EnemyProfiles = new List<Profile>();
+
+
+
+
+
+
     public static Profile tauntedAlly;
     public static Profile tauntedEnemy;
 
+    //düþman kendi hedefini seçebilince silinecek
     public static Profile defaultTargetForEnemies;//!
 
     public static void SetDefaultTarget()//gecici
     {
-        if (TurnScheduler.ActiveAllyProfiles.Count > 0)
+        if (AllyProfiles.Count > 0)
         {
-            defaultTargetForEnemies = TurnScheduler.ActiveAllyProfiles[0].profile;//!
+            defaultTargetForEnemies = AllyProfiles[0];//!
         }
     }
 
     //-----------------------
 
 
-
-
-
-
-
-
     private static GameObject fightPanel;
-
-
-
 
 
     public static event Action OnFightStart, OnFightEnd;
 
     private static EnemyGroup currentEnemy;
-
-
-
-
 
 
 
@@ -67,22 +62,20 @@ public static class FightManager
         currentEnemy = enemy;
 
         //spawn allies
-        List<Profile> ActiveAllyProfiles = BattleSpawner.SpawnAllies(PartyManager.partyStats);
+        AllyProfiles = BattleSpawner.SpawnAllies(PartyManager.partyStats);
 
         //spawn enemies
-        List<Profile> ActiveEnemyProfiles = BattleSpawner.SpawnEnemies(enemy.enemyStats);
+        EnemyProfiles = BattleSpawner.SpawnEnemies(enemy.enemyStats);
 
 
 
-        TurnScheduler.SetAliveProfiles(ActiveAllyProfiles, ActiveEnemyProfiles);
-        TurnScheduler.SortProfilesWithSpeed();
 
         //battleSpawner.ResetStats(AllyProfiles);
 
         SetDefaultTarget();//!
 
-        foreach (Profile profile in ActiveAllyProfiles) profile.stats.talimsan?.OnFightStart(profile);
-        foreach (Profile profile in ActiveEnemyProfiles) profile.stats.talimsan?.OnFightStart(profile);
+        foreach (Profile profile in AllyProfiles) profile.stats.talimsan?.OnFightStart(profile);
+        foreach (Profile profile in EnemyProfiles) profile.stats.talimsan?.OnFightStart(profile);
         TurnScheduler.StartTourLunges();
     }
     
@@ -115,7 +108,7 @@ public static class FightManager
     
     public static void FinishFight()
     {
-        foreach (ProfileLungeHandler lungeHandler in TurnScheduler.ActiveAllyProfiles) lungeHandler.profile.stats.talimsan?.OnFightEnd(lungeHandler.profile);
+        foreach (Profile profile in AllyProfiles) profile.stats.talimsan?.OnFightEnd(profile);
 
         OnFightEnd.Invoke();//moveable-setisinfight
 
@@ -133,9 +126,47 @@ public static class FightManager
 
 
 
+    public static void HandleProfileDeath(Profile deadProfile)
+    {
+        // Listelerden çýkar
+        RemoveFromQueue(deadProfile);
+
+        // Savaþ bitti mi kontrol et
+        if (AllyProfiles.Count == 0)
+        {
+            if (TurnScheduler.playCoroutine != null)
+            {
+                //oynat corosunu durdur
+                //runner.StopCor(playCoroutine);
+                TurnScheduler.playCoroutine = null;
+            }
+
+            FightManager.LoseFight();
+        }
+        else if (EnemyProfiles.Count == 0)
+        {
+            if (TurnScheduler.playCoroutine != null)
+            {
+                //runner.StopCor(playCoroutine);
+                TurnScheduler.playCoroutine = null;
+            }
+
+            FightManager.WinFight();
+        }
+    }
 
 
-
+    private static void RemoveFromQueue(Profile deadProfile)
+    {
+        if (AllyProfiles.Contains(deadProfile))
+        {
+            AllyProfiles.Remove(deadProfile);
+        }
+        else if (EnemyProfiles.Contains(deadProfile))
+        {
+            EnemyProfiles.Remove(deadProfile);
+        }
+    }
 
 
 }

@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditor.Overlays;
+using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,9 +18,22 @@ public static class BattleSpawner
     private static Profile MakeAllyProfile(PersistanceStats persistanceStats)
     {
         Profile profile = FightPanelObjectPool.instance.GetAlly();
+        Profile oldProfile = profile.GetComponent<Profile>();
+        if (oldProfile != null) GameObject.DestroyImmediate(oldProfile);
+
+        // 3. Karar Verme: Stats içindeki tipe göre yeni scripti ekle
+        Profile finalProfile;
+        switch (persistanceStats.type)
+        {
+            case CharacterType.a:
+                finalProfile = profile.gameObject.AddComponent<DefaultAllyProfile>();
+                break;
+            case CharacterType.b:
+                finalProfile = profile.gameObject.AddComponent<DefaultEnemyProfile>();
+                break;
+        }
 
         profile.Setup(persistanceStats);
-
         return profile;
     }
     private static Profile MakeEnemyProfile(PersistanceStats persistanceStats)

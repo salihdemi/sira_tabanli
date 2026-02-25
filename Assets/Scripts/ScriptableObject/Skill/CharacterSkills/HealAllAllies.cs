@@ -7,14 +7,16 @@ public class HealAllAllies : CharacterSkill
     public override IEnumerator Method(Profile user, Profile target)
     {
         yield return null;//!
+        /*
         //animasyonu oynat
         //sesi oynat
 
         //saldýrýyý yap
 
-        foreach (ProfileLungeHandler enemy in TurnScheduler.ActiveAllyProfiles)
+        foreach (Profile ally in FightManager.AllyProfiles)
         {
-            enemy.profile.AddToHealth(5, user);
+            ally.AddToHealth(5, user);
         }
+        */
     }
 }

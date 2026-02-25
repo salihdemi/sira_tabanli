@@ -11,10 +11,10 @@ public class HitAllEnemies : CharacterSkill
         //sesi oynat
 
         //saldýrýyý yap
-
+        /*
         foreach (EnemyProfileLungeHandler enemy in TurnScheduler.ActiveEnemyProfiles)
         {
             enemy.profile.AddToHealth(-5, user);
-        }
+        }*/
     }
 }
