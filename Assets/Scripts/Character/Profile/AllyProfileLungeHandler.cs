@@ -5,14 +5,14 @@ using UnityEngine.Profiling;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
-public class AllyProfile : Profile
+public class AllyProfileLungeHandler : ProfileLungeHandler
 {
 
 
     public override void LungeStart()
     {
         //Debug.Log(name + " hamlesini seçiyor");
-        CharacterActionPanel.instance.OpenWriteThings(this);
+        CharacterActionPanel.instance.OpenWriteThings(profile);
 
     }
     public override void ChooseSkill(Skill skill)
@@ -25,32 +25,28 @@ public class AllyProfile : Profile
         if (skill.targetType == TargetType.enemy)
         {
             if (FightManager.tauntedEnemy) SetTarget(FightManager.tauntedEnemy);
-            else TargetingSystem.StartTargeting(this, skill);
+            else TargetingSystem.StartTargeting(profile, skill);
         }
         else if (skill.targetType == TargetType.ally)
         {
-            TargetingSystem.StartTargeting(this, skill);
+            TargetingSystem.StartTargeting(profile, skill);
+        }
+        else if (skill.targetType == TargetType.self)
+        {
+            SetTarget(profile);
         }
         //gerek var mý?
         else if (skill.targetType == TargetType.all)
         {
             SetTarget(null);
-            lastTargetName = "Herkes";
         }
         else if (skill.targetType == TargetType.allEnemy)
         {
             SetTarget(null);
-            lastTargetName = "Tüm düþmanlar";
         }
         else if (skill.targetType == TargetType.allAlly)
         {
             SetTarget(null);
-            lastTargetName = "Tüm dostlar";
-        }
-        else if (skill.targetType == TargetType.self)
-        {
-            SetTarget(this);
-            lastTargetName = name;
         }
 
     }

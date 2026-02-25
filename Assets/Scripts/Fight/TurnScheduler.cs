@@ -6,12 +6,12 @@ using UnityEngine;
 
 public static class TurnScheduler
 {
-    private static List<Profile> aliveProfiles;
-    public static List<Profile> orderedProfiles;//hiza gore siralan
+    private static List<ProfileLungeHandler> aliveProfiles;
+    public static List<ProfileLungeHandler> orderedProfiles;//hiza gore siralan
     public static int order;
 
-    public static List<AllyProfile> ActiveAllyProfiles = new List<AllyProfile>();
-    public static List<EnemyProfile> ActiveEnemyProfiles = new List<EnemyProfile>();
+    public static List<AllyProfileLungeHandler> ActiveAllyProfiles = new List<AllyProfileLungeHandler>();
+    public static List<EnemyProfileLungeHandler> ActiveEnemyProfiles = new List<EnemyProfileLungeHandler>();
 
     public static event Action onStartPlay;
     public static event Action onTourStart;
@@ -20,32 +20,37 @@ public static class TurnScheduler
     private static Coroutine playCoroutine;
 
     #region ProfileHandlers
-    public static void SetAliveProfiles(List<AllyProfile> AllyProfiles, List<EnemyProfile> EnemyProfiles)
+    public static void SetAliveProfiles(List<Profile> allyProfiles, List<Profile> enemyProfiles)
     {
+        ActiveAllyProfiles = allyProfiles
+        .Select(p => (AllyProfileLungeHandler)p.lungeHandler)
+        .ToList();
+        ActiveEnemyProfiles = enemyProfiles
+        .Select(p => (EnemyProfileLungeHandler)p.lungeHandler)
+        .ToList();
 
-        ActiveAllyProfiles = AllyProfiles;
-        ActiveEnemyProfiles = EnemyProfiles;
-
-        aliveProfiles = AllyProfiles.Cast<Profile>()
-                           .Concat(EnemyProfiles.Cast<Profile>())
-                           .ToList();
+        aliveProfiles = allyProfiles.Cast<ProfileLungeHandler>()
+                                .Concat(enemyProfiles.Cast<ProfileLungeHandler>())
+                                .ToList();
     }
-    public static List<Profile> GetAliveProfiles()
+    public static List<ProfileLungeHandler> GetAliveProfiles()
     {
+        return aliveProfiles ?? new List<ProfileLungeHandler>();//Ne yaptýgýný bilmiyorum??!!
+        /*
         SetAliveProfiles(ActiveAllyProfiles, ActiveEnemyProfiles);
-        return aliveProfiles;
+        return aliveProfiles;*/
     }
     public static void SortProfilesWithSpeed()
     {
         order = 0;
-        orderedProfiles = aliveProfiles.OrderByDescending(p => p.currentStrength).ToList();
+        orderedProfiles = aliveProfiles.OrderByDescending(p => p.profile.currentStrength).ToList();
 
     }
     private static void RemoveFromQueue(Profile deadProfile)
     {
-        if (aliveProfiles.Contains(deadProfile))
+        if (aliveProfiles.Contains(deadProfile.lungeHandler))
         {
-            aliveProfiles.Remove(deadProfile);
+            aliveProfiles.Remove(deadProfile.lungeHandler);
         }
     }
 
@@ -56,8 +61,8 @@ public static class TurnScheduler
     #region LungeSequence
     public static void StartTourLunges()
     {
-        foreach (Profile profile in ActiveAllyProfiles) profile.stats.talimsan?.OnTourStart(profile);
-        foreach (Profile profile in ActiveEnemyProfiles) profile.stats.talimsan?.OnTourStart(profile);
+        foreach (AllyProfileLungeHandler lungeHandler in ActiveAllyProfiles) lungeHandler.profile.stats.talimsan?.OnTourStart(lungeHandler.profile);
+        foreach (EnemyProfileLungeHandler lungeHandler in ActiveEnemyProfiles) lungeHandler.profile.stats.talimsan?.OnTourStart(lungeHandler.profile);
 
         onTourStart.Invoke();
         SortProfilesWithSpeed();
@@ -76,18 +81,18 @@ public static class TurnScheduler
         }
         else//devam et
         {
-            foreach (Profile profile in ActiveAllyProfiles) profile.stats.talimsan?.OnTourEnd(profile);
-            foreach (Profile profile in ActiveEnemyProfiles) profile.stats.talimsan?.OnTourEnd(profile);
+            foreach (AllyProfileLungeHandler profile in ActiveAllyProfiles) profile.profile.stats.talimsan?.OnTourEnd(profile.profile);
+            foreach (EnemyProfileLungeHandler profile in ActiveEnemyProfiles) profile.profile.stats.talimsan?.OnTourEnd(profile.profile);
             LetNextPlayertoLunge();
         }
     }
     private static void LetNextPlayertoLunge()
     {
         order++;
-        Profile profile = aliveProfiles[order - 1];//-1?
+        Profile profile = aliveProfiles[order - 1].profile;//-1?
 
         profile.stats.talimsan?.OnTourStart(profile);
-        profile.LungeStart();
+        profile.lungeHandler.LungeStart();
     }
 
     #endregion
@@ -104,7 +109,7 @@ public static class TurnScheduler
             return;
         }
 
-        Profile profile = orderedProfiles[i++];
+        ProfileLungeHandler profile = orderedProfiles[i++];
 
         bool isPlayed = profile.Play();
 
@@ -168,8 +173,8 @@ public static class TurnScheduler
     public static void HandleProfileDeath(Profile deadProfile)
     {
         // Listelerden çýkar
-        if (deadProfile is AllyProfile ally) ActiveAllyProfiles.Remove(ally);
-        else if (deadProfile is EnemyProfile enemy) ActiveEnemyProfiles.Remove(enemy);
+        if (deadProfile is Profile ally) ActiveAllyProfiles.Remove((AllyProfileLungeHandler)ally.lungeHandler);
+        else if (deadProfile is Profile enemy) ActiveEnemyProfiles.Remove((EnemyProfileLungeHandler)enemy.lungeHandler);
 
         RemoveFromQueue(deadProfile);
 

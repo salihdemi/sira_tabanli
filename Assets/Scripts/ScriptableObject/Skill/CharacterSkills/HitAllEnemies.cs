@@ -12,9 +12,9 @@ public class HitAllEnemies : CharacterSkill
 
         //saldýrýyý yap
 
-        foreach (EnemyProfile enemy in TurnScheduler.ActiveEnemyProfiles)
+        foreach (EnemyProfileLungeHandler enemy in TurnScheduler.ActiveEnemyProfiles)
         {
-            enemy.AddToHealth(-5, user);
+            enemy.profile.AddToHealth(-5, user);
         }
     }
 }

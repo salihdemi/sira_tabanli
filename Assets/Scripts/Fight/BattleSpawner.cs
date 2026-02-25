@@ -13,17 +13,17 @@ public static class BattleSpawner
 
 
 
-    private static AllyProfile MakeAllyProfile(PersistanceStats persistanceStats)
+    private static Profile MakeAllyProfile(PersistanceStats persistanceStats)
     {
-        AllyProfile profile = FightPanelObjectPool.instance.GetAlly();
+        Profile profile = FightPanelObjectPool.instance.GetAlly();
 
         profile.Setup(persistanceStats);
 
         return profile;
     }
-    private static EnemyProfile MakeEnemyProfile(PersistanceStats persistanceStats)
+    private static Profile MakeEnemyProfile(PersistanceStats persistanceStats)
     {
-        EnemyProfile profile = FightPanelObjectPool.instance.GetEnemy();
+        Profile profile = FightPanelObjectPool.instance.GetEnemy();
 
         profile.Setup(persistanceStats);
 
@@ -33,9 +33,9 @@ public static class BattleSpawner
 
 
 
-    public static List<AllyProfile> SpawnAllies(List<PersistanceStats> partyStats)
+    public static List<Profile> SpawnAllies(List<PersistanceStats> partyStats)
     {
-        List<AllyProfile> allyProfiles = new List<AllyProfile> { };
+        List<Profile> allyProfiles = new List<Profile> { };
 
 
         for (int i = 0; i < partyStats.Count; i++)
@@ -48,9 +48,9 @@ public static class BattleSpawner
         return allyProfiles;
 
     }
-    public static List<EnemyProfile> SpawnEnemies(List<PersistanceStats> enemyStats)
+    public static List<Profile> SpawnEnemies(List<PersistanceStats> enemyStats)
     {
-        List<EnemyProfile> enemyProfiles = new List<EnemyProfile> { };
+        List<Profile> enemyProfiles = new List<Profile> { };
 
 
         for (int i = 0; i < enemyStats.Count; i++)

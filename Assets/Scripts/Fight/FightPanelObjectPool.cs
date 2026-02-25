@@ -21,8 +21,8 @@ public class FightPanelObjectPool : MonoBehaviour
     [SerializeField] private int initialPoolSize = 4;
 
     // Uyuyan objeleri tutan listeler
-    private List<AllyProfile> allyPool = new List<AllyProfile>();
-    private List<EnemyProfile> enemyPool = new List<EnemyProfile>();
+    private List<Profile> allyPool = new List<Profile>();
+    private List<Profile> enemyPool = new List<Profile>();
 
     private void Awake()
     {
@@ -43,11 +43,11 @@ public class FightPanelObjectPool : MonoBehaviour
     }
     private void HandleReturnToPool(Profile profile)
     {
-        if (profile is AllyProfile ally)
+        if (profile is Profile ally)
         {
             ReturnAllyToPool(ally);
         }
-        else if (profile is EnemyProfile enemy)
+        else if (profile is Profile enemy)
         {
             ReturnEnemyToPool(enemy);
         }
@@ -65,7 +65,7 @@ public class FightPanelObjectPool : MonoBehaviour
 
 
     #region --- ALLY ÝÞLEMLERÝ ---
-    public AllyProfile GetAlly()
+    public Profile GetAlly()
     {
         foreach (var ally in allyPool)
         {
@@ -77,37 +77,37 @@ public class FightPanelObjectPool : MonoBehaviour
         }
         return CreateNewAlly(); // Yeni yaratýlanýn içinde de SetActive(true) olmalý
     }
-    public void ReturnAllyToPool(AllyProfile ally)
+    public void ReturnAllyToPool(Profile ally)
     {
         // Objenin üzerindeki tüm geçici verileri temizle
-        ally.ClearSkillAndTarget();
+        ally.lungeHandler.ClearSkillAndTarget();
         //ally.ResetStats();
 
         // Obje artýk "uyuyan" statüsüne geçer
         ally.gameObject.SetActive(false);
     }
-    private AllyProfile CreateNewAlly()
+    private Profile CreateNewAlly()
     {
         GameObject obj = Instantiate(allyPrefab, allyParent);
-        AllyProfile profile = obj.GetComponent<AllyProfile>();
+        Profile profile = obj.GetComponent<Profile>();
         obj.SetActive(false);//! denemek gerek
         allyPool.Add(profile);
         return profile;
     }
     public void ClearAllies()
     {
-        List<AllyProfile> activeAllies = TurnScheduler.ActiveAllyProfiles;
+        List<AllyProfileLungeHandler> activeAllies = TurnScheduler.ActiveAllyProfiles;
 
         for (int i = activeAllies.Count - 1; i >= 0; i--)
         {
-            ReturnAllyToPool(activeAllies[i]);
+            ReturnAllyToPool(activeAllies[i].profile);
         }
     }
     #endregion
 
 
     #region --- ENEMY ÝÞLEMLERÝ ---
-    public EnemyProfile GetEnemy()
+    public Profile GetEnemy()
     {
         foreach (var enemy in enemyPool)
         {
@@ -119,28 +119,28 @@ public class FightPanelObjectPool : MonoBehaviour
         }
         return CreateNewEnemy();
     }
-    public void ReturnEnemyToPool(EnemyProfile enemy)
+    public void ReturnEnemyToPool(Profile enemy)
     {
-        enemy.ClearSkillAndTarget();
+        enemy.lungeHandler.ClearSkillAndTarget();
         //enemy.ResetStats();
 
         enemy.gameObject.SetActive(false);
     }
-    private EnemyProfile CreateNewEnemy()
+    private Profile CreateNewEnemy()
     {
         GameObject obj = Instantiate(enemyPrefab, enemyParent);
-        EnemyProfile profile = obj.GetComponent<EnemyProfile>();
+        Profile profile = obj.GetComponent<Profile>();
         obj.SetActive(false);//! denemek gerek
         enemyPool.Add(profile);
         return profile;
     }
     public void ClearEnemies()
     {
-        List<EnemyProfile> activeEnemies = TurnScheduler.ActiveEnemyProfiles;
+        List<EnemyProfileLungeHandler> activeEnemies = TurnScheduler.ActiveEnemyProfiles;
 
         for (int i = activeEnemies.Count - 1; i >= 0; i--)
         {
-            ReturnEnemyToPool(activeEnemies[i]);
+            ReturnEnemyToPool(activeEnemies[i].profile);
         }
     }
     #endregion

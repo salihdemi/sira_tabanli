@@ -42,7 +42,7 @@ public class CharacterActionPanel : MonoBehaviour
 
 
 
-    public void OpenWriteThings(AllyProfile character)
+    public void OpenWriteThings(Profile character)
     {
         gameObject.SetActive(true);
 
@@ -64,19 +64,19 @@ public class CharacterActionPanel : MonoBehaviour
 
 
     #region Write
-    private void WriteName(AllyProfile character)
+    private void WriteName(Profile character)
     {
         nameText.text = character.name;//!
     }
-    private void WriteAttack(AllyProfile profile)
+    private void WriteAttack(Profile profile)
     {
         attackButton.onClick.RemoveAllListeners();
-        attackButton.onClick.AddListener(() => profile.ChooseSkill(profile.stats.attack));
+        attackButton.onClick.AddListener(() => profile.lungeHandler.ChooseSkill(profile.stats.attack));
     }
 
 
     //butonlarý her seferinde silip sýfýrdan oluþturuyor
-    private void WriteSkillsPanel(AllyProfile profile)
+    private void WriteSkillsPanel(Profile profile)
     {
         if (skillsPanel == null) return;
         foreach (Transform child in skillsPanel.transform.GetChild(0))
@@ -90,13 +90,13 @@ public class CharacterActionPanel : MonoBehaviour
 
             Button button = MakeButton(skill, skillsPanel.transform, profile);
 
-            button.GetComponent<Button>().onClick.AddListener(() => profile.ChooseSkill(skill));
+            button.GetComponent<Button>().onClick.AddListener(() => profile.lungeHandler.ChooseSkill(skill));
         }
 
     }
 
 
-    private void WriteConsumablesPanel(AllyProfile profile)
+    private void WriteConsumablesPanel(Profile profile)
     {
         //Yemekleri yaz, !bu fonksiyona hiç gerek olmayadabilir
 
@@ -111,10 +111,10 @@ public class CharacterActionPanel : MonoBehaviour
             Button button = MakeButton(consumable, consumablesPanel.transform, profile);
 
             button.GetComponent<Button>().onClick.AddListener(() => InventoryManager.RemoveConsumable(consumable));
-            button.GetComponent<Button>().onClick.AddListener(() => profile.ChooseSkill(consumable));
+            button.GetComponent<Button>().onClick.AddListener(() => profile.lungeHandler.ChooseSkill(consumable));
         }
     }
-    private void WriteItemButton(AllyProfile profile)
+    private void WriteItemButton(Profile profile)
     {
         itemButton.onClick.RemoveAllListeners();
         if (profile.stats.item == null)
@@ -124,13 +124,13 @@ public class CharacterActionPanel : MonoBehaviour
         else
         {
             itemButton.interactable = true;
-            itemButton.onClick.AddListener(() => profile.ChooseSkill(profile.stats.item.skill));
+            itemButton.onClick.AddListener(() => profile.lungeHandler.ChooseSkill(profile.stats.item.skill));
         }
     }
     #endregion
 
 
-    private Button MakeButton(ConsumableSkill skill, Transform parent, AllyProfile profile)
+    private Button MakeButton(ConsumableSkill skill, Transform parent, Profile profile)
     {
         Button button = Instantiate(buttonPrefab);
         TextMeshProUGUI text = button.transform.GetComponentInChildren<TextMeshProUGUI>();
@@ -142,7 +142,7 @@ public class CharacterActionPanel : MonoBehaviour
 
         return button;
     }
-    private Button MakeButton(CharacterSkill skill, Transform parent, AllyProfile profile)
+    private Button MakeButton(CharacterSkill skill, Transform parent, Profile profile)
     {
         Button button = Instantiate(buttonPrefab);
         TextMeshProUGUI text = button.transform.GetComponentInChildren<TextMeshProUGUI>();

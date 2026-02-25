@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyProfile : Profile
+public class EnemyProfileLungeHandler : ProfileLungeHandler
 {
     public override void LungeStart()
     {
         //Debug.Log(name + " hamlesini seçiyor");
 
-        Skill currentskill = stats.attack; //default hamle
+        Skill currentskill = profile.stats.attack; //default hamle
         ChooseSkill(currentskill);
     }
     public override void ChooseSkill(Skill skill)

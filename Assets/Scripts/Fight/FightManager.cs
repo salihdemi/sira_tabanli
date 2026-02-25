@@ -11,8 +11,8 @@ using UnityEngine.SceneManagement;
 public static class FightManager
 {
     //düþman kendi hedefini seçebilince silinecek
-    public static AllyProfile tauntedAlly;
-    public static EnemyProfile tauntedEnemy;
+    public static Profile tauntedAlly;
+    public static Profile tauntedEnemy;
 
     public static Profile defaultTargetForEnemies;//!
 
@@ -20,7 +20,7 @@ public static class FightManager
     {
         if (TurnScheduler.ActiveAllyProfiles.Count > 0)
         {
-            defaultTargetForEnemies = TurnScheduler.ActiveAllyProfiles[0];//!
+            defaultTargetForEnemies = TurnScheduler.ActiveAllyProfiles[0].profile;//!
         }
     }
 
@@ -62,17 +62,15 @@ public static class FightManager
         OnFightStart.Invoke();
 
         if(fightPanel == null) fightPanel = FightPanelObjectPool.instance.gameObject;//!
-
         fightPanel.SetActive(true);
 
         currentEnemy = enemy;
 
+        //spawn allies
+        List<Profile> ActiveAllyProfiles = BattleSpawner.SpawnAllies(PartyManager.partyStats);
 
-        List<PersistanceStats> allyStats = PartyManager.partyStats;
-        List<AllyProfile> ActiveAllyProfiles = BattleSpawner.SpawnAllies(allyStats);
-
-        List<PersistanceStats> enemyStats = enemy.enemyStats;
-        List<EnemyProfile> ActiveEnemyProfiles = BattleSpawner.SpawnEnemies(enemyStats);
+        //spawn enemies
+        List<Profile> ActiveEnemyProfiles = BattleSpawner.SpawnEnemies(enemy.enemyStats);
 
 
 
@@ -117,7 +115,7 @@ public static class FightManager
     
     public static void FinishFight()
     {
-        foreach (Profile profile in TurnScheduler.ActiveAllyProfiles) profile.stats.talimsan?.OnFightEnd(profile);
+        foreach (ProfileLungeHandler lungeHandler in TurnScheduler.ActiveAllyProfiles) lungeHandler.profile.stats.talimsan?.OnFightEnd(lungeHandler.profile);
 
         OnFightEnd.Invoke();//moveable-setisinfight
 

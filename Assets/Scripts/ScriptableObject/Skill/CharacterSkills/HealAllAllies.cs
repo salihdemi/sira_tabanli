@@ -12,9 +12,9 @@ public class HealAllAllies : CharacterSkill
 
         //saldýrýyý yap
 
-        foreach (AllyProfile enemy in TurnScheduler.ActiveAllyProfiles)
+        foreach (ProfileLungeHandler enemy in TurnScheduler.ActiveAllyProfiles)
         {
-            enemy.AddToHealth(5, user);
+            enemy.profile.AddToHealth(5, user);
         }
     }
 }

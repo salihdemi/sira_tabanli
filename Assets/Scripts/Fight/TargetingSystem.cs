@@ -23,15 +23,15 @@ public static class TargetingSystem
         selectedSkill = skill;
         currentCaster = caster;
 
-        List<Profile> allProfiles = TurnScheduler.orderedProfiles;//!
+        List<ProfileLungeHandler> allProfiles = TurnScheduler.orderedProfiles;//!
 
-        foreach (Profile p in allProfiles)
+        foreach (ProfileLungeHandler p in allProfiles)
         {
-            bool isValid = CheckIfValid(p, skill.targetType);
+            bool isValid = CheckIfValid(p.profile, skill.targetType);
             if (isValid)
             {
-                activeProfileButtons.Add(p);
-                p.view.SetSelectable(true);
+                activeProfileButtons.Add(p.profile);
+                p.profile.view.SetSelectable(true);
             }
         }
 
@@ -40,8 +40,8 @@ public static class TargetingSystem
     private static bool CheckIfValid(Profile target, TargetType type)
     {
         // Hedef geçerli mi kontrolü (Düþman mý? Dost mu?)
-        if (type == TargetType.enemy) return target is EnemyProfile;
-        if (type == TargetType.ally) return target is AllyProfile;
+        if (type == TargetType.enemy) return target is Profile;
+        if (type == TargetType.ally) return target is Profile;
         return true;
     }
 
@@ -50,7 +50,7 @@ public static class TargetingSystem
         if (selectedSkill == null) return;
 
         // Skilli uygula
-        currentCaster.SetTarget(clickedProfile);
+        currentCaster.lungeHandler.SetTarget(clickedProfile);
         CloseButtons();
     }
     private static void CloseButtons()

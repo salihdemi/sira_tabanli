@@ -10,21 +10,30 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public abstract class Profile : MonoBehaviour
 {
+
+
+
+
+
+
+
+
+
+
     public static event Action<Profile> OnSomeoneDie;
 
 
 
 
     [HideInInspector] public PersistanceStats stats;
-    public ProfileButtonHandler view;
+    public ProfileButtonHandler view;//kaldýrýlabilirse iyi olur
+    public ProfileLungeHandler lungeHandler;//kaldýrýlabilirse iyi olur
 
 
 
     public float currentStrength, currentTechnical, currentFocus, currentSpeed;
 
 
-    [HideInInspector] public Skill currentSkill;
-    [HideInInspector] public Profile currentTarget;
 
     [HideInInspector] public event Action onHealthChange, onStaminaChange, onManaChange;
     [HideInInspector] public event Action<float> onStrengthChange, onTechnicalChange, onFocusChange, onSpeedChange;
@@ -32,11 +41,11 @@ public abstract class Profile : MonoBehaviour
     
     private void OnConsumeMana(float amount)
     {
-        foreach (Profile enemy in TurnScheduler.ActiveEnemyProfiles)//profile yerine eterik!!!
+        foreach (EnemyProfileLungeHandler enemy in TurnScheduler.ActiveEnemyProfiles)
         {
-            if (enemy.stats?.talimsan is ManaLeech_Talisman talisman)
+            if (enemy.profile.stats?.talimsan is ManaLeech_Talisman talisman)
             {
-                talisman.AbsorbMana(enemy, this, amount);
+                talisman.AbsorbMana(enemy.profile, this, amount);
             }
         }
     }//yeri ve parametreleri deðiþtirilmesi gerekebilir?!
@@ -105,7 +114,7 @@ public abstract class Profile : MonoBehaviour
 
     #endregion
 
-
+    /*
     #region LungeSequence
     public abstract void LungeStart();
     public abstract void ChooseSkill(Skill skill);
@@ -127,7 +136,7 @@ public abstract class Profile : MonoBehaviour
     }
 
     #endregion
-
+    
     #region PlaySequence
     public bool Play()
     {
@@ -145,12 +154,9 @@ public abstract class Profile : MonoBehaviour
         return false; // Oynayamadý
     }
 
-    public void ClearSkillAndTarget()//gereksiz mi, birden fazla savaþ desteklemek için?
-    {
-        currentTarget = null;
-        currentSkill = null;
-    }
     #endregion
+    */
+
 
     #region Status
 
@@ -271,7 +277,7 @@ public abstract class Profile : MonoBehaviour
         if (amount < 0)
         {
             //mana azaltan herhangi birþey sebeð olabilir!
-            if(this is AllyProfile)
+            if(this is Profile)
             {
                 OnConsumeMana(-amount);//belki burda caðýrýlmamalý!?
             }
@@ -317,15 +323,15 @@ public abstract class Profile : MonoBehaviour
 
     private void EnterTaunt()
     {
-        if (this is AllyProfile ally) FightManager.tauntedAlly = ally;
-        else if (this is EnemyProfile enemy) FightManager.tauntedEnemy = enemy;
+        if (this is Profile ally) FightManager.tauntedAlly = ally;//ally-enemy kontrolü!!!!!!!!!!!!1
+        else if (this is Profile enemy) FightManager.tauntedEnemy = enemy;//
         willTaunt = false;
         taunt = true;
     }
     private void LeaveTaunt()
     {
-        if (this is AllyProfile) FightManager.tauntedAlly = null;
-        else if (this is EnemyProfile) FightManager.tauntedEnemy = null;
+        if (this is Profile) FightManager.tauntedAlly = null;
+        else if (this is Profile) FightManager.tauntedEnemy = null;
         taunt = false;
     }
 

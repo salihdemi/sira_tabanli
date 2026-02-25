@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ProfileLungeHandler : MonoBehaviour
 {
-    Profile profile;
+    public Profile profile;
 
     [HideInInspector] public Skill currentSkill;
     [HideInInspector] public Profile currentTarget;
@@ -45,5 +45,30 @@ public class ProfileLungeHandler : MonoBehaviour
     {
         TurnScheduler.CheckNextCharacterToLunge();
     }
-}
 
+
+    public bool Play()
+    {
+        if (profile.isDied) return false;
+
+        bool needTarget = currentSkill.targetType == TargetType.enemy || currentSkill.targetType == TargetType.ally;
+        bool targetValid = !needTarget || (currentTarget != null && !currentTarget.isDied);
+
+        if (targetValid)
+        {
+            TurnScheduler.AddAction(currentSkill.Method(profile, currentTarget));
+            return true; // Baþarýyla sýraya eklendi
+        }
+
+        return false; // Oynayamadý
+    }
+
+
+
+
+    public void ClearSkillAndTarget()//gereksiz mi, birden fazla savaþ desteklemek için?
+    {
+        currentTarget = null;
+        currentSkill = null;
+    }
+}
