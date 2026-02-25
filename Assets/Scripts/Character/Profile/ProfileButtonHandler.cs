@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ProfileView : MonoBehaviour
+public class ProfileButtonHandler : MonoBehaviour
 {
     // Statik Event: Herhangi bir profile týklandýðýnda bu profili yayýnlar.
     // TargetingSystem bu sesi dinleyecek.

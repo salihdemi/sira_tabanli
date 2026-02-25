@@ -16,7 +16,7 @@ public abstract class Profile : MonoBehaviour
 
 
     [HideInInspector] public PersistanceStats stats;
-    public ProfileView view;
+    public ProfileButtonHandler view;
 
 
 
