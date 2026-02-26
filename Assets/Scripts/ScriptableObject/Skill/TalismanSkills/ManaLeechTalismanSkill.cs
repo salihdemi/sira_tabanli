@@ -11,8 +11,8 @@ public class ManaLeechTalismanSkill : TalismanSkill
 
 
         //konsola yaz
-        string log = user.stats._name + target.stats._name + "'ten " + damage + " mana emdi";
-        ConsolePanel.instance.WriteConsole(log);
+        string text = user.stats._name + target.stats._name + "'ten " + damage + " mana emdi";
+        ConsolePanel.instance.WriteConsole(text);
 
         //saldýrýyý yap
         user.AddToMana(damage);

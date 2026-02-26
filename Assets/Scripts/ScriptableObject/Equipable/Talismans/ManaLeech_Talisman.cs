@@ -12,9 +12,13 @@ public class ManaLeech_Talisman : Talisman
     {
         ownerCount++;
     }
-    public override void OnFightEnd(Profile owner)
+    public override void OnDie(Profile owner, Profile dealer, float damage)
     {
         ownerCount--;
+    }
+    public override void OnFightEnd(Profile owner)
+    {
+        ownerCount = 0;
     }
 
 
@@ -26,4 +30,8 @@ public class ManaLeech_Talisman : Talisman
     {
         TurnScheduler.AddAction(skill.Method(owner, spender, amount / ownerCount));
     }
+
+
+
+
 }

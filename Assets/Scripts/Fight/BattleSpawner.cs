@@ -49,6 +49,7 @@ public static class BattleSpawner
         finalProfile.lungeHandler = lungeHandler;
         finalProfile.buttonHandler = buttonHandler;
 
+        finalProfile.isAlly = true;
         finalProfile.Setup(persistanceStats);
         return finalProfile;
 
@@ -87,6 +88,7 @@ public static class BattleSpawner
         finalProfile.lungeHandler = lungeHandler;
         finalProfile.buttonHandler = buttonHandler;
 
+        finalProfile.isAlly = false;
         finalProfile.Setup(persistanceStats);
         return finalProfile;
     }

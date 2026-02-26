@@ -154,8 +154,6 @@ public static class FightManager
             FightManager.WinFight();
         }
     }
-
-
     private static void RemoveFromQueue(Profile deadProfile)
     {
         if (AllyProfiles.Contains(deadProfile))
@@ -169,4 +167,26 @@ public static class FightManager
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+    //mana ceken dost desteklemiyor.
+    public static void OnAllyConsumeMana(Profile user, float amount)
+    {
+        foreach (Profile enemy in EnemyProfiles)
+        {
+            if (enemy.stats?.talimsan is ManaLeech_Talisman talisman)
+            {
+                talisman.AbsorbMana(enemy, user, amount);
+            }
+        }
+    }
 }

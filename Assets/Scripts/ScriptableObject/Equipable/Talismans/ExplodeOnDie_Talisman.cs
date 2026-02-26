@@ -13,7 +13,7 @@ public class ExplodeOnDie_Talisman : Talisman
     public TalismanSkill explode;
     public override void OnTakeDamage(Profile owner, Profile dealer, float damage)
     {
-        if (!owner.isDied)
+        if (!owner.stats.isDied)
         {
             TurnScheduler.AddAction(explode.Method(owner, null, reflectDamage));
         }

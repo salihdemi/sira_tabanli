@@ -18,7 +18,7 @@ public class ExplodeTalismanSkill : TalismanSkill
         ProfileLungeHandler[] profiles = TurnScheduler.orderedProfiles.ToArray();//sadece allylara da vurabilir
         foreach (ProfileLungeHandler lungeHandler in profiles)
         {
-            if (lungeHandler != null && lungeHandler != user && !lungeHandler.profile.isDied)
+            if (lungeHandler != null && lungeHandler != user && !lungeHandler.profile.stats.isDied)
             {
                 lungeHandler.profile.AddToHealth(-damage, null);
             }

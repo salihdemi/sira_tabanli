@@ -49,10 +49,10 @@ public class ProfileLungeHandler : MonoBehaviour
 
     public bool Play()
     {
-        if (profile.isDied) return false;
+        if (profile.stats.isDied) return false;
 
         bool needTarget = currentSkill.targetType == TargetType.enemy || currentSkill.targetType == TargetType.ally;
-        bool targetValid = !needTarget || (currentTarget != null && !currentTarget.isDied);
+        bool targetValid = !needTarget || (currentTarget != null && !currentTarget.stats.isDied);
 
         if (targetValid)
         {

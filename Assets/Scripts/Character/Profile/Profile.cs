@@ -29,6 +29,7 @@ public abstract class Profile : MonoBehaviour
     public ProfileButtonHandler buttonHandler;//kaldýrýlabilirse iyi olur
     public ProfileLungeHandler lungeHandler;//kaldýrýlabilirse iyi olur
 
+    public bool isAlly;
 
 
     public float currentStrength, currentTechnical, currentFocus, currentSpeed;
@@ -38,21 +39,8 @@ public abstract class Profile : MonoBehaviour
     [HideInInspector] public event Action onHealthChange, onStaminaChange, onManaChange;
     [HideInInspector] public event Action<float> onStrengthChange, onTechnicalChange, onFocusChange, onSpeedChange;
 
-    
-    private void OnConsumeMana(float amount)
-    {
-        foreach (Profile enemy in FightManager.EnemyProfiles)
-        {
-            if (enemy.stats?.talimsan is ManaLeech_Talisman talisman)
-            {
-                talisman.AbsorbMana(enemy, this, amount);
-            }
-        }
-    }//yeri ve parametreleri deðiþtirilmesi gerekebilir?!
 
 
-    public bool isDied;
-    public string lastTargetName;
 
 
 
@@ -98,7 +86,6 @@ public abstract class Profile : MonoBehaviour
     }
     public void ResetStats()
     {
-        isDied = false;
         currentStrength = stats.strength;
         onStrengthChange?.Invoke(currentStrength);
 
@@ -236,9 +223,9 @@ public abstract class Profile : MonoBehaviour
         if (amount < 0)
         {
             //mana azaltan herhangi birþey sebeð olabilir!
-            if(this is Profile)
+            if(isAlly)
             {
-                OnConsumeMana(-amount);//belki burda caðýrýlmamalý!?
+                FightManager.OnAllyConsumeMana(this, -amount);//belki burda caðýrýlmamalý!?
             }
         }
     }
@@ -247,7 +234,6 @@ public abstract class Profile : MonoBehaviour
     {
         stats.talimsan?.OnDie(this, null, 0);//sýra yanlýþ olabilir
 
-        isDied = true;
         stats.isDied = true;
         FightManager.HandleProfileDeath(this);
         FightManager.SetDefaultTarget();
@@ -295,8 +281,8 @@ public abstract class Profile : MonoBehaviour
     }
     private void EnterTaunt()
     {
-        if (this is Profile ally) FightManager.tauntedAlly = ally;//ally-enemy kontrolü!!!!!!!!!!!!1
-        else if (this is Profile enemy) FightManager.tauntedEnemy = enemy;//
+        if (isAlly) FightManager.tauntedAlly = this;
+        else FightManager.tauntedEnemy = this;
         willTaunt = false;
         taunt = true;
     }
