@@ -50,7 +50,6 @@ public static class TurnScheduler
     {
         if (order == orderedProfiles.Count)//oynat
         {
-            Debug.Log("girdi");
             onStartPlay?.Invoke();
             i = 0;
             PlayNextPerson();

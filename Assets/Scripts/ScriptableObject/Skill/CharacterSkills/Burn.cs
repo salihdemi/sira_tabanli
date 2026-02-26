@@ -11,6 +11,6 @@ public class Burn : CharacterSkill
         //sesi oynat
 
         //saldırıyı yap
-        target.fire += 3;
+        target.Burn(3);
     }
 }

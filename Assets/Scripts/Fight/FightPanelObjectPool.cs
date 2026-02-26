@@ -86,7 +86,7 @@ public class FightPanelObjectPool : MonoBehaviour
     public void ReturnAllyToPool(Profile ally)
     {
         // Objenin üzerindeki tüm geçici verileri temizle
-        ally.lungeHandler.ClearSkillAndTarget();
+        //ally.lungeHandler.ClearSkillAndTarget();
         //ally.ResetStats();
 
         // Obje artýk "uyuyan" statüsüne geçer
@@ -125,7 +125,7 @@ public class FightPanelObjectPool : MonoBehaviour
     }
     public void ReturnEnemyToPool(Profile enemy)
     {
-        enemy.lungeHandler.ClearSkillAndTarget();
+        //enemy.lungeHandler.ClearSkillAndTarget();
         //enemy.ResetStats();
 
         enemy.gameObject.SetActive(false);

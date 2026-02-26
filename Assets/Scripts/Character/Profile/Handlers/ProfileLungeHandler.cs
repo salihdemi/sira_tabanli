@@ -1,34 +1,16 @@
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
-public class ProfileLungeHandler : MonoBehaviour
+public abstract class ProfileLungeHandler : MonoBehaviour
 {
     public Profile profile;
+    public ProfileButtonHandler buttonHandler;
 
     [HideInInspector] public Skill currentSkill;
     [HideInInspector] public Profile currentTarget;
 
-    public virtual void LungeStart()
-    {
-        //Debug.Log(name + " hamlesini seçiyor");
-
-        Skill currentskill = profile.stats.attack; //default hamle
-        ChooseSkill(currentskill);
-    }
-    public virtual void ChooseSkill(Skill skill)
-    {
-        currentSkill = skill;
-        if (FightManager.tauntedAlly)
-        {
-            SetTarget(FightManager.tauntedAlly);
-        }
-        else
-        {
-            SetTarget(FightManager.defaultTargetForEnemies);//!default hedef!
-        }
-
-
-    }
+    public abstract void LungeStart();
+    public abstract void ChooseSkill(Skill skill);
     public virtual void SetTarget(Profile profile)
     {
         if (profile == null)//Cok hedefli skillerde
@@ -65,10 +47,10 @@ public class ProfileLungeHandler : MonoBehaviour
 
 
 
-
+    /*
     public void ClearSkillAndTarget()//gereksiz mi, birden fazla savaþ desteklemek için?
     {
         currentTarget = null;
         currentSkill = null;
-    }
+    }*/
 }

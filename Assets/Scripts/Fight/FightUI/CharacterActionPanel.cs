@@ -66,7 +66,7 @@ public class CharacterActionPanel : MonoBehaviour
     #region Write
     private void WriteName(Profile character)
     {
-        nameText.text = character.name;//!
+        nameText.text = character.stats._name;
     }
     private void WriteAttack(Profile profile)
     {

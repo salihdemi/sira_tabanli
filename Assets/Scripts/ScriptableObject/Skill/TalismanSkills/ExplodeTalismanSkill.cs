@@ -11,8 +11,8 @@ public class ExplodeTalismanSkill : TalismanSkill
 
 
         //konsola yazma, cagirilirken yaziliyor
-        string log = $"{user.stats._name} patlayarak tepki verdi!";
-        ConsolePanel.instance.WriteConsole(log);
+        string text = $"{user.stats._name} patlayarak tepki verdi!";
+        ConsolePanel.instance.WriteConsole(text);
 
         //saldýrýyý yap
         ProfileLungeHandler[] profiles = TurnScheduler.orderedProfiles.ToArray();//sadece allylara da vurabilir

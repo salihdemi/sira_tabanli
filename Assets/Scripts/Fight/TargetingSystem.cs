@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Profiling;
 
@@ -8,7 +9,7 @@ public static class TargetingSystem
     private static Profile currentCaster;
 
 
-    private static List<Profile> activeProfileButtons = new List<Profile> { };
+    private static List<ProfileButtonHandler> activeButtonHandlers = new List<ProfileButtonHandler> { };
 
 
     public static void StartTargeting(Profile caster, Skill skill)
@@ -16,15 +17,15 @@ public static class TargetingSystem
         selectedSkill = skill;
         currentCaster = caster;
 
-        List<ProfileLungeHandler> allProfiles = TurnScheduler.orderedProfiles;//!
+        List<ProfileButtonHandler> allProfiles = TurnScheduler.orderedProfiles.Select(p => p.buttonHandler).ToList();//555555555555555!!!
 
-        foreach (ProfileLungeHandler p in allProfiles)
+        foreach (ProfileButtonHandler buttonHandler in allProfiles)
         {
-            bool isValid = CheckIfValid(p.profile, skill.targetType);
+            bool isValid = CheckIfValid(buttonHandler.profile, skill.targetType);
             if (isValid)
             {
-                activeProfileButtons.Add(p.profile);
-                p.profile.buttonHandler.SetSelectable(true);
+                activeButtonHandlers.Add(buttonHandler);
+                buttonHandler.SetSelectable(true);
             }
         }
 
@@ -48,10 +49,10 @@ public static class TargetingSystem
     }
     private static void CloseButtons()
     {
-        foreach (Profile profile in activeProfileButtons)
+        foreach (ProfileButtonHandler buttonHandler in activeButtonHandlers)
         {
-            profile.buttonHandler.SetSelectable(false);
+            buttonHandler.SetSelectable(false);
         }
-        activeProfileButtons.Clear();
+        activeButtonHandlers.Clear();
     }
 }

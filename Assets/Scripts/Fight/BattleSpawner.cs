@@ -43,14 +43,16 @@ public static class BattleSpawner
         ProfileUIHandler UIHandler = lungeHandler.GetComponent<ProfileUIHandler>();
 
         lungeHandler.profile = finalProfile;
+        lungeHandler.buttonHandler = buttonHandler;
+
         buttonHandler.profile = finalProfile;
+
         UIHandler.profile = finalProfile;
 
         finalProfile.lungeHandler = lungeHandler;
-        finalProfile.buttonHandler = buttonHandler;
-
-        finalProfile.isAlly = true;
+        finalProfile.isAlly = false;
         finalProfile.Setup(persistanceStats);
+
         return finalProfile;
 
     }
@@ -82,14 +84,16 @@ public static class BattleSpawner
         ProfileUIHandler UIHandler = lungeHandler.GetComponent<ProfileUIHandler>();
 
         lungeHandler.profile = finalProfile;
+        lungeHandler.buttonHandler = buttonHandler;
+
         buttonHandler.profile = finalProfile;
+
         UIHandler.profile = finalProfile;
 
         finalProfile.lungeHandler = lungeHandler;
-        finalProfile.buttonHandler = buttonHandler;
-
         finalProfile.isAlly = false;
         finalProfile.Setup(persistanceStats);
+
         return finalProfile;
     }
 

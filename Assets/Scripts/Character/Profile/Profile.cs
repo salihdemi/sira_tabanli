@@ -10,54 +10,33 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public abstract class Profile : MonoBehaviour
 {
-
-
-
-
-
-
-
-
-
-
-    public static event Action<Profile> OnSomeoneDie;
-
-
-
-
     [HideInInspector] public PersistanceStats stats;
-    public ProfileButtonHandler buttonHandler;//kaldýrýlabilirse iyi olur
-    public ProfileLungeHandler lungeHandler;//kaldýrýlabilirse iyi olur
+    [HideInInspector] public ProfileLungeHandler lungeHandler;//kaldýrýlabilirse iyi olurdu
 
     public bool isAlly;
 
-
-    public float currentStrength, currentTechnical, currentFocus, currentSpeed;
-
-
-
+    #region Events
     [HideInInspector] public event Action onHealthChange, onStaminaChange, onManaChange;
     [HideInInspector] public event Action<float> onStrengthChange, onTechnicalChange, onFocusChange, onSpeedChange;
+    public static event Action<Profile> OnSomeoneDie;
+    #endregion
 
-
-
-
-
-
-    //private?
-    public int hitCountForTour;
-    public int mute;//aktif degil
-    public int fire;
-    public bool taunt;
-    public bool willTaunt;
-
-
-
+    #region Stats
+    public float currentStrength, currentTechnical, currentFocus, currentSpeed;
+    #endregion
+    #region Effects
+    private int hitCountForTour;
+    private int mute;//aktif degil
+    private int fire;
+    private bool taunt;
+    private bool willTaunt;
+    #endregion
 
 
 
 
     #region Setup
+    
     public void Setup(PersistanceStats persistanceStats)
     {
         gameObject.SetActive(true);
@@ -72,8 +51,7 @@ public abstract class Profile : MonoBehaviour
         ResetStats();
 
 
-        TurnScheduler.onTourEnd += BurnProcess;
-        TurnScheduler.onTourEnd += StatusProcess;//event birikmesi olur mu??!!
+        TurnScheduler.onTourEnd += StatusProcess;
         TurnScheduler.onTourEnd += ResetHitCount;
         //Talisman?
 
@@ -99,9 +77,19 @@ public abstract class Profile : MonoBehaviour
         onSpeedChange?.Invoke(currentSpeed);
     }
 
+    public void UnSetup()
+    {
+        TurnScheduler.onTourEnd -= StatusProcess;
+        TurnScheduler.onTourEnd -= ResetHitCount;
+        //Talisman?
+    }
+    private void OnDestroy()
+    {
+        UnSetup();
+    }
     #endregion
 
-    
+
 
 
     #region SetValue
@@ -233,17 +221,18 @@ public abstract class Profile : MonoBehaviour
     private void Die()
     {
         stats.talimsan?.OnDie(this, null, 0);//sýra yanlýþ olabilir
-
+        UnSetup();
         stats.isDied = true;
         FightManager.HandleProfileDeath(this);
         FightManager.SetDefaultTarget();
 
-        //CombatManager.AddAction(Method(Died);//ölüm mesajý!!
+        TurnScheduler.AddAction(DeadMessage());//ölüm mesajý!!
 
         OnSomeoneDie.Invoke(this);
     }
+
     #endregion
-    #region Stats
+    #region StatsChange
     public void AddToStrength(float amount)
     {
         currentStrength += amount;
@@ -268,7 +257,7 @@ public abstract class Profile : MonoBehaviour
 
 
 
-    #region Effects
+    #region EffectsChange
     public void Taunt()
     {
         willTaunt = true;
@@ -295,11 +284,21 @@ public abstract class Profile : MonoBehaviour
 
 
 
+    public void Burn(int amount)
+    {
+        fire += amount;
+    }
     private void BurnProcess()
     {
         fire--;
         if (fire > 0) AddToHealth(-5, null);
     }
+
+    public void Mute(int amount)
+    {
+        mute += amount;
+    }
+
     private void StatusProcess()
     {
         if (mute > 0) mute--;
@@ -307,6 +306,10 @@ public abstract class Profile : MonoBehaviour
         TauntProcess();
     }
     #endregion
+
+
+
+
 
     private void ResetHitCount()
     {
@@ -353,6 +356,12 @@ public abstract class Profile : MonoBehaviour
 
 
 
+    private IEnumerator DeadMessage()
+    {
+        string text = $"{stats._name} öldü";
+        ConsolePanel.instance.WriteConsole(text);
+        yield return new WaitForSeconds(1f);
+    }
 
     /*private static string GetActionText(Profile profile)
     {
