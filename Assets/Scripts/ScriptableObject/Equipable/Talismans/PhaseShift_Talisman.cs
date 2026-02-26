@@ -28,7 +28,6 @@ public class PhaseShift_Talisman : Talisman
         owner.GetComponent<Image>().sprite = transformedSprite;
 
         owner.AddToStrength(5);
-        owner.AddShield(20);
 
         yield return new WaitForSeconds(1);
     }

@@ -19,6 +19,10 @@ public abstract class Profile : MonoBehaviour
     [HideInInspector] public event Action onHealthChange, onStaminaChange, onManaChange;
     [HideInInspector] public event Action<float> onStrengthChange, onTechnicalChange, onFocusChange, onSpeedChange;
     public static event Action<Profile> OnSomeoneDie;
+    protected virtual void NotifyHealthChanged()
+    {
+        onHealthChange?.Invoke();
+    }
     #endregion
 
     #region Stats
@@ -27,7 +31,7 @@ public abstract class Profile : MonoBehaviour
     #region Effects
     private int hitCountForTour;
     private int mute;//aktif degil
-    private int fire;
+    protected int fire;
     private bool taunt;
     private bool willTaunt;
     #endregion
@@ -98,7 +102,7 @@ public abstract class Profile : MonoBehaviour
     public void SetHealth(float amount)
     {
         stats.currentHealth = amount;
-        onHealthChange?.Invoke();
+        NotifyHealthChanged();
     }
     public void SetStamina(float amount)
     {
@@ -122,64 +126,34 @@ public abstract class Profile : MonoBehaviour
         }
         onHealthChange?.Invoke();
     }*/
-    public void AddToHealth(float amount, Profile dealer)
+    public virtual void AddToHealth(float amount, Profile dealer)
     {
-        //kalkaný varsa
-        if (stats.currentShields.Count > 0 && amount < 0) DamageShield(-amount);
-        else
+        stats.currentHealth += amount;
+
+        //0-max arasýna sabitle
+        stats.currentHealth = Mathf.Clamp(stats.currentHealth, 0, stats.maxHealth);
+
+        NotifyHealthChanged();
+
+        if (amount < 0)
         {
-            stats.currentHealth += amount;
+            float damage = -amount;
 
-            //0-max arasýna sabitle
-            stats.currentHealth = Mathf.Clamp(stats.currentHealth, 0, stats.maxHealth);
+            hitCountForTour++;
 
-            onHealthChange?.Invoke();
-
-            if (amount < 0)
+            if (stats.currentHealth <= 0)
             {
-                float damage = -amount;
-
-                hitCountForTour++;
-
-                if (stats.currentHealth <= 0)
-                {
-                    Die();
-                }
-
-                if (stats.talimsan && dealer)
-                {
-                    stats?.talimsan.OnTakeDamage(this, dealer, damage);
-                }
-
-
+                Die();
             }
-        }
 
-    }
-    public void AddShield(float amount)
-    {
-        stats.currentShields.Add(amount);
+            if (stats.talimsan && dealer)
+            {
+                stats?.talimsan.OnTakeDamage(this, dealer, damage);
+            }
 
-        onHealthChange?.Invoke(); // ondamageShield???
-        return;
-    }
-    private void DamageShield(float damage)
-    {
-        stats.currentShields[0] -= damage;
-
-        if (stats.currentShields[0] <= 0)
-        {
-            stats.currentShields.RemoveAt(0); // En üstteki kalkaný yok et
-            //Debug.Log($"{name} kalkaný kýrýldý! Kalan hasar emildi.");
 
         }
-        else
-        {
-            //Debug.Log($"{name} kalkaný darbe aldý. Kalan kalkan caný: {stats.currentShields[0]}");
-        }
 
-        onHealthChange?.Invoke(); // ondamageShield???
-        return;
     }
 
     public void AddToStamina(float amount)

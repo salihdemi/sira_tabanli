@@ -73,6 +73,8 @@ public class PersistanceStats
         foreach (CharacterSkill skill in unlockedSkills) TryEquipSkill(skill);
 
         talimsan = data.talisman;
+
+        type = data.type;
     }
 
     public void Regen()
@@ -120,10 +122,4 @@ public class PersistanceStats
         }
 
     }
-}
-public enum CharacterType
-{
-    a,
-    b,
-    c
 }

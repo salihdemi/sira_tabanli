@@ -12,8 +12,6 @@ public static class BattleSpawner
 
 
 
-
-
     //bu 2 fonksiyon neredeyse ayný
     private static Profile MakeAllyProfile(PersistanceStats persistanceStats)
     {
@@ -22,22 +20,7 @@ public static class BattleSpawner
         Profile oldProfile = lungeHandler.GetComponent<Profile>();//eski profile kaldýysa
         if (oldProfile != null) GameObject.Destroy(oldProfile);//sil
 
-        // 3. Karar Verme: Stats içindeki tipe göre yeni scripti ekle
-        Profile finalProfile;
-        switch (persistanceStats.type)
-        {
-            case CharacterType.a:
-                finalProfile = lungeHandler.gameObject.AddComponent<DefaultAllyProfile>();
-                break;
-
-            case CharacterType.b:
-                finalProfile = lungeHandler.gameObject.AddComponent<DefaultEnemyProfile>();
-                break;
-
-            default:
-                Debug.LogWarning($"{lungeHandler.gameObject} için profil oluþturulamadý! Tip eþleþmiyor olabilir.");
-                return null;
-        }
+        Profile finalProfile = MakeProfileByType(lungeHandler, persistanceStats.type);
 
         ProfileButtonHandler buttonHandler = lungeHandler.GetComponent<ProfileButtonHandler>();
         ProfileUIHandler UIHandler = lungeHandler.GetComponent<ProfileUIHandler>();
@@ -63,22 +46,7 @@ public static class BattleSpawner
         Profile oldProfile = lungeHandler.GetComponent<Profile>();//eski profile kaldýysa
         if (oldProfile != null) GameObject.Destroy(oldProfile);//sil
 
-        // 3. Karar Verme: Stats içindeki tipe göre yeni scripti ekle
-        Profile finalProfile;
-        switch (persistanceStats.type)
-        {
-            case CharacterType.a:
-                finalProfile = lungeHandler.gameObject.AddComponent<DefaultAllyProfile>();
-                break;
-
-            case CharacterType.b:
-                finalProfile = lungeHandler.gameObject.AddComponent<DefaultEnemyProfile>();
-                break;
-
-            default:
-                Debug.LogWarning($"{lungeHandler.gameObject} için profil oluþturulamadý! Tip eþleþmiyor olabilir.");
-                return null;
-        }
+        Profile finalProfile = MakeProfileByType(lungeHandler, persistanceStats.type);
 
         ProfileButtonHandler buttonHandler = lungeHandler.GetComponent<ProfileButtonHandler>();
         ProfileUIHandler UIHandler = lungeHandler.GetComponent<ProfileUIHandler>();
@@ -142,4 +110,28 @@ public static class BattleSpawner
 
 
 
+
+    private static Profile MakeProfileByType(ProfileLungeHandler lungeHandler, CharacterType type)
+    {
+        // Tip ismini string olarak alýyoruz (Örn: "FireThing")
+        // Eðer class ismin "FireThingProfile" ise sonuna ekleme yapabilirsin.
+        string className = type.ToString();
+
+        // String'den gerçek Type'ý buluyoruz
+        System.Type t = System.Type.GetType(className);
+
+        if (t != null && typeof(Profile).IsAssignableFrom(t))
+        {
+            return (Profile)lungeHandler.gameObject.AddComponent(t);
+        }
+
+        Debug.LogError($"{className} isminde bir Profile sýnýfý bulunamadý!");
+        return null;
+    }
+}
+public enum CharacterType
+{
+    DefaultProfile,
+    FireEnemy,
+    ShieldEnemy
 }

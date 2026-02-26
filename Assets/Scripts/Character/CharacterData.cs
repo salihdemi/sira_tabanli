@@ -33,6 +33,9 @@ public class CharacterData : ScriptableObject
     public Talisman talisman;
 
 
+    public CharacterType type;
+
+
 
 
 
