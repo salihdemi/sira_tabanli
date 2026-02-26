@@ -774,7 +774,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2823643004914483136
 RectTransform:
   m_ObjectHideFlags: 0
@@ -901,43 +901,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c2302d63edb66444ab0c7640ce31b85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyProfile
-  stats:
-    _name: 
-    weaponType: 0
-    currentHealth: 0
-    currentStamina: 0
-    currentMana: 0
-    currentShields: []
-    maxHealth: 0
-    maxStamina: 0
-    maxMana: 0
-    maxShields: []
-    strength: 0
-    technical: 0
-    focus: 0
-    speed: 0
-    weapon: {fileID: 0}
-    item: {fileID: 0}
-    talimsan: {fileID: 0}
-    sprite: {fileID: 0}
-    attack: {fileID: 0}
-    currentSkills: []
-    unlockedSkills: []
-    isDied: 0
-    isInParty: 0
-  view: {fileID: 5078231776207919118}
-  currentStrength: 0
-  currentTechnical: 0
-  currentFocus: 0
-  currentSpeed: 0
-  currentUseable: {fileID: 0}
+  profile: {fileID: 0}
+  currentSkill: {fileID: 0}
   currentTarget: {fileID: 0}
-  isDied: 0
-  lastTargetName: 
-  hitCountForTour: 0
-  mute: 0
-  fire: 0
-  taunt: 0
 --- !u!114 &5078231776207919118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -951,7 +917,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProfileView
   button: {fileID: -675919997547338896}
-  boundProfile: {fileID: 742744003490145377}
+  boundProfile: {fileID: 0}
 --- !u!114 &2523895754031296691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -964,7 +930,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 257ed68485bca8540b0668a9f40fc133, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProfileUIManager
-  profile: {fileID: 742744003490145377}
+  profile: {fileID: 0}
   healthText: {fileID: 4165367221026481842}
   shieldText: {fileID: 2022009703537294278}
   staminaText: {fileID: 3481498304659950499}

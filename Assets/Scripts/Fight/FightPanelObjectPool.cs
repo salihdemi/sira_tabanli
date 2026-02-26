@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 public class FightPanelObjectPool : MonoBehaviour
 {
@@ -23,8 +24,8 @@ public class FightPanelObjectPool : MonoBehaviour
     [SerializeField] private int initialPoolSize = 4;
 
     // Uyuyan objeleri tutan listeler
-    private List<Profile> allyPool = new List<Profile>();
-    private List<Profile> enemyPool = new List<Profile>();
+    private List<AllyProfileLungeHandler> allyPool = new List<AllyProfileLungeHandler>();
+    private List<EnemyProfileLungeHandler> enemyPool = new List<EnemyProfileLungeHandler>();
 
 
 
@@ -36,7 +37,7 @@ public class FightPanelObjectPool : MonoBehaviour
         {
             instance = this;
             // Oyun baþýnda küçük bir hazýrlýk (Pre-warm)
-            PreparePool();
+            //PreparePool();
 
             Profile.OnSomeoneDie += HandleReturnToPool;
             gameObject.SetActive(false);
@@ -71,13 +72,12 @@ public class FightPanelObjectPool : MonoBehaviour
 
 
     #region --- ALLY ÝÞLEMLERÝ ---
-    public Profile GetAlly()
+    public AllyProfileLungeHandler GetAlly()
     {
-        foreach (var ally in allyPool)
+        foreach (AllyProfileLungeHandler ally in allyPool)//aktif olmayaný bul ona yaz
         {
             if (!ally.gameObject.activeInHierarchy)
             {
-                ally.gameObject.SetActive(true);
                 return ally;
             }
         }
@@ -92,13 +92,12 @@ public class FightPanelObjectPool : MonoBehaviour
         // Obje artýk "uyuyan" statüsüne geçer
         ally.gameObject.SetActive(false);
     }
-    private Profile CreateNewAlly()
+    private AllyProfileLungeHandler CreateNewAlly()
     {
         GameObject obj = Instantiate(allyPrefab, allyParent);
         AllyProfileLungeHandler lungeHandler = obj.GetComponent<AllyProfileLungeHandler>();
-        obj.SetActive(false);//! denemek gerek
-        allyPool.Add(profile);
-        return profile;
+        allyPool.Add(lungeHandler);
+        return lungeHandler;
     }
     public void ClearAllies()
     {
@@ -113,13 +112,12 @@ public class FightPanelObjectPool : MonoBehaviour
 
 
     #region --- ENEMY ÝÞLEMLERÝ ---
-    public Profile GetEnemy()
+    public EnemyProfileLungeHandler GetEnemy()
     {
         foreach (var enemy in enemyPool)
         {
             if (!enemy.gameObject.activeInHierarchy)
             {
-                enemy.gameObject.SetActive(true);
                 return enemy;
             }
         }
@@ -132,14 +130,12 @@ public class FightPanelObjectPool : MonoBehaviour
 
         enemy.gameObject.SetActive(false);
     }
-    private Profile CreateNewEnemy()
+    private EnemyProfileLungeHandler CreateNewEnemy()
     {
         GameObject obj = Instantiate(enemyPrefab, enemyParent);
         EnemyProfileLungeHandler lungeHandler = obj.GetComponent<EnemyProfileLungeHandler>();
-        Profile profile = obj.AddComponent<Profile>();
-        obj.SetActive(false);//! denemek gerek
-        enemyPool.Add(profile);
-        return profile;
+        enemyPool.Add(lungeHandler);
+        return lungeHandler;
     }
     public void ClearEnemies()
     {

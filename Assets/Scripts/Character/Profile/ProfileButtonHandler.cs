@@ -8,7 +8,7 @@ public class ProfileButtonHandler : MonoBehaviour
     // TargetingSystem bu sesi dinleyecek.
 
     [SerializeField] private Button button;
-    [SerializeField] private Profile boundProfile;
+    [SerializeField] public Profile profile;
 
     public void SetSelectable(bool state)
     {
@@ -17,9 +17,9 @@ public class ProfileButtonHandler : MonoBehaviour
 
     public void OnProfileButtonPressed()
     {
-        if (boundProfile == null) return;
+        if (profile == null) return;
 
 
-        TargetingSystem.OnProfileClicked(boundProfile);
+        TargetingSystem.OnProfileClicked(profile);
     }
 }

@@ -50,6 +50,7 @@ public static class TurnScheduler
     {
         if (order == orderedProfiles.Count)//oynat
         {
+            Debug.Log("girdi");
             onStartPlay?.Invoke();
             i = 0;
             PlayNextPerson();
@@ -63,11 +64,12 @@ public static class TurnScheduler
     }
     private static void LetNextPlayertoLunge()
     {
-        order++;
-        Profile profile = FightManager.AllyProfiles[order - 1];//-1?
 
-        profile.stats.talimsan?.OnTourStart(profile);
-        profile.lungeHandler.LungeStart();
+        ProfileLungeHandler lungeHandler = orderedProfiles[order];
+        order++;
+
+        lungeHandler.profile.stats.talimsan?.OnTourStart(lungeHandler.profile);
+        lungeHandler.LungeStart();
     }
 
     #endregion

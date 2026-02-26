@@ -1,10 +1,10 @@
 using TMPro;
 using UnityEngine;
 
-public class ProfileUIManager : MonoBehaviour
+public class ProfileUIHandler : MonoBehaviour
 {
 
-    [SerializeField] private Profile profile;
+    [SerializeField] public Profile profile;
 
     [SerializeField] private TextMeshProUGUI healthText, shieldText, staminaText, manaText;
     [SerializeField] private TextMeshProUGUI strengthText, technicalText, focusText, speedText;

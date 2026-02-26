@@ -10,9 +10,9 @@ public class Attack : Skill
         //animasyonu oynat
         //sesi oynat
 
-
         string text = user.stats._name + " " + target.stats._name + "'e " + _name + " yapýyor";
         ConsolePanel.instance.WriteConsole(text);
+        Debug.Log(text);
 
         yield return new WaitForSeconds(1);
 

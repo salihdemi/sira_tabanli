@@ -4,13 +4,6 @@ using UnityEngine.Profiling;
 
 public static class TargetingSystem
 {
-
-
-
-
-
-
-
     private static Skill selectedSkill;
     private static Profile currentCaster;
 
@@ -31,7 +24,7 @@ public static class TargetingSystem
             if (isValid)
             {
                 activeProfileButtons.Add(p.profile);
-                p.profile.view.SetSelectable(true);
+                p.profile.buttonHandler.SetSelectable(true);
             }
         }
 
@@ -57,7 +50,7 @@ public static class TargetingSystem
     {
         foreach (Profile profile in activeProfileButtons)
         {
-            profile.view.SetSelectable(false);
+            profile.buttonHandler.SetSelectable(false);
         }
         activeProfileButtons.Clear();
     }

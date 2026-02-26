@@ -26,7 +26,7 @@ public abstract class Profile : MonoBehaviour
 
 
     [HideInInspector] public PersistanceStats stats;
-    public ProfileButtonHandler view;//kaldýrýlabilirse iyi olur
+    public ProfileButtonHandler buttonHandler;//kaldýrýlabilirse iyi olur
     public ProfileLungeHandler lungeHandler;//kaldýrýlabilirse iyi olur
 
 
@@ -377,3 +377,4 @@ public abstract class Profile : MonoBehaviour
         return $"{profile.name}, {profile.lastTargetName} hedefine {profile.currentUseable.name} kullandý.";
     }*/
 }
+
