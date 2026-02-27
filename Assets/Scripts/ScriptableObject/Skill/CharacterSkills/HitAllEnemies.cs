@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "HitAllEnemies", menuName = "Scriptable Objects/Skills/CharacterSkills/HitAllEnemies")]
-public class HitAllEnemies : CharacterSkill
+public class HitAllEnemies : Skill
 {
     public override IEnumerator Method(Profile user, Profile target)
     {

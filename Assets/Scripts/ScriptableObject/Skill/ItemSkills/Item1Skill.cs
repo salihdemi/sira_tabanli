@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Item1Skill", menuName = "Scriptable Objects/Skills/ItemSkills/Item1Skill")]
-public class Item1Skill : ItemSkill
+public class Item1Skill : Skill
 {
     public override IEnumerator Method(Profile user, Profile target)
     {

@@ -16,7 +16,25 @@ public abstract class Skill : ScriptableObject
     //private AudioClip clip;
 
 
+    [Header("Need")]
+    public float healthCost;
+    public float staminaCost;
+    public float manaCost;
+    protected void Consume(Profile user)
+    {
+        user.AddToHealth(-healthCost, user);
+        user.AddToMana(-manaCost);
+        user.AddToStamina(-staminaCost);
+    }//!
+
+
+    [Header("Skill")]
+    public Sprite sprite;
     public abstract IEnumerator Method(Profile user, Profile target);
+    public virtual IEnumerator Method(Profile user, Profile target, float damage)
+    {
+        yield return Method(user, target);
+    }
 
     protected void PlayAudio()
     {
@@ -29,4 +47,16 @@ public abstract class Skill : ScriptableObject
 
 
 
+}
+public enum TargetType
+{
+    enemy,
+    ally,
+
+    self,
+    allEnemy,
+    allAlly,
+    all,
+
+    none
 }

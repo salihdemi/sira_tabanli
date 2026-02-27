@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ExplodeTalismanSkill", menuName = "Scriptable Objects/Skills/TalismanSkills/ManaLeechTalismanSkill")]
-public class ManaLeechTalismanSkill : TalismanSkill
+public class ManaLeechTalismanSkill : Skill
 {
     public override IEnumerator Method(Profile user, Profile target, float damage)
     {

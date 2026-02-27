@@ -10,7 +10,7 @@ public class ExplodeOnDie_Talisman : Talisman
     public float reflectDamage = 5f;
     public float dieDamage = 10f;
 
-    public TalismanSkill explode;
+    public Skill explode;
     public override void OnTakeDamage(Profile owner, Profile dealer, float damage)
     {
         if (!owner.stats.isDied)

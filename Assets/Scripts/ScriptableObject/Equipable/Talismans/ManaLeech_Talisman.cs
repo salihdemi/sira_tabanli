@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable Objects/Equipables/Talismans/ManaLeech_Talisman")]
 public class ManaLeech_Talisman : Talisman
 {
-    public TalismanSkill skill;
+    public Skill skill;
 
 
     private static int ownerCount;

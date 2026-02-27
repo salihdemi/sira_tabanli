@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Burst", menuName = "Scriptable Objects/Skills/CharacterSkills/Heal")]
-public class Heal : CharacterSkill
+public class Heal : Skill
 {
     public override IEnumerator Method(Profile user, Profile target)
     {
