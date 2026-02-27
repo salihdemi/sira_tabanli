@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "MultiHit", menuName = "Scriptable Objects/Skills/CharacterSkills/MultiHit")]
-public class MultiHit : CharacterSkill
+public class MultiHit : Skill
 {
     [Header("MultiHit")]
     public int hitCount;

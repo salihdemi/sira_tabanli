@@ -305,7 +305,7 @@ public static class SaveManager
         for (int i = 0; i < inventoryData.consumableNames.Count; i++)
         {
             // Þimdilik null check ile geçiyoruz, Resources kýsmýnda baðlayacaðýz
-            var so = FindSOByName<ConsumableSkill>(inventoryData.consumableNames[i]);
+            var so = FindSOByName<Consumable>(inventoryData.consumableNames[i]);
             if (so != null) InventoryManager.consumables.Add(so, inventoryData.consumableAmounts[i]);
         }
 
@@ -464,11 +464,11 @@ public static class SaveManager
 
         persistanceStats.unlockedSkills.Clear();
         for (int i = 0; i < allySaveData.unlockedSkills.Count; i++)          //Skiller listesi
-            persistanceStats.unlockedSkills.Add(FindSOByName<CharacterSkill>(allySaveData.unlockedSkills[i]));
+            persistanceStats.unlockedSkills.Add(FindSOByName<Skill>(allySaveData.unlockedSkills[i]));
 
         persistanceStats.currentSkills.Clear();
         for (int i = 0; i < allySaveData.currentSkills.Count; i++)          //Skiller listesi
-            persistanceStats.currentSkills.Add(FindSOByName<CharacterSkill>(allySaveData.currentSkills[i]));
+            persistanceStats.currentSkills.Add(FindSOByName<Skill>(allySaveData.currentSkills[i]));
 
 
 
@@ -500,9 +500,9 @@ public static class SaveManager
         if (typeof(T) == typeof(Talisman)) folderPath = "Equipables/Talismans/";
         else if (typeof(T) == typeof(Weapon)) folderPath = "Equipables/Weapons/";
         else if (typeof(T) == typeof(Item)) folderPath = "Equipables/Items/";
-        else if (typeof(T) == typeof(CharacterSkill)) folderPath = "Skills/";
+        else if (typeof(T) == typeof(Skill)) folderPath = "Skills/";
         else if (typeof(T) == typeof(Attack)) folderPath = "Attacks/";
-        else if (typeof(T) == typeof(ConsumableSkill)) folderPath = "Consumables/";
+        else if (typeof(T) == typeof(Consumable)) folderPath = "Consumables/";
         else if (typeof(T) == typeof(Sprite)) folderPath = "Sprites/";
 
         // Resources.Load, belirtilen klasördeki ismi arar

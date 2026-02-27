@@ -38,8 +38,8 @@ public class PersistanceStats
 
     [Header("Skills")]
     public Attack attack;
-    public List<CharacterSkill> currentSkills = new List<CharacterSkill>();
-    public List<CharacterSkill> unlockedSkills = new List<CharacterSkill>();
+    public List<Skill> currentSkills = new List<Skill>();
+    public List<Skill> unlockedSkills = new List<Skill>();
 
     [Header("Other")]
     public bool isDied;
@@ -69,8 +69,8 @@ public class PersistanceStats
         sprite = data.sprite;
         attack = data.attack;
 
-        unlockedSkills = new List<CharacterSkill>(data.skills);
-        foreach (CharacterSkill skill in unlockedSkills) TryEquipSkill(skill);
+        unlockedSkills = new List<Skill>(data.skills);
+        foreach (Skill skill in unlockedSkills) TryEquipSkill(skill);
 
         talimsan = data.talisman;
 
@@ -87,7 +87,7 @@ public class PersistanceStats
     }
 
 
-    public void UnlockSkill(CharacterSkill skill)
+    public void UnlockSkill(Skill skill)
     {
         //Debug.Log(skill.ToString());
         if (unlockedSkills.Contains(skill))
@@ -100,7 +100,7 @@ public class PersistanceStats
         TryEquipSkill(skill);
     }
 
-    public void TryEquipSkill(CharacterSkill skill)
+    public void TryEquipSkill(Skill skill)
     {
         if (currentSkills.Count < 4)
         {
@@ -113,7 +113,7 @@ public class PersistanceStats
         }
     }
 
-    public void TryUnequipSkill(CharacterSkill skill)
+    public void TryUnequipSkill(Skill skill)
     {
         if (currentSkills.Count > 1 && currentSkills.Contains(skill))
         {

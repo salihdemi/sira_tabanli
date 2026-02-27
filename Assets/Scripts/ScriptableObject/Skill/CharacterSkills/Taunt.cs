@@ -3,7 +3,7 @@ using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
 [CreateAssetMenu(fileName = "Taunt", menuName = "Scriptable Objects/Skills/CharacterSkills/Taunt")]
-public class Taunt : CharacterSkill
+public class Taunt : Skill
 {
     public override IEnumerator Method(Profile user, Profile target)
     {

@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ExplodeTalismanSkill", menuName = "Scriptable Objects/Skills/TalismanSkills/ThornsTalismanSkill")]
-public class ThornsTalismanSkill : TalismanSkill
+public class ThornsTalismanSkill : Skill
 {
     public override IEnumerator Method(Profile user, Profile target, float damage)
     {

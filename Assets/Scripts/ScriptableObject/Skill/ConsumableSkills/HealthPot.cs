@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "HealthPot", menuName = "Scriptable Objects/Skills/ConsumableSkills/HealthPot")]
-public class HealthPot : ConsumableSkill
+public class HealthPot : Skill
 {
     public override IEnumerator Method(Profile user, Profile target)
     {
@@ -13,6 +13,5 @@ public class HealthPot : ConsumableSkill
         //saldýrýyý yap
 
         user.AddToHealth(10, user);
-        InventoryManager.RemoveConsumable(this);
     }
 }

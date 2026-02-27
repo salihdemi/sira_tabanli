@@ -12,7 +12,7 @@ public class ColliderThing : MonoBehaviour
     public Type type;
 
     public CharacterData characterToUnlock;
-    public ConsumableSkill foodToGive;
+    public Consumable foodToGive;
     public Equipable equipable;
 
 

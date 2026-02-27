@@ -114,7 +114,7 @@ public class CharacterMenu : MonoBehaviour
         foreach (Transform child in skillMenu.transform.GetChild(0)) Destroy(child.gameObject);
 
 
-        foreach (CharacterSkill skill in stats.unlockedSkills)
+        foreach (Skill skill in stats.unlockedSkills)
         {
 
             EquipableSelectionCard card = Instantiate(equipableCardPrefab, skillMenu.transform.GetChild(0));
@@ -123,7 +123,7 @@ public class CharacterMenu : MonoBehaviour
             ChangeSkillButtonEvent(card.button, skill, stats);
         }
     }
-    private void ChangeSkillButtonEvent(Button button, CharacterSkill skill, PersistanceStats stats)
+    private void ChangeSkillButtonEvent(Button button, Skill skill, PersistanceStats stats)
     {
         bool isEquipped = stats.currentSkills.Contains(skill);
 

@@ -292,7 +292,7 @@ public abstract class Profile : MonoBehaviour
 
 
 
-    public bool IsEnoughForSkill(CharacterSkill skill)
+    public bool IsEnoughForSkill(Skill skill)
     {
         bool healthEnough = stats.currentHealth >= skill.healthCost;
         bool staminaEnough = stats.currentStamina >= skill.staminaCost;
