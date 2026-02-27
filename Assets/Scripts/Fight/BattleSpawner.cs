@@ -131,7 +131,8 @@ public static class BattleSpawner
 }
 public enum CharacterType
 {
-    DefaultProfile,
+    Profile,
     FireEnemy,
-    ShieldEnemy
+    ShieldEnemy,
+    HiveEnemy
 }

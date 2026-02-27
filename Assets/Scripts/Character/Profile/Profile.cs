@@ -8,7 +8,7 @@ using UnityEngine.Profiling;
 using UnityEngine.UI;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public abstract class Profile : MonoBehaviour
+public class Profile : MonoBehaviour
 {
     [HideInInspector] public PersistanceStats stats;
     [HideInInspector] public ProfileLungeHandler lungeHandler;//kaldýrýlabilirse iyi olurdu
@@ -38,10 +38,9 @@ public abstract class Profile : MonoBehaviour
 
 
 
-
     #region Setup
     
-    public void Setup(PersistanceStats persistanceStats)
+    public virtual void Setup(PersistanceStats persistanceStats)
     {
         gameObject.SetActive(true);
 
@@ -81,11 +80,15 @@ public abstract class Profile : MonoBehaviour
         onSpeedChange?.Invoke(currentSpeed);
     }
 
-    public void UnSetup()
+    public virtual void UnSetup()
     {
         TurnScheduler.onTourEnd -= StatusProcess;
         TurnScheduler.onTourEnd -= ResetHitCount;
         //Talisman?
+    }
+    private void OnDisable()
+    {
+        UnSetup();
     }
     private void OnDestroy()
     {
@@ -101,7 +104,7 @@ public abstract class Profile : MonoBehaviour
     //setler olustururken calismali sadece
     public void SetHealth(float amount)
     {
-        stats.currentHealth = amount;
+        stats.currentHealth = Mathf.Clamp(amount, 0, stats.maxHealth);
         NotifyHealthChanged();
     }
     public void SetStamina(float amount)
