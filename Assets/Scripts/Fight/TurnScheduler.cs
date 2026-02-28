@@ -46,6 +46,7 @@ public static class TurnScheduler
     }
     private static void StartLunges()
     {
+        profilesThatWillLunge.Clear();
         foreach(Profile profile in FightManager.EnemyProfiles)
         {
             profilesThatWillLunge.Add(profile.lungeHandler);
@@ -62,11 +63,9 @@ public static class TurnScheduler
     {
         if (order == profilesThatWillLunge.Count)//oynat
         {
-            Debug.Log("a");
             onStartPlay?.Invoke();
             i = 0;
             SortProfilesWithSpeed();
-            Debug.Log("a");
             PlayNextPerson();
         }
         else//devam et
@@ -77,7 +76,6 @@ public static class TurnScheduler
     private static void LetNextProfileToLunge()
     {
         ProfileLungeHandler lungeHandler = profilesThatWillLunge[order];
-        Debug.Log(lungeHandler.profile.stats._name);
         order++;
 
         lungeHandler.LungeStart();
@@ -99,6 +97,7 @@ public static class TurnScheduler
     private static int i = 0;
     public static void PlayNextPerson()
     {
+        Debug.Log(i);
         if (i >= orderedProfiles.Count)
         {
             i = 0;
