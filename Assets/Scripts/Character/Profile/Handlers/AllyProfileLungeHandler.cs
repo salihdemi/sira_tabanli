@@ -11,7 +11,7 @@ public class AllyProfileLungeHandler : ProfileLungeHandler
 
     public override void LungeStart()
     {
-        //Debug.Log(name + " hamlesini seçiyor");
+        Debug.Log(name + " hamlesini seçiyor");
         CharacterActionPanel.instance.OpenWriteThings(profile);
 
     }

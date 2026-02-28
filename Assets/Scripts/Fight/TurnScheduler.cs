@@ -56,21 +56,29 @@ public static class TurnScheduler
         }
         else//devam et
         {
-            foreach (Profile profile in FightManager.AllyProfiles) profile.stats.talimsan?.OnTourEnd(profile);
-            foreach (Profile profile in FightManager.EnemyProfiles) profile.stats.talimsan?.OnTourEnd(profile);
             LetNextPlayertoLunge();
         }
     }
     private static void LetNextPlayertoLunge()
     {
-
-        ProfileLungeHandler lungeHandler = orderedProfiles[order];
+        Debug.Log(order);
+        ProfileLungeHandler lungeHandler = orderedProfiles[order];//Hiz sirasina göre yapmamasý lazým, öylee mi yapýyor
+        Debug.Log(lungeHandler.profile.stats._name);
         order++;
 
         lungeHandler.profile.stats.talimsan?.OnTourStart(lungeHandler.profile);
         lungeHandler.LungeStart();
     }
 
+
+
+
+    public static void Back()
+    {
+        Debug.Log("back");
+        order--;
+        LetNextPlayertoLunge();
+    }
     #endregion
 
     #region PlaySequence
@@ -97,6 +105,8 @@ public static class TurnScheduler
 
     private static void FinishTour()
     {
+        foreach (Profile profile in FightManager.AllyProfiles) profile.stats.talimsan?.OnTourEnd(profile);//direkt ontourende abone etsek?!
+        foreach (Profile profile in FightManager.EnemyProfiles) profile.stats.talimsan?.OnTourEnd(profile);
         onTourEnd.Invoke();
 
         StartTourLunges();

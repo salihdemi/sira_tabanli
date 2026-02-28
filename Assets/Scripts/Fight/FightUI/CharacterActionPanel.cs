@@ -140,4 +140,19 @@ public class CharacterActionPanel : MonoBehaviour
         if (itemsPanel != null) itemsPanel.SetActive(false); // Eksik null check eklendi
         gameObject.SetActive(false);
     }
+
+
+
+
+
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TurnScheduler.Back();
+            Debug.Log("Space tuþuna basýldý!");
+        }
+    }
 }
