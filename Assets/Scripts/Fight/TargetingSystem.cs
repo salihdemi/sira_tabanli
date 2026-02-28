@@ -11,6 +11,8 @@ public static class TargetingSystem
 
     private static List<ProfileButtonHandler> activeButtonHandlers = new List<ProfileButtonHandler> { };
 
+    public static bool IsTargeting => selectedSkill != null;
+
 
     public static void StartTargeting(Profile caster, Skill skill)
     {
@@ -30,13 +32,30 @@ public static class TargetingSystem
         }
 
     }
+    public static void CancelTargeting()
+    {
+        if (currentCaster == null) return;
 
+        // 1. Görsel butonlarý temizle
+        CloseButtons();
+
+        // 2. State'i temizle
+        selectedSkill = null;
+
+        // 3. Menüyü tekrar aç (Oyuncu geri döndüðü için seçim panelini görmeli)
+        if (CharacterActionPanel.instance != null)
+        {
+            CharacterActionPanel.instance.OpenWriteThings(currentCaster);
+        }
+
+        currentCaster = null;
+    }
     private static bool CheckIfValid(Profile target, TargetType type)
     {
         // Hedef geçerli mi kontrolü (Düþman mý? Dost mu?)
-        if (type == TargetType.enemy) return target is Profile;
-        if (type == TargetType.ally) return target is Profile;
-        return true;
+        if (type == TargetType.enemy) return !target.isAlly;
+        else if (type == TargetType.ally) return target.isAlly;
+        else return true;
     }
 
     public static void OnProfileClicked(Profile clickedProfile)

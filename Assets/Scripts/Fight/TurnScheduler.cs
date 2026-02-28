@@ -86,9 +86,12 @@ public static class TurnScheduler
 
     public static void Back()
     {
-        Debug.Log("back");
-        order -= 2;
-        LetNextProfileToLunge();
+        if(TargetingSystem.IsTargeting) TargetingSystem.CancelTargeting();
+        else
+        {
+            order -= 2; // ilk dostta geri yaparsan son düþmana döner hamlesini seçtirip geri ilk düþmana gelir. þimdilik çalýþýyorsa dokunma!
+            LetNextProfileToLunge();
+        }
     }
     #endregion
 
@@ -157,24 +160,4 @@ public static class TurnScheduler
         // TÜM EFEKTLER BÝTTÝ, ÞÝMDÝ SIRADAKÝ KÝÞÝYE GEÇEBÝLÝRÝZ
         PlayNextPerson();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

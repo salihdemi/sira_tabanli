@@ -143,16 +143,4 @@ public class CharacterActionPanel : MonoBehaviour
 
 
 
-
-
-
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TurnScheduler.Back();
-            Debug.Log("Space tuþuna basýldý!");
-        }
-    }
 }

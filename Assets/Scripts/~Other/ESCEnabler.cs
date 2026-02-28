@@ -5,7 +5,15 @@ public class ESCEnabler : MonoBehaviour
     public GameObject _gameObject;
     private void Update()
     {
-        if(_gameObject != null)
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TurnScheduler.Back();
+            Debug.Log("Space tuþuna basýldý!");
+        }
+
+
+
+        if (_gameObject != null)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
