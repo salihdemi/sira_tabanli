@@ -34,7 +34,7 @@ public class EnemyGroup : MonoBehaviour
         }
     }
 
-    void OnDestroy()
+    void OnDisable()//ondestroydan cevirdim?
     {
         GroupsInScene.Remove(this);
     }

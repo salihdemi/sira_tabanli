@@ -39,7 +39,7 @@ public static class TurnScheduler
         foreach (Profile profile in FightManager.AllyProfiles)  profile.stats.talimsan?.OnTourStart(profile);
         foreach (Profile profile in FightManager.EnemyProfiles) profile.stats.talimsan?.OnTourStart(profile);
 
-        onTourStart.Invoke();
+        onTourStart?.Invoke();
         SortProfilesWithSpeed();
 
 

@@ -18,7 +18,7 @@ public abstract class MapMoveable : MonoBehaviour
         FightManager.OnFightStart += SetInFight;
         FightManager.OnFightEnd += SetNotInFight;
     }
-    private void OnDestroy()
+    private void OnDisable()//ondestroydan cevirdim?
     {
         FightManager.OnFightStart -= SetInFight;
         FightManager.OnFightEnd -= SetNotInFight;

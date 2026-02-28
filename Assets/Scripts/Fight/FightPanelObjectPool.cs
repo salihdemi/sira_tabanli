@@ -44,7 +44,7 @@ public class FightPanelObjectPool : MonoBehaviour
         }
         else Destroy(gameObject);
     }
-    private void OnDestroy()
+    private void OnDisable()//ondestroydan cevirdim
     {
         Profile.OnSomeoneDie -= HandleReturnToPool;
     }

@@ -12,8 +12,7 @@ public class CharacterSelectMenu : MonoBehaviour
 
     public CharacterMenu characterMenu;
 
-    //private List<CharacterSelectionCard> spawnedCards = new List<CharacterSelectionCard>();
-
+    public List<CharacterSelectionCard> _cardPool = new List<CharacterSelectionCard>();
     public void OnEnable()
     {
         RefreshMenu();
@@ -21,19 +20,38 @@ public class CharacterSelectMenu : MonoBehaviour
 
     private void RefreshMenu()
     {
-        foreach (Transform child in contentArea) Destroy(child.gameObject);
+        // 1. Önce havuza daha önce girmiþ tüm kartlarý pasife çek
+        foreach (var card in _cardPool) card.gameObject.SetActive(false);
+        
 
+        var allies = PartyManager.allUnlockedAllies;
 
-        foreach (var ally in PartyManager.allUnlockedAllies)
+        // 2. Gereken kart sayýsý kadar döngü kur
+        for (int i = 0; i < allies.Count; i++)
         {
-            GameObject go = Instantiate(characterCardPrefab, contentArea);
-            CharacterSelectionCard card = go.GetComponent<CharacterSelectionCard>();
-            card.Setup(ally, this);
-            //spawnedCards.Add(card);
+            CharacterSelectionCard card;
+
+            // Havuzda hali hazýrda bir kart varsa onu kullan
+            if (i < _cardPool.Count) card = _cardPool[i];
+
+            // Havuz yetersizse yeni bir tane oluþtur ve havuza ekle
+            else
+            {
+                GameObject go = Instantiate(characterCardPrefab, contentArea);
+                card = go.GetComponent<CharacterSelectionCard>();
+                _cardPool.Add(card);
+            }
+
+            // Kartý görünür yap ve bilgilerini tazele
+            card.gameObject.SetActive(true);
+            card.Setup(allies[i], this);
+
+            // Bonus: Kartlarýn sýrasýný korumak için (Layout Group kullanýyorsan)
+            card.transform.SetAsLastSibling();
         }
     }
-    
-    
+
+
     public void OpenCharacterMenu(PersistanceStats stats)
     {
         characterMenu.gameObject.SetActive(true);

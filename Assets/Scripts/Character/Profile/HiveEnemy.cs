@@ -14,7 +14,6 @@ public class HiveEnemy : Profile
     {
         base.Setup(persistanceStats);
         if (!hiveEnemies.Contains(this)) hiveEnemies.Add(this);
-        Debug.Log(name);
     }
 
     public override void UnSetup()

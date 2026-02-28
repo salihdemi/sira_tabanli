@@ -24,4 +24,5 @@ MonoBehaviour:
   sprite: {fileID: -405460431907137852, guid: 1cd4c185e11cb4f4387b743337927ecb, type: 3}
   attack: {fileID: 11400000, guid: 40984029d2d07f843bb19458cc67c00d, type: 2}
   skills: []
-  talisman: {fileID: 11400000, guid: 1d5b7dee1d7428447ae5967f1341a27e, type: 2}
+  talisman: {fileID: 0}
+  type: 3
