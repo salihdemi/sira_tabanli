@@ -17,4 +17,4 @@ MonoBehaviour:
   healthCost: 0
   staminaCost: 0
   manaCost: 0
-  sprite: {fileID: 0}
+  sprite: {fileID: -4616598773014292954, guid: df5b70389f7b20f4f869795e54831fc4, type: 3}
