@@ -76,7 +76,7 @@ public static class FightManager
 
         foreach (Profile profile in AllyProfiles) profile.stats.talimsan?.OnFightStart(profile);
         foreach (Profile profile in EnemyProfiles) profile.stats.talimsan?.OnFightStart(profile);
-        TurnScheduler.StartTourLunges();
+        TurnScheduler.StartTour();
     }
     
     public static void WinFight()

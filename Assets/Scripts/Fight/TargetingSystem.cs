@@ -17,7 +17,7 @@ public static class TargetingSystem
         selectedSkill = skill;
         currentCaster = caster;
 
-        List<ProfileButtonHandler> allProfiles = TurnScheduler.orderedProfiles.Select(p => p.buttonHandler).ToList();
+        List<ProfileButtonHandler> allProfiles = TurnScheduler.profilesThatWillLunge.Select(p => p.buttonHandler).ToList();
 
         foreach (ProfileButtonHandler buttonHandler in allProfiles)
         {

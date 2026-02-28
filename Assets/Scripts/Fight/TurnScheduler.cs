@@ -32,41 +32,51 @@ public static class TurnScheduler
 
 
     #region LungeSequence
-    public static void StartTourLunges()
+
+    public static List<ProfileLungeHandler> profilesThatWillLunge = new List<ProfileLungeHandler>();
+
+    public static void StartTour()
     {
-
-
         foreach (Profile profile in FightManager.AllyProfiles)  profile.stats.talimsan?.OnTourStart(profile);
         foreach (Profile profile in FightManager.EnemyProfiles) profile.stats.talimsan?.OnTourStart(profile);
-
         onTourStart?.Invoke();
-        SortProfilesWithSpeed();
 
 
-        SetEnemyLunges();
-        CheckNextAllyToLunge();
+        StartLunges();
     }
-    private static void SetEnemyLunges()
+    private static void StartLunges()
     {
-
-    }
-    public static void CheckNextAllyToLunge()
-    {
-        if (order == FightManager.AllyProfiles.Count)//oynat
+        foreach(Profile profile in FightManager.EnemyProfiles)
         {
+            profilesThatWillLunge.Add(profile.lungeHandler);
+        }
+        foreach(Profile profile in FightManager.AllyProfiles)
+        {
+            profilesThatWillLunge.Add(profile.lungeHandler);
+        }
+
+
+        CheckNextProfileToLunge();
+    }
+    public static void CheckNextProfileToLunge()
+    {
+        if (order == profilesThatWillLunge.Count)//oynat
+        {
+            Debug.Log("a");
             onStartPlay?.Invoke();
             i = 0;
+            SortProfilesWithSpeed();
+            Debug.Log("a");
             PlayNextPerson();
         }
         else//devam et
         {
-            LetNextAllytoLunge();
+            LetNextProfileToLunge();
         }
     }
-    private static void LetNextAllytoLunge()
+    private static void LetNextProfileToLunge()
     {
-        Debug.Log(order);
-        ProfileLungeHandler lungeHandler = FightManager.AllyProfiles[order].lungeHandler;
+        ProfileLungeHandler lungeHandler = profilesThatWillLunge[order];
         Debug.Log(lungeHandler.profile.stats._name);
         order++;
 
@@ -80,7 +90,7 @@ public static class TurnScheduler
     {
         Debug.Log("back");
         order -= 2;
-        LetNextAllytoLunge();
+        LetNextProfileToLunge();
     }
     #endregion
 
@@ -112,7 +122,7 @@ public static class TurnScheduler
         foreach (Profile profile in FightManager.EnemyProfiles) profile.stats.talimsan?.OnTourEnd(profile);
         onTourEnd.Invoke();
 
-        StartTourLunges();
+        StartTour();
     }
 
     #endregion

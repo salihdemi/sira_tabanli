@@ -25,7 +25,7 @@ public abstract class ProfileLungeHandler : MonoBehaviour
     }
     public void FinishLunge()
     {
-        TurnScheduler.CheckNextAllyToLunge();
+       TurnScheduler.CheckNextProfileToLunge();
     }
 
 
@@ -33,7 +33,7 @@ public abstract class ProfileLungeHandler : MonoBehaviour
     {
         if (profile.stats.isDied) return false;
 
-        Debug.Log(currentSkill);
+        Debug.Log(profile.stats._name + " asd " + currentSkill);
         bool needTarget = currentSkill.targetType == TargetType.enemy || currentSkill.targetType == TargetType.ally;
         bool targetValid = !needTarget || (currentTarget != null && !currentTarget.stats.isDied);
 

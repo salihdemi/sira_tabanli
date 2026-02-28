@@ -63,7 +63,6 @@ public class CharacterActionPanel : MonoBehaviour
             button.interactable = profile.IsEnoughForSkill(skill);
 
             button.onClick.RemoveAllListeners();
-            Debug.Log(skill._name);
             button.onClick.AddListener(() => profile.lungeHandler.ChooseSkill(skill));
         }
     }
