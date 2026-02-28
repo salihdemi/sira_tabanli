@@ -43,12 +43,16 @@ public static class TurnScheduler
         SortProfilesWithSpeed();
 
 
-
-        CheckNextCharacterToLunge();
+        SetEnemyLunges();
+        CheckNextAllyToLunge();
     }
-    public static void CheckNextCharacterToLunge()
+    private static void SetEnemyLunges()
     {
-        if (order == orderedProfiles.Count)//oynat
+
+    }
+    public static void CheckNextAllyToLunge()
+    {
+        if (order == FightManager.AllyProfiles.Count)//oynat
         {
             onStartPlay?.Invoke();
             i = 0;
@@ -56,17 +60,16 @@ public static class TurnScheduler
         }
         else//devam et
         {
-            LetNextPlayertoLunge();
+            LetNextAllytoLunge();
         }
     }
-    private static void LetNextPlayertoLunge()
+    private static void LetNextAllytoLunge()
     {
         Debug.Log(order);
-        ProfileLungeHandler lungeHandler = orderedProfiles[order];//Hiz sirasina göre yapmamasý lazým, öylee mi yapýyor
+        ProfileLungeHandler lungeHandler = FightManager.AllyProfiles[order].lungeHandler;
         Debug.Log(lungeHandler.profile.stats._name);
         order++;
 
-        lungeHandler.profile.stats.talimsan?.OnTourStart(lungeHandler.profile);
         lungeHandler.LungeStart();
     }
 
@@ -76,8 +79,8 @@ public static class TurnScheduler
     public static void Back()
     {
         Debug.Log("back");
-        order--;
-        LetNextPlayertoLunge();
+        order -= 2;
+        LetNextAllytoLunge();
     }
     #endregion
 

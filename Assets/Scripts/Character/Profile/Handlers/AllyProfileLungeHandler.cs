@@ -17,6 +17,7 @@ public class AllyProfileLungeHandler : ProfileLungeHandler
     }
     public override void ChooseSkill(Skill skill)
     {
+        Debug.Log(profile.stats._name + skill);
         currentSkill = skill;
         CharacterActionPanel.instance.CloseAndDisableAllPanels();
 
