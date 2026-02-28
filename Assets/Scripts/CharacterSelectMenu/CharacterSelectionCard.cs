@@ -7,6 +7,7 @@ public class CharacterSelectionCard : MonoBehaviour
     public PersistanceStats stats;
 
     public Image portraitImage;
+    public TextMeshProUGUI text;
     public GameObject selectionFrame; // Seçildiðinde yanan görsel
     //public TextMeshProUGUI healthText;
 
@@ -24,6 +25,7 @@ public class CharacterSelectionCard : MonoBehaviour
         this.stats = stats;
         this.characterSelectMenu = characterSelectMenu;
 
+        text.text = stats._name;
         portraitImage.sprite = stats.sprite;
         //healthText.text = stats.currentHealth + " " + stats.maxHealth;
         selectionFrame.SetActive(stats.isInParty);

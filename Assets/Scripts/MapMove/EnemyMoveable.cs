@@ -3,8 +3,10 @@ using UnityEngine;
 
 public enum EnemyState { Idle, Chasing, InFight }
 
-public class EnemyMoveable : MapMoveable
+public class EnemyMoveable : MonoBehaviour
 {
+    [SerializeField] protected Rigidbody2D rb;
+    public float speed = 10;
     [Header("Settings")]
     [SerializeField] private EnemyGroup group;
     [SerializeField] public CharacterData data;

@@ -115,7 +115,7 @@ public class PersistanceStats
 
     public void TryUnequipSkill(Skill skill)
     {
-        if (currentSkills.Count > 1 && currentSkills.Contains(skill))
+        if (currentSkills.Contains(skill))
         {
             //characterToRemove.isInParty = false;
             currentSkills.Remove(skill);
