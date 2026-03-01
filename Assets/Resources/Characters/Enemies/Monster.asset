@@ -26,3 +26,4 @@ MonoBehaviour:
   skills: []
   talisman: {fileID: 0}
   type: 3
+  behaviourSet: {fileID: 11400000, guid: 197f9e40bd6bb0f45934a28b2d31664b, type: 2}
