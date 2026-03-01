@@ -205,7 +205,7 @@ public class Profile : MonoBehaviour
 
         TurnScheduler.AddAction(DeadMessage());//ölüm mesajý!!
 
-        OnSomeoneDie.Invoke(this);
+        OnSomeoneDie?.Invoke(this);
     }
 
     #endregion

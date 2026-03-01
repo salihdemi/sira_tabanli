@@ -1,29 +1,45 @@
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyProfileLungeHandler : ProfileLungeHandler
 {
+
+
     public override void LungeStart()
     {
-        //Debug.Log(name + " hamlesini seçiyor");
-
-        Skill currentskill = profile.stats.attack; //default hamle
-        ChooseSkill(currentskill);
+        ChooseSkill(profile.stats.behaviourSet.DecideSkill(this));
     }
     public override void ChooseSkill(Skill skill)
     {
         currentSkill = skill;
-        if (FightManager.tauntedAlly)
+        Profile target;
+
+        // Sadece saldýrý skillerinde Taunt kontrolü yapmalýsýn!
+        if (skill.targetType == TargetType.enemy && FightManager.tauntedAlly != null)
         {
-            Debug.Log(FightManager.tauntedAlly + " tauntlu");
-            SetTarget(FightManager.tauntedAlly);
+            target = FightManager.tauntedAlly;
         }
         else
         {
-            SetTarget(FightManager.defaultTargetForEnemies);//!default hedef!
+            target = profile.stats.behaviourSet.DecideTarget(this, skill.targetType);
         }
 
+        SetTarget(target);
     }
-    //public override void SetTarget(Profile profile)
+    public override void SetTarget(Profile profile)
+    {
+        if (profile == null)//Cok hedefli skillerde
+        {
+            FinishLunge();
+            return;
+        }
+        currentTarget = profile;
+        //lastTargetName = currentTarget.name;
+
+        FinishLunge();//!
+    }
     //public override void LungeEnd()
+
 }

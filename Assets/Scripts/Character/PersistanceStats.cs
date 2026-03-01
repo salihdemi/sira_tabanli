@@ -45,7 +45,7 @@ public class PersistanceStats
     public bool isDied;
     public bool isInParty;
     public CharacterType type;
-
+    public EnemyBehaviourSet behaviourSet;
     public void LoadFromBase(CharacterData data)
     {
         //originData = data;
@@ -75,6 +75,8 @@ public class PersistanceStats
         talimsan = data.talisman;
 
         type = data.type;
+
+        behaviourSet = data.behaviourSet;
     }
 
     public void Regen()
