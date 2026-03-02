@@ -6,15 +6,25 @@ public class HitAllEnemies : Skill
 {
     public override IEnumerator Method(Profile user, Profile target)
     {
-        yield return null;//!
-        //animasyonu oynat
-        //sesi oynat
+                          //animasyonu oynat
+                          //sesi oynat
+
+
+        //konsola yaz
+        string text = user.stats._name + " " + target.stats._name + "'e " + _name + " yapýyor";
+        ConsolePanel.instance.WriteConsole(text);
+        Debug.Log(text);
+
+        yield return new WaitForSeconds(1f); // 1 saniye bekle
 
         //saldýrýyý yap
-        /*
-        foreach (EnemyProfileLungeHandler enemy in TurnScheduler.ActiveEnemyProfiles)
+        Profile[] profiles = FightManager.AllyProfiles.ToArray();//sadece allylara da vurabilir
+        foreach (Profile profile in profiles)
         {
-            enemy.profile.AddToHealth(-5, user);
-        }*/
+            if (profile != null && profile != user && !profile.stats.isDied)
+            {
+                profile.AddToHealth(-5, null);
+            }
+        }
     }
 }

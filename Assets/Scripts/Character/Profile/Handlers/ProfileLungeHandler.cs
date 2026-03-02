@@ -11,18 +11,7 @@ public abstract class ProfileLungeHandler : MonoBehaviour
 
     public abstract void LungeStart();
     public abstract void ChooseSkill(Skill skill);
-    public virtual void SetTarget(Profile profile)
-    {
-        if (profile == null)//Cok hedefli skillerde
-        {
-            FinishLunge();
-            return;
-        }
-        currentTarget = profile;
-        //lastTargetName = currentTarget.name;
-
-        FinishLunge();//!
-    }
+    public abstract void SetTarget(Profile profile);
     public void FinishLunge()
     {
        TurnScheduler.CheckNextProfileToLunge();

@@ -4,6 +4,27 @@ using UnityEngine.Profiling;
 
 public abstract class EnemyBehaviourSet : ScriptableObject
 {
+
+
+    // HER DAVRANIÞ BU METODU DOLDURACAK
+    public virtual Skill DecideSkill(EnemyProfileLungeHandler lungeHandler)
+    {
+        return lungeHandler.profile.stats.attack; //default hamle
+    }
+    public virtual Profile DecideTarget(EnemyProfileLungeHandler lungeHandler, TargetType type)
+    {
+        return FightManager.defaultTargetForEnemies;
+    }
+
+
+
+
+
+
+
+
+
+
     // Düþmanýn (Düþman gözüyle) rakiplerini (Bizim Ally'larý) bulur
     protected Profile GetRandomOpponent() =>
         FightManager.AllyProfiles.Where(p => !p.stats.isDied).OrderBy(x => Random.value).FirstOrDefault();
@@ -15,13 +36,20 @@ public abstract class EnemyBehaviourSet : ScriptableObject
     protected Profile GetLowestHealthEnemy() =>
         FightManager.EnemyProfiles.Where(p => !p.stats.isDied).OrderBy(p => p.stats.currentHealth).FirstOrDefault();
 
-    // HER DAVRANIÞ BU METODU DOLDURACAK
-    public virtual Skill DecideSkill(EnemyProfileLungeHandler lungeHandler)
+
+
+
+
+    protected Skill GetRandomSkill(EnemyProfileLungeHandler lungeHandler)
     {
-        return lungeHandler.profile.stats.attack; //default hamle
+        int a = lungeHandler.profile.stats.currentSkills.Count;
+        int b = Random.Range(0, a);
+
+        return lungeHandler.profile.stats.currentSkills[b];
     }
-    public virtual Profile DecideTarget(EnemyProfileLungeHandler lungeHandler, TargetType type)
+    protected bool IsEnuoghForSkill(EnemyProfileLungeHandler lungeHandler, Skill skill)
     {
-        return FightManager.defaultTargetForEnemies;
+        return lungeHandler.profile.IsEnoughForSkill(skill);
     }
+
 }

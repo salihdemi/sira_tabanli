@@ -6,17 +6,23 @@ public class HealAllAllies : Skill
 {
     public override IEnumerator Method(Profile user, Profile target)
     {
-        yield return null;//!
-        /*
+
         //animasyonu oynat
         //sesi oynat
 
-        //saldýrýyý yap
 
+        //konsola yaz
+        string text = user.stats._name + " " + "'e " + _name + " yapýyor";
+        ConsolePanel.instance.WriteConsole(text);
+        Debug.Log(text);
+        
+        yield return new WaitForSeconds(1);
+
+        //saldýrýyý yap
         foreach (Profile ally in FightManager.AllyProfiles)
         {
             ally.AddToHealth(5, user);
         }
-        */
+        
     }
 }

@@ -63,7 +63,8 @@ public class CharacterActionPanel : MonoBehaviour
             button.interactable = profile.IsEnoughForSkill(skill);
 
             button.onClick.RemoveAllListeners();
-            button.onClick.AddListener(() => profile.lungeHandler.ChooseSkill(skill));
+            //button.onClick.AddListener(() => profile.lungeHandler.ChooseSkill(skill));
+            button.onClick.AddListener(() => ChooseSkillForLungeHandler(profile, skill));
         }
     }
 
@@ -84,7 +85,8 @@ public class CharacterActionPanel : MonoBehaviour
 
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() => InventoryManager.RemoveConsumable(consumable));
-            button.onClick.AddListener(() => profile.lungeHandler.ChooseSkill(consumable.skill));
+            //button.onClick.AddListener(() => profile.lungeHandler.ChooseSkill(consumable.skill));
+            button.onClick.AddListener(() => ChooseSkillForLungeHandler(profile, consumable.skill));
             // Eþya bitince paneli yenilemek isteyebilirsin:
             button.onClick.AddListener(() => WriteConsumablesPanel(profile));
         }
@@ -116,7 +118,8 @@ public class CharacterActionPanel : MonoBehaviour
     private void WriteAttack(Profile profile)
     {
         attackButton.onClick.RemoveAllListeners();
-        attackButton.onClick.AddListener(() => profile.lungeHandler.ChooseSkill(profile.stats.attack));
+        //attackButton.onClick.AddListener(() => profile.lungeHandler.ChooseSkill(profile.stats.attack));
+        attackButton.onClick.AddListener(() => ChooseSkillForLungeHandler(profile, profile.stats.attack));
     }
 
     private void WriteItemButton(Profile profile)
@@ -129,7 +132,8 @@ public class CharacterActionPanel : MonoBehaviour
         else
         {
             itemButton.interactable = true;
-            itemButton.onClick.AddListener(() => profile.lungeHandler.ChooseSkill(profile.stats.item.skill));
+            //itemButton.onClick.AddListener(() => profile.lungeHandler.ChooseSkill(profile.stats.item.skill));
+            itemButton.onClick.AddListener(() => ChooseSkillForLungeHandler(profile, profile.stats.item.skill));
         }
     }
 
@@ -142,5 +146,8 @@ public class CharacterActionPanel : MonoBehaviour
     }
 
 
-
+    private void ChooseSkillForLungeHandler(Profile profile, Skill skill)
+    {
+        profile.lungeHandler.ChooseSkill(skill);
+    }
 }

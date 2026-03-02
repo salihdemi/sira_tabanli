@@ -51,4 +51,18 @@ public class AllyProfileLungeHandler : ProfileLungeHandler
         }
 
     }
+
+    public override void SetTarget(Profile profile)
+    {
+
+        if (profile == null)//Cok hedefli skillerde
+        {
+            FinishLunge();
+            return;
+        }
+        currentTarget = profile;
+        //lastTargetName = currentTarget.name;
+
+        FinishLunge();//!
+    }
 }

@@ -5,6 +5,28 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Aggressive Behaviour", menuName = "AI/Behaviours/Aggressive")]
 public class AggressiveEnemyBehaviour : EnemyBehaviourSet
 {
+    //aðýrlýklý rastsantýsallýk
+
+    //dost
+    //rastgele
+    //en az canlý
+    //en kuvvetli
+    //en tehlikeliyi susturma
+    //intikam
+
+    //düþman
+    //rastgele
+    //en az canlý
+    //en kuvvetli
+    //support olan
+    //olumsuz etkisi olan
+
+
+    //kendi
+    //caný %30 altýndaysa
+    //manasýý %30 altýndaysa
+    //statü altýndaysa
+
     public override Skill DecideSkill(EnemyProfileLungeHandler handler)
     {
         Profile self = handler.profile;
@@ -16,6 +38,7 @@ public class AggressiveEnemyBehaviour : EnemyBehaviourSet
         if (usableSkills.Count > 0)
         {
             selectedSkill = usableSkills[0];//defaultSkill
+            selectedSkill = GetRandomSkill(handler);
         }
         return selectedSkill;
     }

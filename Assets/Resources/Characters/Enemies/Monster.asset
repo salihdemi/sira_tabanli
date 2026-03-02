@@ -23,7 +23,12 @@ MonoBehaviour:
   speed: 2
   sprite: {fileID: 21300000, guid: 6f35c0078eb4f974185c4a13688d6478, type: 3}
   attack: {fileID: 11400000, guid: 40984029d2d07f843bb19458cc67c00d, type: 2}
-  skills: []
+  skills:
+  - {fileID: 11400000, guid: bf0fabd5ef094fa49b9a76c9bb19787c, type: 2}
+  - {fileID: 11400000, guid: 5762fa63f146f784a8ca1fd6bb9e0fc9, type: 2}
+  - {fileID: 11400000, guid: 118c6c29a419a154b9f5a03c874776d9, type: 2}
+  - {fileID: 11400000, guid: 4542b0163d3c6a844b7ecfe7e30ab6dd, type: 2}
+  - {fileID: 11400000, guid: bf078c690da052c438ff07e7240339bb, type: 2}
   talisman: {fileID: 0}
   type: 3
   behaviourSet: {fileID: 11400000, guid: 197f9e40bd6bb0f45934a28b2d31664b, type: 2}

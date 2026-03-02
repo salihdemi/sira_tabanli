@@ -7,9 +7,17 @@ public class Item1Skill : Skill
 {
     public override IEnumerator Method(Profile user, Profile target)
     {
-        yield return null;//!
         //animasyonu oynat
         //sesi oynat
+
+
+
+        //konsola yaz
+        string text = user.stats._name + " " + target.stats._name + "'e " + _name + " yapýyor";
+        ConsolePanel.instance.WriteConsole(text);
+        Debug.Log(text);
+
+        yield return new WaitForSeconds(1);//!
 
         //saldýrýyý yap
 
