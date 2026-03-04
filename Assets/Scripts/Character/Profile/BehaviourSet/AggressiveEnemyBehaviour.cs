@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Aggressive Behaviour", menuName = "AI/Behaviours/Aggressive")]
-public class AggressiveEnemyBehaviour : BehaviourSet
+public class AggressiveEnemyBehaviour : EnemyBehaviourSet
 {
     //Random bir  skilli en düþük canlý düþman ya da dosta uygular
     public override void DecideLunge(ProfileLungeHandler lungeHandler)

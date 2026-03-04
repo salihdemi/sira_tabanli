@@ -1,29 +1,18 @@
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Profiling;
-using static UnityEngine.GraphicsBuffer;
 
-[CreateAssetMenu(fileName = "DefaultBehaviour", menuName = "AI/Behaviours/Default")]
-public class BehaviourSet : ScriptableObject
+public abstract class EnemyBehaviourSet : ScriptableObject
 {
 
     //KRITER
 
-    //dost
     //en tehlikeli?
-    //scripted?
-    //liste usülü
-
-
-    //düþman
-    //support olan
-    //olumsuz etkisi olan
     //scripted
     //liste usülü
+    //support olan
 
 
-
-
+    //yetenek ardarda vurmama
 
     //aðýrlýklý rastsantýsallýk
 
@@ -42,7 +31,7 @@ public class BehaviourSet : ScriptableObject
     // HER DAVRANIÞ BU METODU DOLDURACAK
     public virtual void DecideLunge(ProfileLungeHandler lungeHandler)
     {
-        ChooseSkill(lungeHandler, lungeHandler.profile.stats.attack);
+        ChooseSkill(lungeHandler, GetRandomUsableSkill(lungeHandler.profile));
         ChooseTarget(lungeHandler, GetRandomAlly());
     }
 

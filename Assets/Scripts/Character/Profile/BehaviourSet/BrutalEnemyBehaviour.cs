@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BrutalBehaviour", menuName = "AI/Behaviours/Brutal")]
-public class BrutalEnemyBehaviour : BehaviourSet
+public class BrutalEnemyBehaviour : EnemyBehaviourSet
 {
     //----------------------------------
     //Canýn az ise can bas

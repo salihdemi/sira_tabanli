@@ -100,9 +100,9 @@ public static class BattleSpawner
         FightPanelObjectPool.instance.ClearEnemies();
     }
 }
-public enum CharacterType
+public enum CharacterType//direkt classlarýn isimlerini alýyor. 
 {
-    Profile,
+    DefaultProfile,
     FireEnemy,
     ShieldEnemy,
     HiveEnemy

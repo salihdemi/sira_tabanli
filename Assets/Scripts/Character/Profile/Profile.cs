@@ -8,7 +8,8 @@ using UnityEngine.Profiling;
 using UnityEngine.UI;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class Profile : MonoBehaviour
+//defaultProfile için ayrý class açýp prýfile abstract yapýlsýn
+public abstract class Profile : MonoBehaviour
 {
     [HideInInspector] public PersistanceStats stats;
     [HideInInspector] public ProfileLungeHandler lungeHandler;//kaldýrýlabilirse iyi olurdu
@@ -19,7 +20,7 @@ public class Profile : MonoBehaviour
     [HideInInspector] public event Action onHealthChange, onStaminaChange, onManaChange;
     [HideInInspector] public event Action<float> onStrengthChange, onTechnicalChange, onFocusChange, onSpeedChange;
     public static event Action<Profile> OnSomeoneDie;
-    protected virtual void NotifyHealthChanged()
+    protected void NotifyHealthChanged()
     {
         onHealthChange?.Invoke();
     }

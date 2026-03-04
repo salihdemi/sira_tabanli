@@ -30,5 +30,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4542b0163d3c6a844b7ecfe7e30ab6dd, type: 2}
   - {fileID: 11400000, guid: bf078c690da052c438ff07e7240339bb, type: 2}
   talisman: {fileID: 0}
-  type: 3
-  behaviourSet: {fileID: 11400000, guid: 197f9e40bd6bb0f45934a28b2d31664b, type: 2}
+  type: 0
+  behaviourSet: {fileID: 0}
