@@ -9,34 +9,21 @@ public class EnemyProfileLungeHandler : ProfileLungeHandler
 
     public override void LungeStart()
     {
-        ChooseSkill(profile.stats.behaviourSet.DecideSkill(this));
+        profile.stats.behaviourSet.DecideLunge(profile.lungeHandler);
     }
     public override void ChooseSkill(Skill skill)
     {
-        currentSkill = skill;
-        Profile target;
-
-        // Sadece saldýrý skillerinde Taunt kontrolü yapmalýsýn!
-        if (skill.targetType == TargetType.enemy && FightManager.tauntedAlly != null)
-        {
-            target = FightManager.tauntedAlly;
-        }
-        else
-        {
-            target = profile.stats.behaviourSet.DecideTarget(this, skill.targetType);
-        }
-
-        SetTarget(target);
+        if (profile.IsEnoughForSkill(skill)) currentSkill = skill;
+        else currentSkill = null;//her çaðýrmada nullcheck yapýlmalý!
     }
-    public override void SetTarget(Profile profile)
+    public override void ChooseTarget(Profile target)
     {
-        if (profile == null)//Cok hedefli skillerde
+        if (target == null)//Cok hedefli skillerde
         {
             FinishLunge();
             return;
         }
-        currentTarget = profile;
-        //lastTargetName = currentTarget.name;
+        currentTarget = target;
 
         FinishLunge();//!
     }

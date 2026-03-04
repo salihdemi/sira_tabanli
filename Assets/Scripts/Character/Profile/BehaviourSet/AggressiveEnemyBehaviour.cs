@@ -3,65 +3,52 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Aggressive Behaviour", menuName = "AI/Behaviours/Aggressive")]
-public class AggressiveEnemyBehaviour : EnemyBehaviourSet
+public class AggressiveEnemyBehaviour : BehaviourSet
 {
-    //aðýrlýklý rastsantýsallýk
-
-    //dost
-    //rastgele
-    //en az canlý
-    //en kuvvetli
-    //en tehlikeliyi susturma
-    //intikam
-
-    //düþman
-    //rastgele
-    //en az canlý
-    //en kuvvetli
-    //support olan
-    //olumsuz etkisi olan
-
-
-    //kendi
-    //caný %30 altýndaysa
-    //manasýý %30 altýndaysa
-    //statü altýndaysa
-
-    public override Skill DecideSkill(EnemyProfileLungeHandler handler)
+    //Random bir  skilli en düþük canlý düþman ya da dosta uygular
+    public override void DecideLunge(ProfileLungeHandler lungeHandler)
     {
-        Profile self = handler.profile;
-        Skill selectedSkill = self.stats.attack; // Varsayýlan olarak normal saldýrý
+
+        Skill selectedSkill = lungeHandler.profile.stats.attack; // Varsayýlan olarak normal saldýrý
 
 
-        List<Skill> usableSkills = self.stats.currentSkills.ToList();
+        List<Skill> usableSkills = lungeHandler.profile.stats.currentSkills.ToList();
 
         if (usableSkills.Count > 0)
         {
-            selectedSkill = usableSkills[0];//defaultSkill
-            selectedSkill = GetRandomSkill(handler);
+            selectedSkill = usableSkills[0];//defaultSkill!
+            //selectedSkill = GetRandomUsableSkill(lungeHandler.profile);
         }
-        return selectedSkill;
-    }
+        ChooseSkill(lungeHandler, selectedSkill);
 
-    public override Profile DecideTarget(EnemyProfileLungeHandler lungeHandler, TargetType type)
-    {
+
+
+
+
+
+
+
+
         Profile target = null;
 
-        if (type == TargetType.enemy)
+        switch (selectedSkill.targetType)
         {
-            //support
-            target = GetLowestHealthEnemy();
+            case TargetType.enemy:
+                //support
+                target = GetLowestHealthEnemy();
+                break;
+
+            case TargetType.ally:
+                //attack
+                target = GetLowestHealthAlly();
+                break;
+
+            case TargetType.self:
+                target = lungeHandler.profile;
+                break;
         }
-        else if (type == TargetType.ally)
-        {
-            //attack
-            target = GetLowestHealthAlly();
-        }
-        else if (type == TargetType.self)
-        {
-            target = lungeHandler.profile;
-        }
-        
-        return target;
+        ChooseTarget(lungeHandler, target);
     }
+
+
 }

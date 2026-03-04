@@ -35,7 +35,7 @@ public class CharacterData : ScriptableObject
 
     public CharacterType type;
 
-    public EnemyBehaviourSet behaviourSet;
+    public BehaviourSet behaviourSet;
 
 
 

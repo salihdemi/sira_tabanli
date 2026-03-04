@@ -100,7 +100,6 @@ public static class TurnScheduler
     private static int i = 0;
     public static void PlayNextPerson()
     {
-        Debug.Log(i);
         if (i >= orderedProfiles.Count)
         {
             i = 0;

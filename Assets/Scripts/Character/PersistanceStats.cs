@@ -45,7 +45,7 @@ public class PersistanceStats
     public bool isDied;
     public bool isInParty;
     public CharacterType type;
-    public EnemyBehaviourSet behaviourSet;
+    public BehaviourSet behaviourSet;
     public void LoadFromBase(CharacterData data)
     {
         //originData = data;

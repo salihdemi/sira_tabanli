@@ -6,12 +6,12 @@ public abstract class ProfileLungeHandler : MonoBehaviour
     public Profile profile;
     public ProfileButtonHandler buttonHandler;
 
-    [HideInInspector] public Skill currentSkill;
-    [HideInInspector] public Profile currentTarget;
+    [HideInInspector] protected Skill currentSkill;
+    [HideInInspector] protected Profile currentTarget;
 
     public abstract void LungeStart();
     public abstract void ChooseSkill(Skill skill);
-    public abstract void SetTarget(Profile profile);
+    public abstract void ChooseTarget(Profile profile);
     public void FinishLunge()
     {
        TurnScheduler.CheckNextProfileToLunge();

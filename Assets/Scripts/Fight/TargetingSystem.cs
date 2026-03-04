@@ -63,7 +63,7 @@ public static class TargetingSystem
         if (selectedSkill == null) return;
 
         // Skilli uygula
-        currentCaster.lungeHandler.SetTarget(clickedProfile);
+        currentCaster.lungeHandler.ChooseTarget(clickedProfile);
         CloseButtons();
     }
     private static void CloseButtons()

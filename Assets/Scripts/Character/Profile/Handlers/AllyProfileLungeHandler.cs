@@ -11,13 +11,11 @@ public class AllyProfileLungeHandler : ProfileLungeHandler
 
     public override void LungeStart()
     {
-        Debug.Log(name + " hamlesini seçiyor");
         CharacterActionPanel.instance.OpenWriteThings(profile);
 
     }
     public override void ChooseSkill(Skill skill)
     {
-        Debug.Log(profile.stats._name + skill);
         currentSkill = skill;
         CharacterActionPanel.instance.CloseAndDisableAllPanels();
 
@@ -25,7 +23,7 @@ public class AllyProfileLungeHandler : ProfileLungeHandler
                        || skill.targetType == TargetType.enemy;
         if (skill.targetType == TargetType.enemy)
         {
-            if (FightManager.tauntedEnemy) SetTarget(FightManager.tauntedEnemy);
+            if (FightManager.tauntedEnemy) ChooseTarget(FightManager.tauntedEnemy);
             else TargetingSystem.StartTargeting(profile, skill);
         }
         else if (skill.targetType == TargetType.ally)
@@ -34,25 +32,25 @@ public class AllyProfileLungeHandler : ProfileLungeHandler
         }
         else if (skill.targetType == TargetType.self)
         {
-            SetTarget(profile);
+            ChooseTarget(profile);
         }
         //gerek var mý?
         else if (skill.targetType == TargetType.all)
         {
-            SetTarget(null);
+            ChooseTarget(null);
         }
         else if (skill.targetType == TargetType.allEnemy)
         {
-            SetTarget(null);
+            ChooseTarget(null);
         }
         else if (skill.targetType == TargetType.allAlly)
         {
-            SetTarget(null);
+            ChooseTarget(null);
         }
 
     }
 
-    public override void SetTarget(Profile profile)
+    public override void ChooseTarget(Profile profile)
     {
 
         if (profile == null)//Cok hedefli skillerde

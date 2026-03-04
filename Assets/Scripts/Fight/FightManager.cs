@@ -22,13 +22,13 @@ public static class FightManager
     public static Profile tauntedEnemy;
 
     //düþman kendi hedefini seçebilince silinecek
-    public static Profile defaultTargetForEnemies;//!
+    //public static Profile defaultTargetForEnemies;//!
 
     public static void SetDefaultTarget()//gecici
     {
         if (AllyProfiles.Count > 0)
         {
-            defaultTargetForEnemies = AllyProfiles[0];//!
+            //defaultTargetForEnemies = AllyProfiles[0];//!
         }
     }
 
@@ -114,7 +114,7 @@ public static class FightManager
 
         BattleSpawner.ClearBattlefield();
 
-        defaultTargetForEnemies = null;
+        //defaultTargetForEnemies = null;
 
         fightPanel.SetActive(false);
     }

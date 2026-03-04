@@ -31,15 +31,18 @@ public class Profile : MonoBehaviour
     #region Effects
     private int hitCountForTour;
     private int mute;//aktif degil
-    protected int fire;
+    public int fire;
     private bool taunt;
     private bool willTaunt;
     #endregion
 
 
 
+
+    public Profile lastAttacker;
+
     #region Setup
-    
+
     public virtual void Setup(PersistanceStats persistanceStats)
     {
         gameObject.SetActive(true);
@@ -141,7 +144,7 @@ public class Profile : MonoBehaviour
         if (amount < 0)
         {
             float damage = -amount;
-
+            lastAttacker = dealer;
             hitCountForTour++;
 
             if (stats.currentHealth <= 0)
@@ -309,6 +312,42 @@ public class Profile : MonoBehaviour
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private void Parryy(Profile owner, Profile target)
     {
         string log = owner.name + " ";
@@ -349,4 +388,3 @@ public class Profile : MonoBehaviour
         return $"{profile.name}, {profile.lastTargetName} hedefine {profile.currentUseable.name} kullandý.";
     }*/
 }
-
