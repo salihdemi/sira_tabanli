@@ -16,13 +16,13 @@ public class HealAllAllies : Skill
         ConsolePanel.instance.WriteConsole(text);
         Debug.Log(text);
         
-        yield return new WaitForSeconds(1);
 
         //saldýrýyý yap
         foreach (Profile ally in FightManager.AllyProfiles)
         {
             ally.AddToHealth(5, user);
         }
+        yield return new WaitForSeconds(1);
         
     }
 }

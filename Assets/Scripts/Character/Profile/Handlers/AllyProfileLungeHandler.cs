@@ -19,35 +19,26 @@ public class AllyProfileLungeHandler : ProfileLungeHandler
         currentSkill = skill;
         CharacterActionPanel.instance.CloseAndDisableAllPanels();
 
-        bool needTargetýng = skill.targetType == TargetType.ally
-                       || skill.targetType == TargetType.enemy;
-        if (skill.targetType == TargetType.enemy)
-        {
-            if (FightManager.tauntedEnemy) ChooseTarget(FightManager.tauntedEnemy);
-            else TargetingSystem.StartTargeting(profile, skill);
-        }
-        else if (skill.targetType == TargetType.ally)
-        {
-            TargetingSystem.StartTargeting(profile, skill);
-        }
-        else if (skill.targetType == TargetType.self)
-        {
-            ChooseTarget(profile);
-        }
-        //gerek var mý?
-        else if (skill.targetType == TargetType.all)
-        {
-            ChooseTarget(null);
-        }
-        else if (skill.targetType == TargetType.allEnemy)
-        {
-            ChooseTarget(null);
-        }
-        else if (skill.targetType == TargetType.allAlly)
-        {
-            ChooseTarget(null);
-        }
 
+        switch (skill.targetType)
+        {
+            case TargetType.enemy:
+                if (FightManager.tauntedEnemy) ChooseTarget(FightManager.tauntedEnemy);
+                else TargetingSystem.StartTargeting(profile, skill);
+                break;
+
+            case TargetType.ally:
+                TargetingSystem.StartTargeting(profile, skill);
+                break;
+
+            case TargetType.self:
+                ChooseTarget(profile);
+                break;
+
+            default:
+                ChooseTarget(null);
+                break;
+        }
     }
 
     public override void ChooseTarget(Profile profile)

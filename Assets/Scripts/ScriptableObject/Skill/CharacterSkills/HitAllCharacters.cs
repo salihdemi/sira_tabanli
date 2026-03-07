@@ -19,7 +19,6 @@ public class HitAllCharacters : Skill
         ConsolePanel.instance.WriteConsole(text);
         Debug.Log(text);
 
-        yield return new WaitForSeconds(1f); // 1 saniye bekle
 
         //saldýrýyý yap
         Profile[] profiles = FightManager.AllyProfiles.ToArray();//sadece allylara da vurabilir
@@ -30,6 +29,7 @@ public class HitAllCharacters : Skill
                 profile.AddToHealth(-damage, null);
             }
         }
+        yield return new WaitForSeconds(1f); // 1 saniye bekle
         
     }
 }

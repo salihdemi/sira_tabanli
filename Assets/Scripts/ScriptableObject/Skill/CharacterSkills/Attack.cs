@@ -14,10 +14,11 @@ public class Attack : Skill
         ConsolePanel.instance.WriteConsole(text);
         Debug.Log(text);
 
-        yield return new WaitForSeconds(1);
-
         //saldýrýyý yap
         target.AddToHealth(-user.currentStrength, user);
+
+        yield return new WaitForSeconds(1);
+
         //Debug.Log(user.name + " " + target.name + "'a " + name + " ile " + user.currentStrength + " hasar verdi");
     }
 }

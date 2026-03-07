@@ -11,20 +11,21 @@ public class HitAllEnemies : Skill
 
 
         //konsola yaz
-        string text = user.stats._name + " " + target.stats._name + "'e " + _name + " yapýyor";
+        string text = user.stats._name + " " + _name + " yapýyor";
         ConsolePanel.instance.WriteConsole(text);
         Debug.Log(text);
 
-        yield return new WaitForSeconds(1f); // 1 saniye bekle
 
         //saldýrýyý yap
-        Profile[] profiles = FightManager.AllyProfiles.ToArray();//sadece allylara da vurabilir
+        Profile[] profiles = FightManager.EnemyProfiles.ToArray();//sadece allylara da vurabilir
         foreach (Profile profile in profiles)
         {
             if (profile != null && profile != user && !profile.stats.isDied)
             {
-                profile.AddToHealth(-5, null);
+                //herkese ayrý mesaj?
+                profile.AddToHealth(-user.currentStrength, null);
             }
         }
+        yield return new WaitForSeconds(1f); // 1 saniye bekle
     }
 }

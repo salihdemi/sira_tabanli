@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class EnemyProfileLungeHandler : ProfileLungeHandler
 {
-
-
     public override void LungeStart()
     {
         profile.stats.behaviourSet.DecideLunge(profile.lungeHandler);

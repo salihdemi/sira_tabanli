@@ -11,12 +11,12 @@ public class Taunt : Skill
         //sesi oynat
 
         //Konsola yaz
-        string text = "";
+        string text;
         if (targetType == TargetType.self) text = user.stats._name + " taunt yapýyor";
         else text = user.stats._name + " " + target.stats._name + "'e " + _name + " yapýyor";
         ConsolePanel.instance.WriteConsole(text);
 
-        yield return new WaitForSeconds(1f);
         target.Taunt();
+        yield return new WaitForSeconds(1f);
     }
 }

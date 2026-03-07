@@ -6,11 +6,11 @@ public class Burn : Skill
 {
     public override IEnumerator Method(Profile user, Profile target)
     {
-        yield return null;//!
         //animasyonu oynat
         //sesi oynat
 
         //saldýrýyý yap
         target.Burn(3);
+        yield return null;//!
     }
 }

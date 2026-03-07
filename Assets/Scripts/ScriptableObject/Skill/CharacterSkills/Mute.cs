@@ -6,7 +6,7 @@ public class Mute : Skill
 {
     public override IEnumerator Method(Profile user, Profile target)
     {
-        yield return null;//!
         target.Mute(1);
+        yield return null;//!
     }
 }

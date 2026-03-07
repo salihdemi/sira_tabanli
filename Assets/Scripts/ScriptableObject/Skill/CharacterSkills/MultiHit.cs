@@ -7,14 +7,16 @@ public class MultiHit : Skill
 {
     [Header("MultiHit")]
     public int hitCount;
+    //yazýlmadý!!!!!!
+    //her vuruþ ayrý mesaj
     public override IEnumerator Method(Profile user, Profile target)
     {
-        yield return null;//!
         //animasyonu oynat
         //sesi oynat
 
         //saldýrýyý yap
         user.StartCoroutine(MultiHitCoroutine(user, target));
+        yield return null;//!
     }
 
 

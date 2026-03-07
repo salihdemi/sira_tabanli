@@ -8,7 +8,36 @@ public class DefaultEnemyBehaviourSet : EnemyBehaviourSet
 {
     public override void DecideLunge(ProfileLungeHandler lungeHandler)
     {
-        ChooseSkill(lungeHandler, GetRandomUsableSkill(lungeHandler.profile));
-        ChooseTarget(lungeHandler, GetRandomAlly());
+        Skill skill = GetRandomUsableSkill(lungeHandler.profile);
+        ChooseSkill(lungeHandler, skill);
+
+        Profile target = ReturnTargetByTargetType(skill.targetType, lungeHandler.profile);
+        ChooseTarget(lungeHandler, target);
+
+    }
+
+    private Profile ReturnTargetByTargetType(TargetType targetType, Profile profile)
+    {
+        Profile target;
+        switch (targetType)
+        {
+            case TargetType.enemy:
+                target = GetRandomEnemy();
+                break;
+
+            case TargetType.ally:
+                target = GetRandomAlly();
+                break;
+
+            case TargetType.self:
+                target = profile;
+                break;
+
+            default:
+                target = null;
+                break;
+        }
+
+        return target;
     }
 }

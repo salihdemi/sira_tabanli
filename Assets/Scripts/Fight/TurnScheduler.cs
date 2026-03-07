@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class TurnScheduler
@@ -37,7 +38,7 @@ public static class TurnScheduler
 
     public static void StartTour()
     {
-        foreach (Profile profile in FightManager.AllyProfiles)  profile.stats.talimsan?.OnTourStart(profile);
+        foreach (Profile profile in FightManager.AllyProfiles) profile.stats.talimsan?.OnTourStart(profile);
         foreach (Profile profile in FightManager.EnemyProfiles) profile.stats.talimsan?.OnTourStart(profile);
         onTourStart?.Invoke();
 
@@ -47,11 +48,11 @@ public static class TurnScheduler
     private static void StartLunges()
     {
         profilesThatWillLunge.Clear();
-        foreach(Profile profile in FightManager.EnemyProfiles)
+        foreach (Profile profile in FightManager.EnemyProfiles)
         {
             profilesThatWillLunge.Add(profile.lungeHandler);
         }
-        foreach(Profile profile in FightManager.AllyProfiles)
+        foreach (Profile profile in FightManager.AllyProfiles)
         {
             profilesThatWillLunge.Add(profile.lungeHandler);
         }
@@ -86,7 +87,7 @@ public static class TurnScheduler
 
     public static void Back()
     {
-        if(TargetingSystem.IsTargeting) TargetingSystem.CancelTargeting();
+        if (TargetingSystem.IsTargeting) TargetingSystem.CancelTargeting();
         else
         {
             order -= 2; // ilk dostta geri yaparsan son düþmana döner hamlesini seçtirip geri ilk düþmana gelir. þimdilik çalýþýyorsa dokunma!
@@ -153,10 +154,38 @@ public static class TurnScheduler
         while (actionQueue.Count > 0)
         {
             yield return FightPanelObjectPool.instance.StartCoroutine(actionQueue.Dequeue());
+
+
+            //////////////////////////
         }
         isBusy = false;
 
         // TÜM EFEKTLER BÝTTÝ, ÞÝMDÝ SIRADAKÝ KÝÞÝYE GEÇEBÝLÝRÝZ
         PlayNextPerson();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static bool skipRequested = false; // Týklama yapýldýðýnda true olacak
+    public static float actionDelay = 1.0f;   // Aksiyon bittikten sonraki ekstra bekleme süresi
+    public static void RequestSkip()
+    {
+        if (isBusy)
+        {
+            skipRequested = true;
+            Debug.Log("Bekleme süresi atlandý!");
+        }
     }
 }

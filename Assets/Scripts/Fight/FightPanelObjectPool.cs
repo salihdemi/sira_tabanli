@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
@@ -29,22 +30,23 @@ public class FightPanelObjectPool : MonoBehaviour
 
 
 
-
-
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
             // Oyun baþýnda küçük bir hazýrlýk (Pre-warm)
             //PreparePool();
-
-            Profile.OnSomeoneDie += HandleReturnToPool;
             gameObject.SetActive(false);
         }
         else Destroy(gameObject);
     }
-    private void OnDisable()//ondestroydan cevirdim
+
+    private void OnEnable()
+    {
+        Profile.OnSomeoneDie += HandleReturnToPool;
+    }
+    private void OnDisable()
     {
         Profile.OnSomeoneDie -= HandleReturnToPool;
     }
@@ -147,4 +149,19 @@ public class FightPanelObjectPool : MonoBehaviour
         }
     }
     #endregion
+
+
+
+    void Update()
+    {
+        // Fare sol týk veya ekrana dokunma yapýldýysa
+        if (Input.GetMouseButtonDown(0))
+        {
+            // Sadece bir þeyler oynatýlýrken (Busy iken) skip isteði gönder
+            if (TurnScheduler.isBusy)
+            {
+                TurnScheduler.RequestSkip();
+            }
+        }
+    }
 }
