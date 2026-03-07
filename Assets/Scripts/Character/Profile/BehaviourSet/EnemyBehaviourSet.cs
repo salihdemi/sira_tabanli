@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -77,6 +79,31 @@ public abstract class EnemyBehaviourSet : ScriptableObject
         lungeHandler.ChooseTarget(target);
     }
     #region Þarta göre profil bulma
+    protected Profile ReturnTargetByTargetType(TargetType targetType, Profile profile)
+    {
+        Profile target;
+        switch (targetType)
+        {
+            case TargetType.enemy:
+                target = GetRandomEnemy();
+                break;
+
+            case TargetType.ally:
+                target = GetRandomAlly();
+                break;
+
+            case TargetType.self:
+                target = profile;
+                break;
+
+            default:
+                target = null;
+                break;
+        }
+
+        return target;
+    }
+
     protected Profile GetRandomAlly() =>
         FightManager.AllyProfiles.Where(p => !p.stats.isDied).OrderBy(x => Random.value).FirstOrDefault();
 
@@ -132,9 +159,7 @@ public abstract class EnemyBehaviourSet : ScriptableObject
     protected Skill GetRandomUsableSkill(Profile profile)
     {
         // Sadece enerjinin yettiði yetenekler + temel saldýrý
-        var usableSkills = profile.stats.currentSkills
-            .Concat(new[] { profile.stats.attack })
-            .ToList();
+        List<Skill> usableSkills = new List<Skill>(profile.stats.currentSkills) { profile.stats.attack };
 
         return usableSkills[Random.Range(0, usableSkills.Count)];
     }

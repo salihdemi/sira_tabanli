@@ -147,6 +147,7 @@ public static class TurnScheduler
         actionQueue.Enqueue(action);
         if (!isBusy) FightPanelObjectPool.instance.StartCoroutine(ProcessQueue());
     }
+    //yapay zeka
     private static IEnumerator ProcessQueue()
     {
         isBusy = true;

@@ -16,28 +16,4 @@ public class DefaultEnemyBehaviourSet : EnemyBehaviourSet
 
     }
 
-    private Profile ReturnTargetByTargetType(TargetType targetType, Profile profile)
-    {
-        Profile target;
-        switch (targetType)
-        {
-            case TargetType.enemy:
-                target = GetRandomEnemy();
-                break;
-
-            case TargetType.ally:
-                target = GetRandomAlly();
-                break;
-
-            case TargetType.self:
-                target = profile;
-                break;
-
-            default:
-                target = null;
-                break;
-        }
-
-        return target;
-    }
 }
