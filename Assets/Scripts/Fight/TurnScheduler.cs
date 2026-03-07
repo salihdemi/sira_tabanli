@@ -147,21 +147,50 @@ public static class TurnScheduler
         actionQueue.Enqueue(action);
         if (!isBusy) FightPanelObjectPool.instance.StartCoroutine(ProcessQueue());
     }
-
     private static IEnumerator ProcessQueue()
     {
         isBusy = true;
         while (actionQueue.Count > 0)
         {
-            yield return FightPanelObjectPool.instance.StartCoroutine(actionQueue.Dequeue());
+            skipRequested = false; // Her yeni aksiyon baþýnda sýfýrla
+            bool actionFinished = false;
 
+            // 1. Sýradaki aksiyonu al
+            IEnumerator nextAction = actionQueue.Dequeue();
 
-            //////////////////////////
+            // 2. Aksiyonu takip edebileceðimiz bir sarmalayýcý ile baþlat
+            // 'actionFinished' deðiþkenini aksiyon bitince true yapacak þekilde gönderiyoruz
+            Coroutine currentCoroutine = FightPanelObjectPool.instance.StartCoroutine(
+                RunActionWrapper(nextAction, () => actionFinished = true)
+            );
+
+            // 3. Ya aksiyonun bitmesini ya da skip istenmesini bekle
+            while (!actionFinished)
+            {
+                if (skipRequested)
+                {
+                    // TIKLANDI: Aksiyonu anýnda durdur
+                    FightPanelObjectPool.instance.StopCoroutine(currentCoroutine);
+                    skipRequested = false;
+                    break; // Bu while döngüsünden çýk, sýradaki Dequeue'ya geç
+                }
+                yield return null; // Bir sonraki frame'e kadar bekle
+            }
+            
+            // Eðer aksiyonlar arasýnda çok az nefes aldýrmak istersen buraya 
+            // yield return new WaitForSeconds(0.1f); ekleyebilirsin.
         }
-        isBusy = false;
 
-        // TÜM EFEKTLER BÝTTÝ, ÞÝMDÝ SIRADAKÝ KÝÞÝYE GEÇEBÝLÝRÝZ
+        isBusy = false;
+        // TÜM EFEKTLER BÝTTÝ
         PlayNextPerson();
+    }
+
+    // Yardýmcý Metot: Aksiyon bittiðinde haber verir
+    private static IEnumerator RunActionWrapper(IEnumerator actualAction, Action onComplete)
+    {
+        yield return FightPanelObjectPool.instance.StartCoroutine(actualAction);
+        onComplete?.Invoke();
     }
 
 
