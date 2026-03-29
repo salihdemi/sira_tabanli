@@ -6,6 +6,7 @@ public enum EnemyState { Idle, Chasing, InFight }
 public class EnemyMoveable : MonoBehaviour
 {
     [SerializeField] protected Rigidbody2D rb;
+    [SerializeField] private Animator animator;
     public float speed = 10;
     [Header("Settings")]
     [SerializeField] private EnemyGroup group;
@@ -16,7 +17,7 @@ public class EnemyMoveable : MonoBehaviour
     private Transform mainCharacter;
     private Vector3 startPosition;
 
-    [HideInInspector] public bool trigger; // Bireysel menzil kontrolü
+    [HideInInspector] public bool trigger; // Bireysel menzil kontrol
 
     private void OnEnable()
     {
@@ -25,9 +26,8 @@ public class EnemyMoveable : MonoBehaviour
     }
     public void ResetEnemy()
     {
-        trigger = false;                    // Takip trigger'ýný sýfýrla
-
-        rb.linearVelocity = Vector2.zero;   // Hareketini kes
+        trigger = false;
+        rb.linearVelocity = Vector2.zero;
     }
 
     private void Update()
@@ -39,6 +39,25 @@ public class EnemyMoveable : MonoBehaviour
     {
         if (currentState == newState) return;
         currentState = newState;
+    }
+
+    private void SetAnimator(Vector2 velocity)
+    {
+        bool isMoving = velocity != Vector2.zero;
+        animator.SetBool("isMoving", isMoving);
+        if (isMoving)
+        {
+            if (Mathf.Abs(velocity.x) >= Mathf.Abs(velocity.y))
+            {
+                animator.SetFloat("moveX", velocity.x > 0 ? 1 : -1);
+                animator.SetFloat("moveY", 0);
+            }
+            else
+            {
+                animator.SetFloat("moveX", 0);
+                animator.SetFloat("moveY", velocity.y > 0 ? 1 : -1);
+            }
+        }
     }
 
     private void HandleState()
@@ -59,25 +78,20 @@ public class EnemyMoveable : MonoBehaviour
 
     private void HandleIdleState()
     {
-        rb.linearVelocity = Vector2.zero;
-
-
         float distance = Vector2.Distance(transform.position, startPosition);
 
         if (distance > stopDistance)
         {
             Vector3 direction = (startPosition - transform.position).normalized;
-            // Fizik motoru (RB) kullanýrken Time.deltaTime kullanmana gerek yoktur, 
-            // hýz (velocity) zaten zamandan baðýmsýz bir deðerdir.
             rb.linearVelocity = direction * speed;
+            SetAnimator(rb.linearVelocity);
         }
         else
         {
             rb.linearVelocity = Vector2.zero;
+            SetAnimator(Vector2.zero);
         }
 
-
-        // ÇÝFT KONTROL: Hem grup tetiklenmiþ olmalý hem de düþman oyuncuyu görmeli
         if (trigger && group.trigger && mainCharacter != null)
         {
             ChangeState(EnemyState.Chasing);
@@ -86,7 +100,6 @@ public class EnemyMoveable : MonoBehaviour
 
     private void HandleChasingState()
     {
-        // ÞARTLARDAN BÝRÝ BOZULURSA (Grup menzilinden çýkýþ veya bireysel menzilden çýkýþ)
         if (mainCharacter == null || !group.trigger || !trigger)
         {
             ChangeState(EnemyState.Idle);
@@ -98,30 +111,31 @@ public class EnemyMoveable : MonoBehaviour
         if (distance > stopDistance)
         {
             Vector3 direction = (mainCharacter.position - transform.position).normalized;
-            // Fizik motoru (RB) kullanýrken Time.deltaTime kullanmana gerek yoktur, 
-            // hýz (velocity) zaten zamandan baðýmsýz bir deðerdir.
             rb.linearVelocity = direction * speed;
+            SetAnimator(rb.linearVelocity);
         }
         else
         {
             rb.linearVelocity = Vector2.zero;
+            SetAnimator(Vector2.zero);
         }
     }
 
     private void HandleInFightState()
     {
         rb.linearVelocity = Vector2.zero;
+        SetAnimator(Vector2.zero);
     }
 
-    // --- TETÝKLEYÝCÝLER ---
+    // --- TETIKLEYICILER ---
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if(currentState != EnemyState.InFight)
+            if (currentState != EnemyState.InFight)
             {
-                group.Cath(); // Bu fonksiyon tüm grubu InFight'a sokar
+                group.Cath();
             }
         }
     }
@@ -140,7 +154,6 @@ public class EnemyMoveable : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             trigger = false;
-            // Chasing içindeki kontrol sayesinde otomatik Idle'a düþecek
         }
     }
 }
