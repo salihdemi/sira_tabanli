@@ -14,6 +14,7 @@ public class SaveData
     public List<AllySaveData> savedAllys = new List<AllySaveData>();
 
     public List<string> deadEnemyIDsInScene = new List<string>();
+    public List<string> collectedIDs = new List<string>();
 
     // Yemeklerin isimleri ve adetleri
     public InventorySaveData inventorySaveData;
@@ -21,7 +22,7 @@ public class SaveData
 
     //Yenilen bosslar
     //Hikaye ilerlemeleri()
-    //sevviye-tecrübe?
+    //sevviye-tecrï¿½be?
 
 }
 
@@ -59,11 +60,11 @@ public class AllySaveData
 [System.Serializable]
 public class InventorySaveData
 {
-    // Dictionary için: Ýsimler ve Adetler
+    // Dictionary iï¿½in: ï¿½simler ve Adetler
     public List<string> consumableNames = new List<string>();
     public List<int> consumableAmounts = new List<int>();
 
-    // Listeler ve HashSetler için: Sadece isimler
+    // Listeler ve HashSetler iï¿½in: Sadece isimler
     public List<string> ownedWeaponNames = new List<string>();
     public List<string> equippedWeaponNames = new List<string>();
 
