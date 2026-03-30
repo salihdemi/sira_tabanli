@@ -1084,10 +1084,7 @@ MonoBehaviour:
   ID: VikingUnlocker
   dialog: {fileID: 0}
   pickupMessage: "Bu e\u015Fyay\u0131 almak ister misin?"
-  type: 0
-  characterToUnlock: {fileID: 11400000, guid: e3fc427995f3e03428fe2ce59f58b89f, type: 2}
-  foodToGive: {fileID: 0}
-  equipable: {fileID: 0}
+  rewardObject: {fileID: 0}
 --- !u!114 &535973465 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4694535692650718491, guid: 01d40439daee8d249a0e134131162069, type: 3}
@@ -1543,10 +1540,7 @@ MonoBehaviour:
   ID: BloodStaff
   dialog: {fileID: 0}
   pickupMessage: "Bu e\u015Fyay\u0131 almak ister misin?"
-  type: 2
-  characterToUnlock: {fileID: 0}
-  foodToGive: {fileID: 0}
-  equipable: {fileID: 11400000, guid: 2b6693e110c2994428471208a91f0197, type: 2}
+  rewardObject: {fileID: 11400000, guid: 8c821746c27c4c14c9a94217078284be, type: 2}
 --- !u!1001 &582788938
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1810,10 +1804,7 @@ MonoBehaviour:
   ID: HeroUnlocker
   dialog: {fileID: 0}
   pickupMessage: "Bu e\u015Fyay\u0131 almak ister misin?"
-  type: 0
-  characterToUnlock: {fileID: 11400000, guid: 78fb724a93868534ab08be30f9fbc3bd, type: 2}
-  foodToGive: {fileID: 0}
-  equipable: {fileID: 0}
+  rewardObject: {fileID: 0}
 --- !u!1 &641799840
 GameObject:
   m_ObjectHideFlags: 0
