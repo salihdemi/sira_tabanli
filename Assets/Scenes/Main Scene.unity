@@ -1398,6 +1398,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5276822682349330700, guid: fbdaca29569714c42962068a5e795053, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: 5ac425fc799bdbe4fa5a16d5e002275d, type: 2}
     - target: {fileID: 6182487853994404768, guid: fbdaca29569714c42962068a5e795053, type: 3}
       propertyPath: m_Name
       value: MoveableEnemy (2)
@@ -5667,6 +5671,10 @@ PrefabInstance:
     - target: {fileID: 1407886550362303620, guid: 4fac144ed5e96fb4597a48d4ff8e2dc9, type: 3}
       propertyPath: orthographic size
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1918788014558228644, guid: 4fac144ed5e96fb4597a48d4ff8e2dc9, type: 3}
+      propertyPath: speed
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1918788014558228644, guid: 4fac144ed5e96fb4597a48d4ff8e2dc9, type: 3}
       propertyPath: animator

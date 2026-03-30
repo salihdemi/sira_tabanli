@@ -23,6 +23,7 @@ public class CharacterData : ScriptableObject
 
     [Header("Visuals")]
     public Sprite sprite;
+    public RuntimeAnimatorController animatorController;
 
     [Header("Skills")]
     public Attack attack;

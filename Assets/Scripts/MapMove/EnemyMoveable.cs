@@ -23,6 +23,8 @@ public class EnemyMoveable : MonoBehaviour
     {
         startPosition = transform.position;
         ChangeState(EnemyState.Idle);
+        if (data.animatorController != null)
+            animator.runtimeAnimatorController = data.animatorController;
     }
     public void ResetEnemy()
     {
