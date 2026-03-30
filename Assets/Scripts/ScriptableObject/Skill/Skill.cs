@@ -30,6 +30,8 @@ public abstract class Skill : ScriptableObject
 
     [Header("Skill")]
     public Sprite sprite;
+    public AnimationClip effectClip;
+    public AudioClip audioClip;
     public abstract IEnumerator Method(Profile user, Profile target);
     public virtual IEnumerator Method(Profile user, Profile target, float damage)
     {
@@ -38,11 +40,16 @@ public abstract class Skill : ScriptableObject
 
     protected void PlayAudio()
     {
-
+        FightAudioPlayer.Instance?.Play(audioClip);
     }
-    protected void PlayAnimation(Profile user, string animationTrigger)
+    protected void PlayAnimation(Profile owner, string animationTrigger)
     {
-        user.SetTrigger(animationTrigger);
+        owner.SetTrigger(animationTrigger);
+    }
+
+    protected void PlayEffect()
+    {
+        EffectPlayer.Instance?.Play(effectClip);
     }
 
 

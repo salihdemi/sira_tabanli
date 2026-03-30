@@ -7,10 +7,16 @@ public class Attack : Skill
     public override IEnumerator Method(Profile user, Profile target)
     {
 
-        //animasyonu oynat
+        //saldırı animasyonu oynat
         PlayAnimation(user, "Attack");
+        //hedefin hasar alma animasyonunu oynat
+        PlayAnimation(target, "GetHit");
         //sesi oynat
+        PlayAudio();
+        //efekti oynat
+        PlayEffect();
 
+        //Konsol mesajı yaz
         string text = user.stats._name + " " + target.stats._name + "'e " + _name + " yap�yor";
         ConsolePanel.instance.WriteConsole(text);
         Debug.Log(text);

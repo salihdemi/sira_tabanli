@@ -2486,6 +2486,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 750115536}
   m_CullTransparentMesh: 1
+--- !u!1 &779139925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 779139927}
+  - component: {fileID: 779139926}
+  m_Layer: 0
+  m_Name: FightAudioPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &779139926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779139925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d843d29e036aa743929954940c32feb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FightAudioPlayer
+--- !u!4 &779139927
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779139925}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 950.25, y: 571.01587, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &801262474
 GameObject:
   m_ObjectHideFlags: 0
@@ -4886,6 +4930,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1763003590}
   m_CullTransparentMesh: 1
+--- !u!1 &1767879232 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6636449670396639941, guid: 01d40439daee8d249a0e134131162069, type: 3}
+  m_PrefabInstance: {fileID: 8600549230136165601}
+  m_PrefabAsset: {fileID: 0}
+--- !u!111 &1767879236
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767879232}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1 &1880355479
 GameObject:
   m_ObjectHideFlags: 0
@@ -6349,7 +6414,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6636449670396639941, guid: 01d40439daee8d249a0e134131162069, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1767879236}
   m_SourcePrefab: {fileID: 100100000, guid: 01d40439daee8d249a0e134131162069, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -6361,3 +6429,4 @@ SceneRoots:
   - {fileID: 641799841}
   - {fileID: 1377439511}
   - {fileID: 1487367805}
+  - {fileID: 779139927}

@@ -113,7 +113,6 @@ public abstract class Profile : MonoBehaviour
     public void PlayHitAnimation()
     {
         if (animator == null) return;
-        animator.SetTrigger("GetHit");
     }
 
     public void SetTrigger(string trigger) => animator?.SetTrigger(trigger);
@@ -151,7 +150,6 @@ public abstract class Profile : MonoBehaviour
             lastAttacker = dealer;
             hitCountForTour++;
 
-            Debug.Log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             PlayHitAnimation();
 
             if (stats.currentHealth <= 0)
