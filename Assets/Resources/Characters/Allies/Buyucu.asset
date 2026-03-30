@@ -22,7 +22,8 @@ MonoBehaviour:
   focus: 3
   speed: 3
   sprite: {fileID: 21300000, guid: 350468460324d7f4ea9703444d789cf2, type: 3}
-  animatorController: {fileID: 0}
+  mapAnimatorController: {fileID: 0}
+  fightAnimatorController: {fileID: 9100000, guid: b44af3ee1387fbd41bba3a1ec01cf7ac, type: 2}
   attack: {fileID: 11400000, guid: 8c821746c27c4c14c9a94217078284be, type: 2}
   skills:
   - {fileID: 11400000, guid: bf078c690da052c438ff07e7240339bb, type: 2}

@@ -8,13 +8,14 @@ public class Attack : Skill
     {
 
         //animasyonu oynat
+        PlayAnimation(user, "Attack");
         //sesi oynat
 
-        string text = user.stats._name + " " + target.stats._name + "'e " + _name + " yapýyor";
+        string text = user.stats._name + " " + target.stats._name + "'e " + _name + " yapï¿½yor";
         ConsolePanel.instance.WriteConsole(text);
         Debug.Log(text);
 
-        //saldýrýyý yap
+        //saldï¿½rï¿½yï¿½ yap
         target.AddToHealth(-user.currentStrength, user);
 
         yield return new WaitForSeconds(1);

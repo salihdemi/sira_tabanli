@@ -10,7 +10,7 @@ public abstract class Skill : ScriptableObject
 {
     public string _name;
 
-    public TargetType targetType = TargetType.enemy;//aþaðý inecek
+    public TargetType targetType = TargetType.enemy;//aï¿½aï¿½ï¿½ inecek
 
     //private AnimationClip clip;
     //private AudioClip clip;
@@ -40,9 +40,9 @@ public abstract class Skill : ScriptableObject
     {
 
     }
-    protected void PlayAnimation()
+    protected void PlayAnimation(Profile user, string animationTrigger)
     {
-
+        user.SetTrigger(animationTrigger);
     }
 
 

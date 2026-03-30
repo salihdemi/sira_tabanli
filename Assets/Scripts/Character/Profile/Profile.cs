@@ -8,11 +8,12 @@ using UnityEngine.Profiling;
 using UnityEngine.UI;
 using static UnityEngine.EventSystems.EventTrigger;
 
-//defaultProfile için ayrý class açýp prýfile abstract yapýlsýn
+//defaultProfile iÃ§in ayrÄ± class aÃ§Ä±p profile abstract yapÄ±lsÄ±n
 public abstract class Profile : MonoBehaviour
 {
     [HideInInspector] public PersistanceStats stats;
-    [HideInInspector] public ProfileLungeHandler lungeHandler;//kaldýrýlabilirse iyi olurdu
+    [HideInInspector] public ProfileLungeHandler lungeHandler;
+    private Animator animator;
 
     public bool isAlly;
 
@@ -31,14 +32,11 @@ public abstract class Profile : MonoBehaviour
     #endregion
     #region Effects
     private int hitCountForTour;
-    private int mute;//aktif degil
+    private int mute;
     public int fire;
     private bool taunt;
     private bool willTaunt;
     #endregion
-
-
-
 
     public Profile lastAttacker;
 
@@ -53,15 +51,15 @@ public abstract class Profile : MonoBehaviour
 
         GetComponent<Image>().sprite = persistanceStats.sprite;
 
+        animator = GetComponent<Animator>();
+        if (animator != null && persistanceStats.animatorController != null)
+            animator.runtimeAnimatorController = persistanceStats.animatorController;
 
         ResetStatus(persistanceStats);
         ResetStats();
 
-
         TurnScheduler.onTourEnd += StatusProcess;
         TurnScheduler.onTourEnd += ResetHitCount;
-        //Talisman?
-
     }
     private void ResetStatus(PersistanceStats persistanceStats)
     {
@@ -88,7 +86,6 @@ public abstract class Profile : MonoBehaviour
     {
         TurnScheduler.onTourEnd -= StatusProcess;
         TurnScheduler.onTourEnd -= ResetHitCount;
-        //Talisman?
     }
     private void OnDisable()
     {
@@ -100,12 +97,30 @@ public abstract class Profile : MonoBehaviour
     }
     #endregion
 
+    #region Animation
+    public void PlayAnimation(AnimationClip clip)
+    {
+        if (animator == null) return;
+        if (clip != null)
+        {
+            var overrideController = animator.runtimeAnimatorController as AnimatorOverrideController;
+            if (overrideController != null)
+                overrideController["attack"] = clip;
+        }
+        animator.SetTrigger("attack");
+    }
 
+    public void PlayHitAnimation()
+    {
+        if (animator == null) return;
+        animator.SetTrigger("GetHit");
+    }
 
+    public void SetTrigger(string trigger) => animator?.SetTrigger(trigger);
+    public void SetBool(string name, bool value) => animator?.SetBool(name, value);
+    #endregion
 
     #region SetValue
-
-    //setler olustururken calismali sadece
     public void SetHealth(float amount)
     {
         stats.currentHealth = Mathf.Clamp(amount, 0, stats.maxHealth);
@@ -122,24 +137,12 @@ public abstract class Profile : MonoBehaviour
         onManaChange?.Invoke();
     }
     #endregion
+
     #region StatusChange
-    /*public void ForceChangeHealth(float amount)//Overhealth
-    {
-        stats.currentHealth += amount;
-        if (stats.currentHealth <= 0)
-        {
-            stats.currentHealth = 0;
-            Die();
-        }
-        onHealthChange?.Invoke();
-    }*/
     public virtual void AddToHealth(float amount, Profile dealer)
     {
         stats.currentHealth += amount;
-
-        //0-max arasýna sabitle
         stats.currentHealth = Mathf.Clamp(stats.currentHealth, 0, stats.maxHealth);
-
         NotifyHealthChanged();
 
         if (amount < 0)
@@ -148,105 +151,59 @@ public abstract class Profile : MonoBehaviour
             lastAttacker = dealer;
             hitCountForTour++;
 
+            Debug.Log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            PlayHitAnimation();
+
             if (stats.currentHealth <= 0)
-            {
                 Die();
-            }
 
             if (stats.talimsan && dealer)
-            {
                 stats?.talimsan.OnTakeDamage(this, dealer, damage);
-            }
-
-
         }
-
     }
 
     public void AddToStamina(float amount)
     {
         stats.currentStamina += amount;
-        if (stats.currentStamina > stats.maxStamina)
-        {
-            stats.currentStamina = stats.maxStamina;
-        }
-        if (stats.currentStamina < 0)
-        {
-            Debug.LogWarning(stats._name + " stamina 0'ýn altýna düþtü");
-        }
+        if (stats.currentStamina > stats.maxStamina) stats.currentStamina = stats.maxStamina;
+        if (stats.currentStamina < 0) Debug.LogWarning(stats._name + " stamina 0'Ä±n altÄ±na dÃ¼ÅŸtÃ¼");
         onStaminaChange?.Invoke();
     }
     public void AddToMana(float amount)
     {
         stats.currentMana += amount;
-        if (stats.currentMana > stats.maxMana)
-        {
-            stats.currentMana = stats.maxMana;
-        }
-        if (stats.currentMana < 0)
-        {
-            Debug.LogWarning(stats._name + " mana 0'ýn altýna düþtü");
-        }
+        if (stats.currentMana > stats.maxMana) stats.currentMana = stats.maxMana;
+        if (stats.currentMana < 0) Debug.LogWarning(stats._name + " mana 0'Ä±n altÄ±na dÃ¼ÅŸtÃ¼");
         onManaChange?.Invoke();
 
-        if (amount < 0)
-        {
-            //mana azaltan herhangi birþey sebeð olabilir!
-            if(isAlly)
-            {
-                FightManager.OnAllyConsumeMana(this, -amount);//belki burda caðýrýlmamalý!?
-            }
-        }
+        if (amount < 0 && isAlly)
+            FightManager.OnAllyConsumeMana(this, -amount);
     }
 
     private void Die()
     {
-        stats.talimsan?.OnDie(this, null, 0);//sýra yanlýþ olabilir
+        stats.talimsan?.OnDie(this, null, 0);
         UnSetup();
         stats.isDied = true;
         FightManager.HandleProfileDeath(this);
         FightManager.SetDefaultTarget();
-
-        TurnScheduler.AddAction(DeadMessage());//ölüm mesajý!!
-
+        TurnScheduler.AddAction(DeadMessage());
         OnSomeoneDie?.Invoke(this);
     }
-
     #endregion
+
     #region StatsChange
-    public void AddToStrength(float amount)
-    {
-        currentStrength += amount;
-        onStrengthChange?.Invoke(currentStrength);
-    }
-    public void AddToTechnical(float amount)
-    {
-        currentTechnical += amount;
-        onTechnicalChange?.Invoke(currentTechnical);
-    }
-    public void AddToFocus(float amount)
-    {
-        currentFocus += amount;
-        onFocusChange?.Invoke(currentFocus);
-    }
-    public void AddToSpeed(float amount)
-    {
-        currentSpeed += amount;
-        onSpeedChange?.Invoke(currentSpeed);
-    }
+    public void AddToStrength(float amount) { currentStrength += amount; onStrengthChange?.Invoke(currentStrength); }
+    public void AddToTechnical(float amount) { currentTechnical += amount; onTechnicalChange?.Invoke(currentTechnical); }
+    public void AddToFocus(float amount) { currentFocus += amount; onFocusChange?.Invoke(currentFocus); }
+    public void AddToSpeed(float amount) { currentSpeed += amount; onSpeedChange?.Invoke(currentSpeed); }
     #endregion
-
-
 
     #region EffectsChange
-    public void Taunt()
-    {
-        willTaunt = true;
-    }
+    public void Taunt() { willTaunt = true; }
     private void TauntProcess()
     {
         if (taunt) LeaveTaunt();
-
         else if (willTaunt) EnterTaunt();
     }
     private void EnterTaunt()
@@ -258,27 +215,19 @@ public abstract class Profile : MonoBehaviour
     }
     private void LeaveTaunt()
     {
-        if (this is Profile) FightManager.tauntedAlly = null;
-        else if (this is Profile) FightManager.tauntedEnemy = null;
+        if (isAlly) FightManager.tauntedAlly = null;
+        else FightManager.tauntedEnemy = null;
         taunt = false;
     }
 
-
-
-    public void Burn(int amount)
-    {
-        fire += amount;
-    }
+    public void Burn(int amount) { fire += amount; }
     private void BurnProcess()
     {
         fire--;
         if (fire > 0) AddToHealth(-5, null);
     }
 
-    public void Mute(int amount)
-    {
-        mute += amount;
-    }
+    public void Mute(int amount) { mute += amount; }
 
     private void StatusProcess()
     {
@@ -288,104 +237,31 @@ public abstract class Profile : MonoBehaviour
     }
     #endregion
 
-
-
-
-
-    private void ResetHitCount()
-    {
-        hitCountForTour = 0;
-    }
-
-
+    private void ResetHitCount() { hitCountForTour = 0; }
 
     public bool IsEnoughForSkill(Skill skill)
     {
-        bool healthEnough = stats.currentHealth >= skill.healthCost;
-        bool staminaEnough = stats.currentStamina >= skill.staminaCost;
-        bool manaEnough = stats.currentMana >= skill.manaCost;
-        return healthEnough && staminaEnough && manaEnough;
+        return stats.currentHealth >= skill.healthCost &&
+               stats.currentStamina >= skill.staminaCost &&
+               stats.currentMana >= skill.manaCost;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private void Parryy(Profile owner, Profile target)
     {
         string log = owner.name + " ";
         ConsolePanel.instance.WriteConsole(log);
         TurnScheduler.AddAction(Parry(owner, target));
-    }//!
+    }
     private IEnumerator Parry(Profile owner, Profile target)
     {
-
         target.AddToHealth(5, null);
-
         yield return new WaitForSeconds(1);
-    }//!
-
-
-
-
-
-
-
-
-
-
+    }
 
     private IEnumerator DeadMessage()
     {
-        string text = $"{stats._name} öldü";
+        string text = $"{stats._name} Ã¶ldÃ¼";
         ConsolePanel.instance.WriteConsole(text);
         yield return new WaitForSeconds(1f);
     }
-
-    /*private static string GetActionText(Profile profile)
-    {
-        if (profile.isDied) return $"{profile.name} öldüðü için hamle yapamadý.";
-        if (profile.mute > 0) return $"{profile.name} susturulduðu için büyü yapamadý.";
-        if (profile.currentTarget != null && profile.currentTarget.isDied) return $"{profile.name}, hedefi öldüðü için vuruþunu boþa salladý.";
-
-        return $"{profile.name}, {profile.lastTargetName} hedefine {profile.currentUseable.name} kullandý.";
-    }*/
 }

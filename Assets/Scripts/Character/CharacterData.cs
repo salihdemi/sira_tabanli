@@ -23,7 +23,8 @@ public class CharacterData : ScriptableObject
 
     [Header("Visuals")]
     public Sprite sprite;
-    public RuntimeAnimatorController animatorController;
+    public RuntimeAnimatorController mapAnimatorController;
+    public RuntimeAnimatorController fightAnimatorController;
 
     [Header("Skills")]
     public Attack attack;
@@ -38,10 +39,8 @@ public class CharacterData : ScriptableObject
 
     public EnemyBehaviourSet behaviourSet;
 
-
-
-
-
-
-
+    public void Give()
+    {
+        PartyManager.UnlockAlly(this);
+    }
 }

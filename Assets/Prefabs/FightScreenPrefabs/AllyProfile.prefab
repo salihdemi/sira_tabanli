@@ -768,6 +768,7 @@ GameObject:
   - component: {fileID: 8979091839921229595}
   - component: {fileID: 5857489469346434421}
   - component: {fileID: 8454806501549580934}
+  - component: {fileID: -5320574944690325497}
   m_Layer: 5
   m_Name: AllyProfile
   m_TagString: Untagged
@@ -902,8 +903,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AllyProfile
   profile: {fileID: 0}
-  currentSkill: {fileID: 0}
-  currentTarget: {fileID: 0}
+  buttonHandler: {fileID: 0}
 --- !u!114 &5857489469346434421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -917,7 +917,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProfileView
   button: {fileID: -675919997547338896}
-  boundProfile: {fileID: 0}
+  profile: {fileID: 0}
 --- !u!114 &8454806501549580934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -939,6 +939,28 @@ MonoBehaviour:
   technicalText: {fileID: 8562289475746700008}
   focusText: {fileID: 2430741887553648723}
   speedText: {fileID: 3676605321529104403}
+--- !u!95 &-5320574944690325497
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5446839951801960851}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5775723802442382393
 GameObject:
   m_ObjectHideFlags: 0

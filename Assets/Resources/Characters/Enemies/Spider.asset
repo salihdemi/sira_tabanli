@@ -22,7 +22,8 @@ MonoBehaviour:
   focus: 1
   speed: 1
   sprite: {fileID: 21300000, guid: 34db587e0e7c9d54ea985722ca717eab, type: 3}
-  animatorController: {fileID: 22100000, guid: 718fa313ed274de479b62728d828860f, type: 2}
+  mapAnimatorController: {fileID: 22100000, guid: b3fae188418642445849be065374ef96, type: 2}
+  fightAnimatorController: {fileID: 9100000, guid: b44af3ee1387fbd41bba3a1ec01cf7ac, type: 2}
   attack: {fileID: 11400000, guid: 40984029d2d07f843bb19458cc67c00d, type: 2}
   skills: []
   talisman: {fileID: 0}

@@ -35,6 +35,7 @@ public class PersistanceStats
 
     [Header("Sprite")]
     public Sprite sprite;
+    public RuntimeAnimatorController animatorController;
 
     [Header("Skills")]
     public Attack attack;
@@ -67,6 +68,7 @@ public class PersistanceStats
 
 
         sprite = data.sprite;
+        animatorController = data.fightAnimatorController;
         attack = data.attack;
 
         unlockedSkills = new List<Skill>(data.skills);
