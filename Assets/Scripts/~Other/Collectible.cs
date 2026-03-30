@@ -1,21 +1,39 @@
 using UnityEngine;
 
+public interface ICollectibleReward
+{
+    void Give();
+}
+
 public class Collectible : MonoBehaviour, IInteractable
 {
     public string ID;
     public DialogData dialog;
+    public string pickupMessage = "Bu eşyayı almak ister misin?";
+    [SerializeField] private ScriptableObject rewardObject;
+    private ICollectibleReward reward => rewardObject as ICollectibleReward;
 
-    public enum Type { characterUnlocker, consumableGiver, equipableGiver }
-    public Type type;
-
-    public CharacterData characterToUnlock;
-    public Consumable foodToGive;
-    public Equipable equipable;
+    private void Awake()
+    {
+        if (rewardObject != null && reward == null)
+            Debug.LogWarning($"{name}: Reward object ICollectibleReward implement etmiyor!");
+    }
 
     public void Interact()
     {
-        if (dialog == null) { Give(); return; }
-        DialogManager.Instance.StartDialog(dialog, OnChoiceSelected);
+        DialogData dataToShow = dialog != null ? dialog : CreateDefaultDialog();
+        DialogManager.Instance.StartDialog(dataToShow, OnChoiceSelected);
+    }
+
+    private DialogData CreateDefaultDialog()
+    {
+        DialogData data = ScriptableObject.CreateInstance<DialogData>();
+        DialogLine line = new DialogLine();
+        line.text = pickupMessage;
+        line.choices.Add(new DialogChoice { choiceText = "Al", actionType = DialogActionType.CollectItem });
+        line.choices.Add(new DialogChoice { choiceText = "Alma", actionType = DialogActionType.None });
+        data.lines.Add(line);
+        return data;
     }
 
     private void OnChoiceSelected(DialogChoice choice)
@@ -26,21 +44,7 @@ public class Collectible : MonoBehaviour, IInteractable
 
     public void Give()
     {
-        if (type == Type.characterUnlocker)
-        {
-            if (characterToUnlock == null) return;
-            PartyManager.UnlockAlly(characterToUnlock);
-        }
-        else if (type == Type.consumableGiver)
-        {
-            InventoryManager.AddConsumable(foodToGive);
-        }
-        else if (type == Type.equipableGiver)
-        {
-            if (equipable is Weapon) InventoryManager.ownedWeapons.Add((Weapon)equipable);
-            else if (equipable is Item) InventoryManager.ownedItems.Add((Item)equipable);
-            else if (equipable is Talisman) InventoryManager.ownedTalismas.Add((Talisman)equipable);
-        }
+        reward?.Give();
 
         SaveManager.RegisterCollected(ID);
         Destroy(gameObject);

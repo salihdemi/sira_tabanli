@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class DialogManager : MonoBehaviour
 {
     public static DialogManager Instance;
+    public bool IsOpen => panel.activeSelf;
 
     [Header("UI")]
     [SerializeField] private GameObject panel;

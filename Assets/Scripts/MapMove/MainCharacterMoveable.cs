@@ -62,10 +62,18 @@ public class MainCharacterMoveable : MonoBehaviour
 
     private void Update()
     {
-        if (!isInFight) Move();
+        bool isDialogOpen = DialogManager.Instance != null && DialogManager.Instance.IsOpen;
+
+        if (!isInFight && !isDialogOpen) Move();
         else rb.linearVelocity = Vector2.zero;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !isDialogOpen && !IsPointerOverUI())
             animator.SetTrigger("shoot");
+    }
+
+    private bool IsPointerOverUI()
+    {
+        return UnityEngine.EventSystems.EventSystem.current != null &&
+               UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
     }
 }

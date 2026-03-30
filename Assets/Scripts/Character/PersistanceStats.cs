@@ -94,10 +94,10 @@ public class PersistanceStats
         //Debug.Log(skill.ToString());
         if (unlockedSkills.Contains(skill))
         {
-            Debug.LogWarning("bu skill zaten öðrenilmiþ");
+            Debug.LogWarning("bu skill zaten ï¿½ï¿½renilmiï¿½");
             return;
         }
-        Debug.Log("Skill öðrenldi");
+        Debug.Log("Skill ï¿½ï¿½renldi");
         unlockedSkills.Add(skill);
         TryEquipSkill(skill);
     }
@@ -111,7 +111,7 @@ public class PersistanceStats
         }
         else
         {
-            Debug.LogWarning("skiller dolu");
+            Debug.LogWarning(_name + "skiller dolu");
         }
     }
 
