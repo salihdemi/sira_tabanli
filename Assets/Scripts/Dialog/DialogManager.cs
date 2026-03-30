@@ -124,6 +124,10 @@ public class DialogManager : MonoBehaviour
 
         if (choice.nextDialog != null)
             StartDialog(choice.nextDialog, onChoiceSelected);
+        if (choice.actionType != DialogActionType.CollectItem)
+        {
+            
+        }
         else
             CloseDialog();
     }
