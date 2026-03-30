@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public class Collectible : MonoBehaviour
+public class Collectible : MonoBehaviour, IInteractable
 {
     public string ID;
+    public DialogData dialog;
 
     public enum Type { characterUnlocker, consumableGiver, equipableGiver }
     public Type type;
@@ -11,9 +12,15 @@ public class Collectible : MonoBehaviour
     public Consumable foodToGive;
     public Equipable equipable;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void Interact()
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (dialog == null) { Give(); return; }
+        DialogManager.Instance.StartDialog(dialog, OnChoiceSelected);
+    }
+
+    private void OnChoiceSelected(DialogChoice choice)
+    {
+        if (choice.actionType == DialogActionType.CollectItem)
             Give();
     }
 

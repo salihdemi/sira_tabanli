@@ -4,6 +4,7 @@ public class MainCharacterMoveable : MonoBehaviour
 {
     [SerializeField] protected Rigidbody2D rb;
     [SerializeField] private Animator animator;
+    [SerializeField] private Transform interactionBox;
     public float speed = 10;
     private Vector2 moveInput;
 
@@ -47,8 +48,16 @@ public class MainCharacterMoveable : MonoBehaviour
                 animator.SetFloat("moveX", 0);
                 animator.SetFloat("moveY", moveInput.y > 0 ? 1 : -1);
             }
+            UpdateInteractionBox(moveInput);
         }
         animator.SetBool("isMoving", moveInput != Vector2.zero);
+    }
+
+    private void UpdateInteractionBox(Vector2 dir)
+    {
+        if (interactionBox == null) return;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90f;
+        interactionBox.localRotation = Quaternion.Euler(0, 0, angle);
     }
 
     private void Update()
