@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "s-ta-tabanl-.slnx"
+    "dotnet.defaultSolution": "sira_tabanli.slnx"
 }
