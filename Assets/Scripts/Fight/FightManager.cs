@@ -21,7 +21,7 @@ public static class FightManager
     public static Profile tauntedAlly;
     public static Profile tauntedEnemy;
 
-    //düþman kendi hedefini seçebilince silinecek
+    //dï¿½ï¿½man kendi hedefini seï¿½ebilince silinecek
     //public static Profile defaultTargetForEnemies;//!
 
     public static void SetDefaultTarget()//gecici
@@ -45,13 +45,42 @@ public static class FightManager
 
 
 
-    public static void StartFight(EnemyGroup enemy)//fonksiyonla
+    public static void StartFight(List<CharacterData> enemies)
+    {
+        List<PersistanceStats> enemyStats = new List<PersistanceStats>();
+        foreach (CharacterData data in enemies)
+        {
+            PersistanceStats stat = new PersistanceStats();
+            stat.LoadFromBase(data);
+            enemyStats.Add(stat);
+        }
+
+        #region NullCheck
+        if (PartyManager.partyStats.Count < 1)
+        { Debug.LogError("Parti boÅŸ"); return; }
+        if (enemyStats.Count < 1)
+        { Debug.LogError("DÃ¼ÅŸman partisi boÅŸ"); return; }
+        #endregion
+
+        OnFightStart.Invoke();
+        if (fightPanel == null) fightPanel = FightPanelObjectPool.instance.gameObject;
+        fightPanel.SetActive(true);
+        currentEnemy = null;
+        AllyProfiles = BattleSpawner.SpawnAllies(PartyManager.partyStats);
+        EnemyProfiles = BattleSpawner.SpawnEnemies(enemyStats);
+        SetDefaultTarget();
+        foreach (Profile profile in AllyProfiles) profile.stats.talimsan?.OnFightStart(profile);
+        foreach (Profile profile in EnemyProfiles) profile.stats.talimsan?.OnFightStart(profile);
+        TurnScheduler.StartTour();
+    }
+
+    public static void StartFight(EnemyGroup enemy)
     {
         #region NullCheck
         if (PartyManager.partyStats.Count < 1)
-        { Debug.LogError("Parti boþ"); return; }
+        { Debug.LogError("Parti boï¿½"); return; }
         if (enemy.enemyStats.Count < 1)
-        { Debug.LogError("Düþman partisi boþ"); return; }
+        { Debug.LogError("Dï¿½ï¿½man partisi boï¿½"); return; }
         #endregion
 
         OnFightStart.Invoke();
@@ -81,7 +110,7 @@ public static class FightManager
     
     public static void WinFight()
     {
-        //Ödül ver
+        //ï¿½dï¿½l ver
         Debug.Log(currentEnemy.loot + "kazanildi");
 
 
@@ -100,7 +129,7 @@ public static class FightManager
     public static void LoseFight()
     {
         Debug.Log("lose");
-        //ölüm ekraný* vs
+        //ï¿½lï¿½m ekranï¿½* vs
         SceneManager.LoadScene(SceneManager.loadedSceneCount);//save sistemi degisince
 
         FinishFight();
@@ -128,10 +157,10 @@ public static class FightManager
 
     public static void HandleProfileDeath(Profile deadProfile)
     {
-        // Listelerden çýkar
+        // Listelerden ï¿½ï¿½kar
         RemoveFromQueue(deadProfile);
 
-        // Savaþ bitti mi kontrol et
+        // Savaï¿½ bitti mi kontrol et
         if (AllyProfiles.Count == 0)
         {
             if (TurnScheduler.playCoroutine != null)

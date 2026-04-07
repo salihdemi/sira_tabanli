@@ -13,13 +13,29 @@ MonoBehaviour:
   m_Name: DialogData 1
   m_EditorClassIdentifier: Assembly-CSharp::DialogData
   lines:
-  - speakerName: salih
+  - speakerName: biri
     portrait: {fileID: 0}
-    text: Naber
+    text: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    actions: []
+    choices: []
+  - speakerName: "\xF6teki"
+    portrait: {fileID: 0}
+    text: eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    actions: []
+    choices: []
+  - speakerName: "\xF6teki"
+    portrait: {fileID: 0}
+    text: al
+    actions:
+    - actionType: 0
+      rewardObject: {fileID: 11400000, guid: 2b6693e110c2994428471208a91f0197, type: 2}
+      enemies: []
     choices:
-    - choiceText: iyi
+    - choiceText: "t\u015Fk"
       nextDialog: {fileID: 0}
-      actionType: 1
-    - choiceText: "k\xF6t\xFC"
-      nextDialog: {fileID: 0}
-      actionType: 2
+      actions: []
+  - speakerName: biri
+    portrait: {fileID: 0}
+    text: dddddddddddddddddddddddddddddddddd
+    actions: []
+    choices: []

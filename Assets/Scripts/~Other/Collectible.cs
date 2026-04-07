@@ -21,6 +21,7 @@ public class Collectible : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        if (DialogManager.Instance.IsOpen) return;
         DialogData dataToShow = dialog != null ? dialog : CreateDefaultDialog();
         DialogManager.Instance.StartDialog(dataToShow, OnChoiceSelected);
     }
@@ -30,15 +31,18 @@ public class Collectible : MonoBehaviour, IInteractable
         DialogData data = ScriptableObject.CreateInstance<DialogData>();
         DialogLine line = new DialogLine();
         line.text = pickupMessage;
-        line.choices.Add(new DialogChoice { choiceText = "Al", actionType = DialogActionType.CollectItem });
-        line.choices.Add(new DialogChoice { choiceText = "Alma", actionType = DialogActionType.None });
+        line.choices = new System.Collections.Generic.List<DialogChoice>
+        {
+            new DialogChoice { choiceText = "Al", actions = new System.Collections.Generic.List<DialogAction> { new DialogAction { actionType = DialogActionType.GiveItem } } },
+            new DialogChoice { choiceText = "Alma" }
+        };
         data.lines.Add(line);
         return data;
     }
 
     private void OnChoiceSelected(DialogChoice choice)
     {
-        if (choice.actionType == DialogActionType.CollectItem)
+        if (choice.actions.Exists(a => a.actionType == DialogActionType.GiveItem))
             Give();
     }
 

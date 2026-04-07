@@ -13,6 +13,7 @@ public class DialogLine
     public string speakerName;
     public Sprite portrait;
     [TextArea(2, 5)] public string text;
+    public List<DialogAction> actions = new List<DialogAction>();
     public List<DialogChoice> choices = new List<DialogChoice>();
 }
 
@@ -20,14 +21,21 @@ public class DialogLine
 public class DialogChoice
 {
     public string choiceText;
-    public DialogData nextDialog;         // null ise dialog kapanır
+    public DialogData nextDialog;
+    public List<DialogAction> actions = new List<DialogAction>();
+}
+
+[System.Serializable]
+public class DialogAction
+{
     public DialogActionType actionType;
+    [HideInInspector] public ScriptableObject rewardObject;
+    [HideInInspector] public List<CharacterData> enemies;
 }
 
 public enum DialogActionType
 {
-    None,
-    CollectItem,
+    GiveItem,
     StartFight,
     ProgressStory
 }

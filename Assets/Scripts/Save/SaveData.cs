@@ -15,6 +15,7 @@ public class SaveData
 
     public List<string> deadEnemyIDsInScene = new List<string>();
     public List<string> collectedIDs = new List<string>();
+    public List<NpcDialogSaveData> npcDialogIndexes = new List<NpcDialogSaveData>();
 
     // Yemeklerin isimleri ve adetleri
     public InventorySaveData inventorySaveData;
@@ -56,6 +57,12 @@ public class AllySaveData
     public List<string> unlockedSkills = new List<string>();
     public List<string> currentSkills = new List<string>();
 
+}
+[System.Serializable]
+public class NpcDialogSaveData
+{
+    public string npcID;
+    public int dialogIndex;
 }
 [System.Serializable]
 public class InventorySaveData

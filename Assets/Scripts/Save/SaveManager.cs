@@ -117,12 +117,14 @@ public static class SaveManager
         SaveSavePoint(data);
         SaveDeadEnemiesInScene(data);
         SaveCollectibles(data);
+        SaveNpcDialogIndexes(data);
     }
     private static void LoadSceneData(SaveData data)
     {
         LoadSavePoint(data);
         LoadEnemiesInScene(data);
         LoadCollectibles(data);
+        LoadNpcDialogIndexes(data);
     }
 
     private static void SaveSavePoint(SaveData data)
@@ -176,6 +178,29 @@ public static class SaveManager
         {
             if (_collectedIDs.Contains(c.ID))
                 Object.Destroy(c.gameObject);
+        }
+    }
+
+    private static void SaveNpcDialogIndexes(SaveData data)
+    {
+        data.npcDialogIndexes.Clear();
+        NPC[] allNpcs = Object.FindObjectsByType<NPC>(FindObjectsSortMode.None);
+        foreach (NPC npc in allNpcs)
+        {
+            if (string.IsNullOrEmpty(npc.ID)) continue;
+            data.npcDialogIndexes.Add(new NpcDialogSaveData { npcID = npc.ID, dialogIndex = npc.dialogIndex });
+        }
+    }
+    private static void LoadNpcDialogIndexes(SaveData data)
+    {
+        NPC[] allNpcs = Object.FindObjectsByType<NPC>(FindObjectsSortMode.None);
+        foreach (NpcDialogSaveData saved in data.npcDialogIndexes)
+        {
+            foreach (NPC npc in allNpcs)
+            {
+                if (npc.ID == saved.npcID)
+                    npc.dialogIndex = saved.dialogIndex;
+            }
         }
     }
 
@@ -529,8 +554,8 @@ public static class SaveManager
         else if (typeof(T) == typeof(Weapon)) folderPath = "Equipables/Weapons/";
         else if (typeof(T) == typeof(Item)) folderPath = "Equipables/Items/";
         else if (typeof(T) == typeof(Skill)) folderPath = "Skills/";
-        else if (typeof(T) == typeof(Attack)) folderPath = "Attacks/";
-        else if (typeof(T) == typeof(Consumable)) folderPath = "Consumables/";
+        else if (typeof(T) == typeof(Attack)) folderPath = "Skills/Attacks/";
+        else if (typeof(T) == typeof(Consumable)) folderPath = "Cosnumables/";
         else if (typeof(T) == typeof(Sprite)) folderPath = "Sprites/";
 
         // Resources.Load, belirtilen klas�rdeki ismi arar

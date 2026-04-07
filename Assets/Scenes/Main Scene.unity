@@ -3201,6 +3201,7 @@ MonoBehaviour:
     savedAllys: []
     deadEnemyIDsInScene: []
     collectedIDs: []
+    npcDialogIndexes: []
     inventorySaveData:
       consumableNames: []
       consumableAmounts: 
@@ -3854,7 +3855,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 876e1d23cb4ce86479cfd4255b39afc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPC
-  dialog: {fileID: 11400000, guid: e8411e08436b7494685cf4bd9bede149, type: 2}
+  ID: asddaf
+  dialogs:
+  - {fileID: 11400000, guid: e8411e08436b7494685cf4bd9bede149, type: 2}
+  - {fileID: 11400000, guid: 1b47f49428864a143aa663683baa49c7, type: 2}
+  dialogIndex: 0
 --- !u!212 &1501888135
 SpriteRenderer:
   serializedVersion: 2
@@ -5227,6 +5232,7 @@ MonoBehaviour:
     savedAllys: []
     deadEnemyIDsInScene: []
     collectedIDs: []
+    npcDialogIndexes: []
     inventorySaveData:
       consumableNames: []
       consumableAmounts: 

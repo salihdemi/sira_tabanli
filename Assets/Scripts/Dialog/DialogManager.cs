@@ -25,6 +25,7 @@ public class DialogManager : MonoBehaviour
     private bool isTyping;
     private Coroutine typingCoroutine;
     private System.Action<DialogChoice> onChoiceSelected;
+    private System.Action<DialogLine> onLineAction;
 
     private void Awake()
     {
@@ -36,7 +37,7 @@ public class DialogManager : MonoBehaviour
     {
         if (!panel.activeSelf) return;
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             if (isTyping)
                 CompleteTyping();
@@ -47,11 +48,12 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    public void StartDialog(DialogData data, System.Action<DialogChoice> choiceCallback = null)
+    public void StartDialog(DialogData data, System.Action<DialogChoice> choiceCallback = null, System.Action<DialogLine> lineActionCallback = null)
     {
         currentDialog = data;
         currentLineIndex = 0;
         onChoiceSelected = choiceCallback;
+        onLineAction = lineActionCallback;
         panel.SetActive(true);
         ShowLine(currentDialog.lines[currentLineIndex]);
     }
@@ -79,8 +81,8 @@ public class DialogManager : MonoBehaviour
         }
         isTyping = false;
 
-        if (line.choices.Count > 0)
-            ShowChoices(line.choices);
+        onLineAction?.Invoke(line);
+        ShowChoicesIfAny(line);
     }
 
     private void CompleteTyping()
@@ -90,7 +92,13 @@ public class DialogManager : MonoBehaviour
         dialogText.text = currentDialog.lines[currentLineIndex].text;
 
         var line = currentDialog.lines[currentLineIndex];
-        if (line.choices.Count > 0)
+        onLineAction?.Invoke(line);
+        ShowChoicesIfAny(line);
+    }
+
+    private void ShowChoicesIfAny(DialogLine line)
+    {
+        if (line.choices != null && line.choices.Count > 0)
             ShowChoices(line.choices);
     }
 
@@ -123,13 +131,9 @@ public class DialogManager : MonoBehaviour
         onChoiceSelected?.Invoke(choice);
 
         if (choice.nextDialog != null)
-            StartDialog(choice.nextDialog, onChoiceSelected);
-        if (choice.actionType != DialogActionType.CollectItem)
-        {
-            
-        }
+            StartDialog(choice.nextDialog, onChoiceSelected, onLineAction);
         else
-            CloseDialog();
+            NextLine();
     }
 
     private void ClearChoices()
@@ -139,9 +143,12 @@ public class DialogManager : MonoBehaviour
             Destroy(child.gameObject);
     }
 
-    private bool HasChoices() =>
-        currentLineIndex < currentDialog.lines.Count &&
-        currentDialog.lines[currentLineIndex].choices.Count > 0;
+    private bool HasChoices()
+    {
+        if (currentLineIndex >= currentDialog.lines.Count) return false;
+        var line = currentDialog.lines[currentLineIndex];
+        return line.choices != null && line.choices.Count > 0;
+    }
 
     public void CloseDialog()
     {
