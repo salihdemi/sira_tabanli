@@ -12,3 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a26fb6e702156d14293f5fc7009418bd, type: 3}
   m_Name: ScriptedBehaviour
   m_EditorClassIdentifier: Assembly-CSharp::XEnemyBehaviour
+  skillSequence:
+  - {fileID: 11400000, guid: 40984029d2d07f843bb19458cc67c00d, type: 2}
+  - {fileID: 11400000, guid: 40984029d2d07f843bb19458cc67c00d, type: 2}
+  - {fileID: 11400000, guid: bf0fabd5ef094fa49b9a76c9bb19787c, type: 2}
+  - {fileID: 11400000, guid: 40984029d2d07f843bb19458cc67c00d, type: 2}
+  endMode: 0

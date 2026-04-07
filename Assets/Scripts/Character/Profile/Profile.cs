@@ -38,7 +38,7 @@ public abstract class Profile : MonoBehaviour
     private bool willTaunt;
     #endregion
 
-    public Profile lastAttacker;
+    [HideInInspector] public Profile lastAttacker;
 
     #region Setup
 

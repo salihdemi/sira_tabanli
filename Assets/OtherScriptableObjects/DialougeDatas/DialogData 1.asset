@@ -16,20 +16,26 @@ MonoBehaviour:
   - speakerName: biri
     portrait: {fileID: 0}
     text: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-    actions: []
+    beforeActions: []
+    afterActions: []
     choices: []
   - speakerName: "\xF6teki"
     portrait: {fileID: 0}
     text: eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-    actions: []
+    beforeActions: []
+    afterActions: []
     choices: []
   - speakerName: "\xF6teki"
     portrait: {fileID: 0}
     text: al
-    actions:
-    - actionType: 0
-      rewardObject: {fileID: 11400000, guid: 2b6693e110c2994428471208a91f0197, type: 2}
+    beforeActions:
+    - actionType: 3
+      rewardObject: {fileID: 0}
       enemies: []
+      animationTrigger: TurnAround
+      animationParamType: 0
+      animationBoolValue: 0
+    afterActions: []
     choices:
     - choiceText: "t\u015Fk"
       nextDialog: {fileID: 0}
@@ -37,5 +43,6 @@ MonoBehaviour:
   - speakerName: biri
     portrait: {fileID: 0}
     text: dddddddddddddddddddddddddddddddddd
-    actions: []
+    beforeActions: []
+    afterActions: []
     choices: []

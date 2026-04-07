@@ -1,35 +1,31 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Profiling;
 
-[CreateAssetMenu(fileName = "Scripted Enemy Behaviour", menuName = "AI/Behaviours/Aggressive")]
+public enum ScriptedBehaviourEndMode { Loop, RepeatLast }
+
+[CreateAssetMenu(fileName = "ScriptedBehaviour", menuName = "AI/Behaviours/Scripted")]
 public class ScriptedEnemyBehaviour : EnemyBehaviourSet
 {
-    [SerializeField] private Skill[] skillArray;
+    [SerializeField] private List<Skill> skillSequence = new List<Skill>();
+    [SerializeField] private ScriptedBehaviourEndMode endMode;
     private int skillIndex;
 
-
-    //Random bir  skilli en düþük canlý düþman ya da dosta uygular
     public override void DecideLunge(ProfileLungeHandler lungeHandler)
     {
-        skillArray = lungeHandler.profile.stats.currentSkills.Append(lungeHandler.profile.stats.attack).ToArray();
+        if (skillSequence == null || skillSequence.Count == 0)
+        {
+            ChooseSkill(lungeHandler, lungeHandler.profile.stats.attack);
+            ChooseTarget(lungeHandler, GetRandomAlly());
+            return;
+        }
 
-        Skill selectedSkill = skillArray[skillIndex];
+        Skill selectedSkill = skillSequence[skillIndex];
+        skillIndex++;
 
-        skillIndex ++;
+        if (skillIndex >= skillSequence.Count)
+            skillIndex = endMode == ScriptedBehaviourEndMode.Loop ? 0 : skillSequence.Count - 1;
 
         ChooseSkill(lungeHandler, selectedSkill);
-
-
-
-
-
-
-
-        Profile target = ReturnTargetByTargetType(selectedSkill.targetType, lungeHandler.profile);
-        ChooseTarget(lungeHandler, target);
+        ChooseTarget(lungeHandler, ReturnTargetByTargetType(selectedSkill.targetType, lungeHandler.profile));
     }
-
-
 }

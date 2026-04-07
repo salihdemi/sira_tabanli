@@ -7,6 +7,8 @@ public class MainCharacterMoveable : MonoBehaviour
     [SerializeField] private Transform interactionBox;
     public float speed = 10;
     private Vector2 moveInput;
+    private Vector2 lastDir = Vector2.down;
+    private Vector2 activeDir = Vector2.down;
 
 
     private bool isInFight;
@@ -29,27 +31,30 @@ public class MainCharacterMoveable : MonoBehaviour
 
     private void Move()
     {
+        if (Input.GetKeyDown(KeyCode.W)) { activeDir = Vector2.up; }
+        else if (Input.GetKeyDown(KeyCode.S)) { activeDir = Vector2.down; }
+        else if (Input.GetKeyDown(KeyCode.A)) { activeDir = Vector2.left; }
+        else if (Input.GetKeyDown(KeyCode.D)) { activeDir = Vector2.right; }
+
         float inputX = Input.GetAxisRaw("Horizontal");
         float inputY = Input.GetAxisRaw("Vertical");
 
-        moveInput = new Vector2(inputX, inputY).normalized;
+        if (activeDir.x != 0) moveInput = inputX != 0 ? new Vector2(inputX, 0) : Vector2.zero;
+        else moveInput = inputY != 0 ? new Vector2(0, inputY) : Vector2.zero;
+
+        // aktif tuş bırakıldıysa diğer basılı tuşa geç
+        if (moveInput == Vector2.zero)
+        {
+            if (inputX != 0) { activeDir = new Vector2(inputX, 0); moveInput = activeDir; }
+            else if (inputY != 0) { activeDir = new Vector2(0, inputY); moveInput = activeDir; }
+        }
 
         rb.linearVelocity = moveInput * speed * Time.deltaTime * 100;
 
-        if (moveInput != Vector2.zero)
-        {
-            if (Mathf.Abs(moveInput.x) >= Mathf.Abs(moveInput.y))
-            {
-                animator.SetFloat("moveX", moveInput.x > 0 ? 1 : -1);
-                animator.SetFloat("moveY", 0);
-            }
-            else
-            {
-                animator.SetFloat("moveX", 0);
-                animator.SetFloat("moveY", moveInput.y > 0 ? 1 : -1);
-            }
-            UpdateInteractionBox(moveInput);
-        }
+        Vector2 animDir = moveInput != Vector2.zero ? moveInput : lastDir;
+        if (moveInput != Vector2.zero) { lastDir = moveInput; UpdateInteractionBox(moveInput); }
+        animator.SetFloat("moveX", animDir.x);
+        animator.SetFloat("moveY", animDir.y);
         animator.SetBool("isMoving", moveInput != Vector2.zero);
     }
 
