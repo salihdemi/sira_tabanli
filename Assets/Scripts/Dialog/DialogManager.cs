@@ -24,8 +24,8 @@ public class DialogManager : MonoBehaviour
     private int currentLineIndex;
     private bool isTyping;
     private Coroutine typingCoroutine;
-    private System.Action<DialogChoice> onChoiceSelected;
-    private System.Action<DialogLine> onLineAction;
+    private GameObject owner;
+    private Animator ownerAnimator;
 
     private void Awake()
     {
@@ -48,12 +48,12 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    public void StartDialog(DialogData data, System.Action<DialogChoice> choiceCallback = null, System.Action<DialogLine> lineActionCallback = null)
+    public void StartDialog(DialogData data, GameObject dialogOwner = null)
     {
         currentDialog = data;
         currentLineIndex = 0;
-        onChoiceSelected = choiceCallback;
-        onLineAction = lineActionCallback;
+        owner = dialogOwner;
+        ownerAnimator = dialogOwner != null ? dialogOwner.GetComponent<Animator>() : null;
         panel.SetActive(true);
         ShowLine(currentDialog.lines[currentLineIndex]);
     }
@@ -66,6 +66,7 @@ public class DialogManager : MonoBehaviour
 
         ClearChoices();
 
+        ExecuteActions(line.beforeActions);
         if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         typingCoroutine = StartCoroutine(TypeText(line.text, line));
     }
@@ -81,7 +82,7 @@ public class DialogManager : MonoBehaviour
         }
         isTyping = false;
 
-        onLineAction?.Invoke(line);
+        ExecuteActions(line.afterActions);
         ShowChoicesIfAny(line);
     }
 
@@ -92,7 +93,7 @@ public class DialogManager : MonoBehaviour
         dialogText.text = currentDialog.lines[currentLineIndex].text;
 
         var line = currentDialog.lines[currentLineIndex];
-        onLineAction?.Invoke(line);
+        ExecuteActions(line.afterActions);
         ShowChoicesIfAny(line);
     }
 
@@ -128,12 +129,41 @@ public class DialogManager : MonoBehaviour
     private void OnChoiceClicked(DialogChoice choice)
     {
         ClearChoices();
-        onChoiceSelected?.Invoke(choice);
+        ExecuteActions(choice.actions);
 
         if (choice.nextDialog != null)
-            StartDialog(choice.nextDialog, onChoiceSelected, onLineAction);
+            StartDialog(choice.nextDialog, owner);
         else
             NextLine();
+    }
+
+    private void ExecuteActions(List<DialogAction> actions)
+    {
+        foreach (var action in actions)
+        {
+            switch (action.actionType)
+            {
+                case DialogActionType.GiveItem:
+                    if (owner != null && owner.TryGetComponent<Collectible>(out var collectible))
+                        collectible.Give();
+                    else
+                        (action.rewardObject as ICollectibleReward)?.Give();
+                    break;
+                case DialogActionType.StartFight:
+                    if (action.enemies != null && action.enemies.Count > 0)
+                        FightManager.StartFight(action.enemies);
+                    break;
+                case DialogActionType.ProgressStory:
+                    break;
+                case DialogActionType.PlayAnimation:
+                    if (string.IsNullOrEmpty(action.animationTrigger)) break;
+                    if (action.animationParamType == AnimationParamType.Bool)
+                        ownerAnimator?.SetBool(action.animationTrigger, action.animationBoolValue);
+                    else
+                        ownerAnimator?.SetTrigger(action.animationTrigger);
+                    break;
+            }
+        }
     }
 
     private void ClearChoices()

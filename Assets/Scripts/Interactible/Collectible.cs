@@ -23,7 +23,7 @@ public class Collectible : MonoBehaviour, IInteractable
     {
         if (DialogManager.Instance.IsOpen) return;
         DialogData dataToShow = dialog != null ? dialog : CreateDefaultDialog();
-        DialogManager.Instance.StartDialog(dataToShow, OnChoiceSelected);
+        DialogManager.Instance.StartDialog(dataToShow, gameObject);
     }
 
     private DialogData CreateDefaultDialog()
@@ -38,12 +38,6 @@ public class Collectible : MonoBehaviour, IInteractable
         };
         data.lines.Add(line);
         return data;
-    }
-
-    private void OnChoiceSelected(DialogChoice choice)
-    {
-        if (choice.actions.Exists(a => a.actionType == DialogActionType.GiveItem))
-            Give();
     }
 
     public void Give()

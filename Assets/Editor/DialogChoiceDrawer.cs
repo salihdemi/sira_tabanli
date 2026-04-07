@@ -15,6 +15,13 @@ public class DialogActionDrawer : PropertyDrawer
             total += h + pad;
         else if (actionType == DialogActionType.StartFight)
             total += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("enemies"), true) + pad;
+        else if (actionType == DialogActionType.PlayAnimation)
+        {
+            total += (h + pad) * 2; // paramType + paramName
+            var paramType = (AnimationParamType)property.FindPropertyRelative("animationParamType").enumValueIndex;
+            if (paramType == AnimationParamType.Bool)
+                total += h + pad;
+        }
 
         return total;
     }
@@ -39,6 +46,16 @@ public class DialogActionDrawer : PropertyDrawer
             var enemiesProp = property.FindPropertyRelative("enemies");
             rect.height = EditorGUI.GetPropertyHeight(enemiesProp, true);
             EditorGUI.PropertyField(rect, enemiesProp, true);
+        }
+        else if (actionType == DialogActionType.PlayAnimation)
+        {
+            EditorGUI.PropertyField(rect, property.FindPropertyRelative("animationParamType"));
+            rect.y += h + pad;
+            EditorGUI.PropertyField(rect, property.FindPropertyRelative("animationTrigger"), new GUIContent("Param Name"));
+            rect.y += h + pad;
+            var paramType = (AnimationParamType)property.FindPropertyRelative("animationParamType").enumValueIndex;
+            if (paramType == AnimationParamType.Bool)
+                EditorGUI.PropertyField(rect, property.FindPropertyRelative("animationBoolValue"));
         }
 
         EditorGUI.EndProperty();
@@ -87,7 +104,8 @@ public class DialogLineDrawer : PropertyDrawer
         float pad = EditorGUIUtility.standardVerticalSpacing;
         float total = (h + pad) * 2; // speakerName, portrait
         total += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("text"), true) + pad;
-        total += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("actions"), true) + pad;
+        total += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("beforeActions"), true) + pad;
+        total += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("afterActions"), true) + pad;
         total += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("choices"), true) + pad;
         return total;
     }
@@ -110,9 +128,15 @@ public class DialogLineDrawer : PropertyDrawer
         EditorGUI.PropertyField(rect, textProp);
         rect.y += rect.height + pad;
 
-        var actionsProp = property.FindPropertyRelative("actions");
-        rect.height = EditorGUI.GetPropertyHeight(actionsProp, true);
-        EditorGUI.PropertyField(rect, actionsProp, true);
+        var beforeActionsProp = property.FindPropertyRelative("beforeActions");
+        rect.height = EditorGUI.GetPropertyHeight(beforeActionsProp, true);
+        EditorGUI.PropertyField(rect, beforeActionsProp, true);
+        rect.y += rect.height + pad;
+        rect.height = h;
+
+        var afterActionsProp = property.FindPropertyRelative("afterActions");
+        rect.height = EditorGUI.GetPropertyHeight(afterActionsProp, true);
+        EditorGUI.PropertyField(rect, afterActionsProp, true);
         rect.y += rect.height + pad;
         rect.height = h;
 
